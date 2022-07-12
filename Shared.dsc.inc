@@ -604,10 +604,6 @@
   # Graphics Driver
   Nexus5XPkg/Driver/SimpleFbDxe/SimpleFbDxe.inf
 
-  # Lattice UC120 Configuration
-  Nexus5XPkg/Driver/LiCE40SpiConfigDxe/LiCE40SpiConfigDxe.inf
-  Nexus5XPkg/GPLDriver/QupSpiDxe/QupSpiDxe.inf
-
   # BDS
   MdeModulePkg/Universal/PrintDxe/PrintDxe.inf
   MdeModulePkg/Universal/Console/ConPlatformDxe/ConPlatformDxe.inf
