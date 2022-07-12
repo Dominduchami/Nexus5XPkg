@@ -572,9 +572,6 @@
   Nexus5XPkg/Driver/PCIExpressConfiguratorDxe/PCIExpressConfiguratorDxe.inf
   Nexus5XPkg/Driver/TimerDxe/TimerDxe.inf
 
-  # PreLoader checker
-  Nexus5XPkg/Driver/PreLoaderDxe/PreLoaderDxe.inf
-
   # Device Drivers
   Nexus5XPkg/Driver/SynapticsTouchDxe/SynapticsTouchDevice.inf
   Nexus5XPkg/Driver/SynapticsTouchDxe/SynapticsTouchDxe.inf
