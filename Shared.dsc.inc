@@ -220,14 +220,6 @@
   # gNexus5XPkgTokenSpaceGuid.PcdNvStorageVariableBlockLba|0
   # gNexus5XPkgTokenSpaceGuid.PcdNvStorageScratchAddress|0x90000000
 
-  # PCI Express
-  gEfiMdeModulePkgTokenSpaceGuid.PcdSrIovSupport|FALSE
-  gEfiMdeModulePkgTokenSpaceGuid.PcdAriSupport|FALSE
-  gEfiMdeModulePkgTokenSpaceGuid.PcdMrIovSupport|FALSE
-  gEfiMdePkgTokenSpaceGuid.PcdPciExpressBaseAddress|0xf8800000
-  gArmTokenSpaceGuid.PcdPciBusMin|0x0
-  gArmTokenSpaceGuid.PcdPciBusMax|0xff
-
   # Timer
   gQcomTokenSpaceGuid.PcdIntDebugTimerExp|41
   gQcomTokenSpaceGuid.PcdQTimerBase|0xF9021000
@@ -569,7 +561,6 @@
   Nexus5XPkg/Driver/SsbiDxe/SsbiDxe.inf
   Nexus5XPkg/Driver/BoardDxe/BoardDxe.inf
   Nexus5XPkg/Driver/RuntimeMemoryConfigDxe/RuntimeMemoryConfigDxe.inf
-  Nexus5XPkg/Driver/PCIExpressConfiguratorDxe/PCIExpressConfiguratorDxe.inf
   Nexus5XPkg/Driver/TimerDxe/TimerDxe.inf
 
   # Device Drivers

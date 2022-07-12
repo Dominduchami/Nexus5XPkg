@@ -100,7 +100,6 @@ READ_LOCK_STATUS   = TRUE
   INF Nexus5XPkg/Driver/SsbiDxe/SsbiDxe.inf
   INF Nexus5XPkg/Driver/BoardDxe/BoardDxe.inf
   INF Nexus5XPkg/Driver/RuntimeMemoryConfigDxe/RuntimeMemoryConfigDxe.inf
-  INF Nexus5XPkg/Driver/PCIExpressConfiguratorDxe/PCIExpressConfiguratorDxe.inf
 
   # Device Drivers
   INF Nexus5XPkg/Driver/SynapticsTouchDxe/SynapticsTouchDevice.inf
