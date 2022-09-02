@@ -25,6 +25,10 @@
 #include <Library/PrePiLib.h>
 #include <Library/SerialPortLib.h>
 
+#include <Library/LKEnvLib.h>
+#include <Chipset/mdp5.h>
+#include <Platform/iomap.h>
+
 VOID EFIAPI ProcessLibraryConstructorList(VOID);
 
 STATIC VOID UartInit(VOID)
@@ -37,9 +41,18 @@ STATIC VOID UartInit(VOID)
        (CHAR16 *)PcdGetPtr(PcdFirmwareVersionString), __TIME__, __DATE__));
 }
 
-STATIC VOID Reboot(VOID)
+STATIC VOID CheckMdpConfig(VOID)
 {
-  MmioWrite32(0xfc4ab000, 0);
+  UINT32 Base = 0xfd915000;
+
+  /* Windows requires a BGRA FB */
+  DEBUG((EFI_D_INFO, "\nChanging FB format\n"));
+	writel(0x000236FF, Base + PIPE_SSPP_SRC_FORMAT);
+	writel(0x03020001, Base + PIPE_SSPP_SRC_UNPACK_PATTERN);
+
+  DEBUG((EFI_D_INFO, "\nChanging FB stride\n"));
+	writel(1080*4, Base + PIPE_SSPP_SRC_YSTRIDE);
+	writel(BIT(3), MDP_CTL_0_BASE + CTL_FLUSH);
 }
 
 VOID Main(IN VOID *StackBase, IN UINTN StackSize)
@@ -67,6 +80,8 @@ VOID Main(IN VOID *StackBase, IN UINTN StackSize)
 
   /* Enable program flow prediction, if supported */
   ArmEnableBranchPrediction();
+
+  CheckMdpConfig();
 
   // Initialize (fake) UART.
   UartInit();
