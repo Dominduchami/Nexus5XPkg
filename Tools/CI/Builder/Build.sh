@@ -23,10 +23,3 @@ if [ ! -f Build/Nexus5X-AARCH64/DEBUG_GCC5/FV/MSM8992_EFI.fd ]; then
     echo "Unable to find build artifacts."
     exit 1
 fi
-
-# Create uefi.img
-gzip -c < Build/Nexus5X-AARCH64/DEBUG_GCC5/FV/MSM8992_EFI.fd >Build/Nexus5X-AARCH64/DEBUG_GCC5/FV/MSM8992_EFI.fd.gz
-cat Build/Nexus5X-AARCH64/DEBUG_GCC5/FV/MSM8992_EFI.fd.gz Nexus5XPkg/device-specific/fdt.img > Build/Nexus5X-AARCH64/DEBUG_GCC5/FV/Image.gz-dtb
-
-mkbootimg --kernel Build/Nexus5X-AARCH64/DEBUG_GCC5/FV/Image.gz-dtb --ramdisk Nexus5XPkg/device-specific/ramdisk-null --base 0x00000000 --pagesize 4096 --ramdisk_offset 0x02000000 --tags_offset 0x01e00000 -o Build/Nexus5X-AARCH64/DEBUG_GCC5/FV/uefi.img 
-
