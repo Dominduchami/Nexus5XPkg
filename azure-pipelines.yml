@@ -11,14 +11,20 @@ trigger:
     - LICENSE
 
 pool:
-  vmImage: 'Ubuntu-latest'
+  vmImage: 'ubuntu-latest'
 
 steps:
 - script: sudo apt update 
   displayName: 'Update APT sources'
 
+- task: UsePythonVersion@0
+  inputs:
+    versionSpec: '3.10'
+    architecture: 'x64'
+  displayName: Install correct Python
+
 # Travis have this by default, because we preinstalled build-essentials
-- script: sudo apt install uuid-dev flex bison
+- script: sudo apt install uuid-dev flex bison gcc-aarch64-linux-gnu
   displayName: 'Install VSTS dependencies'
 
 # Fix-up directory link for VSTS, force replace current reference
@@ -38,6 +44,9 @@ steps:
 
 - script: ./Tools/CI/Bootstrapper/Stage1.sh
   displayName: 'Prepare pre-build environment, phase 1'
+
+- script: chmod +x ./Tools/CI/Builder/build_boot_shim.sh && ./Tools/CI/Builder/build_boot_shim.sh
+  displayName: 'BootShim build'
 
 - script: ./Tools/CI/Builder/Build.sh
   displayName: 'UEFI build'

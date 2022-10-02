@@ -26,34 +26,6 @@ CNTFRQ:
   .quad 0x0124F800
 
 _ModuleEntryPoint:
-  // check if we're located at expected location
-  adr	   x4, .
-  ldr	   x5, =_ModuleEntryPoint
-  cmp	   x4, x5
-  bne	   _CopyUEFI
-  b      _ContinueModuleEntryPoint
-
-_CopyUEFI:
-  // find our start address by getting our expected offset, then subtracting it from our actual address
-  ldr	   x6, =FixedPcdGet64 (PcdFdBaseAddress)
-  sub	   x5, x5, x6 // x5 now holds offset of _ModuleEntryPoint from start of FD base
-  sub	   x4, x4, x5 // x4 now holds address of actual FD base
-  // tweak the return address
-
-  // note: x30 is lr; gcc5 doesn't have the alias
-  sub	   x30, x30, x4
-  add	   x30, x30, x6
-  ldr	   x5, =FixedPcdGet64 (PcdFdSize)
-
-  // ugly memcpy
-_CopyLoop:
-  ldp	   x2, x3, [x4], #16
-  stp	   x2, x3, [x6], #16
-  subs   x5, x5, #16
-  b.ne   _CopyLoop
-
-_ContinueModuleEntryPoint:
-
   // backup start address into x20
   mov    x20, x1
   // backup device tree address into x21
