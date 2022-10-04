@@ -29,6 +29,11 @@ CNTFRQ:
   .quad 0x0124F800
 
 _ModuleEntryPoint:
+  // backup start address into x20
+  mov    x20, x1
+  // backup device tree address into x21
+  mov    x21, x0
+
   mov x0, #0
 
   /* Know about the current CPU index */
@@ -49,11 +54,6 @@ _CpuIndex:
 
   /* Keep the CPU index in x19 */
   mov x19, x0
-
-  // backup start address into x20
-  mov    x20, x1
-  // backup device tree address into x21
-  mov    x21, x0
 
   /* World reset */
   bl ASM_PFX(ArmDeInitialize)
