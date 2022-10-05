@@ -14,11 +14,13 @@
 #include <Library/PlatformPrePiLib.h>
 
 #include <Library/LKEnvLib.h>
-#include <Chipset/mdp5.h>
-#include <Platform/iomap.h>
 
 #include "PlatformUtils.h"
 #include <Configuration/DeviceMemoryMap.h>
+
+#include <Chipset/mdp5.h>
+
+#include <Platform/iomap.h>
 
 EFI_STATUS
 EFIAPI
@@ -87,10 +89,22 @@ VOID CheckMdpConfig(VOID)
   writel(BIT(3), MDP_CTL_0_BASE + CTL_FLUSH);
 }
 
+STATIC
+VOID
+DisplayEnableRefresh(VOID)
+{
+  writel((BIT(31) | AUTOREFRESH_FRAMENUM), MDP_REG_PP_0_AUTOREFRESH_CONFIG);
+  dsb();
+};
+
 VOID PlatformInitialize()
 {
   UartInit();
+
+  //Change the config for Windows
   CheckMdpConfig();
 
-  /* TODO: FB reconfig? */
+  /* Display refresh gets disabled by the stock bootloader.
+  Enable it so that we'll get a proper framebuffer */
+  DisplayEnableRefresh();
 }

@@ -3,6 +3,8 @@
 
 #include <Library/PcdLib.h>
 
+#define AUTOREFRESH_FRAMENUM 60
+
 VOID PlatformInitialize();
 
 #endif /* _PLATFORM_UTILS_H_ */

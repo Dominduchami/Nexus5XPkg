@@ -2,6 +2,7 @@
 #include <PiDxe.h>
 #include <Uefi.h>
 
+#include <Library/ArmLib.h>
 #include <Library/BaseLib.h>
 #include <Library/BaseMemoryLib.h>
 #include <Library/CacheMaintenanceLib.h>
