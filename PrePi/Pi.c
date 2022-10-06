@@ -45,27 +45,46 @@ STATIC VOID PsciFixupInit(VOID)
   LowerELSynchronous64PatchOffset = LOWER_EL_SYNC_EXC_64B_PATCH_ADDR;
   LowerELSynchronous32PatchOffset = LOWER_EL_SYNC_EXC_32B_PATCH_ADDR;
 
+  DEBUG((EFI_D_INFO, "\nPSCI Fixup Init\n"));
+
   CopyMem(
       (VOID *)WakeFromPowerGatePatchOffset, WakeFromPowerGatePatchHandler,
       sizeof(WakeFromPowerGatePatchHandler));
+
+  DEBUG((EFI_D_INFO, "First CopyMem done\n"));
+
   CopyMem(
       (VOID *)LowerELSynchronous64PatchOffset, LowerELSynchronous64PatchHandler,
       sizeof(LowerELSynchronous64PatchHandler));
+
+  DEBUG((EFI_D_INFO, "Second CopyMem done\n"));
+
   CopyMem(
       (VOID *)LowerELSynchronous32PatchOffset, LowerELSynchronous32PatchHandler,
       sizeof(LowerELSynchronous32PatchHandler));
+
+  DEBUG((EFI_D_INFO, "Third CopyMem done\n"));
 
   ArmDataSynchronizationBarrier();
   ArmInvalidateDataCache();
   ArmInvalidateInstructionCache();
 
+  DEBUG((EFI_D_INFO, "Barriers done\n"));
+
+  DEBUG((EFI_D_INFO, "Call into the handler to make HCR_EL2.TSC sticky\n"));
   // Call into the handler to make HCR_EL2.TSC sticky
   StubArgsHvc.Arg0 = ARM_SMC_ID_PSCI_VERSION;
   ArmCallHvc(&StubArgsHvc);
 
+  DEBUG((EFI_D_INFO, "HVC call done\n"));
+
   // Well...
+  DEBUG((EFI_D_INFO, "Call SMC\n"));
+
   StubArgsSmc.Arg0 = ARM_SMC_ID_PSCI_VERSION;
   ArmCallSmc(&StubArgsSmc);
+
+  DEBUG((EFI_D_INFO, "SMC call done\n"));
 }
 
 VOID PrePiMain(IN VOID *StackBase, IN UINTN StackSize)
