@@ -17,7 +17,8 @@ GCC_ASM_IMPORT (ArmInvalidateTlb)
 
 .global _StackBase 
 .global _StackSize
-.global CNTFRQ 
+.global _SecondaryCpuStackSize
+.global _MpParkBase
 
 _StackBase:
   .quad FixedPcdGet32(PcdPrePiStackBase)
@@ -25,8 +26,11 @@ _StackBase:
 _StackSize:
   .quad FixedPcdGet32(PcdPrePiStackSize)
 
-CNTFRQ:
-  .quad 0x0124F800
+_SecondaryCpuStackSize:
+  .quad FixedPcdGet32(SecondaryCpuStackSize)
+
+_MpParkBase:
+  .quad FixedPcdGet64(SecondaryCpuMpParkRegionBase)
 
 _ModuleEntryPoint:
   // backup start address into x20
@@ -54,6 +58,10 @@ _CpuIndex:
 
   /* Keep the CPU index in x19 */
   mov x19, x0
+
+  /* Secondary startup is not expected */
+  cmp x19, #0x0
+  bne dead
 
   /* World reset */
   bl ASM_PFX(ArmDeInitialize)
