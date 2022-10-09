@@ -33,6 +33,21 @@
 
 VOID EFIAPI ProcessLibraryConstructorList(VOID);
 
+STATIC VOID PsciTest(VOID)
+{
+  //EFI_STATUS           Status;
+  ARM_HVC_ARGS         StubArgsHvc;
+
+  DEBUG((EFI_D_INFO, "PSCI Test\n"));
+
+  // PSCI_CPU_SUSPEND_AA64
+  StubArgsHvc.Arg0 = 0xc4000001;
+  ArmCallHvc(&StubArgsHvc);
+
+  DEBUG((EFI_D_INFO | EFI_D_LOAD,"StubArgsHvc.Arg0 = %11x\n", StubArgsHvc.Arg0));
+  //ASSERT(StubArgsHvc.Arg0 == ARM_SMC_PSCI_RET_SUCCESS);
+}
+
 STATIC VOID PsciFixupInit(VOID)
 {
   EFI_PHYSICAL_ADDRESS WakeFromPowerGatePatchOffset;
@@ -97,6 +112,9 @@ VOID PrePiMain(IN VOID *StackBase, IN UINTN StackSize)
   UINTN MemorySize       = 0;
   UINTN UefiMemoryBase   = 0;
   UINTN UefiMemorySize   = 0;
+
+  // PSCI test
+  PsciTest();
 
   // PSCI fixup init
   PsciFixupInit();
