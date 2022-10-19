@@ -20,6 +20,7 @@
 #include <Library/IoLib.h>
 #include <Library/MemoryAllocationLib.h>
 #include <Library/PcdLib.h>
+#include <Library/LKEnvLib.h>
 #include <Library/PeCoffGetEntryPointLib.h>
 #include <Library/PerformanceLib.h>
 #include <Library/PrePiHobListPointerLib.h>
@@ -30,6 +31,8 @@
 #include <IndustryStandard/ArmStdSmc.h>
 #include <Library/ArmHvcLib.h>
 #include <Library/ArmSmcLib.h>
+
+#include <Chipset/psci.h>
 
 VOID EFIAPI ProcessLibraryConstructorList(VOID);
 
@@ -51,12 +54,10 @@ STATIC VOID PsciTest(VOID)
   }
 
   else {
-    DEBUG((EFI_D_INFO, "PSCI call suceeded\n"));
+    DEBUG((EFI_D_INFO | EFI_D_LOAD, "PSCI - v%d.%d detected\n", 
+          PSCI_VERSION_MAJOR(StubArgsHvc.Arg0), PSCI_VERSION_MINOR(StubArgsHvc.Arg0)));
   }
-
-  DEBUG((EFI_D_INFO, "HVC test call done\n"));
 }
-
 
 STATIC VOID PsciFixupInit(VOID)
 {
