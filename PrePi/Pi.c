@@ -33,6 +33,26 @@
 
 VOID EFIAPI ProcessLibraryConstructorList(VOID);
 
+STATIC VOID PsciTest(VOID)
+{
+  ARM_HVC_ARGS         StubArgsHvc;
+
+  DEBUG((EFI_D_INFO, "PSCI Test\n"));
+
+  StubArgsHvc.Arg0 = ARM_SMC_ID_PSCI_VERSION;
+  ArmCallHvc(&StubArgsHvc);
+
+  if (ArmHvcArgs.Arg0 != ARM_SMC_PSCI_RET_SUCCESS) {
+    DEBUG((EFI_D_INFO | EFI_D_LOAD, "PSCI Call returned %llx\n", ArmHvcArgs.Arg0));
+  }
+  else {
+    DEBUG((EFI_D_INFO, "PSCI call suceeded\n"));
+  }
+
+  DEBUG((EFI_D_INFO, "HVC test call done\n"));
+}
+
+
 STATIC VOID PsciFixupInit(VOID)
 {
   EFI_PHYSICAL_ADDRESS WakeFromPowerGatePatchOffset;
@@ -97,6 +117,9 @@ VOID PrePiMain(IN VOID *StackBase, IN UINTN StackSize)
   UINTN MemorySize       = 0;
   UINTN UefiMemoryBase   = 0;
   UINTN UefiMemorySize   = 0;
+
+  //PSCI test
+  PsciTest();
 
   // PSCI fixup init
   PsciFixupInit();
