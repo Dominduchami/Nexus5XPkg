@@ -42,8 +42,8 @@ STATIC VOID PsciTest(VOID)
   StubArgsHvc.Arg0 = ARM_SMC_ID_PSCI_VERSION;
   ArmCallHvc(&StubArgsHvc);
 
-  if (ArmHvcArgs.Arg0 != ARM_SMC_PSCI_RET_SUCCESS) {
-    DEBUG((EFI_D_INFO | EFI_D_LOAD, "PSCI Call returned %llx\n", ArmHvcArgs.Arg0));
+  if (StubArgsHvc.Arg0 != ARM_SMC_PSCI_RET_SUCCESS) {
+    DEBUG((EFI_D_INFO | EFI_D_LOAD, "PSCI Call returned %llx\n", StubArgsHvc.Arg0));
   }
   else {
     DEBUG((EFI_D_INFO, "PSCI call suceeded\n"));
