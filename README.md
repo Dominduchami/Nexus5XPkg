@@ -19,7 +19,7 @@ to copy the payload to the right space.
 
 ## Windows Notes
 
-Windows Boot Manager boots fine, however booting Windows is unsupported as of now. ACPI tables will have to be adapted to make it possible. It's worth noting also that builds higher than 19041.1 will not boot on the device. The hyp CVE that is used by Lumia950XLPkg to enable booting of newer versions was patched by Google (thanks to Gustave Monce for the information).
+Windows Boot Manager boots fine, however booting Windows is unsupported as of now. ACPI tables will have to be adapted to make it possible.
 
 ## Linux notes
 
