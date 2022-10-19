@@ -43,8 +43,13 @@ STATIC VOID PsciTest(VOID)
   ArmCallHvc(&StubArgsHvc);
 
   if (StubArgsHvc.Arg0 == ARM_SMC_PSCI_RET_INVALID_PARAMS) {
-    DEBUG((EFI_D_INFO, "PSCI call suceeded invalid parameters!\n"));
+    DEBUG((EFI_D_INFO, "PSCI call returned invalid parameters!\n"));
   }
+
+  else if (StubArgsHvc.Arg0 == ARM_SMC_PSCI_RET_NOT_SUPPORTED) {
+    DEBUG((EFI_D_INFO, "PSCI call returned : not supported!\n"));
+  }
+
   else {
     DEBUG((EFI_D_INFO, "PSCI call suceeded\n"));
   }
