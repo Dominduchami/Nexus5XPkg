@@ -524,27 +524,39 @@ PCIExpressConfiguratorEntry(
 {
   EFI_STATUS Status;
 
+  DEBUG((EFI_D_LOAD | EFI_D_INFO, "PCIEConfiguratorDxe\n"));
+
   Status = AcquireEfiProtocols();
   if (EFI_ERROR(Status))
     goto exit;
+
+  DEBUG((EFI_D_LOAD | EFI_D_INFO, "EFI protocols aquired\n"));
 
   Status = VerifyPlatform();
   if (EFI_ERROR(Status))
     goto exit;
 
+  DEBUG((EFI_D_LOAD | EFI_D_INFO, "Platform verified\n"));
+
   Status = EnableClocksMsm8994();
   if (EFI_ERROR(Status))
     goto exit;
 
+  DEBUG((EFI_D_LOAD | EFI_D_INFO, "EnableClocksMsm8994() suceeded\n"));
+
   Status = ConfigurePCIeAndCnssGpio();
   if (EFI_ERROR(Status))
     goto exit;
+
+  DEBUG((EFI_D_LOAD | EFI_D_INFO, "ConfigurePCIeAndCnssGpio() suceeded\n"));
 
   // TODO: Call msm_pcie_restore_sec_config to restore security config
 
   Status = InitializePciePHY();
   if (EFI_ERROR(Status))
     goto exit;
+  
+  DEBUG((EFI_D_LOAD | EFI_D_INFO, "InitializePciePHY() suceeded\n"));
 
 #ifdef ENABLE_QCOM_RPM
   Status = RpmTurnOnLdo30();
@@ -556,21 +568,31 @@ PCIExpressConfiguratorEntry(
   if (EFI_ERROR(Status))
     goto exit;
 
+  DEBUG((EFI_D_LOAD | EFI_D_INFO, "SetPipeClock() suceeded\n"));
+
   Status = EnableLink();
   if (EFI_ERROR(Status))
     goto exit;
+
+  DEBUG((EFI_D_LOAD | EFI_D_INFO, "EnableLink() suceeded\n"));
 
   Status = ConfigDmCore();
   if (EFI_ERROR(Status))
     goto exit;
 
+  DEBUG((EFI_D_LOAD | EFI_D_INFO, "ConfigDmCore() suceeded\n"));
+
   Status = ConfigSpace();
   if (EFI_ERROR(Status))
     goto exit;
 
+  DEBUG((EFI_D_LOAD | EFI_D_INFO, "ConfigSpace() suceeded\n"));
+
   Status = FinishingUp();
   if (EFI_ERROR(Status))
     goto exit;
+
+  DEBUG((EFI_D_LOAD | EFI_D_INFO, "FinishingUp() suceeded\n"));
 
   Status = gBS->InstallProtocolInterface(
       &ImageHandle, &gQcomMsmPCIExpressInitProtocolGuid, EFI_NATIVE_INTERFACE,
