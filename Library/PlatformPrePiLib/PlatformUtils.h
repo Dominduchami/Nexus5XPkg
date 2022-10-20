@@ -3,7 +3,7 @@
 
 #include <Library/PcdLib.h>
 
-#define AUTOREFRESH_FRAMENUM 1
+#define AUTOREFRESH_FRAMENUM 4
 
 VOID PlatformInitialize();
 
