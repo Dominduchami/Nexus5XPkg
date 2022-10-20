@@ -554,6 +554,7 @@ PCIExpressConfiguratorEntry(
 
   Status = InitializePciePHY();
   if (EFI_ERROR(Status))
+    DEBUG((EFI_D_LOAD | EFI_D_INFO, "\nInitializePciePHY() errored\n"));
     goto exit;
   
   DEBUG((EFI_D_LOAD | EFI_D_INFO, "InitializePciePHY() suceeded\n"));
@@ -566,30 +567,35 @@ PCIExpressConfiguratorEntry(
 
   Status = SetPipeClock();
   if (EFI_ERROR(Status))
+    DEBUG((EFI_D_LOAD | EFI_D_INFO, "\nSetPipeClock() errored\n"));
     goto exit;
 
   DEBUG((EFI_D_LOAD | EFI_D_INFO, "SetPipeClock() suceeded\n"));
 
   Status = EnableLink();
   if (EFI_ERROR(Status))
+    DEBUG((EFI_D_LOAD | EFI_D_INFO, "\nEnableLink() errored\n"));
     goto exit;
 
   DEBUG((EFI_D_LOAD | EFI_D_INFO, "EnableLink() suceeded\n"));
 
   Status = ConfigDmCore();
   if (EFI_ERROR(Status))
+    DEBUG((EFI_D_LOAD | EFI_D_INFO, "\nConfigDmCore() errored\n"));
     goto exit;
 
   DEBUG((EFI_D_LOAD | EFI_D_INFO, "ConfigDmCore() suceeded\n"));
 
   Status = ConfigSpace();
   if (EFI_ERROR(Status))
+    DEBUG((EFI_D_LOAD | EFI_D_INFO, "\nConfigSpace() errored\n"));
     goto exit;
 
   DEBUG((EFI_D_LOAD | EFI_D_INFO, "ConfigSpace() suceeded\n"));
 
   Status = FinishingUp();
   if (EFI_ERROR(Status))
+    DEBUG((EFI_D_LOAD | EFI_D_INFO, "FinishingUp() errored\n"));
     goto exit;
 
   DEBUG((EFI_D_LOAD | EFI_D_INFO, "FinishingUp() suceeded\n"));
