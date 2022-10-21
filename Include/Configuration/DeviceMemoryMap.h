@@ -99,7 +99,7 @@ static ARM_MEMORY_REGION_DESCRIPTOR_EX gDeviceMemoryDescriptorEx[] = {
 
     /* RAM partition regions */
     {"RAM Partition",     0x20000000, 0x40000000, AddMem, SYS_MEM, SYS_MEM_CAP, Conv,   WRITE_BACK_XN},
-    {"RAM Partition",     0x80000000, 0x20000000, AddMem, SYS_MEM, SYS_MEM_CAP, Conv,   WRITE_BACK_XN},
+    {"RAM Partition",     0x60000000, 0x20000000, AddMem, SYS_MEM, SYS_MEM_CAP, Conv,   WRITE_BACK_XN},
 
     /* Other memory regions */
     {"IMEM SMEM Base",    0xFE805000, 0x00001000, NoHob,  MMAP_IO, INITIALIZED,  Conv,   NS_DEVICE},
