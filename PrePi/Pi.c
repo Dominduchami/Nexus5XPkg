@@ -20,6 +20,7 @@
 #include <Library/IoLib.h>
 #include <Library/MemoryAllocationLib.h>
 #include <Library/PcdLib.h>
+#include <Library/LKEnvLib.h>
 #include <Library/PeCoffGetEntryPointLib.h>
 #include <Library/PerformanceLib.h>
 #include <Library/PrePiHobListPointerLib.h>
@@ -31,7 +32,24 @@
 #include <Library/ArmHvcLib.h>
 #include <Library/ArmSmcLib.h>
 
+#include <Chipset/psci.h>
+
 VOID EFIAPI ProcessLibraryConstructorList(VOID);
+
+STATIC VOID PsciTest(VOID)
+{
+  ARM_HVC_ARGS         StubArgsHvc;
+
+  DEBUG((EFI_D_INFO, "PSCI Test\n"));
+
+  StubArgsHvc.Arg0 = ARM_SMC_ID_PSCI_VERSION;
+  ArmCallHvc(&StubArgsHvc);
+
+  DEBUG((EFI_D_INFO | EFI_D_LOAD, "PSCI - v%d.%d detected\n", 
+        PSCI_VERSION_MAJOR(StubArgsHvc.Arg0), PSCI_VERSION_MINOR(StubArgsHvc.Arg0)));
+
+  DEBUG((EFI_D_INFO, "PSCI Test done\n"));
+}
 
 STATIC VOID PsciFixupInit(VOID)
 {
@@ -44,6 +62,8 @@ STATIC VOID PsciFixupInit(VOID)
   WakeFromPowerGatePatchOffset    = WAKE_FROM_POWERGATE_PATCH_ADDR;
   LowerELSynchronous64PatchOffset = LOWER_EL_SYNC_EXC_64B_PATCH_ADDR;
   LowerELSynchronous32PatchOffset = LOWER_EL_SYNC_EXC_32B_PATCH_ADDR;
+
+  DEBUG((EFI_D_INFO, "\nPSCI Fixup Init\n"));
 
   CopyMem(
       (VOID *)WakeFromPowerGatePatchOffset, WakeFromPowerGatePatchHandler,
@@ -61,13 +81,29 @@ STATIC VOID PsciFixupInit(VOID)
   ArmInvalidateDataCache();
   ArmInvalidateInstructionCache();
 
+  DEBUG((EFI_D_INFO, "Call into the handler to make HCR_EL2.TSC sticky\n"));
+
   // Call into the handler to make HCR_EL2.TSC sticky
   StubArgsHvc.Arg0 = ARM_SMC_ID_PSCI_VERSION;
   ArmCallHvc(&StubArgsHvc);
 
+  if (StubArgsHvc.Arg0 != ARM_SMC_PSCI_RET_SUCCESS) {
+    DEBUG((EFI_D_INFO | EFI_D_LOAD, "PSCI HVC call error%llx\n", StubArgsHvc.Arg0));
+  }
+
+  DEBUG((EFI_D_INFO | EFI_D_LOAD, "PSCI - v%d.%d detected\n", 
+        PSCI_VERSION_MAJOR(StubArgsHvc.Arg0), PSCI_VERSION_MINOR(StubArgsHvc.Arg0)));
+
   // Well...
   StubArgsSmc.Arg0 = ARM_SMC_ID_PSCI_VERSION;
   ArmCallSmc(&StubArgsSmc);
+
+  if (StubArgsHvc.Arg0 != ARM_SMC_PSCI_RET_SUCCESS) {
+    DEBUG((EFI_D_INFO | EFI_D_LOAD, "PSCI SMC call error%llx\n", StubArgsHvc.Arg0));
+  }
+
+  DEBUG((EFI_D_INFO | EFI_D_LOAD, "PSCI - v%d.%d detected\n", 
+        PSCI_VERSION_MAJOR(StubArgsHvc.Arg0), PSCI_VERSION_MINOR(StubArgsHvc.Arg0)));
 }
 
 VOID PrePiMain(IN VOID *StackBase, IN UINTN StackSize)
@@ -80,6 +116,9 @@ VOID PrePiMain(IN VOID *StackBase, IN UINTN StackSize)
   UINTN MemorySize       = 0;
   UINTN UefiMemoryBase   = 0;
   UINTN UefiMemorySize   = 0;
+
+  // PSCI test
+  PsciTest();
 
   // PSCI fixup init
   PsciFixupInit();
