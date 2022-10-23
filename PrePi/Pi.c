@@ -31,6 +31,8 @@
 #include <Library/ArmHvcLib.h>
 #include <Library/ArmSmcLib.h>
 
+#include <Chipset/psci.h>
+
 VOID EFIAPI ProcessLibraryConstructorList(VOID);
 
 STATIC VOID PsciTest(VOID)
