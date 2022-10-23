@@ -2,9 +2,6 @@
 #include <AsmMacroIoLibV8.h>
 #include <Chipset/AArch64.h>
 
-#define LoadConstantToReg(Data, Reg) \
-  ldr  Reg, =Data
-
 .text
 .align 3
 
@@ -17,8 +14,7 @@ GCC_ASM_IMPORT (ArmInvalidateTlb)
 
 .global _StackBase 
 .global _StackSize
-.global _SecondaryCpuStackSize
-.global _MpParkBase
+.global CNTFRQ 
 
 _StackBase:
   .quad FixedPcdGet32(PcdPrePiStackBase)
@@ -26,42 +22,14 @@ _StackBase:
 _StackSize:
   .quad FixedPcdGet32(PcdPrePiStackSize)
 
-_SecondaryCpuStackSize:
-  .quad FixedPcdGet32(SecondaryCpuStackSize)
-
-_MpParkBase:
-  .quad FixedPcdGet64(SecondaryCpuMpParkRegionBase)
+CNTFRQ:
+  .quad 0x0124F800
 
 _ModuleEntryPoint:
   // backup start address into x20
   mov    x20, x1
   // backup device tree address into x21
   mov    x21, x0
-
-  mov x0, #0
-
-  /* Know about the current CPU index */
-  mrs x3, mpidr_el1
-  mov x2, x3
-  mov x1, #0x0000100
-  and x2, x2, x1
-  cmp x2, #0x0
-  mov x0, #0
-  beq _CpuIndex
-
-  mov x0, #4
-_CpuIndex:
-  mov x2, x3
-  mov x1, #0xf
-  and x2, x2, x1
-  add x0, x0, x2
-
-  /* Keep the CPU index in x19 */
-  mov x19, x0
-
-  /* Secondary startup is not expected */
-  cmp x19, #0x0
-  bne dead
 
   /* World reset */
   bl ASM_PFX(ArmDeInitialize)
@@ -82,36 +50,14 @@ _CpuIndex:
   /* Invalidate TLB */
   bl ASM_PFX(ArmInvalidateTlb)
 
-_SetupExceptionVector:
-  LoadConstantToReg (FixedPcdGet32(PcdCpuVectorBaseAddress), x0)
-  ldr x1, dead
-  mov x2, #0
-
-_FillVectors:
-  /* Each entry is 8 bytes, vector table size is 0x800 per core */
-  str     x1, [x0, x2]
-  adds    x2, x2, #8
-  cmp     x2, #0x800
-  bne     _FillVectors
-
   /* Get current EL in x0 */
-  mrs x0, CurrentEl
+  EL1_OR_EL2_OR_EL3(x0)
 
-  /* Check if we are in EL1 */
-  cmp x0, #0x4
-  b.eq _SetupEl1VBar
+1:  b _SetupPrimaryCoreStack
+2:  b _SetupPrimaryCoreStack
 
-  cmp x0, #0x5
-  b.eq _SetupEl1VBar
-
-_SetupEl1VBar:
-  msr vbar_el1, x0        
-
-_DonNotTrap_VFP_SIMD:
-  mrs x0, CPACR_EL1
-  /* Bit 20 and 21 */
-  orr x0, x0, #0x300000
-  msr CPACR_EL1, x0
+  /* We should have EL1 initialized */
+3:  b dead
 
 _SetupPrimaryCoreStack:
   ldr x0, _StackBase     /* Stack base arg0 */
