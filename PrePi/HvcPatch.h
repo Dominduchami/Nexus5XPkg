@@ -22,9 +22,9 @@
 #if defined(SILICON_PLATFORM)
 
 // Patch location are identical between platforms.
-#define WAKE_FROM_POWERGATE_PATCH_ADDR 0x6C001A0
-#define LOWER_EL_SYNC_EXC_64B_PATCH_ADDR 0x6C08BCC
-#define LOWER_EL_SYNC_EXC_32B_PATCH_ADDR 0x6C08DCC
+#define WAKE_FROM_POWERGATE_PATCH_ADDR 0x6C001F8
+#define LOWER_EL_SYNC_EXC_64B_PATCH_ADDR 0x6C08C24
+#define LOWER_EL_SYNC_EXC_32B_PATCH_ADDR 0x6C08E24
 
 // Set HCR_EL2.TSC upon powergate wake-up.
 // This patch is shared between platforms.
