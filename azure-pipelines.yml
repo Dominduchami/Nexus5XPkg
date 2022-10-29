@@ -28,6 +28,14 @@ steps:
 - script: sudo apt install uuid-dev flex bison gcc-aarch64-linux-gnu
   displayName: 'Install VSTS dependencies'
 
+- script: |
+    git submodule update --init --recursive
+  displayName: Fetch Submodules
+
+# Initialize submodules
+- script: git submodule init
+  displayName: 'Initialize submodules'
+
 # Fix-up directory link for VSTS, force replace current reference
 - script: sudo ln -sfn $(pwd) ../Nexus5XPkg
   displayName: 'Fix directory links'
