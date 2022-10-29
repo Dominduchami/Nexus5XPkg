@@ -1,0 +1,3 @@
+[submodule "AcpiTables"]
+	path = AcpiTables
+	url = https://github.com/Dominduchami/Nexus5X-ACPI.git
