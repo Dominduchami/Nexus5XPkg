@@ -13,8 +13,6 @@
 #include <Library/ArmSmcLib.h>
 #include <Library/PlatformPrePiLib.h>
 
-#include <Library/LKEnvLib.h>
-
 #include "PlatformUtils.h"
 #include <Configuration/DeviceMemoryMap.h>
 
@@ -93,7 +91,7 @@ STATIC
 VOID
 DisplayEnableRefresh(VOID)
 {
-  writel((BIT(31) | AUTOREFRESH_FRAMENUM), MDP_REG_PP_0_AUTOREFRESH_CONFIG);
+  MmioWrite32(MDP_REG_PP_0_AUTOREFRESH_CONFIG, ((1 << (31)) | AUTOREFRESH_FRAMENUM))
   dsb();
 };
 
