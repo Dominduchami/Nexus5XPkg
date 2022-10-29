@@ -75,24 +75,22 @@ STATIC VOID UartInit(VOID)
 
 VOID CheckMdpConfig(VOID)
 {
-  UINT32 Base = 0xfd915000;
-
   /* Windows requires a BGRA FB */
   DEBUG((EFI_D_INFO, "\nChanging FB format\n"));
-  writel(0x000236FF, Base + PIPE_SSPP_SRC_FORMAT);
-  writel(0x03020001, Base + PIPE_SSPP_SRC_UNPACK_PATTERN);
+  MmioWrite32(PIPE_BASE + PIPE_SSPP_SRC_FORMAT, 0x000236FF);
+  MmioWrite32(PIPE_BASE + PIPE_SSPP_SRC_UNPACK_PATTERN, 0x03020001);
 
   DEBUG((EFI_D_INFO, "\nChanging FB stride\n"));
-  writel(1080*4, Base + PIPE_SSPP_SRC_YSTRIDE);
-  writel(BIT(3), MDP_CTL_0_BASE + CTL_FLUSH);
+  MmioWrite32(PIPE_BASE + PIPE_SSPP_SRC_YSTRIDE, 1080*4);
+  MmioWrite32(MDP_CTL_0_BASE + CTL_FLUSH, (1 << (3)));
 }
 
 STATIC
 VOID
 DisplayEnableRefresh(VOID)
 {
-  MmioWrite32(MDP_REG_PP_0_AUTOREFRESH_CONFIG, ((1 << (31)) | AUTOREFRESH_FRAMENUM))
-  dsb();
+  MmioWrite32(MDP_REG_PP_0_AUTOREFRESH_CONFIG, ((1 << (31)) | AUTOREFRESH_FRAMENUM));
+  ArmDataSynchronizationBarrier();
 };
 
 VOID PlatformInitialize()

@@ -4,6 +4,7 @@
 #include <Library/PcdLib.h>
 
 #define AUTOREFRESH_FRAMENUM 1
+#define PIPE_BASE  0xFD915000
 
 VOID PlatformInitialize();
 
