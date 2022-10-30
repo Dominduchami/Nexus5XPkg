@@ -2,6 +2,8 @@
 #define _PLATFORM_UTILS_H_
 
 #include <Library/PcdLib.h>
+#include <Library/PrintLib.h>
+#include <Library/BaseLib.h>
 
 #define AUTOREFRESH_FRAMENUM 1
 #define PIPE_BASE  0xFD915000
