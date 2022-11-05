@@ -95,26 +95,11 @@ static ARM_MEMORY_REGION_DESCRIPTOR_EX gDeviceMemoryDescriptorEx[] = {
     {"PStore",            0x0F200000, 0x00800000, AddMem, MEM_RES, WRITE_THROUGH, MaxMem, WRITE_THROUGH},
     {"HLOS 4",            0x0FA00000, 0x10600000, AddMem, SYS_MEM, SYS_MEM_CAP,  Conv,   WRITE_BACK},
 #else
-    {"HLOS 4",            0x0F400000, 0x10B00000, AddMem, SYS_MEM, SYS_MEM_CAP,  Conv,   WRITE_BACK},
-    {"Persistent RAM 1",  0x1FF00000, 0x00010000, AddMem, SYS_MEM, SYS_MEM_CAP,  Reserv, NS_DEVICE},
-    {"Persistent RAM 2",  0x1FF10000, 0x00010000, AddMem, SYS_MEM, SYS_MEM_CAP,  Reserv, NS_DEVICE},
-    {"Persistent RAM 3",  0x1FF20000, 0x00020000, AddMem, SYS_MEM, SYS_MEM_CAP,  Reserv, NS_DEVICE},
+    {"HLOS 4",            0x0F200000, 0x10E00000, AddMem, SYS_MEM, SYS_MEM_CAP,  Conv,   WRITE_BACK},
 #endif
 
-    /*  iomem:
-        00000000-04ffffff : System RAM
-        00080000-01537bd3 : Kernel code
-        01815000-01e5febf : Kernel data
-        07200000-073fffff : System RAM
-        0f400000-1fefffff : System RAM
-        1ff00000-1ff0ffff : persistent_ram
-        1ff10000-1ff1ffff : persistent_ram
-        1ff20000-1ff3ffff : persistent_ram
-        1ff40000-7fffffff : System RAM
-    */
-
     /* RAM partition regions */
-    {"RAM Partition",     0x1FF40000, 0x600C0000, AddMem, SYS_MEM, SYS_MEM_CAP, Conv,   WRITE_BACK_XN},
+    {"RAM Partition",     0x20000000, 0x60000000, AddMem, SYS_MEM, SYS_MEM_CAP, Conv,   WRITE_BACK_XN},
 
     /* Other memory regions */
     {"IMEM SMEM Base",    0xFE805000, 0x00001000, NoHob,  MMAP_IO, INITIALIZED,  Conv,   NS_DEVICE},
