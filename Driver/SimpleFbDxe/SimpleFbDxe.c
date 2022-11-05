@@ -133,6 +133,15 @@ DisplaySetMode(IN EFI_GRAPHICS_OUTPUT_PROTOCOL *This, IN UINT32 ModeNumber)
 }
 
 STATIC
+VOID
+DisplayRefresh(VOID)
+{
+  MmioWrite32(0xFD90201C, 1);//MDP_CTL_0_BASE + CTL_START
+  ArmDataSynchronizationBarrier(); 
+  MicroSecondDelay( 32000 );
+};
+
+STATIC
 EFI_STATUS
 EFIAPI
 DisplayBlt(
@@ -154,6 +163,8 @@ DisplayBlt(
   Status = FrameBufferBlt(
       mFrameBufferBltLibConfigure, BltBuffer, BltOperation, SourceX, SourceY,
       DestinationX, DestinationY, Width, Height, Delta);
+
+  DisplayRefresh();
 
   gBS->RestoreTPL(Tpl);
 
