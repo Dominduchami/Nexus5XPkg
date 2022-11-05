@@ -155,7 +155,7 @@ DisplayBlt(
       mFrameBufferBltLibConfigure, BltBuffer, BltOperation, SourceX, SourceY,
       DestinationX, DestinationY, Width, Height, Delta);
 
-  MicroSecondDelay( 3200 );
+  MicroSecondDelay( 32000 );
 
   gBS->RestoreTPL(Tpl);
 
