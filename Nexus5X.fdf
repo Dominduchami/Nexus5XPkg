@@ -142,7 +142,6 @@ READ_LOCK_STATUS   = TRUE
 	SECTION RAW = Nexus5XPkg/AcpiTables/8992/builtin/MADT.SingleCore.aml
 	SECTION RAW = Nexus5XPkg/AcpiTables/8992/builtin/MCFG.aml
 	SECTION RAW = Nexus5XPkg/AcpiTables/8992/builtin/PPTT.aml
-	SECTION RAW = Nexus5XPkg/AcpiTables/8992/builtin/SSDT.aml
 	SECTION UI = "AcpiTables"
   }
 
