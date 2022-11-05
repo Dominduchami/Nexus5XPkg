@@ -85,6 +85,14 @@ VOID CheckMdpConfig(VOID)
   MmioWrite32(MDP_CTL_0_BASE + CTL_FLUSH, (1 << (3)));
 }
 
+STATIC
+VOID
+DisplayEnableRefresh(VOID)
+{
+  MmioWrite32(MDP_REG_PP_0_AUTOREFRESH_CONFIG, ((1 << (31)) | AUTOREFRESH_FRAMENUM));
+  ArmDataSynchronizationBarrier();
+};
+
 EFI_STATUS
 EFIAPI
 NtBlStatusPrintHook (
@@ -122,6 +130,10 @@ VOID PlatformInitialize()
 
   //Change the config for Windows
   CheckMdpConfig();
+
+  /* Display refresh gets disabled by the stock bootloader.
+  Enable it so that we'll get a proper framebuffer */
+  DisplayEnableRefresh();
 
   NtBlStatusPrintHook("TESTING!\n");
 }
