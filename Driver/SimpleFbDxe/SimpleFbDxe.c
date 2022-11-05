@@ -155,6 +155,8 @@ DisplayBlt(
       mFrameBufferBltLibConfigure, BltBuffer, BltOperation, SourceX, SourceY,
       DestinationX, DestinationY, Width, Height, Delta);
 
+  MicroSecondDelay( 3200 );
+
   gBS->RestoreTPL(Tpl);
 
   return RETURN_ERROR(Status) ? EFI_INVALID_PARAMETER : EFI_SUCCESS;
