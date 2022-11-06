@@ -2,13 +2,7 @@
 
 ## Support Status
  - EDK2 boots fully!
- - Display works (although the current implementation could probably be improved)
-
-## TODO
- - Adapt ACPI for Nexus 5X (tables are currently mostly unmodified)
- (note : linux dts for bullhead states that it's firmware has no PSCI support)
- - Make USB work in EDK2
- - Fix buttons
+ - Display via framebuffer works
 
 ## Run
 
@@ -19,7 +13,7 @@ to copy the payload to the right space.
 
 ## Windows Notes
 
-Windows Boot Manager boots fine, however booting Windows is unsupported as of now. ACPI tables will have to be adapted to make it possible.
+Windows boots fine now (although with only emmc and display via framebuffer working for now)
 
 ## Linux notes
 
