@@ -17,7 +17,7 @@ Windows boots fine now (although with only emmc and display via framebuffer work
 
 ## Linux notes
 
-Mainline linux boots with framebuffer working, but kernel panics. Cause is not identified yet.
+Mainline linux boots with framebuffer working via efifb.
 
 ## Framebuffer notes
 
