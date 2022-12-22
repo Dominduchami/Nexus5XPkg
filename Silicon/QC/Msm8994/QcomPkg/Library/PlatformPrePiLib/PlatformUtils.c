@@ -55,6 +55,18 @@ BOOLEAN IsLinuxBootRequested(VOID)
   return FALSE;
 }
 
+VOID CheckMdpConfig(VOID)
+{
+  /* Windows requires a BGRA FB */
+  DEBUG((EFI_D_INFO, "\nChanging FB format\n"));
+  MmioWrite32(PIPE_BASE + PIPE_SSPP_SRC_FORMAT, 0x000236FF);
+  MmioWrite32(PIPE_BASE + PIPE_SSPP_SRC_UNPACK_PATTERN, 0x03020001);
+
+  DEBUG((EFI_D_INFO, "\nChanging FB stride\n"));
+  MmioWrite32(PIPE_BASE + PIPE_SSPP_SRC_YSTRIDE, 1080*4);
+  MmioWrite32(MDP_CTL_0_BASE + CTL_FLUSH, (1 << (3)));
+}
+
 STATIC
 VOID
 DisplayEnableRefresh(VOID)
@@ -66,6 +78,8 @@ DisplayEnableRefresh(VOID)
 VOID PlatformInitialize(VOID)
 {
   QGicPeim();
+
+  CheckMdpConfig();
 
   DisplayEnableRefresh();
 }
