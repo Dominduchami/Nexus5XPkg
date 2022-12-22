@@ -23,7 +23,7 @@
   MdePkg/MdePkg.dec
   MdeModulePkg/MdeModulePkg.dec
   EmbeddedPkg/EmbeddedPkg.dec
-  LumiaFamilyPkg/LumiaFamilyPkg.dec
+  NexusFamilyPkg/NexusFamilyPkg.dec
   QcomPkg/QcomPkg.dec
 
 [LibraryClasses]

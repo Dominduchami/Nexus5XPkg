@@ -19,7 +19,7 @@
   PcBdsPkg/PcBdsPkg.dec
   MsCorePkg/MsCorePkg.dec
   MdeModulePkg/MdeModulePkg.dec
-  LumiaFamilyPkg/LumiaFamilyPkg.dec
+  NexusFamilyPkg/NexusFamilyPkg.dec
   QcomPkg/QcomPkg.dec
 
 [LibraryClasses]

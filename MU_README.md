@@ -1,8 +1,8 @@
-# [Project Mu](https://microsoft.github.io/mu/) UEFI Implementation for Lumia 950 Platforms
+# [Project Mu](https://microsoft.github.io/mu/) UEFI Implementation for Nexus 5X Platforms
 
 ## Description
 
-This repository hosts the code and underlying work behind the Lumia 950 Windows UEFI firmware "bootstrapper" for Lumia 950 and Lumia 950 XL devices.
+This repository hosts the code and underlying work behind the Nexus 5X Windows UEFI firmware "bootstrapper" for Nexus 5X and Nexus 5X devices.
 
 ## Build
 
@@ -32,8 +32,8 @@ This repository hosts the code and underlying work behind the Lumia 950 Windows 
 
 # Build UEFI
 pip install --upgrade -r pip-requirements.txt
-./build_uefi_talkman.sh
-./build_uefi_cityman.sh
+./build_uefi_bullhead.sh
+./build_uefi_bullhead.sh
 
 # Generate ELF image
 chmod +x ./Tools/edk2-build.ps1 && ./Tools/edk2-build.ps1

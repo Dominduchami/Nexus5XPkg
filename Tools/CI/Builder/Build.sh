@@ -19,7 +19,7 @@ echo "Start build..."
 . rundbbuild.sh --950xl --development
 
 # Check if we have both FD ready
-if [ ! -f Build/Lumia950XL-AARCH64/DEBUG_GCC5/FV/MSM8994_EFI.fd ]; then
+if [ ! -f Build/Nexus5X-AARCH64/DEBUG_GCC5/FV/MSM8994_EFI.fd ]; then
     echo "Unable to find build artifacts."
     exit 1
 fi

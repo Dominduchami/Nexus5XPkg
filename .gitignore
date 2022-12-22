@@ -1,6 +1,6 @@
 # Dynamic Generated
-Platforms/Lumia950Pkg/Include/Resources/ReleaseInfo.h
-Platforms/Lumia950XLPkg/Include/Resources/ReleaseInfo.h
+Platforms/Nexus5XPkg/Include/Resources/ReleaseInfo.h
+Platforms/Nexus5XPkg/Include/Resources/ReleaseInfo.h
 
 # Local
 .DS_Store
@@ -18,4 +18,4 @@ tags/
 BuildConfig.conf
 
 /Conf/
-/Lumia/
+/Nexus/

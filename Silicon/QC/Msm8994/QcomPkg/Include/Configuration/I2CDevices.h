@@ -1,5 +1,5 @@
-#ifndef _LUMIA_950XL_I2C_DEVICES_H_
-#define _LUMIA_950XL_I2C_DEVICES_H_
+#ifndef _Nexus_950XL_I2C_DEVICES_H_
+#define _Nexus_950XL_I2C_DEVICES_H_
 
 typedef struct _I2C_DEVICE {
   INTN   DeviceId;
