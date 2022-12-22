@@ -10,6 +10,9 @@
 #include <Library/ArmHvcLib.h>
 #include <Library/ArmSmcLib.h>
 
+#include <Chipset/mdp5.h>
+#include <Platform/iomap.h>
+
 #include "HvcPatch.h"
 
 STATIC VOID PsciFixupInit(VOID)
@@ -52,8 +55,17 @@ BOOLEAN IsLinuxBootRequested(VOID)
   return FALSE;
 }
 
+STATIC
+VOID
+DisplayEnableRefresh(VOID)
+{
+  MmioWrite32(MDP_REG_PP_0_AUTOREFRESH_CONFIG, ((1 << (31)) | AUTOREFRESH_FRAMENUM));
+  ArmDataSynchronizationBarrier();
+};
+
 VOID PlatformInitialize(VOID)
 {
-  PsciFixupInit();
   QGicPeim();
+
+  DisplayEnableRefresh();
 }
