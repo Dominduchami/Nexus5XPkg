@@ -1,14 +1,14 @@
-# EDK2 UEFI Implementation for Lumia 950 and Lumia 950 XL
+# EDK2 UEFI Implementation for Nexus 5X and Nexus 5X
 
 ## For users
 
 You can download the latest UEFI build by clicking the Azure Pipelines icon below. Click Artifacts button in Azure Pipelines, then download UEFI.elf in ELF directory.
 
-[![Build Status (Visual Studio Team Services)](https://dev.azure.com/LumiaWoA/Lumia950XLPkg/_apis/build/status/Lumia950XLPkg%20CI%20build?branchName=master)](https://dev.azure.com/LumiaWoA/Lumia950XLPkg/_build/latest?definitionId=1&branchName=master)
+[![Build Status (Visual Studio Team Services)](https://dev.azure.com/NexusWoA/Nexus5XPkg/_apis/build/status/Nexus5XPkg%20CI%20build?branchName=master)](https://dev.azure.com/NexusWoA/Nexus5XPkg/_build/latest?definitionId=1&branchName=master)
 
 ## What's this?
 
-This package demonstrates an AArch64 UEFI implementation for hacked Lumia 950 and Lumia 950 XL. Currently it is able to boot Windows 10 ARM64 as well as various Linux distros. See notes below for more details. Please be aware that MSM8992 devices have limited support.
+This package demonstrates an AArch64 UEFI implementation for hacked Nexus 5X and Nexus 5X. Currently it is able to boot Windows 10 ARM64 as well as various Linux distros. See notes below for more details. Please be aware that MSM8992 devices have limited support.
 
 Hapanero support has been dropped as of 2020/11. Hapanero users are expected to completely understand all hardware, firmware and software implementation details, thus there's no point to keep an untested target floating in this project. For existing Hapanero owners, please build and fix this firmware by yourself (use 950 XL configuration as the blueprint), but no PR regarding Hapanero will be accepted.
 
@@ -24,7 +24,7 @@ Applicable to all supported targets unless noted.
 ## What can you do?
 
 I am too busy to write an average-user tutorial. So, if you are interested in, you are welcome to
-contribute to an easy instruction for all Lumia 950 (XL) users.
+contribute to an easy instruction for all Nexus 5X (XL) users.
 
 Or you can buy me a coffee: [PayPal](https://www.paypal.com/paypalme/imbushuo).
 
@@ -57,7 +57,7 @@ You only need to run it once.
 Per UEFI specification, ARM32 UEFI cannot boot ARM64 binaries directly. A recent engineering
 change removed the dependency of Little Kernel. LK can still boot it, but the path is untested.
 
-To run this UEFI build on Lumia 950 XL, the following procedure is required:
+To run this UEFI build on Nexus 5X, the following procedure is required:
 
 - Check out [Boot Shim](https://github.com/imbushuo/boot-shim). This Boot Manager Application 
 implements a simple ELF loader for the kickstarter (LK) with Secure Monitor Call for EL1 transition.
@@ -83,7 +83,7 @@ To get started, starts with the device tree of Qualcomm MSM8994 MTP. The reposit
 DT content from Android Linux Kernel is sufficient for DT development. To boot with device tree, add it in your
 GRUB configuration:
 	
-	devicetree /lumia-950-xl.dtb
+	devicetree /Nexus-950-xl.dtb
 	linux /vmlinuz ..... acpi=no
 
 PSCI partially works in EL1. If you want to use PSCI for multi-processor startup, add the following code to your DT:

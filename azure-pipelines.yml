@@ -1,4 +1,4 @@
-# Lumia950XLPkg CI build on VSTS
+# Nexus5XPkg CI build on VSTS
 
 trigger:
   branches:
@@ -34,24 +34,15 @@ steps:
 - script: chmod +x ./build_releaseinfo.ps1 && ./build_releaseinfo.ps1
   displayName: 'Stamp build'
 
-- script: chmod +x ./build_uefi_talkman.sh && ./build_uefi_talkman.sh
-  displayName: 'UEFI build (Lumia 950)'
-
-- script: chmod +x ./build_uefi_cityman.sh && ./build_uefi_cityman.sh
-  displayName: 'UEFI build (Lumia 950 XL)'
+- script: chmod +x ./build_uefi_bullhead.sh && ./build_uefi_bullhead.sh
+  displayName: 'UEFI build (Nexus 5X)'
 
 - script: chmod +x ./Tools/edk2-build.ps1 && ./Tools/edk2-build.ps1
   displayName: 'UEFI boot image build'
 
 # Publish UEFI (2 targets)
 - task: PublishBuildArtifacts@1
-  displayName: 'Publish MSM8992 UEFI build (Lumia 950)'
+  displayName: 'Publish MSM8992 UEFI build (Nexus 5X)'
   inputs:
-    pathtoPublish: ./Build/Lumia950-AARCH64/DEBUG_CLANG38/FV/
-    artifactName: MSM8992 UEFI (Lumia 950)
-
-- task: PublishBuildArtifacts@1
-  displayName: 'Publish MSM8994 UEFI build (Lumia 950 XL)'
-  inputs:
-    pathtoPublish: ./Build/Lumia950XL-AARCH64/DEBUG_CLANG38/FV/
-    artifactName: MSM8994 UEFI (Lumia 950 XL)
+    pathtoPublish: ./Build/Nexus5X-AARCH64/DEBUG_CLANG38/FV/
+    artifactName: MSM8992 UEFI (Nexus 5X)

@@ -1,5 +1,5 @@
 {
-  "platform": "microsoft-mobile,lumia-950",
+  "platform": "microsoft-mobile,Nexus-950",
   "soc": "qcom,msm8992",
   "uc120": {
     "spi_mosi": 53,

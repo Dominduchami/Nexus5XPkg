@@ -5,6 +5,6 @@
 #define REFIND_FALLBACK_INSTALLATION_PATH L"\\efi\\refind\\refind.efi"
 #define REFIND_TITLE L"rEFInd"
 
-#define LUMIA_BOOTAPP_TITLE L"Lumia BootApp"
+#define Nexus_BOOTAPP_TITLE L"Nexus BootApp"
 
 #endif

@@ -5,7 +5,7 @@ RECONFIG=FALSE
 DEVBUILD=FALSE
 CIBUILD=FALSE
 DB820C=FALSE
-LUMIA950XL=FALSE
+Nexus5X=FALSE
 
 function HelpMsg()
 {
@@ -21,7 +21,7 @@ function HelpMsg()
   echo
   echo "  --820c, -820c         Run build for Dragonboard 820c."
   echo
-  echo "  --950xl, -950xl       Run build for Lumia 950 XL."
+  echo "  --950xl, -950xl       Run build for Nexus 5X."
   echo
   echo "  --production, -ci     Run CI build (clean)."
   echo
@@ -88,9 +88,9 @@ function SetupEnv()
 
 function FixPermission()
 {
-  if [ -d "Lumia950XLPkg" ]; then
-   chmod +x Lumia950XLPkg/Tools/*.ps1
-   chmod +x Lumia950XLPkg/Tools/PsModules/*.psm1
+  if [ -d "Nexus5XPkg" ]; then
+   chmod +x Nexus5XPkg/Tools/*.ps1
+   chmod +x Nexus5XPkg/Tools/PsModules/*.psm1
   fi
 }
 
@@ -105,8 +105,8 @@ function DevelopmentBuild()
 {
   if [ "$DB820C" = TRUE ]; then
     ./Dragonboard820cPkg/Tools/edk2-build.ps1
-  elif [ "$LUMIA950XL" = TRUE ]; then
-    ./Lumia950XLPkg/Tools/edk2-build.ps1
+  elif [ "$Nexus5X" = TRUE ]; then
+    ./Nexus5XPkg/Tools/edk2-build.ps1
   else
     ./DragonboardPkg/Tools/edk2-build.ps1
   fi
@@ -122,8 +122,8 @@ function CIBuild()
 {
   if [ "$DB820C" = TRUE ]; then
     ./Dragonboard820cPkg/Tools/edk2-build.ps1 -Clean
-  elif [ "$LUMIA950XL" = TRUE ]; then
-    ./Lumia950XLPkg/Tools/edk2-build.ps1 -Clean
+  elif [ "$Nexus5X" = TRUE ]; then
+    ./Nexus5XPkg/Tools/edk2-build.ps1 -Clean
   else
     ./DragonboardPkg/Tools/edk2-build.ps1 -Clean
   fi
@@ -169,8 +169,8 @@ do
     ;;
     --950xl|-950xl)
       # 950XL build
-      echo "[Builder] Run Lumia 950 / Lumia 950 XL Build."
-      LUMIA950XL=TRUE
+      echo "[Builder] Run Nexus 5X / Nexus 5X Build."
+      Nexus5X=TRUE
       shift
     ;;
     -?|-h|--help|*)

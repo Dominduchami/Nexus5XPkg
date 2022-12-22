@@ -45,14 +45,14 @@
   gEmbeddedTokenSpaceGuid.PcdPrePiCpuIoSize|16
 
 !if $(SILICON_PLATFORM) == 8994
-  gLumiaFamilyPkgTokenSpaceGuid.PcdSmbiosProcessorModel|"Snapdragon (TM) 810 @ 1.96 GHz"
-  gLumiaFamilyPkgTokenSpaceGuid.PcdSmbiosProcessorRetailModel|"MSM8994"
+  gNexusFamilyPkgTokenSpaceGuid.PcdSmbiosProcessorModel|"Snapdragon (TM) 810 @ 1.96 GHz"
+  gNexusFamilyPkgTokenSpaceGuid.PcdSmbiosProcessorRetailModel|"MSM8994"
   gArmPlatformTokenSpaceGuid.PcdCoreCount|8
   gArmPlatformTokenSpaceGuid.PcdClusterCount|2
   gQcomPkgTokenSpaceGuid.PsciCpuSuspendAddress|0x6c03aa8
 !else
-  gLumiaFamilyPkgTokenSpaceGuid.PcdSmbiosProcessorModel|"Snapdragon (TM) 808 @ 1.96 GHz"
-  gLumiaFamilyPkgTokenSpaceGuid.PcdSmbiosProcessorRetailModel|"MSM8992"
+  gNexusFamilyPkgTokenSpaceGuid.PcdSmbiosProcessorModel|"Snapdragon (TM) 808 @ 1.96 GHz"
+  gNexusFamilyPkgTokenSpaceGuid.PcdSmbiosProcessorRetailModel|"MSM8992"
   gArmPlatformTokenSpaceGuid.PcdCoreCount|6
   gArmPlatformTokenSpaceGuid.PcdClusterCount|2
   gQcomPkgTokenSpaceGuid.PsciCpuSuspendAddress|0x6c03920
@@ -61,7 +61,7 @@
   gArmTokenSpaceGuid.PcdSystemMemoryBase|0x00000000         # 0GB Base
 
   # UART
-  gLumiaFamilyPkgTokenSpaceGuid.PcdUartSerialBase|0x00A90000
+  gNexusFamilyPkgTokenSpaceGuid.PcdUartSerialBase|0x00A90000
 
   gQcomPkgTokenSpaceGuid.PcdUefiMemPoolSize|0x7800000
   gQcomPkgTokenSpaceGuid.PcdPreAllocatedMemorySize|0x20000000  # Start here
@@ -182,7 +182,7 @@
   PlatformMemoryMapLib|QcomPkg/Library/PlatformMemoryMapLib/PlatformMemoryMapLib.inf
   PlatformPeiLib|QcomPkg/PlatformPei/PlatformPeiLib.inf
   PlatformPrePiLib|QcomPkg/Library/PlatformPrePiLib/PlatformPrePiLib.inf
-  AslUpdateLib|LumiaFamilyPkg/Library/DxeAslUpdateLib/DxeAslUpdateLib.inf
+  AslUpdateLib|NexusFamilyPkg/Library/DxeAslUpdateLib/DxeAslUpdateLib.inf
 
   AcpiPlatformUpdateLib|QcomPkg/Library/AcpiPlatformUpdateLib/AcpiPlatformUpdateLib.inf
   PlatformThemeLib|QcomPkg/Library/PlatformThemeLib/PlatformThemeLib.inf
@@ -304,15 +304,15 @@
 
 
   # Graphics Driver
-  LumiaFamilyPkg/Driver/SimpleFbDxe/SimpleFbDxe.inf
+  NexusFamilyPkg/Driver/SimpleFbDxe/SimpleFbDxe.inf
 
   # Lattice UC120 Configuration
   QcomPkg/Driver/LiCE40SpiConfigDxe/LiCE40SpiConfigDxe.inf
   QcomPkg/GPLDriver/QupSpiDxe/QupSpiDxe.inf
 
-  LumiaFamilyPkg/Driver/SmBiosTableDxe/SmBiosTableDxe.inf
+  NexusFamilyPkg/Driver/SmBiosTableDxe/SmBiosTableDxe.inf
 
   MdeModulePkg/Universal/Console/GraphicsConsoleDxe/GraphicsConsoleDxe.inf
   MdeModulePkg/Universal/Disk/DiskIoDxe/DiskIoDxe.inf
 
-  LumiaFamilyPkg/Driver/GpioButtons/GpioButtons.inf
+  NexusFamilyPkg/Driver/GpioButtons/GpioButtons.inf

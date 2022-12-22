@@ -15,7 +15,7 @@
 
 [Packages]
   MdePkg/MdePkg.dec
-  Lumia950XLPkg/Lumia950XLPkg.dec
+  Nexus5XPkg/Nexus5XPkg.dec
   MicroLibC/MicroLibC.dec
 
 [LibraryClasses]
