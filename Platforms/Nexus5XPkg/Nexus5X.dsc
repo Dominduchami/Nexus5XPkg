@@ -35,7 +35,7 @@
 
 [PcdsFixedAtBuild.common]
   # Platform-specific
-  gArmTokenSpaceGuid.PcdSystemMemorySize|0xC0000000        # 3GB Size
+  gArmTokenSpaceGuid.PcdSystemMemorySize|0x80000000        # 2GB Size
 
   # SMBIOS
   gNexusFamilyPkgTokenSpaceGuid.PcdSmbiosSystemModel|"Nexus 5X"
