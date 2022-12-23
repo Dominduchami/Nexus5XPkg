@@ -295,7 +295,6 @@
   QcomPkg/Driver/SsbiDxe/SsbiDxe.inf
   QcomPkg/Driver/BoardDxe/BoardDxe.inf
   QcomPkg/Driver/RuntimeMemoryConfigDxe/RuntimeMemoryConfigDxe.inf
-  QcomPkg/Driver/PCIExpressConfiguratorDxe/PCIExpressConfiguratorDxe.inf
   QcomPkg/Driver/TimerDxe/TimerDxe.inf
 
   # Device Drivers
@@ -306,8 +305,6 @@
   # Graphics Driver
   NexusFamilyPkg/Driver/SimpleFbDxe/SimpleFbDxe.inf
 
-  # Lattice UC120 Configuration
-  QcomPkg/Driver/LiCE40SpiConfigDxe/LiCE40SpiConfigDxe.inf
   QcomPkg/GPLDriver/QupSpiDxe/QupSpiDxe.inf
 
   NexusFamilyPkg/Driver/SmBiosTableDxe/SmBiosTableDxe.inf
