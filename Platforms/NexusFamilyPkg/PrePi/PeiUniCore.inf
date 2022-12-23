@@ -38,6 +38,7 @@
 [LibraryClasses]
   ArmLib
   ArmMmuLib
+  ArmPlatformLib
   BaseLib
   DebugLib
   IoLib
@@ -51,6 +52,7 @@
   MemoryAllocationLib
   PrePiMemoryAllocationLib
   PerformanceLib
+  PlatformPrePiLib
   HobLib
   CompilerIntrinsicsLib
   # Platform-specific libraries
