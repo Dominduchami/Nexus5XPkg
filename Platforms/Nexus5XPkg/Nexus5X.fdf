@@ -117,7 +117,6 @@ READ_LOCK_STATUS   = TRUE
   INF QcomPkg/Driver/SsbiDxe/SsbiDxe.inf
   INF QcomPkg/Driver/BoardDxe/BoardDxe.inf
   INF QcomPkg/Driver/RuntimeMemoryConfigDxe/RuntimeMemoryConfigDxe.inf
-  INF QcomPkg/Driver/PCIExpressConfiguratorDxe/PCIExpressConfiguratorDxe.inf
 
   # Device Drivers
   INF QcomPkg/Driver/SynapticsTouchDxe/SynapticsTouchDevice.inf
@@ -150,10 +149,6 @@ READ_LOCK_STATUS   = TRUE
   # Graphics
   INF NexusFamilyPkg/Driver/SimpleFbDxe/SimpleFbDxe.inf
 
-  # Lattice UC120 Configuration
-!if $(UC120_BITSTREAM_UPLOADER) == 1
-  INF QcomPkg/Driver/LiCE40SpiConfigDxe/LiCE40SpiConfigDxe.inf
-!endif
   INF QcomPkg/GPLDriver/QupSpiDxe/QupSpiDxe.inf
 
   # BDS
