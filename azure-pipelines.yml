@@ -25,6 +25,14 @@ steps:
 - script: sudo apt install -y uuid-dev clang llvm gcc-aarch64-linux-gnu
   displayName: 'Install VSTS dependencies'
 
+- script: |
+    git submodule update --init --recursive
+  displayName: Fetch Submodules
+
+# Initialize submodules
+- script: git submodule init
+  displayName: 'Initialize submodules'
+
 - script: sudo apt install -y mkbootimg
   displayName: 'Install mkbootimg'
 

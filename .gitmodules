@@ -18,3 +18,6 @@
 	path = Silicon/ARM/TIANO
 	url = https://github.com/microsoft/mu_silicon_arm_tiano.git
 	branch = release/202208
+[submodule "Platforms/NexusACPI"]
+	path = Platforms/NexusACPI
+	url = https://github.com/Dominduchami/Nexus5X-ACPI.git
