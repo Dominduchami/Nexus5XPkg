@@ -44,9 +44,6 @@ VOID Main(IN VOID *StackBase, IN UINTN StackSize, IN UINT64 StartTimeStamp)
   UINTN UefiMemoryBase = 0;
   UINTN UefiMemorySize = 0;
 
-  // PSCI fixup init
-  PsciFixupInit();
-
   // Architecture-specific initialization
   // Enable Floating Point
   ArmEnableVFP();
