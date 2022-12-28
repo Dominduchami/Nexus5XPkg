@@ -3,7 +3,7 @@
 trigger:
   branches:
     include:
-    - main
+    - master
   paths:
     exclude:
     - README.md
@@ -25,6 +25,9 @@ steps:
 - script: sudo apt install -y uuid-dev clang llvm gcc-aarch64-linux-gnu
   displayName: 'Install VSTS dependencies'
 
+- script: sudo apt install -y mkbootimg
+  displayName: 'Install mkbootimg'
+
 - script: export CLANG38_BIN=/usr/lib/llvm-38/bin/ && export CLANG38_AARCH64_PREFIX=aarch64-linux-gnu-
   displayName: 'Setup CLANG environment'
 
@@ -37,12 +40,15 @@ steps:
 - script: chmod +x ./build_uefi_bullhead.sh && ./build_uefi_bullhead.sh
   displayName: 'UEFI build (Nexus 5X)'
 
-- script: chmod +x ./Tools/edk2-build.ps1 && ./Tools/edk2-build.ps1
+- script: chmod +x ./build_boot_shim.sh && ./build_boot_shim.sh
+  displayName: 'BootShim build'
+
+- script: chmod +x ./build_boot_images.sh && ./build_boot_images.sh
   displayName: 'UEFI boot image build'
 
 # Publish UEFI (2 targets)
 - task: PublishBuildArtifacts@1
   displayName: 'Publish MSM8992 UEFI build (Nexus 5X)'
   inputs:
-    pathtoPublish: ./Build/Nexus5X-AARCH64/DEBUG_CLANG38/FV/
+    pathtoPublish: ./ImageResources/uefi.img
     artifactName: MSM8992 UEFI (Nexus 5X)
