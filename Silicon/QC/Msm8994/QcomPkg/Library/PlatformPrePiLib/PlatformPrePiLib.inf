@@ -8,7 +8,6 @@
 
 [Sources]
   PlatformUtils.c
-  EarlyQGic/EarlyQGic.c
 
 [Packages]
   ArmPkg/ArmPkg.dec
@@ -25,5 +24,3 @@
   BaseMemoryLib
   IoLib
   # MpPark
-  ArmHvcLib
-  ArmSmcLib

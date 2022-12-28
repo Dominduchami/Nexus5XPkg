@@ -30,8 +30,6 @@
 #ifndef _PLATFORM_MSM_SHARED_MDP_5_H_
 #define _PLATFORM_MSM_SHARED_MDP_5_H_
 
-#include <Chipset/msm_panel.h>
-
 #define PIPE_SSPP_SRC0_ADDR 0x14
 #define PIPE_SSPP_SRC_YSTRIDE 0x24
 #define PIPE_SSPP_SRC_IMG_SIZE 0x04
@@ -193,32 +191,4 @@
 #define MDSS_MDP_REG_PP_FBC_BUDGET_CTL 0x038
 #define MDSS_MDP_REG_PP_FBC_LOSSY_MODE 0x03C
 
-void mdp_set_revision(int rev);
-int  mdp_get_revision(void);
-int mdp_dsi_video_config(struct msm_panel_info *pinfo, struct fbcon_config *fb);
-int mdp_dsi_cmd_config(struct msm_panel_info *pinfo, struct fbcon_config *fb);
-int mipi_dsi_cmd_config(
-    struct fbcon_config mipi_fb_cfg, unsigned short num_of_lanes);
-int     mdp_dsi_cmd_off(void);
-int     mdp_dsi_video_on(struct msm_panel_info *pinfo);
-int     mdp_dsi_video_off(struct msm_panel_info *pinfo);
-int     mdp_dma_on(struct msm_panel_info *pinfo);
-int     mdp_edp_config(struct msm_panel_info *pinfo, struct fbcon_config *fb);
-int     mdp_edp_on(struct msm_panel_info *pinfo);
-int     mdp_edp_off(void);
-void    mdp_disable(void);
-void    mdp_gdsc_ctrl(uint8_t enable);
-int     mdp_get_revision(void);
-uint8_t target_is_edp(void);
-void    target_edp_panel_init(struct msm_panel_info *pinfo);
-int     target_edp_panel_clock(uint8_t enable, struct msm_panel_info *pinfo);
-int     target_edp_panel_enable(void);
-int     target_edp_panel_disable(void);
-int     target_edp_bl_ctrl(int enable);
-int     mdss_hdmi_init(void);
-int     mdss_hdmi_on(struct msm_panel_info *pinfo);
-int     mdss_hdmi_config(struct msm_panel_info *pinfo, struct fbcon_config *fb);
-void    mdss_hdmi_get_vic(char *buf);
-int     msm_display_off(void);
-void    display_shutdown(void);
 #endif
