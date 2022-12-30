@@ -283,9 +283,6 @@ void FbConFlush(void)
       (total_x * total_y * bytes_per_bpp));
 }
 
-#define MDP_CTL_0_BASE 0xfd902000
-#define CTL_START 0x1C
-
 UINTN
 EFIAPI
 SerialPortWrite(IN UINT8 *Buffer, IN UINTN NumberOfBytes)
@@ -302,11 +299,6 @@ SerialPortWrite(IN UINT8 *Buffer, IN UINTN NumberOfBytes)
 
   if (InterruptState)
     ArmEnableInterrupts();
-#if SILICON_PLATFORM == 8994
-  /* Ugly refresh */
-  MmioWrite32(MDP_CTL_0_BASE + CTL_START, 1);
-  ArmDataSynchronizationBarrier();
-#endif
 
   return NumberOfBytes;
 }
