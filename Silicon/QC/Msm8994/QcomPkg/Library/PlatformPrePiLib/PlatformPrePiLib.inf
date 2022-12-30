@@ -24,3 +24,6 @@
   BaseMemoryLib
   IoLib
   # MpPark
+
+[FixedPcd]
+  gEfiMdeModulePkgTokenSpaceGuid.PcdVideoHorizontalResolution
