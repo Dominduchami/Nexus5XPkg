@@ -45,7 +45,7 @@
   gNexusFamilyPkgTokenSpaceGuid.PcdSmbiosBoardModel|"Nexus 6P"
 
   # Simple FrameBuffer
-  gNexusFamilyPkgTokenSpaceGuid.PcdMipiFrameBufferAddress|0x03401000
+  gNexusFamilyPkgTokenSpaceGuid.PcdMipiFrameBufferAddress|0x03400000
   gNexusFamilyPkgTokenSpaceGuid.PcdMipiFrameBufferWidth|1440
   gNexusFamilyPkgTokenSpaceGuid.PcdMipiFrameBufferHeight|2560
   gNexusFamilyPkgTokenSpaceGuid.PcdMipiFrameBufferPixelBpp|32
