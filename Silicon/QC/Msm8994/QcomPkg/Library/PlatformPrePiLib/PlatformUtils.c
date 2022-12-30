@@ -18,34 +18,21 @@ BOOLEAN IsLinuxBootRequested(VOID)
 
 VOID CheckMdpConfig(VOID)
 {
+  uint32_t width = FixedPcdGet32(PcdMipiFrameBufferWidth);
+
   /* Windows requires a BGRA FB */
   MmioWrite32(PIPE_BASE + PIPE_SSPP_SRC_FORMAT, 0x000236FF);
   MmioWrite32(PIPE_BASE + PIPE_SSPP_SRC_UNPACK_PATTERN, 0x03020001);
 
-  MmioWrite32(PIPE_BASE + PIPE_SSPP_SRC_YSTRIDE, 1080*4);
+  MmioWrite32(PIPE_BASE + PIPE_SSPP_SRC_YSTRIDE, width*4);
   MmioWrite32(MDP_CTL_0_BASE + CTL_FLUSH, (1 << (3)));
 }
-/*
-STATIC
-VOID
-DisplayEnableRefresh(VOID)
-{
-  MmioWrite32(MDP_REG_PP_0_AUTOREFRESH_CONFIG, ((1 << (31)) | AUTOREFRESH_FRAMENUM));
-  ArmDataSynchronizationBarrier();
-};*/
-
-#define MDP_PP_SYNC_CONFIG_VSYNC	0x004
-#define MDP_PP_AUTOREFRESH_CONFIG	0x030
 
 STATIC
 VOID
 DisplayEnableRefresh(VOID)
 {
-#if SILICON_PLATFORM == 8992
-  uint32_t height = 1080;
-#else
-  uint32_t height = 1440;
-#endif
+  uint32_t height = FixedPcdGet32(PcdMipiFrameBufferHeight);
   uint32_t vsync_count = 19200000 / (height * 60); /* 60 fps */
 	uint32_t mdss_mdp_rev = readl(MDP_HW_REV);
 	uint32_t pp0_base;
@@ -57,9 +44,9 @@ DisplayEnableRefresh(VOID)
 	else
 		pp0_base = REG_MDP(0x21B00);
 
-	writel(vsync_count | BIT(19), pp0_base + MDP_PP_SYNC_CONFIG_VSYNC);
-	writel(BIT(31) | 1, pp0_base + MDP_PP_AUTOREFRESH_CONFIG);
-	writel(1, MDP_CTL_0_BASE + CTL_START);
+	MmioWrite32(pp0_base + MDP_PP_SYNC_CONFIG_VSYNC, vsync_count | BIT(19));
+	MmioWrite32(pp0_base + MDP_PP_AUTOREFRESH_CONFIG, BIT(31) | 1);
+	MmioWrite32(MDP_CTL_0_BASE + CTL_START, 1);
 }
 
 VOID PlatformInitialize(VOID)
