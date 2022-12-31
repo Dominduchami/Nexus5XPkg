@@ -21,11 +21,13 @@ VOID CheckMdpConfig(VOID)
   //uint32_t width = FixedPcdGet32(PcdMipiFrameBufferWidth);
   uint32_t stride = MmioRead32(PIPE_BASE + PIPE_SSPP_SRC_YSTRIDE);
 
+  DEBUG((EFI_D_INFO | EFI_D_LOAD,"Framebuffer stride = 0x%llx\n", stride));
+
   /* Windows requires a BGRA FB */
   MmioWrite32(PIPE_BASE + PIPE_SSPP_SRC_FORMAT, 0x000236FF);
   MmioWrite32(PIPE_BASE + PIPE_SSPP_SRC_UNPACK_PATTERN, 0x03020001);
 
-  MmioWrite32(PIPE_BASE + PIPE_SSPP_SRC_YSTRIDE, stride*9);
+  //MmioWrite32(PIPE_BASE + PIPE_SSPP_SRC_YSTRIDE, stride*9);
   MmioWrite32(MDP_CTL_0_BASE + CTL_FLUSH, (1 << (3)));
 }
 
