@@ -54,7 +54,7 @@ DisplayEnableRefresh(VOID)
 
 VOID PlatformInitialize(VOID)
 {
-  CheckMdpConfig();
+  //CheckMdpConfig();
 
   DisplayEnableRefresh();
 }
