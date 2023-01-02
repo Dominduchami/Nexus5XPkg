@@ -16,12 +16,24 @@ BOOLEAN IsLinuxBootRequested(VOID)
   return FALSE;
 }
 
+VOID CheckMdpConfig(VOID)
+{
+  uint32_t width = FixedPcdGet32(PcdMipiFrameBufferWidth);
+  uint32_t stride = MmioRead32(PIPE_BASE + PIPE_SSPP_SRC_YSTRIDE);
+
+  /* Windows requires a BGRA FB */
+  MmioWrite32(PIPE_BASE + PIPE_SSPP_SRC_FORMAT, 0x000236FF);
+  MmioWrite32(PIPE_BASE + PIPE_SSPP_SRC_UNPACK_PATTERN, 0x03020001);
+  MmioWrite32(PIPE_BASE + PIPE_SSPP_SRC_YSTRIDE, width);
+  MmioWrite32(MDP_CTL_0_BASE + CTL_FLUSH, (1 << (3)));
+}
+
 STATIC
 VOID
 DisplayEnableRefresh(VOID)
 {
-  uint32_t height = FixedPcdGet32(PcdMipiFrameBufferHeight);
-  uint32_t vsync_count = 19200000 / (height * 60); /* 60 fps */
+	uint32_t height = FixedPcdGet32(PcdMipiFrameBufferHeight);
+	uint32_t vsync_count = 19200000 / (height * 60); /* 60 fps */
 	uint32_t mdss_mdp_rev = readl(MDP_HW_REV);
 	uint32_t pp0_base;
 
@@ -40,4 +52,6 @@ DisplayEnableRefresh(VOID)
 VOID PlatformInitialize(VOID)
 {
   DisplayEnableRefresh();
+
+  CheckMdpConfig();
 }
