@@ -35,6 +35,20 @@ static ARM_MEMORY_REGION_DESCRIPTOR_EX gDeviceMemoryDescriptorEx[] = {
     {"HLOS 3",            0x06100000, 0x00200000, AddMem, SYS_MEM, SYS_MEM_CAP,  Conv,   WRITE_BACK},
     /*{"Removed Region 1",  0x06300000, 0x00200000, NoHob,  SYS_MEM, SYS_MEM_CAP,  Reserv, NS_DEVICE},*/
 #endif
+
+    /* [    0.000000] cma: CMA: reserved 300 MiB at 0x00000000cd400000 for secure_mem (0x12c00000)
+[    0.000000] cma: CMA: reserved 64 MiB at 0x00000000c9400000 for adsp_mem
+[    0.000000] cma: CMA: reserved 24 MiB at 0x00000000c7c00000 for qseecom_mem
+[    0.000000] cma: CMA: reserved 8 MiB at 0x00000000c7400000 for audio_mem
+[    0.000000] cma: CMA: reserved 13 MiB at 0x0000000006300000 for memory_hole
+[    0.000000] cma: CMA: reserved 4 MiB at 0x0000000003400000 for dfps_data_mem
+[    0.000000] cma: CMA: reserved 16 MiB at 0x0000000003800000 for cont_splash_mem
+[    0.000000] cma: CMA: reserved 31 MiB at 0x000000000ca00000 for peripheral_mem
+[    0.000000] cma: CMA: reserved 90 MiB at 0x0000000007000000 for modem_mem
+[    0.000000] cma: CMA: reserved 3 MiB at 0x000000001fd00000 for ramoops_mem
+[    0.000000] cma: CMA: reserved 25 MiB at 0x0000000004800000 for tzapp_mem
+[    0.000000] cma: CMA: reserved 32 MiB at 0x00000000c5400000 for default region*/
+
 #if SILICON_PLATFORM == 8992
     {"TZ Apps",           0x06500000, 0x00500000, AddMem, SYS_MEM, SYS_MEM_CAP,  Reserv, NS_DEVICE},
     {"SMEM",              0x06A00000, 0x00200000, AddMem, MEM_RES, UNCACHEABLE,  Reserv, UNCACHED_UNBUFFERED},
@@ -48,12 +62,12 @@ static ARM_MEMORY_REGION_DESCRIPTOR_EX gDeviceMemoryDescriptorEx[] = {
     {"CNSS_DEBUG",        0x0EF00000, 0x00300000, AddMem, SYS_MEM, SYS_MEM_CAP,  Reserv, NS_DEVICE},
     {"HLOS 4",            0x0F200000, 0x10E00000, AddMem, SYS_MEM, SYS_MEM_CAP,  Conv,   WRITE_BACK},
 #else
-    /*{"TZ Apps",           0x06500000, 0x00500000, AddMem, SYS_MEM, SYS_MEM_CAP,  Reserv, NS_DEVICE},
+    {"TZ Apps",           0x06500000, 0x00500000, AddMem, SYS_MEM, SYS_MEM_CAP,  Reserv, NS_DEVICE},
     {"SMEM",              0x06A00000, 0x00200000, AddMem, MEM_RES, UNCACHEABLE,  Reserv, UNCACHED_UNBUFFERED},
     {"Hypervisor",        0x06C00000, 0x00100000, AddMem, SYS_MEM, SYS_MEM_CAP,  Reserv, NS_DEVICE},
     {"TZ",                0x06D00000, 0x00160000, AddMem, SYS_MEM, SYS_MEM_CAP,  Reserv, NS_DEVICE},
     {"ADSP_EFS",          0x06E60000, 0x00020000, AddMem, SYS_MEM, SYS_MEM_CAP,  Reserv, NS_DEVICE},
-    {"MPSS_EFS / SBL",    0x06E80000, 0x00180000, AddMem, SYS_MEM, SYS_MEM_CAP,  Reserv, NS_DEVICE},*/
+    {"MPSS_EFS / SBL",    0x06E80000, 0x00180000, AddMem, SYS_MEM, SYS_MEM_CAP,  Reserv, NS_DEVICE},
     {"Subsy Res. 1/DHMS", 0x07000000, 0x07F00000, AddMem, SYS_MEM, SYS_MEM_CAP,  Reserv, NS_DEVICE},
     {"CNSS_DEBUG",        0x0EF00000, 0x00300000, AddMem, SYS_MEM, SYS_MEM_CAP,  Reserv, NS_DEVICE},
     {"HLOS 3",            0x0F200000, 0x10E00000, AddMem, SYS_MEM, SYS_MEM_CAP,  Conv,   WRITE_BACK},
@@ -62,9 +76,9 @@ static ARM_MEMORY_REGION_DESCRIPTOR_EX gDeviceMemoryDescriptorEx[] = {
     /* RAM partition regions */
 #if MEMORY_3GB == 1
     {"RAM Partition",     0x20000000, 0x40000000, AddMem, SYS_MEM, SYS_MEM_CAP, Conv,   WRITE_BACK_XN},
-    {"RAM Partition",     0x80000000, 0x2C1C0000, AddMem, SYS_MEM, SYS_MEM_CAP, Conv,   WRITE_BACK_XN},
-
-    {"RAM Partition",     0xAC1C1000, 0x33E3F000, AddMem, SYS_MEM, SYS_MEM_CAP, Conv,   WRITE_BACK_XN},
+    {"RAM Partition",     0x80000000, 0x45400000, AddMem, SYS_MEM, SYS_MEM_CAP, Conv,   WRITE_BACK_XN},
+    {"Default region",    0xC5400000, 0x08000000, AddMem, SYS_MEM, SYS_MEM_CAP,  Reserv, NS_DEVICE},
+    {"Secure region",     0xCD400000, 0x12C00000, AddMem, SYS_MEM, SYS_MEM_CAP,  Reserv, NS_DEVICE},
 #else
     {"RAM Partition",     0x20000000, 0x60000000, AddMem, SYS_MEM, SYS_MEM_CAP, Conv,   WRITE_BACK_XN},
 #endif
