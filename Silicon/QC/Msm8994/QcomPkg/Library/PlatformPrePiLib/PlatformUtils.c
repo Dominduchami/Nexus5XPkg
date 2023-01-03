@@ -18,14 +18,15 @@ BOOLEAN IsLinuxBootRequested(VOID)
 
 VOID CheckMdpConfig(VOID)
 {
-  uint32_t width = FixedPcdGet32(PcdMipiFrameBufferWidth);
-  //uint32_t stride = MmioRead32(PIPE_BASE + PIPE_SSPP_SRC_YSTRIDE);
+	uint32_t width = FixedPcdGet32(PcdMipiFrameBufferWidth);
 
-  /* Windows requires a BGRA FB */
-  MmioWrite32(PIPE_BASE + PIPE_SSPP_SRC_FORMAT, 0x000236FF);
-  MmioWrite32(PIPE_BASE + PIPE_SSPP_SRC_UNPACK_PATTERN, 0x03020001);
-  MmioWrite32(PIPE_BASE + PIPE_SSPP_SRC_YSTRIDE, width);
-  MmioWrite32(MDP_CTL_0_BASE + CTL_FLUSH, (1 << (3)));
+	uint32_t tmp_stride = readl(PIPE_BASE + PIPE_SRC_YSTRIDE);
+
+  	/* Windows requires a BGRA FB */
+  	writel(0x000236FF, PIPE_BASE + PIPE_SSPP_SRC_FORMAT);
+  	writel(0x03020001, PIPE_BASE + PIPE_SSPP_SRC_UNPACK_PATTERN);
+  	writel(tmp_stride*4, PIPE_BASE + PIPE_SSPP_SRC_YSTRIDE);
+  	writel(BIT(3), MDP_CTL_0_BASE + CTL_FLUSH);
 }
 
 STATIC
