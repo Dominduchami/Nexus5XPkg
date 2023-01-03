@@ -31,7 +31,7 @@ static ARM_MEMORY_REGION_DESCRIPTOR_EX gDeviceMemoryDescriptorEx[] = {
     {"HLOS 1",            0x00D00000, 0x02700000, AddMem, SYS_MEM, SYS_MEM_CAP,  BsData, WRITE_BACK},
     {"DFPS Data Mem",     0x03400000, 0x00001000, AddMem, SYS_MEM, SYS_MEM_CAP,  Reserv, NS_DEVICE},
     {"Display Reserved",  0x03401000, 0x02200000, AddMem, MEM_RES, WRITE_THROUGH, MaxMem, WRITE_THROUGH},
-    {"HLOS 2",            0x04600000, 0x00200000, AddMem, SYS_MEM, SYS_MEM_CAP,  Conv,   WRITE_BACK},
+    {"HLOS 2",            0x04601000, 0x001FF000, AddMem, SYS_MEM, SYS_MEM_CAP,  Conv,   WRITE_BACK},
     {"TZ App Mem",        0x04800000, 0x01900000, AddMem, SYS_MEM, SYS_MEM_CAP,  Reserv, NS_DEVICE},
     {"HLOS 3",            0x06100000, 0x00200000, AddMem, SYS_MEM, SYS_MEM_CAP,  Conv,   WRITE_BACK},
     /* memory hole start (0x6300000, 0xd00000)
@@ -66,7 +66,9 @@ static ARM_MEMORY_REGION_DESCRIPTOR_EX gDeviceMemoryDescriptorEx[] = {
     /* RAM partition regions */
 #if MEMORY_3GB == 1
     {"RAM Partition",     0x20000000, 0x40000000, AddMem, SYS_MEM, SYS_MEM_CAP, Conv,   WRITE_BACK_XN},
-    {"RAM Partition",     0x80000000, 0x60000000, AddMem, SYS_MEM, SYS_MEM_CAP, Conv,   WRITE_BACK_XN},
+    {"RAM Partition",     0x80000000, 0x2C1C0000, AddMem, SYS_MEM, SYS_MEM_CAP, Conv,   WRITE_BACK_XN},
+    /* reserved mem: 0xac1c0000 0x0000000000001000;*/
+    {"RAM Partition",     0xAC1C1000, 0x33E3F000, AddMem, SYS_MEM, SYS_MEM_CAP, Conv,   WRITE_BACK_XN},
 #else
     {"RAM Partition",     0x20000000, 0x60000000, AddMem, SYS_MEM, SYS_MEM_CAP, Conv,   WRITE_BACK_XN},
 #endif
