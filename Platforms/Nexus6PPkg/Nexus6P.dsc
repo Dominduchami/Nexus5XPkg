@@ -45,21 +45,21 @@
   gNexusFamilyPkgTokenSpaceGuid.PcdSmbiosBoardModel|"Nexus 6P"
 
   # Simple FrameBuffer
-  gNexusFamilyPkgTokenSpaceGuid.PcdMipiFrameBufferAddress|0x03401000
-  gNexusFamilyPkgTokenSpaceGuid.PcdMipiFrameBufferWidth|1440
-  gNexusFamilyPkgTokenSpaceGuid.PcdMipiFrameBufferHeight|2560
+  gNexusFamilyPkgTokenSpaceGuid.PcdMipiFrameBufferAddress|0x03400000
+  gNexusFamilyPkgTokenSpaceGuid.PcdMipiFrameBufferWidth|1080
+  gNexusFamilyPkgTokenSpaceGuid.PcdMipiFrameBufferHeight|1920
   gNexusFamilyPkgTokenSpaceGuid.PcdMipiFrameBufferPixelBpp|32
 
   gQcomPkgTokenSpaceGuid.SynapticsXMax|1440
   gQcomPkgTokenSpaceGuid.SynapticsYMax|2560
 
 [PcdsDynamicDefault.common]
-  gEfiMdeModulePkgTokenSpaceGuid.PcdVideoHorizontalResolution|1440
-  gEfiMdeModulePkgTokenSpaceGuid.PcdVideoVerticalResolution|2560
-  gEfiMdeModulePkgTokenSpaceGuid.PcdSetupVideoHorizontalResolution|1440
-  gEfiMdeModulePkgTokenSpaceGuid.PcdSetupVideoVerticalResolution|2560
-  gEfiMdeModulePkgTokenSpaceGuid.PcdSetupConOutRow|320
-  gEfiMdeModulePkgTokenSpaceGuid.PcdSetupConOutColumn|75
+  gEfiMdeModulePkgTokenSpaceGuid.PcdVideoHorizontalResolution|1080
+  gEfiMdeModulePkgTokenSpaceGuid.PcdVideoVerticalResolution|1920
+  gEfiMdeModulePkgTokenSpaceGuid.PcdSetupVideoHorizontalResolution|1080
+  gEfiMdeModulePkgTokenSpaceGuid.PcdSetupVideoVerticalResolution|1920
+  gEfiMdeModulePkgTokenSpaceGuid.PcdSetupConOutRow|160
+  gEfiMdeModulePkgTokenSpaceGuid.PcdSetupConOutColumn|120
 
 !include QcomPkg/QcomPkg.dsc.inc
 !include NexusFamilyPkg/NexusFamily.dsc.inc
