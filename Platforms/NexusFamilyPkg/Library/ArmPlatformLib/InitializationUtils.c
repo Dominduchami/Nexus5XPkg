@@ -26,7 +26,7 @@ VOID InitializeSharedUartBuffers(VOID)
 VOID MemoryTest(VOID)
 {
   // RAM Sanity testing begins here.
-  PARM_MEMORY_REGION_DESCRIPTOR_EX MemoryDescriptorEx;
+  PARM_MEMORY_REGION_DESCRIPTOR_EX MemoryDescriptorEx = gDeviceMemoryDescriptorEx;
 
   DEBUG((EFI_D_ERROR, "Testing RAM. Please wait.\n"));
 
