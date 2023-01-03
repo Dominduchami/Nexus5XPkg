@@ -101,21 +101,21 @@ READ_LOCK_STATUS   = TRUE
   INF EmbeddedPkg/RealTimeClockRuntimeDxe/RealTimeClockRuntimeDxe.inf
 
   # SoC Drivers (Cross-referenced from EFIDroid)
-  INF QcomPkg/Driver/BamDxe/BamDxe.inf
+  # INF QcomPkg/Driver/BamDxe/BamDxe.inf
   # INF QcomPkg/GPLDriver/GpioTlmmDxe/GpioTlmmDxe.inf
   # INF QcomPkg/GPLDriver/GpioTlmmInterruptDxe/GpioTlmmInterruptDxe.inf
-  INF QcomPkg/Driver/SpmiDxe/SpmiDxe.inf
-  INF QcomPkg/Driver/Pm8x41Dxe/Pm8x41Dxe.inf
+  # INF QcomPkg/Driver/SpmiDxe/SpmiDxe.inf
+  # INF QcomPkg/Driver/Pm8x41Dxe/Pm8x41Dxe.inf
   # INF QcomPkg/Driver/GenericKeypadDeviceDxe/GenericKeypadDeviceDxe.inf
   # INF QcomPkg/Driver/KeypadDxe/KeypadDxe.inf
-  INF QcomPkg/Driver/ClockDxe/ClockDxe.inf
+  # INF QcomPkg/Driver/ClockDxe/ClockDxe.inf
   # INF QcomPkg/Driver/SdhciMMCHSDxe/SdhciMMCHS.inf
-  INF QcomPkg/Driver/I2cQupDxe/I2cQupDxe.inf
-  INF QcomPkg/Driver/SmemDxe/SmemDxe.inf
-  INF QcomPkg/Driver/SmemPtableDxe/SmemPtableDxe.inf
-  INF QcomPkg/Driver/SmdRpmDxe/RpmDxe.inf
-  INF QcomPkg/Driver/SsbiDxe/SsbiDxe.inf
-  INF QcomPkg/Driver/BoardDxe/BoardDxe.inf
+  # INF QcomPkg/Driver/I2cQupDxe/I2cQupDxe.inf
+  # INF QcomPkg/Driver/SmemDxe/SmemDxe.inf
+  # INF QcomPkg/Driver/SmemPtableDxe/SmemPtableDxe.inf
+  # INF QcomPkg/Driver/SmdRpmDxe/RpmDxe.inf
+  # INF QcomPkg/Driver/SsbiDxe/SsbiDxe.inf
+  # INF QcomPkg/Driver/BoardDxe/BoardDxe.inf
   INF QcomPkg/Driver/RuntimeMemoryConfigDxe/RuntimeMemoryConfigDxe.inf
 
   # Device Drivers
@@ -149,7 +149,7 @@ READ_LOCK_STATUS   = TRUE
   # Graphics
   INF NexusFamilyPkg/Driver/SimpleFbDxe/SimpleFbDxe.inf
 
-  INF QcomPkg/GPLDriver/QupSpiDxe/QupSpiDxe.inf
+  # INF QcomPkg/GPLDriver/QupSpiDxe/QupSpiDxe.inf
 
   # BDS
   INF MdeModulePkg/Universal/PrintDxe/PrintDxe.inf
