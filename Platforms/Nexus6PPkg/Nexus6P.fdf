@@ -102,14 +102,14 @@ READ_LOCK_STATUS   = TRUE
 
   # SoC Drivers (Cross-referenced from EFIDroid)
   INF QcomPkg/Driver/BamDxe/BamDxe.inf
-  INF QcomPkg/GPLDriver/GpioTlmmDxe/GpioTlmmDxe.inf
-  INF QcomPkg/GPLDriver/GpioTlmmInterruptDxe/GpioTlmmInterruptDxe.inf
+  # INF QcomPkg/GPLDriver/GpioTlmmDxe/GpioTlmmDxe.inf
+  # INF QcomPkg/GPLDriver/GpioTlmmInterruptDxe/GpioTlmmInterruptDxe.inf
   INF QcomPkg/Driver/SpmiDxe/SpmiDxe.inf
   INF QcomPkg/Driver/Pm8x41Dxe/Pm8x41Dxe.inf
-  INF QcomPkg/Driver/GenericKeypadDeviceDxe/GenericKeypadDeviceDxe.inf
-  INF QcomPkg/Driver/KeypadDxe/KeypadDxe.inf
+  # INF QcomPkg/Driver/GenericKeypadDeviceDxe/GenericKeypadDeviceDxe.inf
+  # INF QcomPkg/Driver/KeypadDxe/KeypadDxe.inf
   INF QcomPkg/Driver/ClockDxe/ClockDxe.inf
-  INF QcomPkg/Driver/SdhciMMCHSDxe/SdhciMMCHS.inf
+  # INF QcomPkg/Driver/SdhciMMCHSDxe/SdhciMMCHS.inf
   INF QcomPkg/Driver/I2cQupDxe/I2cQupDxe.inf
   INF QcomPkg/Driver/SmemDxe/SmemDxe.inf
   INF QcomPkg/Driver/SmemPtableDxe/SmemPtableDxe.inf
@@ -119,8 +119,8 @@ READ_LOCK_STATUS   = TRUE
   INF QcomPkg/Driver/RuntimeMemoryConfigDxe/RuntimeMemoryConfigDxe.inf
 
   # Device Drivers
-  INF QcomPkg/Driver/SynapticsTouchDxe/SynapticsTouchDevice.inf
-  INF QcomPkg/Driver/SynapticsTouchDxe/SynapticsTouchDxe.inf
+  # INF QcomPkg/Driver/SynapticsTouchDxe/SynapticsTouchDevice.inf
+  # INF QcomPkg/Driver/SynapticsTouchDxe/SynapticsTouchDxe.inf
 
   # Debug heartbeat
 !if $(SEND_HEARTBEAT_TO_SERIAL) == 1
@@ -144,7 +144,7 @@ READ_LOCK_STATUS   = TRUE
     # INF NexusFamilyPkg/Driver/SecureBootProvisioningDxe/SecureBootProvisioningDxe.inf
   !endif
 
-  INF NexusFamilyPkg/Driver/GpioButtons/GpioButtons.inf
+  # INF NexusFamilyPkg/Driver/GpioButtons/GpioButtons.inf
 
   # Graphics
   INF NexusFamilyPkg/Driver/SimpleFbDxe/SimpleFbDxe.inf
