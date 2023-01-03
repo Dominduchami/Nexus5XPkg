@@ -57,21 +57,15 @@ static ARM_MEMORY_REGION_DESCRIPTOR_EX gDeviceMemoryDescriptorEx[] = {
     {"TZ",                0x06D00000, 0x00160000, AddMem, SYS_MEM, SYS_MEM_CAP,  Reserv, NS_DEVICE},
     {"ADSP_EFS",          0x06E60000, 0x00020000, AddMem, SYS_MEM, SYS_MEM_CAP,  Reserv, NS_DEVICE},
     {"MPSS_EFS / SBL",    0x06E80000, 0x00180000, AddMem, SYS_MEM, SYS_MEM_CAP,  Reserv, NS_DEVICE},
-    memory hole end
-
-    Reserved regions, marked as remove_completely downstream : 
-    modem region, reg = <0x00 0x7000000 0x00 0x5a00000>;
-    periph region, reg = <0x00 0xca00000 0x00 0x1f00000>;*/
-    {"Reserved mem",      0x0E900000, 0x00600000, AddMem, SYS_MEM, SYS_MEM_CAP,  Reserv, NS_DEVICE},
+    memory hole end*/
+    {"Subsy Res. 1/DHMS", 0x07000000, 0x07F00000, AddMem, SYS_MEM, SYS_MEM_CAP,  Reserv, NS_DEVICE},
     {"CNSS_DEBUG",        0x0EF00000, 0x00300000, AddMem, SYS_MEM, SYS_MEM_CAP,  Reserv, NS_DEVICE},
-    {"HLOS 3",            0x0F200000, 0x10C00000, AddMem, SYS_MEM, SYS_MEM_CAP,  Conv,   WRITE_BACK},
-    /* ramoops_region, reg = <0x00 0x1fe00000 0x00 0x200000>;*/
+    {"HLOS 3",            0x0F200000, 0x10E00000, AddMem, SYS_MEM, SYS_MEM_CAP,  Conv,   WRITE_BACK},
 #endif
 
     /* RAM partition regions */
 #if MEMORY_3GB == 1
     {"RAM Partition",     0x20000000, 0x40000000, AddMem, SYS_MEM, SYS_MEM_CAP, Conv,   WRITE_BACK_XN},
-    /* memory hole */
     {"RAM Partition",     0x80000000, 0x2C1C0000, AddMem, SYS_MEM, SYS_MEM_CAP, Conv,   WRITE_BACK_XN},
     /* reserved mem: 0xac1c0000 0x0000000000001000;*/
     {"RAM Partition",     0xAC1C1000, 0x33E3F000, AddMem, SYS_MEM, SYS_MEM_CAP, Conv,   WRITE_BACK_XN},
