@@ -31,43 +31,6 @@
 
 VOID EFIAPI ProcessLibraryConstructorList(VOID);
 
-VOID MemoryTest(VOID)
-{
-  // RAM Sanity testing begins here.
-  PARM_MEMORY_REGION_DESCRIPTOR_EX MemoryDescriptorEx =
-      gDeviceMemoryDescriptorEx;
-
-  DEBUG((EFI_D_ERROR, "Testing RAM. Please wait.\n"));
-
-  // Run through each memory descriptor
-  while (MemoryDescriptorEx->Length != 0) {
-    if (MemoryDescriptorEx->HobOption == AddMem &&
-        MemoryDescriptorEx->ResourceType == SYS_MEM &&
-        MemoryDescriptorEx->ResourceAttribute == (SYS_MEM_CAP) &&
-        (MemoryDescriptorEx->MemoryType == Conv ||
-         MemoryDescriptorEx->MemoryType == BsData ||
-         MemoryDescriptorEx->MemoryType == RtData) &&
-        AsciiStriCmp("DBI Dump", MemoryDescriptorEx->Name) != 0 &&
-        AsciiStriCmp("UEFI FD", MemoryDescriptorEx->Name) != 0 &&
-        AsciiStriCmp("CPU Vectors", MemoryDescriptorEx->Name) != 0 &&
-        AsciiStriCmp("UEFI Stack", MemoryDescriptorEx->Name) != 0) {
-
-      DEBUG((EFI_D_ERROR, "Testing %a. Please wait.\n", MemoryDescriptorEx->Name));
-
-      for (UINT64 i = 0; i < MemoryDescriptorEx->Length; i += sizeof(UINT64)) {
-        MmioWrite64(MemoryDescriptorEx->Address + i, 0);
-      }
-
-      DEBUG((EFI_D_ERROR, "Testing %a is finished.\n", MemoryDescriptorEx->Name));
-    }
-    MemoryDescriptorEx++;
-  }
-
-  DEBUG((EFI_D_ERROR, "Testing RAM is finished.\n"));
-
-  return NULL;
-}
-
 VOID Main(IN VOID *StackBase, IN UINTN StackSize, IN UINT64 StartTimeStamp)
 {
 
@@ -129,9 +92,6 @@ VOID Main(IN VOID *StackBase, IN UINTN StackSize, IN UINT64 StartTimeStamp)
       CpuDeadLoop();
     }
   }
-
-  MemoryTest();
-  CpuDeadLoop();
 
   // Add HOBs
   BuildStackHob((UINTN)StackBase, StackSize);
