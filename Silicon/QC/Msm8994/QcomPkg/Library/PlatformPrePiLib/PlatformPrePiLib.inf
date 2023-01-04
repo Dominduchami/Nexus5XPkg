@@ -24,3 +24,7 @@
   BaseMemoryLib
   IoLib
   # MpPark
+
+[FixedPcd]
+  gNexusFamilyPkgTokenSpaceGuid.PcdMipiFrameBufferWidth
+  gNexusFamilyPkgTokenSpaceGuid.PcdMipiFrameBufferHeight
