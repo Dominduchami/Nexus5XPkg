@@ -18,8 +18,9 @@ BOOLEAN IsLinuxBootRequested(VOID)
 
 VOID CheckMdpConfig(VOID)
 {
+#if SILICON_PLATFORM == 8992
   uint32_t width = FixedPcdGet32(PcdMipiFrameBufferWidth);
-
+#endif
   /* Windows requires a BGRA FB */
   MmioWrite32(PIPE_BASE + PIPE_SSPP_SRC_FORMAT, 0x000236FF);
   MmioWrite32(PIPE_BASE + PIPE_SSPP_SRC_UNPACK_PATTERN, 0x03020001);
