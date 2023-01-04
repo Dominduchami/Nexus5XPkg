@@ -65,7 +65,7 @@ Arguments:
   FileHandle  - Handle of the file being invoked.
   PeiServices - Describes the list of possible PEI Services.
 
-Returns:6A00000
+Returns:
 
   Status -  EFI_SUCCESS if the boot mode could be set
 

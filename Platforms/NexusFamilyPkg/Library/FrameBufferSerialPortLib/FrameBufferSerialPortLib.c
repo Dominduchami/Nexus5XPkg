@@ -3,7 +3,6 @@
 #include <Library/ArmLib.h>
 #include <Library/CacheMaintenanceLib.h>
 #include <Library/HobLib.h>
-#include <Library/IoLib.h>
 #include <Library/MemoryMapHelperLib.h>
 #include <Library/SerialPortLib.h>
 
@@ -299,7 +298,6 @@ SerialPortWrite(IN UINT8 *Buffer, IN UINTN NumberOfBytes)
 
   if (InterruptState)
     ArmEnableInterrupts();
-
   return NumberOfBytes;
 }
 

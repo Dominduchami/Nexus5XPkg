@@ -26,7 +26,6 @@
 #include <Library/PerformanceLib.h>
 #include <Library/PrePiHobListPointerLib.h>
 #include <Library/PrePiLib.h>
-#include <Library/PlatformMemoryMapLib.h>
 #include <Library/SerialPortLib.h>
 #include <Library/ArmPlatformLib/InitializationUtils.h>
 
