@@ -64,7 +64,7 @@
   gNexusFamilyPkgTokenSpaceGuid.PcdUartSerialBase|0x00A90000
 
   gQcomPkgTokenSpaceGuid.PcdUefiMemPoolSize|0x7800000
-  gQcomPkgTokenSpaceGuid.PcdPreAllocatedMemorySize|0x58800000  # Start here
+  gQcomPkgTokenSpaceGuid.PcdPreAllocatedMemorySize|0xD8800000 # Start here
 
   # SoC Drivers GPIO TLMM
   gQcomTokenSpaceGuid.PcdGpioTlmmBaseAddress|0xFD510000
