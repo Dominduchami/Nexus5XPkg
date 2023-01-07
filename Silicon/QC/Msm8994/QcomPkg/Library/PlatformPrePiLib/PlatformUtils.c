@@ -20,7 +20,7 @@ VOID CheckMdpConfig(VOID)
 {
   MmioWrite32(0xfd905030, 0x000236FF); //format
   MmioWrite32(0xfd905034, 0x03020001); //unpack_pattern
-  MmioWrite32(0xfd905024, 1440*4); //ystride
+  MmioWrite32(0xfd905024, 1440); //ystride
   MmioWrite32(MDP_CTL_0_BASE + CTL_FLUSH, (1 << (3)));
   MmioWrite32(MDP_CTL_1_BASE + CTL_FLUSH, (1 << (3)));
 }
@@ -48,7 +48,7 @@ DisplayEnableRefresh(VOID)
 
 VOID PlatformInitialize(VOID)
 {
-  DisplayEnableRefresh();
-
   CheckMdpConfig();
+
+  DisplayEnableRefresh();
 }
