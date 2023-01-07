@@ -28,7 +28,11 @@
   ((UINT8                                                                      \
         *)((UINTN)This->Mode->FrameBufferBase + (posY)*This->Mode->Info->PixelsPerScanLine * FB_BYTES_PER_PIXEL + (posX)*FB_BYTES_PER_PIXEL))
 
+#if SILICON_PLATFORM == 8992
 #define FB_BITS_PER_PIXEL (32)
+#else
+#define FB_BITS_PER_PIXEL (32)
+#endif
 #define FB_BYTES_PER_PIXEL (FB_BITS_PER_PIXEL / 8)
 #define DISPLAYDXE_PHYSICALADDRESS32(_x_) (UINTN)((_x_)&0xFFFFFFFF)
 
