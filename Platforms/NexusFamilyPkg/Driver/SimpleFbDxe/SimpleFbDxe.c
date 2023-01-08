@@ -219,11 +219,11 @@ SimpleFbDxeInitialize(
   mDisplay.Mode->Info->VerticalResolution   = MipiFrameBufferHeight;
 
   /* SimpleFB runs on a8r8g8b8 (VIDEO_BPP32) for WoA devices */
-  UINT32               LineLength = MipiFrameBufferWidth;
+  UINT32               LineLength = MipiFrameBufferWidth  * VNBYTES(VIDEO_BPP24);
   UINT32               FrameBufferSize    = LineLength * MipiFrameBufferHeight;
   EFI_PHYSICAL_ADDRESS FrameBufferAddress = MipiFrameBufferAddr;
 
-  mDisplay.Mode->Info->PixelsPerScanLine = MipiFrameBufferWidth*3;
+  mDisplay.Mode->Info->PixelsPerScanLine = MipiFrameBufferWidth;
   mDisplay.Mode->Info->PixelFormat = PixelBlueGreenRedReserved8BitPerColor;
   mDisplay.Mode->SizeOfInfo      = sizeof(EFI_GRAPHICS_OUTPUT_MODE_INFORMATION);
   mDisplay.Mode->FrameBufferBase = FrameBufferAddress;
