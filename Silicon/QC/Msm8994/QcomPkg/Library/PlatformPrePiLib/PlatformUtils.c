@@ -63,7 +63,7 @@ CleanScreen(VOID)
 
   // Set to black color
   for (UINTN i = 0; i < 1080; i++) {
-    for (UINTN j = 0; j < 1920; j++) {
+    for (UINTN j = 0; j < 2560; j++) {
       BgColor = 0xff000000;
       // Set pixel bit 
       for (UINTN p = 0; p < (32 / 8); p++) {
