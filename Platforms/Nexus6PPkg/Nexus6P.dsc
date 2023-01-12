@@ -58,8 +58,8 @@
   gEfiMdeModulePkgTokenSpaceGuid.PcdVideoVerticalResolution|1920
   gEfiMdeModulePkgTokenSpaceGuid.PcdSetupVideoHorizontalResolution|1080
   gEfiMdeModulePkgTokenSpaceGuid.PcdSetupVideoVerticalResolution|1920
-  gEfiMdeModulePkgTokenSpaceGuid.PcdSetupConOutRow|213
-  gEfiMdeModulePkgTokenSpaceGuid.PcdSetupConOutColumn|160
+  gEfiMdeModulePkgTokenSpaceGuid.PcdSetupConOutRow|160
+  gEfiMdeModulePkgTokenSpaceGuid.PcdSetupConOutColumn|120
 
 !include QcomPkg/QcomPkg.dsc.inc
 !include NexusFamilyPkg/NexusFamily.dsc.inc
