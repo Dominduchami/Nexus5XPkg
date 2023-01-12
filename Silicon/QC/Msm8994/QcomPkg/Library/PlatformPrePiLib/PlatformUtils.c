@@ -18,8 +18,8 @@ BOOLEAN IsLinuxBootRequested(VOID)
 
 VOID CheckMdpConfig(VOID)
 {
-  MmioWrite32(0xfd905030, 0x000237FF); //format
-  MmioWrite32(0xfd905034, 0x03020001); //unpack_pattern
+  MmioWrite32(0xfd905030, 0x3); //format 0x000237FF
+  //MmioWrite32(0xfd905034, 0x03020001); //unpack_pattern
   //MmioWrite32(0xfd905024, 5760); //ystride
   MmioWrite32(MDP_CTL_0_BASE + CTL_FLUSH, (1 << (2)));
 }
