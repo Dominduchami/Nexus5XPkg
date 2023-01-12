@@ -47,7 +47,7 @@
   # Simple FrameBuffer
   gNexusFamilyPkgTokenSpaceGuid.PcdMipiFrameBufferAddress|0x03400000
   gNexusFamilyPkgTokenSpaceGuid.PcdMipiFrameBufferWidth|1080
-  gNexusFamilyPkgTokenSpaceGuid.PcdMipiFrameBufferHeight|2560
+  gNexusFamilyPkgTokenSpaceGuid.PcdMipiFrameBufferHeight|2560 
   gNexusFamilyPkgTokenSpaceGuid.PcdMipiFrameBufferPixelBpp|32
 
   gQcomPkgTokenSpaceGuid.SynapticsXMax|1440
