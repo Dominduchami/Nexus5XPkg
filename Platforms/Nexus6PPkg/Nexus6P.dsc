@@ -46,18 +46,18 @@
 
   # Simple FrameBuffer
   gNexusFamilyPkgTokenSpaceGuid.PcdMipiFrameBufferAddress|0x03400000
-  gNexusFamilyPkgTokenSpaceGuid.PcdMipiFrameBufferWidth|1440
-  gNexusFamilyPkgTokenSpaceGuid.PcdMipiFrameBufferHeight|2560
+  gNexusFamilyPkgTokenSpaceGuid.PcdMipiFrameBufferWidth|1080
+  gNexusFamilyPkgTokenSpaceGuid.PcdMipiFrameBufferHeight|1920
   gNexusFamilyPkgTokenSpaceGuid.PcdMipiFrameBufferPixelBpp|24
 
   gQcomPkgTokenSpaceGuid.SynapticsXMax|1440
   gQcomPkgTokenSpaceGuid.SynapticsYMax|2560
 
 [PcdsDynamicDefault.common]
-  gEfiMdeModulePkgTokenSpaceGuid.PcdVideoHorizontalResolution|1440
-  gEfiMdeModulePkgTokenSpaceGuid.PcdVideoVerticalResolution|2560
-  gEfiMdeModulePkgTokenSpaceGuid.PcdSetupVideoHorizontalResolution|1440
-  gEfiMdeModulePkgTokenSpaceGuid.PcdSetupVideoVerticalResolution|2560
+  gEfiMdeModulePkgTokenSpaceGuid.PcdVideoHorizontalResolution|1080
+  gEfiMdeModulePkgTokenSpaceGuid.PcdVideoVerticalResolution|1920
+  gEfiMdeModulePkgTokenSpaceGuid.PcdSetupVideoHorizontalResolution|1080
+  gEfiMdeModulePkgTokenSpaceGuid.PcdSetupVideoVerticalResolution|1920
   gEfiMdeModulePkgTokenSpaceGuid.PcdSetupConOutRow|213
   gEfiMdeModulePkgTokenSpaceGuid.PcdSetupConOutColumn|160
 
