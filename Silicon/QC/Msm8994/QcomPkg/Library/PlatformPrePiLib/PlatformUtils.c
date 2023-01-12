@@ -35,7 +35,7 @@ DisplayEnableRefresh(VOID)
 {
 #if SILICON_PLATFORM == 8994
   uint32_t height = FixedPcdGet32(PcdMipiFrameBufferHeight);
-  uint32_t vsync_count = 19200000 / (height * 60);//905000000
+  uint32_t vsync_count = 905000000 / (height * 60);//905000000
 #endif
   uint32_t mdss_mdp_rev = readl(MDP_HW_REV);
   uint32_t pp0_base;
