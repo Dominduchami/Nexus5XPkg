@@ -28,8 +28,7 @@
   ((UINT8                                                                      \
         *)((UINTN)This->Mode->FrameBufferBase + (posY)*This->Mode->Info->PixelsPerScanLine * FB_BYTES_PER_PIXEL + (posX)*FB_BYTES_PER_PIXEL))
 
-
-#define FB_BITS_PER_PIXEL (24)//32
+#define FB_BITS_PER_PIXEL (32)
 #define FB_BYTES_PER_PIXEL (FB_BITS_PER_PIXEL / 8)
 #define DISPLAYDXE_PHYSICALADDRESS32(_x_) (UINTN)((_x_)&0xFFFFFFFF)
 
@@ -48,7 +47,6 @@ enum video_log2_bpp {
   VIDEO_BPP4,
   VIDEO_BPP8,
   VIDEO_BPP16,
-  VIDEO_BPP24,
   VIDEO_BPP32,
 };
 
@@ -219,7 +217,7 @@ SimpleFbDxeInitialize(
   mDisplay.Mode->Info->VerticalResolution   = MipiFrameBufferHeight;
 
   /* SimpleFB runs on a8r8g8b8 (VIDEO_BPP32) for WoA devices */
-  UINT32               LineLength = MipiFrameBufferWidth  * VNBYTES(VIDEO_BPP24);
+  UINT32               LineLength = MipiFrameBufferWidth * VNBYTES(VIDEO_BPP32);
   UINT32               FrameBufferSize    = LineLength * MipiFrameBufferHeight;
   EFI_PHYSICAL_ADDRESS FrameBufferAddress = MipiFrameBufferAddr;
 
