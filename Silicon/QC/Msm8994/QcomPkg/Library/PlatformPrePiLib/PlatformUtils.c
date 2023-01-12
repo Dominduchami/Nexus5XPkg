@@ -18,18 +18,16 @@ BOOLEAN IsLinuxBootRequested(VOID)
 
 VOID CheckMdpConfig(VOID)
 {
-  //MmioWrite32(0xfd905030, 0x3); //format 0x000237FF
-  //MmioWrite32(0xfd905034, 0x03020001); //unpack_pattern
-  //MmioWrite32(0xfd905024, 5760); //ystride
 #if SILICON_PLATFORM == 8992
   MmioWrite32(PIPE_BASE + PIPE_SSPP_SRC_FORMAT, 0x000236FF);
   MmioWrite32(PIPE_BASE + PIPE_SSPP_SRC_UNPACK_PATTERN, 0x03020001);
   MmioWrite32(PIPE_BASE + PIPE_SSPP_SRC_YSTRIDE, 1080*4);
 #else
-  MmioWrite32(0xfd905030, 0x3); //format 0x000237FF
-  //MmioWrite32(0xfd905034, 0x03020001); //unpack_pattern
-  //MmioWrite32(0xfd905024, 5760); //ystride
+  MmioWrite32(PIPE_BASE + PIPE_SSPP_SRC_FORMAT, 0x3); //format 0x000237FF
+  //MmioWrite32(PIPE_BASE + PIPE_SSPP_SRC_UNPACK_PATTERN, 0x03020001);
+  //MmioWrite32(PIPE_BASE + PIPE_SSPP_SRC_YSTRIDE, 5760);
   MmioWrite32(MDP_CTL_0_BASE + CTL_FLUSH, (1 << (2)));
+#endif
 }
 
 STATIC
