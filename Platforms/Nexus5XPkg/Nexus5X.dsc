@@ -56,9 +56,8 @@
   gEfiMdeModulePkgTokenSpaceGuid.PcdVideoVerticalResolution|1920
   gEfiMdeModulePkgTokenSpaceGuid.PcdSetupVideoHorizontalResolution|1080
   gEfiMdeModulePkgTokenSpaceGuid.PcdSetupVideoVerticalResolution|1920
-  gEfiMdeModulePkgTokenSpaceGuid.PcdSetupConOutColumn|120 # 1080/9 = 120
-  gEfiMdeModulePkgTokenSpaceGuid.PcdSetupConOutRow|160 # 1920/12 = 160
-
+  gEfiMdeModulePkgTokenSpaceGuid.PcdSetupConOutRow|160
+  gEfiMdeModulePkgTokenSpaceGuid.PcdSetupConOutColumn|120
 
 !include QcomPkg/QcomPkg.dsc.inc
 !include NexusFamilyPkg/NexusFamily.dsc.inc
