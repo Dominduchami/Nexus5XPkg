@@ -55,32 +55,9 @@ DisplayEnableRefresh(VOID)
   MmioWrite32(MDP_CTL_0_BASE + CTL_START, 1);
 }
 
-STATIC
-VOID
-CleanScreen(VOID)
-{
-  char *Pixels = (void *)0x03400000ull;
-  UINTN BgColor = 0xff000000;
-
-  // Set to black color
-  for (UINTN i = 0; i < 1080; i++) {
-    for (UINTN j = 0; j < 2560; j++) {
-      BgColor = 0xff000000;
-      // Set pixel bit 
-      for (UINTN p = 0; p < (32 / 8); p++) {
-        *Pixels = (unsigned char)BgColor;
-        BgColor = BgColor >> 8;
-        Pixels++;
-      }
-    }
-  }
-}
-
 VOID PlatformInitialize(VOID)
 {
   CheckMdpConfig();
 
   DisplayEnableRefresh();
-
-  CleanScreen();
 }
