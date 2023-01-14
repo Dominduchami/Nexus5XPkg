@@ -46,7 +46,7 @@
 
   # Simple FrameBuffer
   gNexusFamilyPkgTokenSpaceGuid.PcdMipiFrameBufferAddress|0x03400000
-  gNexusFamilyPkgTokenSpaceGuid.PcdMipiFrameBufferWidth|1080
+  gNexusFamilyPkgTokenSpaceGuid.PcdMipiFrameBufferWidth|1440
   gNexusFamilyPkgTokenSpaceGuid.PcdMipiFrameBufferHeight|2560 
   gNexusFamilyPkgTokenSpaceGuid.PcdMipiFrameBufferPixelBpp|32
 
@@ -54,9 +54,9 @@
   gQcomPkgTokenSpaceGuid.SynapticsYMax|2560
 
 [PcdsDynamicDefault.common]
-  gEfiMdeModulePkgTokenSpaceGuid.PcdVideoHorizontalResolution|1080
+  gEfiMdeModulePkgTokenSpaceGuid.PcdVideoHorizontalResolution|1440
   gEfiMdeModulePkgTokenSpaceGuid.PcdVideoVerticalResolution|2560
-  gEfiMdeModulePkgTokenSpaceGuid.PcdSetupVideoHorizontalResolution|1080
+  gEfiMdeModulePkgTokenSpaceGuid.PcdSetupVideoHorizontalResolution|1440
   gEfiMdeModulePkgTokenSpaceGuid.PcdSetupVideoVerticalResolution|2560
   gEfiMdeModulePkgTokenSpaceGuid.PcdSetupConOutColumn|160
   gEfiMdeModulePkgTokenSpaceGuid.PcdSetupConOutRow|120
