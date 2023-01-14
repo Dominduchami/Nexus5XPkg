@@ -28,6 +28,7 @@ VOID CheckMdpConfig(VOID)
   MmioWrite32(BULLHEAD_PIPE_BASE + PIPE_SSPP_SRC_YSTRIDE, 1080*4);
 #endif
   MmioWrite32(MDP_CTL_0_BASE + CTL_FLUSH, (1 << (3)));
+  MmioWrite32(MDP_CTL_1_BASE + CTL_FLUSH, (1 << (3)));
 }
 
 STATIC
