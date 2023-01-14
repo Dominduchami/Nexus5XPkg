@@ -23,9 +23,9 @@ VOID CheckMdpConfig(VOID)
   MmioWrite32(BULLHEAD_PIPE_BASE + PIPE_SSPP_SRC_UNPACK_PATTERN, 0x03020001);
   MmioWrite32(BULLHEAD_PIPE_BASE + PIPE_SSPP_SRC_YSTRIDE, 1080*4);
 #else
-  writel(0x000236FF, 0xfd905030);
+  writel(0x0002243F, 0xfd905030);
   writel(0x03020001, 0xfd905034);
-  writel(1440, 0xfd905024);
+  writel(1440*3, 0xfd905024);
 #endif
   writel(BIT(3), 0xfd902018);
 }
