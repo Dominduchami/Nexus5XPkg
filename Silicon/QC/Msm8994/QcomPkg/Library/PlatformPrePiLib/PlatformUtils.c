@@ -36,8 +36,10 @@ STATIC
 VOID
 DisplayEnableRefresh(VOID)
 {
+#if SILICON_PLATFORM == 8994
   uint32_t height = FixedPcdGet32(PcdMipiFrameBufferHeight);
   uint32_t vsync_count = 19200000 / (height * 60);
+#endif
   uint32_t mdss_mdp_rev = readl(MDP_HW_REV);
   uint32_t pp0_base;
 
@@ -48,7 +50,9 @@ DisplayEnableRefresh(VOID)
   else
     pp0_base = REG_MDP(0x21B00);
 
+#if SILICON_PLATFORM == 8994
   MmioWrite32(pp0_base + MDP_PP_SYNC_CONFIG_VSYNC, vsync_count | BIT(19));
+#endif
   MmioWrite32(pp0_base + MDP_PP_AUTOREFRESH_CONFIG, BIT(31) | 1);
   MmioWrite32(MDP_CTL_0_BASE + CTL_START, 1);
 }
