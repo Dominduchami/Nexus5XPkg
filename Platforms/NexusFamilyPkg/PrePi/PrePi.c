@@ -58,7 +58,7 @@ MemoryTest(VOID)
 
       for (UINT64 i = 0; i < MemoryDescriptorEx->Length; i += sizeof(UINT64)) {
         MmioWrite64(MemoryDescriptorEx->Address + i, 0);
-        DEBUG((EFI_D_ERROR, "Testing %p is finished.\n", MemoryDescriptorEx->Address + i));
+        DEBUG((EFI_D_ERROR, "\rTesting addr : %p", MemoryDescriptorEx->Address + i));
       }
 
       DEBUG((EFI_D_ERROR, "Testing %a is finished.\n", MemoryDescriptorEx->Name));
