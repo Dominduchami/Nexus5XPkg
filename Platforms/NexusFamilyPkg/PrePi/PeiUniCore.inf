@@ -53,6 +53,7 @@
   PrePiMemoryAllocationLib
   PerformanceLib
   PlatformPrePiLib
+  PlatformMemoryMapLib
   HobLib
   CompilerIntrinsicsLib
   # Platform-specific libraries
