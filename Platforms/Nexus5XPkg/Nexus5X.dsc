@@ -39,8 +39,8 @@
 
   # SMBIOS
   gNexusFamilyPkgTokenSpaceGuid.PcdSmbiosSystemModel|"Nexus 5X"
-  gNexusFamilyPkgTokenSpaceGuid.PcdSmbiosSystemRetailModel|"RM-1104"
-  gNexusFamilyPkgTokenSpaceGuid.PcdSmbiosSystemRetailSku|"RM-1104"
+  gNexusFamilyPkgTokenSpaceGuid.PcdSmbiosSystemRetailModel|"LGH791"
+  gNexusFamilyPkgTokenSpaceGuid.PcdSmbiosSystemRetailSku|"LGH791"
   gNexusFamilyPkgTokenSpaceGuid.PcdSmbiosBoardModel|"Nexus 5X"
 
   # Simple FrameBuffer

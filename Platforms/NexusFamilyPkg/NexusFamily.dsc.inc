@@ -44,7 +44,7 @@
   gEfiMdeModulePkgTokenSpaceGuid.PcdInstallAcpiSdtProtocol|TRUE
 
 [PcdsFixedAtBuild.common]
-  gEfiMdeModulePkgTokenSpaceGuid.PcdFirmwareVendor|L"NexusWoA authors"
+  gEfiMdeModulePkgTokenSpaceGuid.PcdFirmwareVendor|L"LumiaWoA authors & Dominduchami"
   gEfiMdeModulePkgTokenSpaceGuid.PcdFirmwareVersionString|L"2212.12"
   gEfiMdeModulePkgTokenSpaceGuid.PcdFirmwareRevision|0x0016040C
   gEfiMdeModulePkgTokenSpaceGuid.PcdAcpiDefaultOemId|"QCOM  "

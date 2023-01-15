@@ -13,6 +13,9 @@
 
 BOOLEAN IsLinuxBootRequested(VOID)
 {
+  /* TODO : 
+  * make it dependent on key press 
+  * actually use it */
   return FALSE;
 }
 
@@ -20,11 +23,12 @@ VOID CheckMdpConfig(VOID)
 {
   /* Windows requires a BGRA FB */
 #if SILICON_PLATFORM == 8992
-  MmioWrite32(PIPE_BASE + PIPE_SSPP_SRC_FORMAT, 0x000236FF);
-  MmioWrite32(PIPE_BASE + PIPE_SSPP_SRC_UNPACK_PATTERN, 0x03020001);
-  MmioWrite32(PIPE_BASE + PIPE_SSPP_SRC_YSTRIDE, 1080*4);
+  MmioWrite32(BULLHEAD_PIPE_BASE + PIPE_SSPP_SRC_FORMAT, 0x000236FF);
+  MmioWrite32(BULLHEAD_PIPE_BASE + PIPE_SSPP_SRC_UNPACK_PATTERN, 0x03020001);
+  MmioWrite32(BULLHEAD_PIPE_BASE + PIPE_SSPP_SRC_YSTRIDE, 1080*4);
   MmioWrite32(MDP_CTL_0_BASE + CTL_FLUSH, (1 << (3)));
 #else
+/* TODO: proper config and cleanup */
   writel(0x0002243F, 0xfd905030); //format
   writel(0x03020001, 0xfd905034); //unpack pattern
   //writel(1440*3, 0xfd905024); //stride
@@ -51,6 +55,7 @@ DisplayEnableRefresh(VOID)
     pp0_base = REG_MDP(0x21B00);
 
 #if SILICON_PLATFORM == 8994
+  /* Required for working framebuffer on angler, breaks on bullhead */
   MmioWrite32(pp0_base + MDP_PP_SYNC_CONFIG_VSYNC, vsync_count | BIT(19));
 #endif
   MmioWrite32(pp0_base + MDP_PP_AUTOREFRESH_CONFIG, BIT(31) | 1);

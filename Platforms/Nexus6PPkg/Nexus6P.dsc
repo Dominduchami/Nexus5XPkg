@@ -40,8 +40,8 @@
 
   # SMBIOS
   gNexusFamilyPkgTokenSpaceGuid.PcdSmbiosSystemModel|"Nexus 6P"
-  gNexusFamilyPkgTokenSpaceGuid.PcdSmbiosSystemRetailModel|""
-  gNexusFamilyPkgTokenSpaceGuid.PcdSmbiosSystemRetailSku|""
+  gNexusFamilyPkgTokenSpaceGuid.PcdSmbiosSystemRetailModel|"H1511"
+  gNexusFamilyPkgTokenSpaceGuid.PcdSmbiosSystemRetailSku|"H1511"
   gNexusFamilyPkgTokenSpaceGuid.PcdSmbiosBoardModel|"Nexus 6P"
 
   # Simple FrameBuffer
