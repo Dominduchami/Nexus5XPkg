@@ -19,14 +19,17 @@ BOOLEAN IsLinuxBootRequested(VOID)
 VOID CheckMdpConfig(VOID)
 {
   /* Windows requires a BGRA FB */
+#if SILICON_PLATFORM == 8992
   MmioWrite32(PIPE_BASE + PIPE_SSPP_SRC_FORMAT, 0x000236FF);
   MmioWrite32(PIPE_BASE + PIPE_SSPP_SRC_UNPACK_PATTERN, 0x03020001);
-#if SILICON_PLATFORM == 8992
   MmioWrite32(PIPE_BASE + PIPE_SSPP_SRC_YSTRIDE, 1080*4);
-#else
-  MmioWrite32(PIPE_BASE + PIPE_SSPP_SRC_YSTRIDE, 1080*4);
-#endif
   MmioWrite32(MDP_CTL_0_BASE + CTL_FLUSH, (1 << (3)));
+#else
+  writel(0x0002243F, 0xfd905030); //format
+  writel(0x03020001, 0xfd905034); //unpack pattern
+  //writel(1440*3, 0xfd905024); //stride
+  writel(BIT(3), 0xfd902018); //flush
+#endif
 }
 
 STATIC
