@@ -1,0 +1,20 @@
+// SPDX-License-Identifier: BSD-3-Clause
+
+/dts-v1/;
+
+/ {
+    model = "Huawei Nexus 6P";
+	qcom,msm-id = <207 0x20000>;
+	qcom,pmic-id = <0x10009 0x1000A 0x0 0x0>;
+	qcom,board-id = <8026 0>;
+    
+	#address-cells = <2>;
+	#size-cells = <2>;
+
+	chosen { };
+
+	memory@0 {
+		device_type = "memory";
+		reg = <0 0 0 0>;
+	};
+};

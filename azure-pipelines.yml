@@ -36,6 +36,9 @@ steps:
 - script: sudo apt install -y mkbootimg
   displayName: 'Install mkbootimg'
 
+- script: sudo apt install -y device-tree-compiler
+  displayName: 'Install dtc'
+
 - script: export CLANG38_BIN=/usr/lib/llvm-38/bin/ && export CLANG38_AARCH64_PREFIX=aarch64-linux-gnu-
   displayName: 'Setup CLANG environment'
 
