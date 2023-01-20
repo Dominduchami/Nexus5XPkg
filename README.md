@@ -1,8 +1,12 @@
-# [Project Mu](https://microsoft.github.io/mu/) UEFI Implementation for Nexus 5X
+# [Project Mu](https://microsoft.github.io/mu/) UEFI Implementation for Nexus 5X and 6P
 
 ## Description
 
-This repository hosts the code and underlying work behind the Windows UEFI firmware "bootstrapper" for Nexus 5X.
+This repository hosts the code and underlying work behind the Windows UEFI firmware "bootstrapper" for Nexus 5X and Nexus 6P.
+
+## Windows support notes
+
+UEFI works on both devices, however as of now booting Windows is supported only on Nexus 5X (and only with framebuffer and internal storage working)
 
 ## Build
 
