@@ -5,7 +5,7 @@ static ARM_MEMORY_REGION_DESCRIPTOR_EX gDeviceMemoryDescriptorEx[] = {
     /* Name               Address     Length      HobOption        ResourceAttribute    ArmAttributes
                                                           ResourceType          MemoryType */
 
-    /* DDR Regions */
+    /* DDR Bank 0 start */
     {"DBI Dump",          0x00010000, 0x00014000, NoHob,  MMAP_IO, INITIALIZED,  Conv,   NS_DEVICE},
     {"DDR Health Mon",    0x00024000, 0x00002000, NoHob,  MMAP_IO, INITIALIZED,  Reserv, NS_DEVICE},
     {"HLOS 0",            0x00100000, 0x00100000, AddMem, SYS_MEM, SYS_MEM_CAP,  Conv,   WRITE_BACK},
@@ -45,22 +45,39 @@ static ARM_MEMORY_REGION_DESCRIPTOR_EX gDeviceMemoryDescriptorEx[] = {
     {"Removed Region 2",  0x070A0000, 0x00160000, AddMem, SYS_MEM, SYS_MEM_CAP,  Reserv, NS_DEVICE},
     {"HLOS 3",            0x07200000, 0x00200000, AddMem, SYS_MEM, SYS_MEM_CAP,  Conv,   WRITE_BACK},
     {"Subsys Reser. 1",   0x07400000, 0x07B00000, AddMem, SYS_MEM, SYS_MEM_CAP,  Reserv, NS_DEVICE},
-#else
-    {"TZ",                0x06D00000, 0x00160000, AddMem, SYS_MEM, SYS_MEM_CAP,  Reserv, NS_DEVICE},
-    {"ADSP_EFS",          0x06E60000, 0x00020000, AddMem, SYS_MEM, SYS_MEM_CAP,  Reserv, NS_DEVICE},
-    {"MPSS_EFS / SBL",    0x06E80000, 0x00180000, AddMem, SYS_MEM, SYS_MEM_CAP,  Reserv, NS_DEVICE},
-    {"Subsy Res. 1/DHMS", 0x07000000, 0x07F00000, AddMem, SYS_MEM, SYS_MEM_CAP,  Reserv, NS_DEVICE},
-#endif
     {"CNSS_DEBUG",        0x0EF00000, 0x00300000, AddMem, SYS_MEM, SYS_MEM_CAP,  Reserv, NS_DEVICE},
-    {"DXE Heap",          0x0F200000, 0x07800000, AddMem, SYS_MEM, SYS_MEM_CAP,  Conv,   WRITE_BACK_XN},
-    {"HLOS 4",            0x16A00000, 0x09600000, AddMem, SYS_MEM, SYS_MEM_CAP,  Conv,   WRITE_BACK},
-
-    /* RAM partition regions */
-#if MEMORY_3GB == 1
-    {"RAM Partition",     0x20000000, 0x40000000, AddMem, SYS_MEM, SYS_MEM_CAP, Conv,   WRITE_BACK_XN},
-    {"RAM Partition",     0x80000000, 0x60000000, AddMem, SYS_MEM, SYS_MEM_CAP, Conv,   WRITE_BACK_XN},
 #else
+    {"TZ",                0x06D00000, 0x00160000, NoHob,  SYS_MEM, SYS_MEM_CAP,  Reserv, NS_DEVICE},
+    {"ADSP_EFS",          0x06E60000, 0x00020000, NoHob,  SYS_MEM, SYS_MEM_CAP,  Reserv, NS_DEVICE},
+    {"MPSS_EFS / SBL",    0x06E80000, 0x00180000, NoHob,  SYS_MEM, SYS_MEM_CAP,  Reserv, NS_DEVICE},
+    {"Modem Mem",         0x07000000, 0x05A00000, AddMem, SYS_MEM, SYS_MEM_CAP,  Reserv, NS_DEVICE},
+    {"Peripheral Mem",    0x0CA00000, 0x01F00000, AddMem, SYS_MEM, SYS_MEM_CAP,  Reserv, NS_DEVICE},
+    {"HLOS 4",            0x0E900000, 0x00900000, AddMem, SYS_MEM, SYS_MEM_CAP,  Conv,   WRITE_BACK},
+#endif
+    {"DXE Heap",          0x0F200000, 0x07800000, AddMem, SYS_MEM, SYS_MEM_CAP,  Conv,   WRITE_BACK_XN},
+    {"HLOS 4",            0x16A00000, 0x09400000, AddMem, SYS_MEM, SYS_MEM_CAP,  Conv,   WRITE_BACK},
+    /* Persistent RAM (0x1FE00000 -> 0x20000000, size 0x200000 */
+    /* DDR Bank 0 end */
+
+#if MEMORY_3GB == 1
+    /* DDR Bank 1 Start*/
+    {"RAM Partition",     0x20000000, 0x40000000, AddMem, SYS_MEM, SYS_MEM_CAP, Conv,   WRITE_BACK_XN},
+    /* DDR Bank 1 End*/
+
+    /* Carveout Region (0x60000000 -> 0x80000000, size 0x20000000)*/
+
+    /* DDR Bank 2 Start */
+    {"RAM Partition",     0x80000000, 0x45400000, AddMem, SYS_MEM, SYS_MEM_CAP, Conv,   WRITE_BACK_XN},
+    {"Default region",    0xc5400000, 0x02000000, AddMem, SYS_MEM, SYS_MEM_CAP,  Reserv, NS_DEVICE},
+    {"Audio Mem",         0xc7400000, 0x00800000, AddMem, SYS_MEM, SYS_MEM_CAP,  Reserv, NS_DEVICE},
+    {"QSEECOM Mem",       0xc7c00000, 0x01800000, AddMem, SYS_MEM, SYS_MEM_CAP,  Reserv, NS_DEVICE},
+    {"ADSP Mem",          0xc9400000, 0x04000000, AddMem, SYS_MEM, SYS_MEM_CAP,  Reserv, NS_DEVICE},
+    {"Secure Mem",        0xcd400000, 0x12C00000, AddMem, SYS_MEM, SYS_MEM_CAP,  Reserv, NS_DEVICE},
+    /* DDR Bank 2 End */
+#else
+    /* DDR Bank 1 Start*/
     {"RAM Partition",     0x20000000, 0x60000000, AddMem, SYS_MEM, SYS_MEM_CAP, Conv,   WRITE_BACK_XN},
+    /* DDR Bank 1 End*/
 #endif
 
     /* Other memory regions */
