@@ -57,6 +57,7 @@
   CompilerIntrinsicsLib
   # Platform-specific libraries
   MemoryInitPeiLib
+  MemoryMapHelperLib
   PlatformPeiLib
   # MpPark
   ArmHvcLib

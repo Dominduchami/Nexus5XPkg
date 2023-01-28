@@ -28,10 +28,11 @@
 #include <Library/PrePiLib.h>
 #include <Library/SerialPortLib.h>
 #include <Library/ArmPlatformLib/InitializationUtils.h>
+#include <Library/MemoryMapHelperLib.h>
 
 VOID EFIAPI ProcessLibraryConstructorList(VOID);
 
-VOID Main(IN VOID *StackBase, IN UINTN StackSize, IN UINT64 StartTimeStamp)
+VOID Main(IN UINT64 StartTimeStamp)
 {
 
   EFI_HOB_HANDOFF_INFO_TABLE *HobList;
@@ -41,6 +42,8 @@ VOID Main(IN VOID *StackBase, IN UINTN StackSize, IN UINT64 StartTimeStamp)
   UINTN MemorySize     = 0;
   UINTN UefiMemoryBase = 0;
   UINTN UefiMemorySize = 0;
+  UINTN StackBase = 0;
+  UINTN StackSize = 0;
 
   // Architecture-specific initialization
   // Enable Floating Point
@@ -49,23 +52,38 @@ VOID Main(IN VOID *StackBase, IN UINTN StackSize, IN UINT64 StartTimeStamp)
   /* Enable program flow prediction, if supported */
   ArmEnableBranchPrediction();
 
+  ARM_MEMORY_REGION_DESCRIPTOR_EX DxeHeap;
+  ARM_MEMORY_REGION_DESCRIPTOR_EX UefiStack;
+  ARM_MEMORY_REGION_DESCRIPTOR_EX UefiFd;
+
+  Status = LocateMemoryMapAreaByName("DXE Heap", &DxeHeap);
+  ASSERT_EFI_ERROR (Status);
+
+  Status = LocateMemoryMapAreaByName("UEFI Stack", &UefiStack);
+  ASSERT_EFI_ERROR (Status);
+
+  Status = LocateMemoryMapAreaByName("UEFI FD", &UefiFd);
+  ASSERT_EFI_ERROR (Status);
+
   // Declare UEFI region
   MemoryBase     = FixedPcdGet32(PcdSystemMemoryBase);
   MemorySize     = FixedPcdGet32(PcdSystemMemorySize);
-  UefiMemoryBase = MemoryBase + FixedPcdGet32(PcdPreAllocatedMemorySize);
-  UefiMemorySize = FixedPcdGet32(PcdUefiMemPoolSize);
-  StackBase      = (VOID *)(UefiMemoryBase + UefiMemorySize - StackSize);
+  UefiMemoryBase = DxeHeap.Address;
+  UefiMemorySize = DxeHeap.Length;
+  StackBase     = UefiStack.Address;
+  StackSize     = UefiStack.Length;
+  StackBase     = UefiMemoryBase + UefiMemorySize - StackSize;
 
   DEBUG(
       (EFI_D_INFO | EFI_D_LOAD,
        "UEFI Memory Base = 0x%llx, Size = 0x%llx, Stack Base = 0x%llx, Stack "
        "Size = 0x%llx\n",
-       UefiMemoryBase, UefiMemorySize, StackBase, StackSize));
+       (VOID *)UefiMemoryBase, UefiMemorySize, (VOID *)StackBase, StackSize));
 
   // Set up HOB
   HobList = HobConstructor(
       (VOID *)UefiMemoryBase, UefiMemorySize, (VOID *)UefiMemoryBase,
-      StackBase);
+      (VOID *)StackBase);
 
   PrePeiSetHobList(HobList);
 
@@ -125,9 +143,9 @@ VOID Main(IN VOID *StackBase, IN UINTN StackSize, IN UINT64 StartTimeStamp)
   CpuDeadLoop();
 }
 
-VOID CEntryPoint(IN VOID *StackBase, IN UINTN StackSize)
+VOID CEntryPoint()
 {
   EarlyInitialization();
 
-  Main(StackBase, StackSize, 0);
+  Main(0);
 }
