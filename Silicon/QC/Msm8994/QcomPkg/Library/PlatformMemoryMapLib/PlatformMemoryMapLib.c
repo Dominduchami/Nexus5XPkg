@@ -50,13 +50,12 @@ static ARM_MEMORY_REGION_DESCRIPTOR_EX gDeviceMemoryDescriptorEx[] = {
     {"DXE Heap",          0x0F400000, 0x07800000, AddMem, SYS_MEM, SYS_MEM_CAP,  Conv,   WRITE_BACK_XN},
     {"HLOS 4",            0x16A00000, 0x09600000, AddMem, SYS_MEM, SYS_MEM_CAP,  Conv,   WRITE_BACK},
 #else
-    {"TZ",                0x06D00000, 0x00160000, NoHob,  SYS_MEM, SYS_MEM_CAP,  Reserv, NS_DEVICE},
-    {"ADSP_EFS",          0x06E60000, 0x00020000, NoHob,  SYS_MEM, SYS_MEM_CAP,  Reserv, NS_DEVICE},
-    {"MPSS_EFS / SBL",    0x06E80000, 0x00180000, NoHob,  SYS_MEM, SYS_MEM_CAP,  Reserv, NS_DEVICE},
-    {"Modem Mem",         0x07000000, 0x05A00000, AddMem, SYS_MEM, SYS_MEM_CAP,  Reserv, NS_DEVICE},
-    {"Peripheral Mem",    0x0CA00000, 0x01F00000, AddMem, SYS_MEM, SYS_MEM_CAP,  Reserv, NS_DEVICE},
-    {"DXE Heap",          0x0E900000, 0x07800000, AddMem, SYS_MEM, SYS_MEM_CAP,  Conv,   WRITE_BACK},
-    {"HLOS 5",            0x16100000, 0x09F00000, AddMem, SYS_MEM, SYS_MEM_CAP,  Conv,   WRITE_BACK},
+    {"TZ",                0x06D00000, 0x00160000, AddMem, SYS_MEM, SYS_MEM_CAP,  Reserv, NS_DEVICE},
+    {"ADSP_EFS",          0x06E60000, 0x00020000, AddMem, SYS_MEM, SYS_MEM_CAP,  Reserv, NS_DEVICE},
+    {"MPSS_EFS / SBL",    0x06E80000, 0x00180000, AddMem, SYS_MEM, SYS_MEM_CAP,  Reserv, NS_DEVICE},
+    {"Subsy Res. 1/DHMS", 0x07000000, 0x07F00000, AddMem, SYS_MEM, SYS_MEM_CAP,  Reserv, NS_DEVICE},
+    {"CNSS_DEBUG",        0x0EF00000, 0x00300000, AddMem, SYS_MEM, SYS_MEM_CAP,  Reserv, NS_DEVICE},
+    {"DXE Heap",          0x0F200000, 0x10E00000, AddMem, SYS_MEM, SYS_MEM_CAP,  Conv,   WRITE_BACK},
 #endif
     /* DDR Bank 0 end */
 
