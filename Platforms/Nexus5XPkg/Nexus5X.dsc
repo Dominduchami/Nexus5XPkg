@@ -48,8 +48,8 @@
   gNexusFamilyPkgTokenSpaceGuid.PcdMipiFrameBufferHeight|1920
   gNexusFamilyPkgTokenSpaceGuid.PcdMipiFrameBufferPixelBpp|32
 
-  gQcomPkgTokenSpaceGuid.SynapticsXMax|1440
-  gQcomPkgTokenSpaceGuid.SynapticsYMax|2660
+  gQcomPkgTokenSpaceGuid.SynapticsXMax|1080
+  gQcomPkgTokenSpaceGuid.SynapticsYMax|1920
 
 [PcdsDynamicDefault.common]
   gEfiMdeModulePkgTokenSpaceGuid.PcdVideoHorizontalResolution|1080
