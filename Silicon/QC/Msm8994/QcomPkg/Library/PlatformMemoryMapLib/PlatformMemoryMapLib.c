@@ -28,22 +28,12 @@ static ARM_MEMORY_REGION_DESCRIPTOR_EX gDeviceMemoryDescriptorEx[] = {
     {"TZ Apps",           0x06500000, 0x00500000, AddMem, SYS_MEM, SYS_MEM_CAP,  Reserv, NS_DEVICE},
     {"SMEM",              0x06A00000, 0x00200000, AddMem, MEM_RES, UNCACHEABLE,  Reserv, UNCACHED_UNBUFFERED},
     {"Hypervisor",        0x06C00000, 0x00100000, AddMem, SYS_MEM, SYS_MEM_CAP,  Reserv, NS_DEVICE},
-#if SILICON_PLATFORM == 8992
-    {"TZ",                0x06D00000, 0x00200000, AddMem, SYS_MEM, SYS_MEM_CAP,  Reserv, NS_DEVICE},
-    {"MPSS_EFS / SBL",    0x06F00000, 0x00180000, AddMem, SYS_MEM, SYS_MEM_CAP,  Reserv, NS_DEVICE},
-    {"ADSP_EFS",          0x07080000, 0x00020000, AddMem, SYS_MEM, SYS_MEM_CAP,  Reserv, NS_DEVICE},
-    {"HLOS 3",            0x070A0000, 0x00360000, AddMem, SYS_MEM, SYS_MEM_CAP,  Conv,   WRITE_BACK},
-    {"Subsys Reser. 1",   0x07400000, 0x07B00000, AddMem, SYS_MEM, SYS_MEM_CAP,  Reserv, NS_DEVICE},
-    {"CNSS_DEBUG",        0x0EF00000, 0x00300000, AddMem, SYS_MEM, SYS_MEM_CAP,  Reserv, NS_DEVICE},
-    {"HLOS 4",            0x0F200000, 0x10E00000, AddMem, SYS_MEM, SYS_MEM_CAP,  Conv,   WRITE_BACK},
-#else
     {"TZ",                0x06D00000, 0x00160000, AddMem, SYS_MEM, SYS_MEM_CAP,  Reserv, NS_DEVICE},
     {"ADSP_EFS",          0x06E60000, 0x00020000, AddMem, SYS_MEM, SYS_MEM_CAP,  Reserv, NS_DEVICE},
     {"MPSS_EFS / SBL",    0x06E80000, 0x00180000, AddMem, SYS_MEM, SYS_MEM_CAP,  Reserv, NS_DEVICE},
     {"Subsy Res. 1/DHMS", 0x07000000, 0x07F00000, AddMem, SYS_MEM, SYS_MEM_CAP,  Reserv, NS_DEVICE},
     {"CNSS_DEBUG",        0x0EF00000, 0x00300000, AddMem, SYS_MEM, SYS_MEM_CAP,  Reserv, NS_DEVICE},
     {"HLOS 3",            0x0F200000, 0x10E00000, AddMem, SYS_MEM, SYS_MEM_CAP,  Conv,   WRITE_BACK},
-#endif
 
     /* RAM partition regions */
     {"RAM Partition",     0x20000000, 0x40000000, AddMem, SYS_MEM, SYS_MEM_CAP, Conv,   WRITE_BACK_XN},
@@ -56,11 +46,7 @@ static ARM_MEMORY_REGION_DESCRIPTOR_EX gDeviceMemoryDescriptorEx[] = {
 
     /* Other memory regions */
     {"IMEM SMEM Base",    0xFE805000, 0x00001000, NoHob,  MMAP_IO, INITIALIZED,  Conv,   NS_DEVICE},
-#if SILICON_PLATFORM == 8992
-    {"IMEM Cookie Base",  0xFE80F000, 0x00001000, AddDev, MMAP_IO, INITIALIZED,  Conv,   NS_DEVICE},
-#else
     {"IMEM Cookie Base",  0xFE87F000, 0x00001000, AddDev, MMAP_IO, INITIALIZED,  Conv,   NS_DEVICE},
-#endif
 
     /* Register regions */
     {"TERMINATOR",        0xF9000000, 0x00113000, AddDev, MMAP_IO, UNCACHEABLE,  MmIO,   NS_DEVICE},
@@ -82,13 +68,9 @@ static ARM_MEMORY_REGION_DESCRIPTOR_EX gDeviceMemoryDescriptorEx[] = {
     {"TLMM CSR",          0xFD510000, 0x00004000, AddDev, MMAP_IO, UNCACHEABLE,  MmIO,   NS_DEVICE},
     {"TCSR TCSR MUTEX",   0xFD484000, 0x00002000, AddDev, MMAP_IO, UNCACHEABLE,  MmIO,   NS_DEVICE},
     {"TCSR TCSR REGS",    0xFD4A0000, 0x00010000, AddDev, MMAP_IO, UNCACHEABLE,  MmIO,   NS_DEVICE},
-#if SILICON_PLATFORM == 8992
-    {"PCIE WRAPPER AXI",  0xFF000000, 0x00800000, AddDev, MMAP_IO, UNCACHEABLE,  MmIO,   NS_DEVICE},
-    {"PCIE WRAPPER AHB",  0xFC520000, 0x00008000, AddDev, MMAP_IO, UNCACHEABLE,  MmIO,   NS_DEVICE},
-#else
+
     {"PCIE WRAPPER AXI",  0xF8800000, 0x00800000, AddDev, MMAP_IO, UNCACHEABLE,  MmIO,   NS_DEVICE},
     {"PCIE WRAPPER AHB",  0xFC528000, 0x00008000, AddDev, MMAP_IO, UNCACHEABLE,  MmIO,   NS_DEVICE},
-#endif
 
     /* Terminator for MMU */
     {"Terminator", 0, 0, 0, 0, 0, 0, 0}};
