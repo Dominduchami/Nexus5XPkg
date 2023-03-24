@@ -23,7 +23,7 @@ static ARM_MEMORY_REGION_DESCRIPTOR_EX gDeviceMemoryDescriptorEx[] = {
     {"CPU Vectors",       0x00C40000, 0x00010000, AddMem, SYS_MEM, SYS_MEM_CAP,  BsCode, WRITE_BACK},
     {"Reser. Cached 0",   0x00C50000, 0x000B0000, AddMem, SYS_MEM, SYS_MEM_CAP,  BsData, WRITE_BACK},
     {"HLOS 1",            0x00D00000, 0x02700000, AddMem, SYS_MEM, SYS_MEM_CAP,  BsData, WRITE_BACK},
-    {"Display Reserved",  0x03400000, 0x02200000, AddMem, MEM_RES, WRITE_THROUGH, MaxMem, WRITE_THROUGH},
+    {"Display Reserved",  0x03400000, 0x01200000, AddMem, MEM_RES, WRITE_THROUGH, MaxMem, WRITE_THROUGH},
     {"HLOS 2",            0x04600000, 0x00200000, AddMem, SYS_MEM, SYS_MEM_CAP,  Conv,   WRITE_BACK},
     {"TZ App Mem",        0x04800000, 0x01900000, NoHob,  SYS_MEM, SYS_MEM_CAP,  Reserv, NS_DEVICE},
     {"HLOS 3",            0x06100000, 0x00200000, AddMem, SYS_MEM, SYS_MEM_CAP,  Conv,   WRITE_BACK},
