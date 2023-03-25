@@ -6,7 +6,7 @@ This repository hosts the code and underlying work behind the Windows UEFI firmw
 
 ## Windows support notes
 
-UEFI works on both devices, however as of now booting Windows is supported only on Nexus 5X (and only with framebuffer and internal storage working)
+Windows boots on both devices, however with only framebuffer and internal storage working for now
 
 ## Build
 
