@@ -145,8 +145,9 @@ VOID Main(IN UINT64 StartTimeStamp)
 
 VOID CEntryPoint()
 {
-  MmioWrite32(0xFC4AB000, 0); //test reboot
   EarlyInitialization();
+
+  for(;;) {};
 
   Main(0);
 }
