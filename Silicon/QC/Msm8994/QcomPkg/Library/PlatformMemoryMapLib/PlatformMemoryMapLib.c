@@ -46,8 +46,9 @@ static ARM_MEMORY_REGION_DESCRIPTOR_EX gDeviceMemoryDescriptorEx[] = {
 #endif
 
     /* RAM partition regions */
-    {"RAM Partition",     0x20000000, 0x40000000, AddMem, SYS_MEM, SYS_MEM_CAP, Conv,   WRITE_BACK_XN},
-    {"Display Reserved",  0x00400000, 0x00800000, AddMem, MEM_RES, WRITE_THROUGH, MaxMem, WRITE_THROUGH},
+    {"RAM Partition",     0x20000000, 0x10000000, AddMem, SYS_MEM, SYS_MEM_CAP, Conv,   WRITE_BACK_XN},
+    {"Display Reserved",  0x30000000, 0x02600000, AddMem, MEM_RES, WRITE_THROUGH, MaxMem, WRITE_THROUGH},
+    {"RAM Partition",     0x32600000, 0x2DA00000, AddMem, SYS_MEM, SYS_MEM_CAP, Conv,   WRITE_BACK_XN},
     {"RAM Partition",     0x80000000, 0x30000000, AddMem, SYS_MEM, SYS_MEM_CAP, Conv,   WRITE_BACK_XN},
     {"Preloader Block",   0xB0000000, 0x00001000, AddMem, SYS_MEM, SYS_MEM_CAP, Conv,   WRITE_BACK_XN},
     {"RAM Partition",     0xB0001000, 0x2FFFF000, AddMem, SYS_MEM, SYS_MEM_CAP, Conv,   WRITE_BACK_XN},
