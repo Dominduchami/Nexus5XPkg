@@ -8,7 +8,7 @@ cat ./ImageResources/Hima/bootpayload.bin ./ImageResources/Hima/Hima.dtb >> ./Im
 
 mkbootimg --kernel ./ImageResources/Hima/Image.gz-dtb \
   --ramdisk ./ImageResources/ramdisk-null \
-  --base 0x00000000 --pagesize 4096 \
-  --ramdisk_offset 0x02000000 \
-  --tags_offset 0x01e00000 \
+  --base 0x00078000 --pagesize 4096 \
+  --ramdisk_offset 0x01f88000 \
+  --tags_offset 0x01d88000 \
   -o ./ImageResources/Hima/uefi.img

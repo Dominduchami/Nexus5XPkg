@@ -57,9 +57,16 @@ steps:
 - script: chmod +x ./build_boot_images.sh && ./build_boot_images.sh
   displayName: 'UEFI boot image build'
 
-# Publish UEFI (1 target)
+# Publish UEFI payload (1 target)
 - task: PublishBuildArtifacts@1
-  displayName: 'Publish MSM8994 UEFI build (HTC One M9)'
+  displayName: 'Publish MSM8994 UEFI payload (HTC One M9)'
   inputs:
     pathtoPublish: ./ImageResources/Hima/bootpayload.bin
+    artifactName: MSM8994 UEFI (HTC One M9)
+
+# Publish UEFI "kernel" (1 target)
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish MSM8994 UEFI (HTC One M9)'
+  inputs:
+    pathtoPublish: ./ImageResources/Hima/uefi.img
     artifactName: MSM8994 UEFI (HTC One M9)

@@ -147,7 +147,5 @@ VOID CEntryPoint()
 {
   EarlyInitialization();
 
-  for(;;) {};
-
   Main(0);
 }
