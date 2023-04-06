@@ -11,6 +11,7 @@ cat ./ImageResources/Hima/bootpayload.bin.gz ./ImageResources/Hima/Hima.dtb >> .
 mkbootimg --kernel ./ImageResources/Hima/Image.gz-dtb \
   --ramdisk ./ImageResources/ramdisk-null \
   --base 0x00078000 --pagesize 4096 \
+  --kernel_offset 0x00008000 \
   --ramdisk_offset 0x01f88000 \
   --tags_offset 0x01d88000 \
   -o ./ImageResources/Hima/uefi.img
