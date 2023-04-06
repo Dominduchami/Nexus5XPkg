@@ -4,7 +4,9 @@ cat ./BootShim/BootShim.bin ./Build/HtcOneM9-AARCH64/DEBUG_CLANG38/FV/MSM8994_EF
 
 #dtc -I dts -O dtb ./ImageResources/Hima/Hima.dts -o ./ImageResources/Hima/Hima.dtb
 
-cat ./ImageResources/Hima/bootpayload.bin ./ImageResources/Hima/Hima.dtb >> ./ImageResources/Hima/Image.gz-dtb
+gzip -c < ./ImageResources/Hima/bootpayload.bin >./ImageResources/Hima/bootpayload.bin.gz
+
+cat ./ImageResources/Hima/bootpayload.bin.gz ./ImageResources/Hima/Hima.dtb >> ./ImageResources/Hima/Image.gz-dtb
 
 mkbootimg --kernel ./ImageResources/Hima/Image.gz-dtb \
   --ramdisk ./ImageResources/ramdisk-null \
