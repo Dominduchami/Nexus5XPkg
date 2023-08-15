@@ -37011,10 +37011,6 @@ DefinitionBlock(".\DSDT_MTP.aml", "DSDT", 0x02, "QCOMM ", "MSM8994 ", 0x00000003
         {
             Name(_HID, "QCOM2418")
             Name(_UID, One)
-            Name(_DEP, Package(0x1)
-            {
-                \_SB_.PEP0
-            })
             Method(_CRS, 0x0, NotSerialized)
             {
                 Name(RBUF, Buffer(0x49)
@@ -37028,52 +37024,6 @@ DefinitionBlock(".\DSDT_MTP.aml", "DSDT", 0x02, "QCOMM ", "MSM8994 ", 0x00000003
 	0x00
                 })
                 Return(RBUF)
-            }
-            Name(PGID, Buffer(0xa)
-            {
-	0x5c, 0x5f, 0x53, 0x42, 0x2e, 0x54, 0x53, 0x43, 0x31, 0x00
-            })
-            Name(DBUF, Buffer(DBFL)
-            {
-            })
-            CreateByteField(DBUF, Zero, STAT)
-            CreateByteField(DBUF, 0x2, DVAL)
-            CreateField(DBUF, 0x18, 0xa0, DEID)
-            Method(_S1D, 0x0, NotSerialized)
-            {
-                Return(0x3)
-            }
-            Method(_S2D, 0x0, NotSerialized)
-            {
-                Return(0x3)
-            }
-            Method(_S3D, 0x0, NotSerialized)
-            {
-                Return(0x3)
-            }
-            Method(_PS0, 0x0, NotSerialized)
-            {
-                Store(Buffer(ESNL)
-                {
-                }, DEID)
-                Store(Zero, DVAL)
-                Store(PGID, DEID)
-                If(\_SB_.ABD_.AVBL)
-                {
-                    Store(DBUF, \_SB_.PEP0.FLD0)
-                }
-            }
-            Method(_PS3, 0x0, NotSerialized)
-            {
-                Store(Buffer(ESNL)
-                {
-                }, DEID)
-                Store(0x3, DVAL)
-                Store(PGID, DEID)
-                If(\_SB_.ABD_.AVBL)
-                {
-                    Store(DBUF, \_SB_.PEP0.FLD0)
-                }
             }
         }
         Device(AGR0)
@@ -38365,31 +38315,6 @@ DefinitionBlock(".\DSDT_MTP.aml", "DSDT", 0x02, "QCOMM ", "MSM8994 ", 0x00000003
                 \_SB_.SMD0
             })
             Name(_HID, "QCOM2412")
-        }
-        Device(FMSL)
-        {
-            Name(_DEP, Package(0x2)
-            {
-                \_SB_.PEP0,
-                \_SB_.IC11
-            })
-            Name(_HID, "QCOM24B1")
-            Method(_CRS, 0x0, NotSerialized)
-            {
-                Name(RBUF, Buffer(0x64)
-                {
-	0x8e, 0x19, 0x00, 0x01, 0x00, 0x01, 0x02, 0x00, 0x00, 0x01, 0x06, 0x00,
-	0x80, 0x1a, 0x06, 0x00, 0x11, 0x00, 0x5c, 0x5f, 0x53, 0x42, 0x2e, 0x49,
-	0x43, 0x31, 0x31, 0x00, 0x8c, 0x20, 0x00, 0x01, 0x00, 0x01, 0x00, 0x03,
-	0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x17, 0x00, 0x00, 0x19, 0x00, 0x23,
-	0x00, 0x00, 0x00, 0x09, 0x00, 0x5c, 0x5f, 0x53, 0x42, 0x2e, 0x47, 0x49,
-	0x4f, 0x30, 0x00, 0x8c, 0x20, 0x00, 0x01, 0x01, 0x01, 0x00, 0x00, 0x00,
-	0x01, 0x00, 0x00, 0x00, 0x00, 0x17, 0x00, 0x00, 0x19, 0x00, 0x23, 0x00,
-	0x00, 0x00, 0x3e, 0x00, 0x5c, 0x5f, 0x53, 0x42, 0x2e, 0x47, 0x49, 0x4f,
-	0x30, 0x00, 0x79, 0x00
-                })
-                Return(RBUF)
-            }
         }
         Device(BTH0)
         {
