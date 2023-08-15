@@ -6,17 +6,17 @@ static ARM_MEMORY_REGION_DESCRIPTOR_EX gDeviceMemoryDescriptorEx[] = {
                                                           ResourceType          MemoryType */
 
     /* DDR Regions */
-    {"DBI Dump",          0x00010000, 0x00014000, NoHob,  MMAP_IO, INITIALIZED,  Conv,   NS_DEVICE},
-    {"DDR Health Mon",    0x00024000, 0x00002000, NoHob,  MMAP_IO, INITIALIZED,  Reserv, NS_DEVICE},
+    //{"DBI Dump",          0x00010000, 0x00014000, NoHob,  MMAP_IO, INITIALIZED,  Conv,   NS_DEVICE},
+    //{"DDR Health Mon",    0x00024000, 0x00002000, NoHob,  MMAP_IO, INITIALIZED,  Reserv, NS_DEVICE},
     {"HLOS 0",            0x00100000, 0x00100000, AddMem, SYS_MEM, SYS_MEM_CAP,  Conv,   WRITE_BACK},
     {"UEFI FD",           0x00200000, 0x00100000, AddMem, SYS_MEM, SYS_MEM_CAP,  BsCode, WRITE_BACK},
     {"MPPark Code",       0x00300000, 0x00080000, AddMem, MEM_RES, UNCACHEABLE,  RtCode, UNCACHED_UNBUFFERED},
-    {"FBPT Payload",      0x00380000, 0x00001000, AddMem, SYS_MEM, SYS_MEM_CAP,  RtData, UNCACHED_UNBUFFERED},
+    //{"FBPT Payload",      0x00380000, 0x00001000, AddMem, SYS_MEM, SYS_MEM_CAP,  RtData, UNCACHED_UNBUFFERED},
     {"DBG2",              0x00381000, 0x00004000, AddMem, SYS_MEM, SYS_MEM_CAP,  RtData, UNCACHED_UNBUFFERED},
-    {"Capsule Header",    0x00385000, 0x00001000, AddMem, SYS_MEM, SYS_MEM_CAP,  RtData, UNCACHED_UNBUFFERED},
-    {"TPM Control Area",  0x00386000, 0x00003000, AddMem, SYS_MEM, SYS_MEM_CAP,  RtData, UNCACHED_UNBUFFERED},
-    {"UEFI Info Block",   0x00389000, 0x00001000, AddMem, SYS_MEM, SYS_MEM_CAP,  RtData, UNCACHED_UNBUFFERED},
-    {"Reset Data",        0x0038A000, 0x00004000, AddMem, SYS_MEM, SYS_MEM_CAP,  RtData, UNCACHED_UNBUFFERED},
+    //{"Capsule Header",    0x00385000, 0x00001000, AddMem, SYS_MEM, SYS_MEM_CAP,  RtData, UNCACHED_UNBUFFERED},
+    //{"TPM Control Area",  0x00386000, 0x00003000, AddMem, SYS_MEM, SYS_MEM_CAP,  RtData, UNCACHED_UNBUFFERED},
+    //{"UEFI Info Block",   0x00389000, 0x00001000, AddMem, SYS_MEM, SYS_MEM_CAP,  RtData, UNCACHED_UNBUFFERED},
+    //{"Reset Data",        0x0038A000, 0x00004000, AddMem, SYS_MEM, SYS_MEM_CAP,  RtData, UNCACHED_UNBUFFERED},
     {"Reser. Uncached0",  0x0038E000, 0x00002000, AddMem, SYS_MEM, SYS_MEM_CAP,  RtData, UNCACHED_UNBUFFERED}, /* It's tricky tricky tricky */
     {"Reser. Uncached0",  0x00390000, 0x00070000, AddMem, SYS_MEM, SYS_MEM_CAP,  BsData, UNCACHED_UNBUFFERED}, /* There goes the other part */
     {"UEFI Stack",        0x00C00000, 0x00040000, AddMem, SYS_MEM, SYS_MEM_CAP,  BsData, WRITE_BACK},
@@ -33,7 +33,7 @@ static ARM_MEMORY_REGION_DESCRIPTOR_EX gDeviceMemoryDescriptorEx[] = {
     {"HLOS 2",            0x04600000, 0x00200000, AddMem, SYS_MEM, SYS_MEM_CAP,  Conv,   WRITE_BACK},
     {"TZ App Mem",        0x04800000, 0x01900000, NoHob,  SYS_MEM, SYS_MEM_CAP,  Reserv, NS_DEVICE},
     {"HLOS 3",            0x06100000, 0x00200000, AddMem, SYS_MEM, SYS_MEM_CAP,  Conv,   WRITE_BACK},
-    {"Removed Region 1",  0x06300000, 0x00200000, NoHob,  SYS_MEM, SYS_MEM_CAP,  Reserv, NS_DEVICE},
+    //{"Removed Region 1",  0x06300000, 0x00200000, NoHob,  SYS_MEM, SYS_MEM_CAP,  Reserv, NS_DEVICE},
 #endif
     {"TZ Apps",           0x06500000, 0x00500000, AddMem, SYS_MEM, SYS_MEM_CAP,  Reserv, NS_DEVICE},
     {"SMEM",              0x06A00000, 0x00200000, AddMem, MEM_RES, UNCACHEABLE,  Reserv, UNCACHED_UNBUFFERED},
