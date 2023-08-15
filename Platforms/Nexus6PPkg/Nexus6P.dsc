@@ -53,6 +53,12 @@
   gQcomPkgTokenSpaceGuid.SynapticsXMax|1440
   gQcomPkgTokenSpaceGuid.SynapticsYMax|2560
 
+  # Device Driver Synaptics 3202
+  gQcomPkgTokenSpaceGuid.SynapticsCtlrAddress|0x20
+  gQcomPkgTokenSpaceGuid.SynapticsCtlrResetPin|8
+  gQcomPkgTokenSpaceGuid.SynapticsCtlrIntPin|22
+  gQcomPkgTokenSpaceGuid.SynapticsCtlrI2cDevice|2
+
 [PcdsDynamicDefault.common]
   gEfiMdeModulePkgTokenSpaceGuid.PcdVideoHorizontalResolution|1440
   gEfiMdeModulePkgTokenSpaceGuid.PcdVideoVerticalResolution|2560

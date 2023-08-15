@@ -118,12 +118,6 @@
   # SoC Drivers I2C
   gQcomTokenSpaceGuid.PcdGicSpiStart|32
 
-  # Device Driver Synaptics 3202
-  gQcomPkgTokenSpaceGuid.SynapticsCtlrAddress|0x20
-  gQcomPkgTokenSpaceGuid.SynapticsCtlrResetPin|8
-  gQcomPkgTokenSpaceGuid.SynapticsCtlrIntPin|22
-  gQcomPkgTokenSpaceGuid.SynapticsCtlrI2cDevice|2
-
   # RPM
   gQcomTokenSpaceGuid.PcdApcsAlias0IpcInterrupt|0xF900D008
   gQcomTokenSpaceGuid.PcdSmdIrq|200
