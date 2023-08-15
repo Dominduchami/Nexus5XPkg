@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cat ./BootShim/BootShim.bin ./Build/Nexus5X-AARCH64/DEBUG_CLANG38/FV/MSM8992_EFI.fd > ./ImageResources/Bullhead/bootpayload.bin
+cat ./Build/Nexus5X-AARCH64/DEBUG_CLANG38/FV/MSM8992_EFI.fd > ./ImageResources/Bullhead/bootpayload.bin
 
 gzip -c < ./ImageResources/Bullhead/bootpayload.bin >./ImageResources/Bullhead/bootpayload.bin.gz
 
