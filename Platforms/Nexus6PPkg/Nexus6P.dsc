@@ -54,9 +54,9 @@
   gQcomPkgTokenSpaceGuid.SynapticsYMax|2560
 
   # Device Driver Synaptics 3202
-  gQcomPkgTokenSpaceGuid.SynapticsCtlrAddress|0x20
-  gQcomPkgTokenSpaceGuid.SynapticsCtlrResetPin|8
-  gQcomPkgTokenSpaceGuid.SynapticsCtlrIntPin|22
+  gQcomPkgTokenSpaceGuid.SynapticsCtlrAddress|0x70
+  gQcomPkgTokenSpaceGuid.SynapticsCtlrResetPin|96
+  gQcomPkgTokenSpaceGuid.SynapticsCtlrIntPin|77
   gQcomPkgTokenSpaceGuid.SynapticsCtlrI2cDevice|2
 
 [PcdsDynamicDefault.common]
