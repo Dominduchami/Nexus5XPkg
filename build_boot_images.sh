@@ -16,7 +16,7 @@ mkbootimg --kernel ./ImageResources/Bullhead/Image.gz-dtb \
   -o ./ImageResources/Bullhead/uefi.img
 
 
-cat ./BootShim/BootShim.bin ./Build/Nexus6P-AARCH64/DEBUG_CLANG38/FV/MSM8994_EFI.fd > ./ImageResources/Angler/bootpayload.bin
+cat ./Build/Nexus6P-AARCH64/DEBUG_CLANG38/FV/MSM8994_EFI.fd > ./ImageResources/Angler/bootpayload.bin
 
 gzip -c < ./ImageResources/Angler/bootpayload.bin >./ImageResources/Angler/bootpayload.bin.gz
 
