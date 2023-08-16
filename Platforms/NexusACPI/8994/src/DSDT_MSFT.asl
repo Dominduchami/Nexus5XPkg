@@ -38050,45 +38050,6 @@ DefinitionBlock(".\DSDT_MTP.aml", "DSDT", 0x02, "QCOMM ", "MSM8994 ", 0x00000003
         {
             Name(_HID, "QCOM2148")
         }
-        Device(SEN1)
-        {
-            Name(_DEP, Package(0x2)
-            {
-                \_SB_.IPC0,
-                \_SB_.ADSP
-            })
-            Name(_HID, "QCOM2495")
-            Method(AROT, 0x0, NotSerialized)
-            {
-                Name(RBUF, Package(0x3)
-                {
-                    "0 1 0",
-                    "1 0 0",
-                    "0 0 -1"
-                })
-                Return(RBUF)
-            }
-            Method(GROT, 0x0, NotSerialized)
-            {
-                Name(RBUF, Package(0x3)
-                {
-                    "0 1 0",
-                    "1 0 0",
-                    "0 0 -1"
-                })
-                Return(RBUF)
-            }
-            Method(MROT, 0x0, NotSerialized)
-            {
-                Name(RBUF, Package(0x3)
-                {
-                    "-1 0 0",
-                    "0 -1 0",
-                    "0 0 1"
-                })
-                Return(RBUF)
-            }
-        }
         Device(QDCI)
         {
             Name(_DEP, Package(One)
