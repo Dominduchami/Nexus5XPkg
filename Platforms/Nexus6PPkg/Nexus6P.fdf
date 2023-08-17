@@ -119,8 +119,8 @@ READ_LOCK_STATUS   = TRUE
   INF QcomPkg/Driver/RuntimeMemoryConfigDxe/RuntimeMemoryConfigDxe.inf
 
   # Device Drivers
-  INF QcomPkg/Driver/SynapticsTouchDxe/SynapticsTouchDevice.inf
-  INF QcomPkg/Driver/SynapticsTouchDxe/SynapticsTouchDxe.inf
+  # INF QcomPkg/Driver/SynapticsTouchDxe/SynapticsTouchDevice.inf
+  # INF QcomPkg/Driver/SynapticsTouchDxe/SynapticsTouchDxe.inf
 
   # Debug heartbeat
 !if $(SEND_HEARTBEAT_TO_SERIAL) == 1
