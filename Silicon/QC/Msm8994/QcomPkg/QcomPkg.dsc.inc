@@ -289,6 +289,7 @@
   QcomPkg/Driver/SsbiDxe/SsbiDxe.inf
   QcomPkg/Driver/BoardDxe/BoardDxe.inf
   QcomPkg/Driver/RuntimeMemoryConfigDxe/RuntimeMemoryConfigDxe.inf
+  QcomPkg/Driver/PCIExpressConfiguratorDxe/PCIExpressConfiguratorDxe.inf
   QcomPkg/Driver/TimerDxe/TimerDxe.inf
 
   # Device Drivers
