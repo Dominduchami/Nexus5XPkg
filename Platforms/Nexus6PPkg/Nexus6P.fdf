@@ -117,6 +117,7 @@ READ_LOCK_STATUS   = TRUE
   INF QcomPkg/Driver/SsbiDxe/SsbiDxe.inf
   INF QcomPkg/Driver/BoardDxe/BoardDxe.inf
   INF QcomPkg/Driver/RuntimeMemoryConfigDxe/RuntimeMemoryConfigDxe.inf
+  INF QcomPkg/Driver/PCIExpressConfiguratorDxe/PCIExpressConfiguratorDxe.inf
 
   # Device Drivers
   # INF QcomPkg/Driver/SynapticsTouchDxe/SynapticsTouchDevice.inf
