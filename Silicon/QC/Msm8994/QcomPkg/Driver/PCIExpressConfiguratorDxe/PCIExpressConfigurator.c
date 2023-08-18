@@ -41,6 +41,7 @@ AcquireEfiProtocols(VOID)
     goto exit;
 
 #ifdef ENABLE_QCOM_RPM
+  DEBUG((EFI_D_ERROR | EFI_D_INFO, "Enable rpm flag set\n"));
   Status =
       gBS->LocateProtocol(&gQcomRpmProtocolGuid, NULL, (VOID **)&mRpmProtocol);
   if (EFI_ERROR(Status))
@@ -524,6 +525,8 @@ PCIExpressConfiguratorEntry(
 {
   EFI_STATUS Status;
 
+  DEBUG((EFI_D_ERROR, "PCIExpressConfiguratorEntry()\n"));
+
   Status = AcquireEfiProtocols();
   if (EFI_ERROR(Status))
     goto exit;
@@ -531,14 +534,19 @@ PCIExpressConfiguratorEntry(
   Status = VerifyPlatform();
   if (EFI_ERROR(Status))
     goto exit;
+  DEBUG((EFI_D_ERROR, "PCIExpress: PLatform verified\n"));
 
   Status = EnableClocksMsm8994();
   if (EFI_ERROR(Status))
     goto exit;
 
+  DEBUG((EFI_D_ERROR, "PCIExpress: Clocks inited\n"));
+
   Status = ConfigurePCIeAndCnssGpio();
   if (EFI_ERROR(Status))
     goto exit;
+
+  DEBUG((EFI_D_ERROR, "PCIExpress: PCIe and gpio configured\n"));
 
   // TODO: Call msm_pcie_restore_sec_config to restore security config
 
@@ -546,31 +554,45 @@ PCIExpressConfiguratorEntry(
   if (EFI_ERROR(Status))
     goto exit;
 
+  DEBUG((EFI_D_ERROR, "PCIExpress: PCIe phy initialized\n"));
+
 #ifdef ENABLE_QCOM_RPM
   Status = RpmTurnOnLdo30();
   if (EFI_ERROR(Status))
     goto exit;
 #endif
 
+  DEBUG((EFI_D_ERROR, "PCIExpress: LDO30 enabled\n"));
+
   Status = SetPipeClock();
   if (EFI_ERROR(Status))
     goto exit;
+
+  DEBUG((EFI_D_ERROR, "PCIExpress: Pipe clock set\n"));
 
   Status = EnableLink();
   if (EFI_ERROR(Status))
     goto exit;
 
+  DEBUG((EFI_D_ERROR, "PCIExpress: Link enabled\n"));
+
   Status = ConfigDmCore();
   if (EFI_ERROR(Status))
     goto exit;
+
+  DEBUG((EFI_D_ERROR, "PCIExpress: DMCore configured\n"));
 
   Status = ConfigSpace();
   if (EFI_ERROR(Status))
     goto exit;
 
+  DEBUG((EFI_D_ERROR, "PCIExpress: Space configured\n"));
+
   Status = FinishingUp();
   if (EFI_ERROR(Status))
     goto exit;
+
+  DEBUG((EFI_D_ERROR, "PCIExpress: Initialization finished, installing protocol...\n"));
 
   Status = gBS->InstallProtocolInterface(
       &ImageHandle, &gQcomMsmPCIExpressInitProtocolGuid, EFI_NATIVE_INTERFACE,
