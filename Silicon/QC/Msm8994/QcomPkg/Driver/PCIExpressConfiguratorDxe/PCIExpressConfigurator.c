@@ -216,6 +216,7 @@ InitializePciePHY(VOID)
   UINTN MsmPciePhyBase = 0;
 
   if (mBoardProtocol->board_platform_id() == MSM8992) {
+    DEBUG((EFI_D_ERROR, "PCIExpress: Board is msm8992\n"));
     // GCC clks (GCC_PCIE_0_BCR)
     MmioWrite32(0xFC401AC0, 0x1);
     gBS->Stall(2000);
@@ -224,6 +225,7 @@ InitializePciePHY(VOID)
     MsmPciePhyBase = 0xfc526000;
   }
   else {
+    DEBUG((EFI_D_ERROR, "PCIExpress: Board is msm8994\n"));
     // GCC clks (GCC_PCIE_1_BCR)
     MmioWrite32(0xFC401B40, 0x1);
     gBS->Stall(2000);
@@ -231,6 +233,7 @@ InitializePciePHY(VOID)
     // PHY base
     MsmPciePhyBase = 0xfc52e000;
   }
+  DEBUG((EFI_D_ERROR, "PCIExpress: InitPhy: Board-specific init done!\n"));
 
   MmioWrite32(MsmPciePhyBase + PCIE_PHY_POWER_DOWN_CONTROL, 0x3);
   MmioWrite32(MsmPciePhyBase + QSERDES_COM_SYSCLK_EN_SEL_TXBAND, 0x8);
@@ -284,6 +287,7 @@ InitializePciePHY(VOID)
   MmioWrite32(MsmPciePhyBase + PCIE_PHY_START, 0x3);
 
   // Wait for PHY to get ready
+  DEBUG((EFI_D_ERROR, "PCIExpress: Wait for PHY to get ready\n"));
   while (MmioRead32(MsmPciePhyBase + PCIE_PHY_PCS_STATUS) & 0x40)
     gBS->Stall(5);
 
