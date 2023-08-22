@@ -105,5 +105,6 @@ VOID LibQcomTargetMmcSdhciInit(INIT_SLOT_CB InitSlot)
 
   if (InitSlot(&config) == NULL) {
     DEBUG((DEBUG_ERROR, "Can't initialize mmc slot %u\n", config.slot));
+    for (;;) {};
   }
 }
