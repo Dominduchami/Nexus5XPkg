@@ -28,12 +28,15 @@ static ARM_MEMORY_REGION_DESCRIPTOR_EX gDeviceMemoryDescriptorEx[] = {
     {"HLOS 2",            0x04000000, 0x01000000, AddMem, SYS_MEM, SYS_MEM_CAP,  Conv,   WRITE_BACK},
     {"Removed Region 1",  0x05000000, 0x01500000, AddMem, SYS_MEM, SYS_MEM_CAP,  Reserv, NS_DEVICE},
 #else
-    {"HLOS 1",            0x00D00000, 0x02700000, AddMem, SYS_MEM, SYS_MEM_CAP,  BsData, WRITE_BACK},
+    /* TODO: Make it dynamic */
+    /*{"HLOS 1",            0x00D00000, 0x02700000, AddMem, SYS_MEM, SYS_MEM_CAP,  BsData, WRITE_BACK},
     {"Display Reserved",  0x03400000, 0x01200000, AddMem, MEM_RES, WRITE_THROUGH, MaxMem, WRITE_THROUGH},
     {"HLOS 2",            0x04600000, 0x00200000, AddMem, SYS_MEM, SYS_MEM_CAP,  Conv,   WRITE_BACK},
     {"TZ App Mem",        0x04800000, 0x01900000, NoHob,  SYS_MEM, SYS_MEM_CAP,  Reserv, NS_DEVICE},
     {"HLOS 3",            0x06100000, 0x00200000, AddMem, SYS_MEM, SYS_MEM_CAP,  Conv,   WRITE_BACK},
-    {"Removed Region 1",  0x06300000, 0x00200000, NoHob,  SYS_MEM, SYS_MEM_CAP,  Reserv, NS_DEVICE},
+    {"Removed Region 1",  0x06300000, 0x00200000, NoHob,  SYS_MEM, SYS_MEM_CAP,  Reserv, NS_DEVICE},*/
+    {"HLOS 1",            0x00D00000, 0x05600000, AddMem, SYS_MEM, SYS_MEM_CAP,  BsData, WRITE_BACK},
+    {"Removed Region 1",  0x06300000, 0x00200000, AddMem, SYS_MEM, SYS_MEM_CAP,  Reserv, NS_DEVICE},
 #endif
     {"TZ Apps",           0x06500000, 0x00500000, AddMem, SYS_MEM, SYS_MEM_CAP,  Reserv, NS_DEVICE},
     {"SMEM",              0x06A00000, 0x00200000, AddMem, MEM_RES, UNCACHEABLE,  Reserv, UNCACHED_UNBUFFERED},
@@ -63,7 +66,9 @@ static ARM_MEMORY_REGION_DESCRIPTOR_EX gDeviceMemoryDescriptorEx[] = {
     {"RAM Partition",     0x20000000, 0x60000000, AddMem, SYS_MEM, SYS_MEM_CAP, Conv,   WRITE_BACK_XN},
 #else
     {"DXE Heap",          0x20000000, 0x10000000, AddMem, SYS_MEM, SYS_MEM_CAP, Conv,   WRITE_BACK_XN},
-    {"RAM Partition",     0x30000000, 0x30000000, AddMem, SYS_MEM, SYS_MEM_CAP, Conv,   WRITE_BACK_XN},
+    //{"RAM Partition",     0x30000000, 0x30000000, AddMem, SYS_MEM, SYS_MEM_CAP, Conv,   WRITE_BACK_XN},
+    {"Display Reserved",  0x30000000, 0x02600000, AddMem, MEM_RES, WRITE_THROUGH, MaxMem, WRITE_THROUGH},
+    {"RAM Partition",     0x32600000, 0x2DA00000, AddMem, SYS_MEM, SYS_MEM_CAP, Conv,   WRITE_BACK_XN},
     {"RAM Partition",     0x80000000, 0x30000000, AddMem, SYS_MEM, SYS_MEM_CAP, Conv,   WRITE_BACK_XN},
     {"Preloader Block",   0xB0000000, 0x00001000, AddMem, SYS_MEM, SYS_MEM_CAP, Conv,   WRITE_BACK_XN},
     {"RAM Partition",     0xB0001000, 0x2FFFF000, AddMem, SYS_MEM, SYS_MEM_CAP, Conv,   WRITE_BACK_XN},
