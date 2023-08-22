@@ -48,11 +48,11 @@ steps:
 - script: chmod +x ./build_releaseinfo.ps1 && ./build_releaseinfo.ps1
   displayName: 'Stamp build'
 
-- script: chmod +x ./build_uefi_bullhead.sh && ./build_uefi_bullhead.sh
-  displayName: 'UEFI build (Nexus 5X)'
+#- script: chmod +x ./build_uefi_bullhead.sh && ./build_uefi_bullhead.sh
+#  displayName: 'UEFI build (Nexus 5X)'
 
-- script: chmod +x ./build_uefi_angler.sh && ./build_uefi_angler.sh
-  displayName: 'UEFI build (Nexus 6P)'
+#- script: chmod +x ./build_uefi_angler.sh && ./build_uefi_angler.sh
+#  displayName: 'UEFI build (Nexus 6P)'
 
 - script: chmod +x ./build_uefi_hima.sh && ./build_uefi_hima.sh
   displayName: 'UEFI build (HTC One M9)'
@@ -64,17 +64,17 @@ steps:
   displayName: 'UEFI boot image build'
 
 # Publish UEFI (2 targets)
-- task: PublishBuildArtifacts@1
-  displayName: 'Publish MSM8992 UEFI build (Nexus 5X)'
-  inputs:
-    pathtoPublish: ./ImageResources/Bullhead/uefi.img
-    artifactName: MSM8992 UEFI (Nexus 5X)
+#- task: PublishBuildArtifacts@1
+#  displayName: 'Publish MSM8992 UEFI build (Nexus 5X)'
+#  inputs:
+#    pathtoPublish: ./ImageResources/Bullhead/uefi.img
+#    artifactName: MSM8992 UEFI (Nexus 5X)
 
-- task: PublishBuildArtifacts@1
-  displayName: 'Publish MSM8994 UEFI build (Nexus 6P)'
-  inputs:
-    pathtoPublish: ./ImageResources/Angler/uefi.img
-    artifactName: MSM8994 UEFI (Nexus 6P)
+#- task: PublishBuildArtifacts@1
+#  displayName: 'Publish MSM8994 UEFI build (Nexus 6P)'
+#  inputs:
+#    pathtoPublish: ./ImageResources/Angler/uefi.img
+#    artifactName: MSM8994 UEFI (Nexus 6P)
 
 - task: PublishBuildArtifacts@1
   displayName: 'Publish MSM8994 UEFI (HTC One M9)'
