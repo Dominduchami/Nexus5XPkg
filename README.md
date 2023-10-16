@@ -36,9 +36,6 @@ This repository hosts the code and underlying work behind the Windows UEFI firmw
 - Run the following commands in order, with 0 typo, and without copy pasting all of them blindly all at once:
 
 ```
-# Stamp
-./build_releaseinfo.ps1
-
 # Build UEFI
 pip install --upgrade -r pip-requirements.txt
 ./build_uefi_angler.sh
