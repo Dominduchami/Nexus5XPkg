@@ -112,12 +112,6 @@
   gEfiSMEMProtocolGuid =               { 0xf4e5c7d0, 0xd239, 0x47cb, { 0xaa, 0xcd, 0x7f, 0x66, 0xef, 0x76, 0x32, 0x38 } }
 
 [PcdsFixedAtBuild.common]
-  # Simple FrameBuffer
-  gNexusFamilyPkgTokenSpaceGuid.PcdMipiFrameBufferAddress|0x03400000|UINT32|0x0000a400
-  gNexusFamilyPkgTokenSpaceGuid.PcdMipiFrameBufferWidth|1080|UINT32|0x0000a401
-  gNexusFamilyPkgTokenSpaceGuid.PcdMipiFrameBufferHeight|1920|UINT32|0x0000a402
-  gNexusFamilyPkgTokenSpaceGuid.PcdMipiFrameBufferPixelBpp|32|UINT32|0x0000a403
-
   # SMBIOS
   gNexusFamilyPkgTokenSpaceGuid.PcdSmbiosProcessorModel|"Snapdragon (TM) 810 @ 1.96 GHz"|VOID*|0x0000a301
   gNexusFamilyPkgTokenSpaceGuid.PcdSmbiosProcessorRetailModel|"MSM8994"|VOID*|0x0000a302
@@ -126,8 +120,11 @@
   gNexusFamilyPkgTokenSpaceGuid.PcdSmbiosSystemRetailSku|"RM-1085"|VOID*|0x0000a305
   gNexusFamilyPkgTokenSpaceGuid.PcdSmbiosBoardModel|"Nexus 5X"|VOID*|0x0000a306
 
-  # Debug Screen Serial
-  gNexusFamilyPkgTokenSpaceGuid.PcdEnableScreenSerial|FALSE|BOOLEAN|0x00000a105
+  # Simple FrameBuffer
+  gNexusFamilyPkgTokenSpaceGuid.PcdMipiFrameBufferAddress|0x03400000|UINT32|0x0000a400
+  gNexusFamilyPkgTokenSpaceGuid.PcdMipiFrameBufferWidth|1080|UINT32|0x0000a401
+  gNexusFamilyPkgTokenSpaceGuid.PcdMipiFrameBufferHeight|1920|UINT32|0x0000a402
+  gNexusFamilyPkgTokenSpaceGuid.PcdMipiFrameBufferPixelBpp|32|UINT32|0x0000a403
   
   # UART
   gNexusFamilyPkgTokenSpaceGuid.PcdUartSerialBase|0x0098C000|UINT32|0x0000a501

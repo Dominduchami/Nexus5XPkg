@@ -25,25 +25,27 @@
 [Packages]
   ArmPkg/ArmPkg.dec
   ArmPlatformPkg/ArmPlatformPkg.dec
-  MdePkg/MdePkg.dec
   EmbeddedPkg/EmbeddedPkg.dec
   MdeModulePkg/MdeModulePkg.dec
+  MdePkg/MdePkg.dec
+  OemPkg/OemPkg.dec
+  PcBdsPkg/PcBdsPkg.dec
   NexusFamilyPkg/NexusFamilyPkg.dec
 
 [LibraryClasses]
   BaseLib
-  ReportStatusCodeLib
-  UefiLib
-  UefiBootServicesTableLib
-  UefiDriverEntryPoint
   BaseMemoryLib
   DebugLib
-  CompilerIntrinsicsLib
+  MuUefiVersionLib
+  ReportStatusCodeLib
+  UefiBootServicesTableLib
+  UefiDriverEntryPoint
+  UefiLib
 
 [Protocols]
   gEfiSmbiosProtocolGuid
   gEfiChipInfoProtocolGuid
-
+  
 [Depex]
   gEfiSmbiosProtocolGuid
 

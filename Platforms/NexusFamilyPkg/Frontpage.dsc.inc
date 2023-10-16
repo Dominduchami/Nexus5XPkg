@@ -97,10 +97,6 @@
   #
   MsPlatformPowerCheckLib|PcBdsPkg/Library/MsPlatformPowerCheckLibNull/MsPlatformPowerCheckLibNull.inf
   #
-  # Empty Console Message Library
-  #
-  ConsoleMsgLib|PcBdsPkg/Library/ConsoleMsgLibNull/ConsoleMsgLibNull.inf
-  #
   # Library to help set the console to known points (low res, native res)
   #
   GraphicsConsoleHelperLib|PcBdsPkg/Library/GraphicsConsoleHelperLib/GraphicsConsoleHelper.inf
@@ -150,7 +146,7 @@
   #
   # Library to support Device disable Settings  (get/set)
   #
-  MsBootManagerSettingsLib|PcBdsPkg/Library/MsBootManagerSettingsDxeLib/MsBootManagerSettingsDxeLib.inf
+  MsBootManagerSettingsLib|OemPkg/Library/MsBootManagerSettingsDxeLib/MsBootManagerSettingsDxeLib.inf
   #
   # Library to provide Dialog Boxes in a Simple Window Manager environment.
   #
@@ -170,7 +166,7 @@
   MsUiThemeLib|MsGraphicsPkg/Library/MsUiThemeLib/Dxe/MsUiThemeLib.inf
   SafeIntLib|MdePkg/Library/BaseSafeIntLib/BaseSafeIntLib.inf
   #
-  # Library for determining if Manufacturing mode should be enabled on this boot.
+  # Library for determining if Manufacturing mode should be enabled on this boot. 
   # This libray is what everyone should use to determine which mode we are in.
   # It can be called from PEI or DXE.
   #
@@ -187,8 +183,10 @@
 
   Hash2CryptoLib|SecurityPkg/Library/DxeHash2CryptoLib/DxeHash2CryptoLib.inf
 
+  MsPlatformEarlyGraphicsLib|NexusFamilyPkg/Library/MsPlatformEarlyGraphicsLib/MsEarlyGraphicsLib.inf
+
 [PcdsFixedAtBuild.common]
-  # a PCD that controls the enumeration and connection of ConIn's. When true, ConIn is only connected once a console input is requests
+  # a PCD that controls the enumeration and connection of ConIn's. When true, ConIn is only connected once a console input is requests 
   gEfiMdeModulePkgTokenSpaceGuid.PcdConInConnectOnDemand|TRUE
 
 # Enable SHELL to build instead of just taking the binary
@@ -201,6 +199,8 @@
   # The GUID of Frontpage.inf from MU_OEM_SAMPLE
   # 4042708A-0F2D-4823-AC60-0D77B3111889
   gEfiMdeModulePkgTokenSpaceGuid.PcdBootManagerMenuFile|{ 0x8A, 0x70, 0x42, 0x40, 0x2D, 0x0F, 0x23, 0x48, 0xAC, 0x60, 0x0D, 0x77, 0xB3, 0x11, 0x18, 0x89 }
+
+  gOemPkgTokenSpaceGuid.PcdPostBackgroundColor|0x0
 
 [Components.AARCH64]
 
@@ -239,7 +239,7 @@
         NULL|DfciPkg/Library/DfciWpbtSettingLib/DfciWpbtSetting.inf
         NULL|DfciPkg/Library/DfciAssetTagSettingLib/DfciAssetTagSetting.inf
         DfciSettingPermissionLib|DfciPkg/Library/DfciSettingPermissionLib/DfciSettingPermissionLib.inf
-        NULL|PcBdsPkg/Library/MsBootManagerSettingsDxeLib/MsBootManagerSettingsDxeLib.inf
+        NULL|OemPkg/Library/MsBootManagerSettingsDxeLib/MsBootManagerSettingsDxeLib.inf
   <PcdsFeatureFlag>
      gDfciPkgTokenSpaceGuid.PcdSettingsManagerInstallProvider|TRUE
   }
@@ -278,6 +278,8 @@
   #
   MsGraphicsPkg/DisplayEngineDxe/DisplayEngineDxe.inf
 
+  MsGraphicsPkg/MsEarlyGraphics/Dxe/MsEarlyGraphics.inf
+
   MsWheaPkg/HwErrBert/HwErrBert.inf
   MsWheaPkg/MsWheaReport/Dxe/MsWheaReportDxe.inf
 
@@ -287,21 +289,3 @@
   MsCorePkg/AcpiRGRT/AcpiRgrt.inf
 
   DfciPkg/Application/DfciMenu/DfciMenu.inf
-
-#######################################
-#  Shell
-#######################################
-
-  ShellPkg/Application/Shell/Shell.inf {
-    <LibraryClasses>
-      NULL|ShellPkg/Library/UefiShellLevel2CommandsLib/UefiShellLevel2CommandsLib.inf
-      NULL|ShellPkg/Library/UefiShellLevel1CommandsLib/UefiShellLevel1CommandsLib.inf
-      NULL|ShellPkg/Library/UefiShellLevel3CommandsLib/UefiShellLevel3CommandsLib.inf
-      NULL|ShellPkg/Library/UefiShellDriver1CommandsLib/UefiShellDriver1CommandsLib.inf
-      NULL|ShellPkg/Library/UefiShellInstall1CommandsLib/UefiShellInstall1CommandsLib.inf
-      NULL|ShellPkg/Library/UefiShellDebug1CommandsLib/UefiShellDebug1CommandsLib.inf
-      NULL|ShellPkg/Library/UefiShellNetwork1CommandsLib/UefiShellNetwork1CommandsLib.inf
-      NULL|ShellPkg/Library/UefiShellNetwork2CommandsLib/UefiShellNetwork2CommandsLib.inf
-    <PcdsFixedAtBuild>
-     gEfiShellPkgTokenSpaceGuid.PcdShellLibAutoInitialize|FALSE
-  }
