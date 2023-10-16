@@ -28,7 +28,7 @@
   OemPkg/OemPkg.dec
   PcBdsPkg/PcBdsPkg.dec
   QcomPkg/QcomPkg.dec
-  LumiaFamilyPkg/LumiaFamilyPkg.dec
+  NexusFamilyPkg/NexusFamilyPkg.dec
 
 [LibraryClasses]
   BaseMemoryLib

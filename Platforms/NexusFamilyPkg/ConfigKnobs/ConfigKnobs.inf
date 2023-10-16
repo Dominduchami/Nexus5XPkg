@@ -23,7 +23,7 @@
   MdePkg/MdePkg.dec
   SetupDataPkg/SetupDataPkg.dec
   PolicyServicePkg/PolicyServicePkg.dec
-  LumiaFamilyPkg/LumiaFamilyPkg.dec
+  NexusFamilyPkg/NexusFamilyPkg.dec
   OemPkg/OemPkg.dec
 
 [LibraryClasses]

@@ -219,13 +219,13 @@ class PlatformBuilder( UefiBuilder, BuildSettingsManager):
         # Include the MFCI test cert by default, override on the commandline with "BLD_*_SHIP_MODE=TRUE" if you want the retail MFCI cert
         self.env.SetValue("BLD_*_SHIP_MODE", "FALSE", "Default")
 
-        self.env.SetValue("CONF_AUTOGEN_INCLUDE_PATH", self.mws.join(self.ws, "Platforms", "LumiaFamilyPkg", "Include"), "Platform Hardcoded")
-        self.env.SetValue("MU_SCHEMA_DIR", self.mws.join(self.ws, "Platforms", "LumiaFamilyPkg", "CfgData"), "Platform Defined")
-        self.env.SetValue("MU_SCHEMA_FILE_NAME", "LumiaFamilyPkgCfgData.xml", "Platform Hardcoded")
+        self.env.SetValue("CONF_AUTOGEN_INCLUDE_PATH", self.mws.join(self.ws, "Platforms", "NexusFamilyPkg", "Include"), "Platform Hardcoded")
+        self.env.SetValue("MU_SCHEMA_DIR", self.mws.join(self.ws, "Platforms", "NexusFamilyPkg", "CfgData"), "Platform Defined")
+        self.env.SetValue("MU_SCHEMA_FILE_NAME", "NexusFamilyPkgCfgData.xml", "Platform Hardcoded")
 
-        self.env.SetValue("YAML_POLICY_FILE", self.mws.join(self.ws, "LumiaFamilyPkg", "PolicyData", "PolicyDataUsb.yaml"), "Platform Hardcoded")
-        self.env.SetValue("POLICY_DATA_STRUCT_FOLDER", self.mws.join(self.ws, "LumiaFamilyPkg", "Include"), "Platform Defined")
-        self.env.SetValue('POLICY_REPORT_FOLDER', self.mws.join(self.ws, "LumiaFamilyPkg", "PolicyData"), "Platform Defined")
+        self.env.SetValue("YAML_POLICY_FILE", self.mws.join(self.ws, "NexusFamilyPkg", "PolicyData", "PolicyDataUsb.yaml"), "Platform Hardcoded")
+        self.env.SetValue("POLICY_DATA_STRUCT_FOLDER", self.mws.join(self.ws, "NexusFamilyPkg", "Include"), "Platform Defined")
+        self.env.SetValue('POLICY_REPORT_FOLDER', self.mws.join(self.ws, "NexusFamilyPkg", "PolicyData"), "Platform Defined")
 
         return 0
 
