@@ -16,5 +16,6 @@ edk2-pytool-library~=0.19.1 # MU_CHANGE
 edk2-pytool-extensions~=0.25.0
 edk2-basetools==0.1.49 # MU_CHANGE
 antlr4-python3-runtime==4.13.1
-regex
+regex==2023.3.23
 pefile~=2023.2.7
+xmlschema==2.2.3

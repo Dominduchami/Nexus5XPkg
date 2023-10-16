@@ -181,6 +181,8 @@
   AcpiPlatformUpdateLib|QcomPkg/Library/AcpiPlatformUpdateLib/AcpiPlatformUpdateLib.inf
   PlatformThemeLib|QcomPkg/Library/PlatformThemeLib/PlatformThemeLib.inf
 
+  ConsoleMsgLib|QcomPkg/Library/ConsoleMsgLib/ConsoleMsgLib.inf
+
   # SoC Drivers
   InterruptsLib|QcomPkg/Library/InterruptsLib/InterruptsLib.inf
   MallocLib|QcomPkg/Library/MallocLib/MallocLib.inf
