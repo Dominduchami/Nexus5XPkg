@@ -44,8 +44,8 @@
 
 [PcdsFixedAtBuild.common]
   gEfiMdeModulePkgTokenSpaceGuid.PcdFirmwareVendor|L"LumiaWoA authors & Dominduchami"
-  gEfiMdeModulePkgTokenSpaceGuid.PcdFirmwareVersionString|L"2303.83"
-  gEfiMdeModulePkgTokenSpaceGuid.PcdFirmwareRevision|0x01230383
+  gEfiMdeModulePkgTokenSpaceGuid.PcdFirmwareVersionString|L"2310.01"
+  gEfiMdeModulePkgTokenSpaceGuid.PcdFirmwareRevision|0x01231001
   gEfiMdeModulePkgTokenSpaceGuid.PcdAcpiDefaultOemId|"QCOM  "
   gEfiMdeModulePkgTokenSpaceGuid.PcdAcpiDefaultOemTableId|0x324B44454D4F4351
   gEfiMdeModulePkgTokenSpaceGuid.PcdAcpiDefaultCreatorId|0x4D4F4351
