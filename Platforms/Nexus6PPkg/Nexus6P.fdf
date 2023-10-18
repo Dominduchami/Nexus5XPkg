@@ -150,7 +150,7 @@ READ_LOCK_STATUS   = TRUE
   # Graphics
   INF NexusFamilyPkg/Driver/SimpleFbDxe/SimpleFbDxe.inf
 
-  # INF QcomPkg/GPLDriver/QupSpiDxe/QupSpiDxe.inf
+  INF QcomPkg/GPLDriver/QupSpiDxe/QupSpiDxe.inf
 
   # BDS
   INF MdeModulePkg/Universal/PrintDxe/PrintDxe.inf
