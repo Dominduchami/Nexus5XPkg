@@ -26,7 +26,7 @@
   FLASH_DEFINITION               = Nexus6PPkg/Nexus6P.fdf
   SECURE_BOOT_ENABLE             = 1
   USE_PHYSICAL_TIMER             = 1
-  USE_SCREEN_FOR_SERIAL_OUTPUT   = 0
+  USE_SCREEN_FOR_SERIAL_OUTPUT   = 1
   USE_MEMORY_FOR_SERIAL_OUTPUT   = 0
   SEND_HEARTBEAT_TO_SERIAL       = 0
   MEMORY_3GB                     = 1
