@@ -5,13 +5,13 @@
  * 
  * Disassembling to symbolic ASL+ operators
  *
- * Disassembly of ./DSDT_MTP.aml, Thu Oct 19 14:23:24 2023
+ * Disassembly of ./DSDT_MTP.aml, Thu Oct 19 14:27:57 2023
  *
  * Original Table Header:
  *     Signature        "DSDT"
- *     Length           0x0002B4D4 (177364)
+ *     Length           0x0002B4F7 (177399)
  *     Revision         0x02
- *     Checksum         0x43
+ *     Checksum         0x14
  *     OEM ID           "QCOMM "
  *     OEM Table ID     "MSM8994 "
  *     OEM Revision     0x00000003 (3)
@@ -40820,7 +40820,13 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8994 ", 0x00000003)
                         "\\_SB.GIO0", 0x00, ResourceConsumer, ,
                         )
                         {   // Pin list
-                            0x003D
+                            0x004D
+                        }
+                    GpioIo (Exclusive, PullNone, 0x0000, 0x0000, IoRestrictionNone,
+                        "\\_SB.GIO0", 0x00, ResourceConsumer, ,
+                        )
+                        {   // Pin list
+                            0x0060
                         }
                 })
                 Return (RBUF) /* \_SB_.TSC1._CRS.RBUF */
