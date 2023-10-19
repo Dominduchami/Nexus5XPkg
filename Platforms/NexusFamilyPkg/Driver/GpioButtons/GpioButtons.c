@@ -126,9 +126,8 @@ state in gButtonState.
 @return EFI_ERROR   - Error the string
 **/
 EFI_STATUS
-GetButtonState(IN GPIO_BUTTON_SERVICES_PROTOCOL *Bsp)
+GetButtonState()
 {
-  MS_BUTTON_SERVICES_PROTOCOL       *Protocol = NULL;
   EFI_STATUS                         Status;
   EFI_HANDLE                         Handle = NULL;
   EFI_DEVICE_PATH_PROTOCOL          *ButtonsDxeDevicePath;
@@ -235,7 +234,7 @@ ButtonsInit(IN EFI_HANDLE ImageHandle, IN EFI_SYSTEM_TABLE *SystemTable)
       PreBootClearVolumeButtonState;
   gBsp->ButtonState = NoButtons;
 
-  Status = GetButtonState(gBsp);
+  Status = GetButtonState();
   if (EFI_ERROR(Status)) {
     FreePool(gBsp);
     return Status;
