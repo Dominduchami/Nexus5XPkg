@@ -5,13 +5,13 @@
  * 
  * Disassembling to symbolic ASL+ operators
  *
- * Disassembly of ./DSDT_MTP.aml, Thu Oct 19 14:27:57 2023
+ * Disassembly of ./DSDT_MTP.aml, Thu Oct 19 14:33:50 2023
  *
  * Original Table Header:
  *     Signature        "DSDT"
  *     Length           0x0002B4F7 (177399)
  *     Revision         0x02
- *     Checksum         0x14
+ *     Checksum         0x88
  *     OEM ID           "QCOMM "
  *     OEM Table ID     "MSM8994 "
  *     OEM Revision     0x00000003 (3)
@@ -26406,7 +26406,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8994 ", 0x00000003)
                             "TLMMGPIO", 
                             Package (0x06)
                             {
-                                0x3C, 
+                                0x60, 
                                 Zero, 
                                 Zero, 
                                 One, 
@@ -26465,7 +26465,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8994 ", 0x00000003)
                             "TLMMGPIO", 
                             Package (0x06)
                             {
-                                0x3C, 
+                                0x60, 
                                 One, 
                                 Zero, 
                                 One, 
@@ -26479,7 +26479,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8994 ", 0x00000003)
                             "TLMMGPIO", 
                             Package (0x06)
                             {
-                                0x3D, 
+                                0x4D, 
                                 One, 
                                 Zero, 
                                 Zero, 
@@ -26543,7 +26543,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8994 ", 0x00000003)
                             "TLMMGPIO", 
                             Package (0x06)
                             {
-                                0x3C, 
+                                0x60, 
                                 Zero, 
                                 Zero, 
                                 One, 
@@ -26557,7 +26557,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8994 ", 0x00000003)
                             "TLMMGPIO", 
                             Package (0x06)
                             {
-                                0x3D, 
+                                0x4D, 
                                 One, 
                                 Zero, 
                                 Zero, 

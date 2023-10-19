@@ -1,5 +1,5 @@
 // CreatorID=MSFT	CreatorRev=5.0.0
-// FileLength=177399	FileChkSum=0x14
+// FileLength=177399	FileChkSum=0x88
 
 DefinitionBlock(".\DSDT_MTP.aml", "DSDT", 0x02, "QCOMM ", "MSM8994 ", 0x00000003)
 {
@@ -24268,7 +24268,7 @@ DefinitionBlock(".\DSDT_MTP.aml", "DSDT", 0x02, "QCOMM ", "MSM8994 ", 0x00000003
                             "TLMMGPIO",
                             Package(0x6)
                             {
-                                0x3c,
+                                0x60,
                                 Zero,
                                 Zero,
                                 One,
@@ -24323,7 +24323,7 @@ DefinitionBlock(".\DSDT_MTP.aml", "DSDT", 0x02, "QCOMM ", "MSM8994 ", 0x00000003
                             "TLMMGPIO",
                             Package(0x6)
                             {
-                                0x3c,
+                                0x60,
                                 One,
                                 Zero,
                                 One,
@@ -24336,7 +24336,7 @@ DefinitionBlock(".\DSDT_MTP.aml", "DSDT", 0x02, "QCOMM ", "MSM8994 ", 0x00000003
                             "TLMMGPIO",
                             Package(0x6)
                             {
-                                0x3d,
+                                0x4d,
                                 One,
                                 Zero,
                                 Zero,
@@ -24396,7 +24396,7 @@ DefinitionBlock(".\DSDT_MTP.aml", "DSDT", 0x02, "QCOMM ", "MSM8994 ", 0x00000003
                             "TLMMGPIO",
                             Package(0x6)
                             {
-                                0x3c,
+                                0x60,
                                 Zero,
                                 Zero,
                                 One,
@@ -24409,7 +24409,7 @@ DefinitionBlock(".\DSDT_MTP.aml", "DSDT", 0x02, "QCOMM ", "MSM8994 ", 0x00000003
                             "TLMMGPIO",
                             Package(0x6)
                             {
-                                0x3d,
+                                0x4d,
                                 One,
                                 Zero,
                                 Zero,
