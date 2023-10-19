@@ -1,4 +1,7 @@
-DefinitionBlock(".\DSDT_MTP8992.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
+// CreatorID=MSFT	CreatorRev=5.0.0
+// FileLength=148284	FileChkSum=0x5b
+
+DefinitionBlock(".\DSDT_MTP.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
 {
     Scope(\_SB_)
     {
@@ -22638,7 +22641,7 @@ DefinitionBlock(".\DSDT_MTP8992.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x0000
                             "TLMMGPIO",
                             Package(0x6)
                             {
-                                0x8,
+                                0x3c,
                                 Zero,
                                 Zero,
                                 One,
@@ -31850,6 +31853,10 @@ DefinitionBlock(".\DSDT_MTP8992.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x0000
         {
             Name(_HID, "MSHW1003")
             Name(_UID, One)
+            Name(_DEP, Package(0x1)
+            {
+                \_SB_.PEP0
+            })
             Method(_CRS, 0x0, NotSerialized)
             {
                 Name(RBUF, Buffer(0x6c)
