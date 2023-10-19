@@ -5,13 +5,13 @@
  * 
  * Disassembling to symbolic ASL+ operators
  *
- * Disassembly of ./DSDT_MTP.aml, Thu Oct 19 15:53:23 2023
+ * Disassembly of ./DSDT_MTP.aml, Thu Oct 19 16:03:07 2023
  *
  * Original Table Header:
  *     Signature        "DSDT"
  *     Length           0x0002433C (148284)
  *     Revision         0x02
- *     Checksum         0x5B
+ *     Checksum         0x8F
  *     OEM ID           "QCOMM "
  *     OEM Table ID     "MSM8992 "
  *     OEM Revision     0x00000003 (3)
@@ -24664,7 +24664,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8992 ", 0x00000003)
                             "TLMMGPIO", 
                             Package (0x06)
                             {
-                                0x3C, 
+                                0x08, 
                                 Zero, 
                                 Zero, 
                                 One, 

@@ -1,5 +1,5 @@
 // CreatorID=MSFT	CreatorRev=5.0.0
-// FileLength=148284	FileChkSum=0x5b
+// FileLength=148284	FileChkSum=0x8f
 
 DefinitionBlock(".\DSDT_MTP.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
 {
@@ -22641,7 +22641,7 @@ DefinitionBlock(".\DSDT_MTP.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003
                             "TLMMGPIO",
                             Package(0x6)
                             {
-                                0x3c,
+                                0x8,
                                 Zero,
                                 Zero,
                                 One,
