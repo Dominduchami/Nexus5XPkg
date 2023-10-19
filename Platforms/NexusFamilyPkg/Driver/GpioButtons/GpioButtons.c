@@ -103,16 +103,16 @@ KeyNotify(IN EFI_KEY_DATA *KeyData)
   
   if (KeyData->KeyState.KeyToggleState && KeyData->Key.ScanCode == SCAN_UP) {
     gBsp->ButtonState = VolUpButton;
-    DEBUG((DEBUG_INFO, "%a: Vol+ Button Detected\n", __FUNCTION__));
+    DEBUG((DEBUG_ERROR, "%a: Vol+ Button Detected\n", __FUNCTION__));
   }
   else if (
       KeyData->KeyState.KeyToggleState && KeyData->Key.ScanCode == SCAN_DOWN) {
     gBsp->ButtonState = VolDownButton;
-    DEBUG((DEBUG_INFO, "%a: Vol- Button Detected\n", __FUNCTION__));
+    DEBUG((DEBUG_ERROR, "%a: Vol- Button Detected\n", __FUNCTION__));
   }
   else {
     gBsp->ButtonState = NoButtons;
-    DEBUG((DEBUG_INFO, "%a: Neither Vol+ nor Vol- detected\n", __FUNCTION__));
+    DEBUG((DEBUG_ERROR, "%a: Neither Vol+ nor Vol- detected\n", __FUNCTION__));
   }
   return EFI_SUCCESS;
 }
