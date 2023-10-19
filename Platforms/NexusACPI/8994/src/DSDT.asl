@@ -5,13 +5,13 @@
  * 
  * Disassembling to symbolic ASL+ operators
  *
- * Disassembly of ./DSDT_MTP.aml, Thu Oct 19 15:14:08 2023
+ * Disassembly of ./DSDT_MTP.aml, Thu Oct 19 15:33:41 2023
  *
  * Original Table Header:
  *     Signature        "DSDT"
- *     Length           0x0002CA42 (182850)
+ *     Length           0x0002CA65 (182885)
  *     Revision         0x02
- *     Checksum         0x91
+ *     Checksum         0x86
  *     OEM ID           "QCOMM "
  *     OEM Table ID     "MSM8994 "
  *     OEM Revision     0x00000003 (3)
@@ -26404,7 +26404,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8994 ", 0x00000003)
                             "TLMMGPIO", 
                             Package (0x06)
                             {
-                                0x3C, 
+                                0x60, 
                                 Zero, 
                                 Zero, 
                                 One, 
@@ -26463,7 +26463,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8994 ", 0x00000003)
                             "TLMMGPIO", 
                             Package (0x06)
                             {
-                                0x3C, 
+                                0x60, 
                                 One, 
                                 Zero, 
                                 One, 
@@ -26477,7 +26477,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8994 ", 0x00000003)
                             "TLMMGPIO", 
                             Package (0x06)
                             {
-                                0x3D, 
+                                0x4D, 
                                 One, 
                                 Zero, 
                                 Zero, 
@@ -26541,7 +26541,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8994 ", 0x00000003)
                             "TLMMGPIO", 
                             Package (0x06)
                             {
-                                0x3C, 
+                                0x60, 
                                 Zero, 
                                 Zero, 
                                 One, 
@@ -26555,7 +26555,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8994 ", 0x00000003)
                             "TLMMGPIO", 
                             Package (0x06)
                             {
-                                0x3D, 
+                                0x4D, 
                                 One, 
                                 Zero, 
                                 Zero, 
@@ -41691,7 +41691,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8994 ", 0x00000003)
             {
                 Name (RBUF, ResourceTemplate ()
                 {
-                    I2cSerialBusV2 (0x0020, ControllerInitiated, 0x00061A80,
+                    I2cSerialBusV2 (0x0070, ControllerInitiated, 0x00061A80,
                         AddressingMode7Bit, "\\_SB.I2C2",
                         0x00, ResourceConsumer, , Exclusive,
                         RawDataBuffer (0x08)  // Vendor Data
@@ -41702,7 +41702,13 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8994 ", 0x00000003)
                         "\\_SB.GIO0", 0x00, ResourceConsumer, ,
                         )
                         {   // Pin list
-                            0x003D
+                            0x004D
+                        }
+                    GpioIo (Exclusive, PullNone, 0x0000, 0x0000, IoRestrictionNone,
+                        "\\_SB.GIO0", 0x00, ResourceConsumer, ,
+                        )
+                        {   // Pin list
+                            0x0060
                         }
                 })
                 Return (RBUF) /* \_SB_.TSC1._CRS.RBUF */
