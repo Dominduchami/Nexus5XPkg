@@ -5,13 +5,13 @@
  * 
  * Disassembling to symbolic ASL+ operators
  *
- * Disassembly of ./DSDT_MTP.aml, Thu Oct 19 14:33:50 2023
+ * Disassembly of ./DSDT_MTP.aml, Thu Oct 19 14:47:10 2023
  *
  * Original Table Header:
  *     Signature        "DSDT"
- *     Length           0x0002B4F7 (177399)
+ *     Length           0x0002B5F7 (177655)
  *     Revision         0x02
- *     Checksum         0x88
+ *     Checksum         0x63
  *     OEM ID           "QCOMM "
  *     OEM Table ID     "MSM8994 "
  *     OEM Revision     0x00000003 (3)
@@ -40805,6 +40805,10 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8994 ", 0x00000003)
         {
             Name (_HID, "QCOM2418")  // _HID: Hardware ID
             Name (_UID, One)  // _UID: Unique ID
+            Name (_DEP, Package (0x01)  // _DEP: Dependencies
+            {
+                \_SB.PEP0
+            })
             Method (_CRS, 0, NotSerialized)  // _CRS: Current Resource Settings
             {
                 Name (RBUF, ResourceTemplate ()
@@ -40830,6 +40834,51 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8994 ", 0x00000003)
                         }
                 })
                 Return (RBUF) /* \_SB_.TSC1._CRS.RBUF */
+            }
+
+            Name (PGID, Buffer (0x0A)
+            {
+                "\\_SB.TSC1"
+            })
+            Name (DBUF, Buffer (DBFL){})
+            CreateByteField (DBUF, Zero, STAT)
+            CreateByteField (DBUF, 0x02, DVAL)
+            CreateField (DBUF, 0x18, 0xA0, DEID)
+            Method (_S1D, 0, NotSerialized)  // _S1D: S1 Device State
+            {
+                Return (0x03)
+            }
+
+            Method (_S2D, 0, NotSerialized)  // _S2D: S2 Device State
+            {
+                Return (0x03)
+            }
+
+            Method (_S3D, 0, NotSerialized)  // _S3D: S3 Device State
+            {
+                Return (0x03)
+            }
+
+            Method (_PS0, 0, NotSerialized)  // _PS0: Power State 0
+            {
+                DEID = Buffer (ESNL){}
+                DVAL = Zero
+                DEID = PGID /* \_SB_.TSC1.PGID */
+                If (\_SB.ABD.AVBL)
+                {
+                    \_SB.PEP0.FLD0 = DBUF /* \_SB_.TSC1.DBUF */
+                }
+            }
+
+            Method (_PS3, 0, NotSerialized)  // _PS3: Power State 3
+            {
+                DEID = Buffer (ESNL){}
+                DVAL = 0x03
+                DEID = PGID /* \_SB_.TSC1.PGID */
+                If (\_SB.ABD.AVBL)
+                {
+                    \_SB.PEP0.FLD0 = DBUF /* \_SB_.TSC1.DBUF */
+                }
             }
         }
 
