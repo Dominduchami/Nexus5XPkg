@@ -5,7 +5,7 @@
  * 
  * Disassembling to symbolic ASL+ operators
  *
- * Disassembly of ./DSDT_MTP.aml, Thu Oct 19 15:05:36 2023
+ * Disassembly of ./DSDT_MTP.aml, Thu Oct 19 15:14:08 2023
  *
  * Original Table Header:
  *     Signature        "DSDT"
