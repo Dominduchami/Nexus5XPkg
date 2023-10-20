@@ -19,20 +19,21 @@ static ARM_MEMORY_REGION_DESCRIPTOR_EX gDeviceMemoryDescriptorEx[] = {
     {"Reset Data",        0x0038A000, 0x00004000, AddMem, SYS_MEM, SYS_MEM_CAP,  RtData, UNCACHED_UNBUFFERED},
     {"Reser. Uncached0",  0x0038E000, 0x00002000, AddMem, SYS_MEM, SYS_MEM_CAP,  RtData, UNCACHED_UNBUFFERED}, /* It's tricky tricky tricky */
     {"Reser. Uncached0",  0x00390000, 0x00070000, AddMem, SYS_MEM, SYS_MEM_CAP,  BsData, UNCACHED_UNBUFFERED}, /* There goes the other part */
+    {"HLOS 1",            0x00400000, 0x00800000, AddMem, SYS_MEM, SYS_MEM_CAP,  Conv,   WRITE_BACK},
     {"UEFI Stack",        0x00C00000, 0x00040000, AddMem, SYS_MEM, SYS_MEM_CAP,  BsData, WRITE_BACK},
     {"CPU Vectors",       0x00C40000, 0x00010000, AddMem, SYS_MEM, SYS_MEM_CAP,  BsCode, WRITE_BACK},
     {"Reser. Cached 0",   0x00C50000, 0x000B0000, AddMem, SYS_MEM, SYS_MEM_CAP,  BsData, WRITE_BACK},
 #if SILICON_PLATFORM == 8992
-    {"HLOS 1",            0x00D00000, 0x02700000, AddMem, SYS_MEM, SYS_MEM_CAP,  BsData, WRITE_BACK},
+    {"HLOS 2",            0x00D00000, 0x02700000, AddMem, SYS_MEM, SYS_MEM_CAP,  BsData, WRITE_BACK},
     {"Display Reserved",  0x03400000, 0x00C00000, AddMem, MEM_RES, WRITE_THROUGH, MaxMem, WRITE_THROUGH},
-    {"HLOS 2",            0x04000000, 0x01000000, AddMem, SYS_MEM, SYS_MEM_CAP,  Conv,   WRITE_BACK},
+    {"HLOS 3",            0x04000000, 0x01000000, AddMem, SYS_MEM, SYS_MEM_CAP,  Conv,   WRITE_BACK},
     {"Removed Region 1",  0x05000000, 0x01500000, AddMem, SYS_MEM, SYS_MEM_CAP,  Reserv, NS_DEVICE},
 #else
-    {"HLOS 1",            0x00D00000, 0x02700000, AddMem, SYS_MEM, SYS_MEM_CAP,  BsData, WRITE_BACK},
+    {"HLOS 2",            0x00D00000, 0x02700000, AddMem, SYS_MEM, SYS_MEM_CAP,  BsData, WRITE_BACK},
     {"Display Reserved",  0x03400000, 0x01200000, AddMem, MEM_RES, WRITE_THROUGH, MaxMem, WRITE_THROUGH},
-    {"HLOS 2",            0x04600000, 0x00200000, AddMem, SYS_MEM, SYS_MEM_CAP,  Conv,   WRITE_BACK},
+    {"HLOS 3",            0x04600000, 0x00200000, AddMem, SYS_MEM, SYS_MEM_CAP,  Conv,   WRITE_BACK},
     {"TZ App Mem",        0x04800000, 0x01900000, NoHob,  SYS_MEM, SYS_MEM_CAP,  Reserv, NS_DEVICE},
-    {"HLOS 3",            0x06100000, 0x00200000, AddMem, SYS_MEM, SYS_MEM_CAP,  Conv,   WRITE_BACK},
+    {"HLOS 4",            0x06100000, 0x00200000, AddMem, SYS_MEM, SYS_MEM_CAP,  Conv,   WRITE_BACK},
     {"Removed Region 1",  0x06300000, 0x00200000, NoHob,  SYS_MEM, SYS_MEM_CAP,  Reserv, NS_DEVICE},
 #endif
     {"TZ Apps",           0x06500000, 0x00500000, AddMem, SYS_MEM, SYS_MEM_CAP,  Reserv, NS_DEVICE},
@@ -43,19 +44,19 @@ static ARM_MEMORY_REGION_DESCRIPTOR_EX gDeviceMemoryDescriptorEx[] = {
     {"MPSS_EFS / SBL",    0x06F00000, 0x00180000, AddMem, SYS_MEM, SYS_MEM_CAP,  Reserv, NS_DEVICE},
     {"ADSP_EFS",          0x07080000, 0x00020000, AddMem, SYS_MEM, SYS_MEM_CAP,  Reserv, NS_DEVICE},
     {"Removed Region 2",  0x070A0000, 0x00160000, AddMem, SYS_MEM, SYS_MEM_CAP,  Reserv, NS_DEVICE},
-    {"HLOS 3",            0x07200000, 0x00200000, AddMem, SYS_MEM, SYS_MEM_CAP,  Conv,   WRITE_BACK},
+    {"HLOS 4",            0x07200000, 0x00200000, AddMem, SYS_MEM, SYS_MEM_CAP,  Conv,   WRITE_BACK},
     {"Subsys Reser. 1",   0x07400000, 0x07B00000, AddMem, SYS_MEM, SYS_MEM_CAP,  Reserv, NS_DEVICE},
     {"CNSS_DEBUG",        0x0EF00000, 0x00300000, AddMem, SYS_MEM, SYS_MEM_CAP,  Reserv, NS_DEVICE},
     {"Reserved",          0x0F200000, 0x00200000, AddMem, SYS_MEM, SYS_MEM_CAP,  Reserv, NS_DEVICE},
     {"DXE Heap",          0x0F400000, 0x07800000, AddMem, SYS_MEM, SYS_MEM_CAP,  Conv,   WRITE_BACK_XN},
-    {"HLOS 4",            0x16A00000, 0x09600000, AddMem, SYS_MEM, SYS_MEM_CAP,  Conv,   WRITE_BACK},
+    {"HLOS 5",            0x16A00000, 0x09600000, AddMem, SYS_MEM, SYS_MEM_CAP,  Conv,   WRITE_BACK},
 #else
     {"TZ",                0x06D00000, 0x00160000, AddMem, SYS_MEM, SYS_MEM_CAP,  Reserv, NS_DEVICE},
     {"ADSP_EFS",          0x06E60000, 0x00020000, AddMem, SYS_MEM, SYS_MEM_CAP,  Reserv, NS_DEVICE},
     {"MPSS_EFS / SBL",    0x06E80000, 0x00180000, AddMem, SYS_MEM, SYS_MEM_CAP,  Reserv, NS_DEVICE},
     {"Subsy Res. 1/DHMS", 0x07000000, 0x07F00000, AddMem, SYS_MEM, SYS_MEM_CAP,  Reserv, NS_DEVICE},
     {"CNSS_DEBUG",        0x0EF00000, 0x00300000, AddMem, SYS_MEM, SYS_MEM_CAP,  Reserv, NS_DEVICE},
-    {"HLOS 3",            0x0F200000, 0x10E00000, AddMem, SYS_MEM, SYS_MEM_CAP,  Conv,   WRITE_BACK},
+    {"HLOS 5",            0x0F200000, 0x10E00000, AddMem, SYS_MEM, SYS_MEM_CAP,  Conv,   WRITE_BACK},
 #endif
 
     /* RAM partition regions */
