@@ -5,13 +5,13 @@
  * 
  * Disassembling to symbolic ASL+ operators
  *
- * Disassembly of ./DSDT_MTP.aml, Thu Oct 19 16:03:07 2023
+ * Disassembly of ./DSDT_MTP.aml, Fri Oct 20 11:25:08 2023
  *
  * Original Table Header:
  *     Signature        "DSDT"
- *     Length           0x0002433C (148284)
+ *     Length           0x00024384 (148356)
  *     Revision         0x02
- *     Checksum         0x8F
+ *     Checksum         0x31
  *     OEM ID           "QCOMM "
  *     OEM Table ID     "MSM8992 "
  *     OEM Revision     0x00000003 (3)
@@ -37474,6 +37474,12 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8992 ", 0x00000003)
             {
                 Name (RBUF, ResourceTemplate ()
                 {
+                    GpioInt (Edge, ActiveBoth, Exclusive, PullDown, 0x0000,
+                        "\\_SB.PM01", 0x00, ResourceConsumer, ,
+                        )
+                        {   // Pin list
+                            0x0040
+                        }
                     GpioInt (Edge, ActiveBoth, SharedAndWake, PullUp, 0x0000,
                         "\\_SB.PM01", 0x00, ResourceConsumer, ,
                         RawDataBuffer (0x03)  // Vendor Data
@@ -37482,6 +37488,12 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8992 ", 0x00000003)
                         })
                         {   // Pin list
                             0x0610
+                        }
+                    GpioInt (Edge, ActiveBoth, ExclusiveAndWake, PullDown, 0x0000,
+                        "\\_SB.PM01", 0x00, ResourceConsumer, ,
+                        )
+                        {   // Pin list
+                            0x0041
                         }
                 })
                 Return (RBUF) /* \_SB_.BTNS._CRS.RBUF */
