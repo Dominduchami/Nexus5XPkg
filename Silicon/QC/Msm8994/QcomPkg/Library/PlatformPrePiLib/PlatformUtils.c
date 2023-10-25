@@ -60,10 +60,8 @@ STATIC
 VOID
 DisplayEnableRefresh(VOID)
 {
-#if SILICON_PLATFORM == 8994
   UINT32 Height = FixedPcdGet32(PcdMipiFrameBufferHeight);
   UINT32 VsyncCount = 19200000 / (Height * 60);
-#endif
   UINT32 MdssMdpRev = MmioRead32(MDP_HW_REV);
   UINT32 pp0_base;
 
@@ -74,10 +72,8 @@ DisplayEnableRefresh(VOID)
   else
     pp0_base = REG_MDP(0x21B00);
 
-#if SILICON_PLATFORM == 8994
-  /* Vsync write required for working framebuffer on angler, breaks on bullhead */
   MmioWrite32(pp0_base + MDP_PP_SYNC_CONFIG_VSYNC, VsyncCount | BIT(19));
-#endif
+
   /* Enable autorefresh and flush */
   MmioWrite32(pp0_base + MDP_PP_AUTOREFRESH_CONFIG, BIT(31) | AUTOREFRESH_FRAMENUM);
   MmioWrite32(MDP_CTL_0_BASE + CTL_START, 1);
