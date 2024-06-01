@@ -117,7 +117,7 @@ READ_LOCK_STATUS   = TRUE
   INF QcomPkg/Driver/SsbiDxe/SsbiDxe.inf
   INF QcomPkg/Driver/BoardDxe/BoardDxe.inf
   INF QcomPkg/Driver/RuntimeMemoryConfigDxe/RuntimeMemoryConfigDxe.inf
-  INF QcomPkg/Driver/PCIExpressConfiguratorDxe/PCIExpressConfiguratorDxe.inf
+  # INF QcomPkg/Driver/PCIExpressConfiguratorDxe/PCIExpressConfiguratorDxe.inf
 
   # Device Drivers
   # INF QcomPkg/Driver/SynapticsTouchDxe/SynapticsTouchDevice.inf
@@ -140,7 +140,7 @@ READ_LOCK_STATUS   = TRUE
   INF MdeModulePkg/Universal/SecurityStubDxe/SecurityStubDxe.inf
 
   # Secure Boot Key Enroll
-  !if $(SECURE_BOOT_ENABLE) == TRUE
+  !if $(SECURE_BOOT_ENABLE) == 1
     # INF SecurityPkg/VariableAuthenticated/SecureBootConfigDxe/SecureBootConfigDxe.inf
     # INF NexusFamilyPkg/Driver/SecureBootProvisioningDxe/SecureBootProvisioningDxe.inf
   !endif
@@ -150,7 +150,7 @@ READ_LOCK_STATUS   = TRUE
   # Graphics
   INF NexusFamilyPkg/Driver/SimpleFbDxe/SimpleFbDxe.inf
 
-  # INF QcomPkg/GPLDriver/QupSpiDxe/QupSpiDxe.inf
+  INF QcomPkg/GPLDriver/QupSpiDxe/QupSpiDxe.inf
 
   # BDS
   INF MdeModulePkg/Universal/PrintDxe/PrintDxe.inf

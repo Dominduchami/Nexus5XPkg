@@ -1,17 +1,17 @@
 /*
  * Intel ACPI Component Architecture
- * AML/ASL+ Disassembler version 20190108 (32-bit version)
- * Copyright (c) 2000 - 2019 Intel Corporation
+ * AML/ASL+ Disassembler version 20210105 (32-bit version)
+ * Copyright (c) 2000 - 2021 Intel Corporation
  * 
  * Disassembling to symbolic ASL+ operators
  *
- * Disassembly of ./8994/builtin/DSDT.aml, Sun Apr 02 21:57:49 2023
+ * Disassembly of ./DSDT_MTP.aml, Thu Oct 19 15:53:21 2023
  *
  * Original Table Header:
  *     Signature        "DSDT"
- *     Length           0x0002CAF0 (183024)
+ *     Length           0x0002CA65 (182885)
  *     Revision         0x02
- *     Checksum         0xC8
+ *     Checksum         0x86
  *     OEM ID           "QCOMM "
  *     OEM Table ID     "MSM8994 "
  *     OEM Revision     0x00000003 (3)
@@ -26404,7 +26404,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8994 ", 0x00000003)
                             "TLMMGPIO", 
                             Package (0x06)
                             {
-                                0x3C, 
+                                0x60, 
                                 Zero, 
                                 Zero, 
                                 One, 
@@ -26463,7 +26463,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8994 ", 0x00000003)
                             "TLMMGPIO", 
                             Package (0x06)
                             {
-                                0x3C, 
+                                0x60, 
                                 One, 
                                 Zero, 
                                 One, 
@@ -26477,7 +26477,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8994 ", 0x00000003)
                             "TLMMGPIO", 
                             Package (0x06)
                             {
-                                0x3D, 
+                                0x4D, 
                                 One, 
                                 Zero, 
                                 Zero, 
@@ -26541,7 +26541,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8994 ", 0x00000003)
                             "TLMMGPIO", 
                             Package (0x06)
                             {
-                                0x3C, 
+                                0x60, 
                                 Zero, 
                                 Zero, 
                                 One, 
@@ -26555,7 +26555,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8994 ", 0x00000003)
                             "TLMMGPIO", 
                             Package (0x06)
                             {
-                                0x3D, 
+                                0x4D, 
                                 One, 
                                 Zero, 
                                 Zero, 
@@ -28673,7 +28673,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8994 ", 0x00000003)
                 Package (0x07)
                 {
                     "AMSS", 
-                    ToUUID ("936dc601-5530-4b82-9d2a-72a488bec7c1"), 
+                    ToUUID ("936dc601-5530-4b82-9d2a-72a488bec7c1") /* Unknown UUID */, 
                     Zero, 
                     Zero, 
                     Zero, 
@@ -28684,7 +28684,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8994 ", 0x00000003)
                 Package (0x07)
                 {
                     "ADSP", 
-                    ToUUID ("d58464d3-5b28-4ea6-a2e2-e8e57c5c69b8"), 
+                    ToUUID ("d58464d3-5b28-4ea6-a2e2-e8e57c5c69b8") /* Unknown UUID */, 
                     Zero, 
                     Zero, 
                     Zero, 
@@ -28695,7 +28695,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8994 ", 0x00000003)
                 Package (0x07)
                 {
                     "SharedIMEM", 
-                    ToUUID ("6fae2f68-3b80-4931-8e0e-e30a3580f14c"), 
+                    ToUUID ("6fae2f68-3b80-4931-8e0e-e30a3580f14c") /* Unknown UUID */, 
                     Zero, 
                     Zero, 
                     One, 
@@ -28706,7 +28706,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8994 ", 0x00000003)
                 Package (0x07)
                 {
                     "TZ_LOG", 
-                    ToUUID ("aa795f4d-3b0a-44a4-bb84-b7ecf3ee056a"), 
+                    ToUUID ("aa795f4d-3b0a-44a4-bb84-b7ecf3ee056a") /* Unknown UUID */, 
                     Zero, 
                     Zero, 
                     One, 
@@ -28717,7 +28717,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8994 ", 0x00000003)
                 Package (0x0B)
                 {
                     "RPM", 
-                    ToUUID ("7f8e50dc-fad4-4a31-a243-3ab83708e49f"), 
+                    ToUUID ("7f8e50dc-fad4-4a31-a243-3ab83708e49f") /* Unknown UUID */, 
                     Zero, 
                     One, 
                     0x03, 
@@ -28732,7 +28732,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8994 ", 0x00000003)
                 Package (0x07)
                 {
                     "HYP_LOG", 
-                    ToUUID ("2d79304a-543b-4147-bf69-465bbdd69fe0"), 
+                    ToUUID ("2d79304a-543b-4147-bf69-465bbdd69fe0") /* Unknown UUID */, 
                     Zero, 
                     Zero, 
                     One, 
@@ -28767,7 +28767,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8994 ", 0x00000003)
                     {
                         Zero, 
                         Zero, 
-                        ToUUID ("ba58766d-abf2-4402-88d7-90ab243f6c77")
+                        ToUUID ("ba58766d-abf2-4402-88d7-90ab243f6c77") /* Unknown UUID */
                     }
                 })
                 DerefOf (PKGG [Zero]) [Zero] = RMTB /* \_SB_.RMTB */
@@ -28779,8 +28779,8 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8994 ", 0x00000003)
             {
                 Return (Package (0x02)
                 {
-                    ToUUID ("ed9e8101-05fa-46b7-82aa-8d58770d200b"), 
-                    ToUUID ("11406f35-1173-4869-807b-27df71802812")
+                    ToUUID ("ed9e8101-05fa-46b7-82aa-8d58770d200b") /* Unknown UUID */, 
+                    ToUUID ("11406f35-1173-4869-807b-27df71802812") /* Unknown UUID */
                 })
             }
 
@@ -29004,7 +29004,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8994 ", 0x00000003)
                             Package (0x06)
                             {
                                 0x02, 
-                                ToUUID ("5f51a34c-6834-479d-9ea2-eafa622524ba"), 
+                                ToUUID ("5f51a34c-6834-479d-9ea2-eafa622524ba") /* Unknown UUID */, 
                                 One, 
                                 Zero, 
                                 One, 
@@ -29453,7 +29453,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8994 ", 0x00000003)
                                     Package (0x09)
                                     {
                                         One, 
-                                        ToUUID ("8c2e4c6c-ba3e-415a-8bc8-33ec5ee7a77c"), 
+                                        ToUUID ("8c2e4c6c-ba3e-415a-8bc8-33ec5ee7a77c") /* Unknown UUID */, 
                                         0x02, 
                                         Zero, 
                                         0x02, 
@@ -29771,7 +29771,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8994 ", 0x00000003)
 
             Method (GUID, 0, NotSerialized)
             {
-                Return (ToUUID ("de2eaa3d-0fa5-45e9-ac9d-a494c6c04d7c"))
+                Return (ToUUID ("de2eaa3d-0fa5-45e9-ac9d-a494c6c04d7c") /* Unknown UUID */)
             }
 
             Method (CTXI, 0, NotSerialized)
@@ -29855,7 +29855,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8994 ", 0x00000003)
 
             Method (GUID, 0, NotSerialized)
             {
-                Return (ToUUID ("c00de5a5-e6e0-4dd7-b8c3-2b71ab6fca15"))
+                Return (ToUUID ("c00de5a5-e6e0-4dd7-b8c3-2b71ab6fca15") /* Unknown UUID */)
             }
 
             Method (CTXI, 0, NotSerialized)
@@ -29943,7 +29943,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8994 ", 0x00000003)
 
             Method (GUID, 0, NotSerialized)
             {
-                Return (ToUUID ("84a989bd-145d-4985-83bd-1a80829b5030"))
+                Return (ToUUID ("84a989bd-145d-4985-83bd-1a80829b5030") /* Unknown UUID */)
             }
 
             Method (CTXI, 0, NotSerialized)
@@ -30043,7 +30043,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8994 ", 0x00000003)
 
             Method (GUID, 0, NotSerialized)
             {
-                Return (ToUUID ("9833c712-3292-4ffb-b0f4-2bd20e1f7f66"))
+                Return (ToUUID ("9833c712-3292-4ffb-b0f4-2bd20e1f7f66") /* Unknown UUID */)
             }
 
             Method (CTXI, 0, NotSerialized)
@@ -30135,7 +30135,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8994 ", 0x00000003)
 
             Method (GUID, 0, NotSerialized)
             {
-                Return (ToUUID ("c461b828-b8ad-4113-939a-8934272f9102"))
+                Return (ToUUID ("c461b828-b8ad-4113-939a-8934272f9102") /* Unknown UUID */)
             }
 
             Method (CTXI, 0, NotSerialized)
@@ -30523,7 +30523,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8994 ", 0x00000003)
 
             Method (GUID, 0, NotSerialized)
             {
-                Return (ToUUID ("bf8f998b-7dd4-4d92-b3af-33f1f8ed3ef1"))
+                Return (ToUUID ("bf8f998b-7dd4-4d92-b3af-33f1f8ed3ef1") /* Unknown UUID */)
             }
 
             Method (CTXI, 0, NotSerialized)
@@ -30615,7 +30615,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8994 ", 0x00000003)
 
             Method (GUID, 0, NotSerialized)
             {
-                Return (ToUUID ("ad65697c-af56-4b4c-97da-3308cb1e788c"))
+                Return (ToUUID ("ad65697c-af56-4b4c-97da-3308cb1e788c") /* Unknown UUID */)
             }
 
             Method (CTXI, 0, NotSerialized)
@@ -30668,7 +30668,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8994 ", 0x00000003)
             })
             Method (GUID, 0, NotSerialized)
             {
-                Return (ToUUID ("0bdb4206-6a68-4e0e-a4e6-079946be378c"))
+                Return (ToUUID ("0bdb4206-6a68-4e0e-a4e6-079946be378c") /* Unknown UUID */)
             }
 
             Method (_CRS, 0, NotSerialized)  // _CRS: Current Resource Settings
@@ -30950,7 +30950,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8994 ", 0x00000003)
                             Package (0x02)
                             {
                                 "MMUIDS", 
-                                ToUUID ("9833c712-3292-4ffb-b0f4-2bd20e1f7f66")
+                                ToUUID ("9833c712-3292-4ffb-b0f4-2bd20e1f7f66") /* Unknown UUID */
                             }, 
 
                             Package (0x03)
@@ -31228,7 +31228,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8994 ", 0x00000003)
                             Package (0x02)
                             {
                                 "MMUIDS", 
-                                ToUUID ("de2eaa3d-0fa5-45e9-ac9d-a494c6c04d7c")
+                                ToUUID ("de2eaa3d-0fa5-45e9-ac9d-a494c6c04d7c") /* Unknown UUID */
                             }, 
 
                             Package (0x03)
@@ -31284,7 +31284,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8994 ", 0x00000003)
                     {
                         "COMPONENT", 
                         Zero, 
-                        ToUUID ("2c135991-4391-4633-90b1-fa96f2e2cc04"), 
+                        ToUUID ("2c135991-4391-4633-90b1-fa96f2e2cc04") /* Unknown UUID */, 
                         "PRIMDISPLAY_POWER_STATES", 
                         "HW_BLOCK_MDP", 
                         Package (0x02)
@@ -31894,7 +31894,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8994 ", 0x00000003)
                     {
                         "COMPONENT", 
                         One, 
-                        ToUUID ("30bdf1b5-28f7-4c0c-ac47-273dd1401e11"), 
+                        ToUUID ("30bdf1b5-28f7-4c0c-ac47-273dd1401e11") /* Unknown UUID */, 
                         "GRAPHICS_POWER_STATES", 
                         "HW_BLOCK_GRAPHICS", 
                         Package (0x02)
@@ -32004,7 +32004,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8994 ", 0x00000003)
                     {
                         "COMPONENT", 
                         0x02, 
-                        ToUUID ("07ca2add-df87-49e1-8583-08687dc81c8e"), 
+                        ToUUID ("07ca2add-df87-49e1-8583-08687dc81c8e") /* Unknown UUID */, 
                         "MDPBLT_POWER_STATES", 
                         "HW_BLOCK_MDP", 
                         Package (0x02)
@@ -32434,7 +32434,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8994 ", 0x00000003)
                     {
                         "COMPONENT", 
                         0x03, 
-                        ToUUID ("4d5ffbf5-d791-41cd-89cb-0154129ba607"), 
+                        ToUUID ("4d5ffbf5-d791-41cd-89cb-0154129ba607") /* Unknown UUID */, 
                         "ROTATOR_POWER_STATES", 
                         "HW_BLOCK_MDP", 
                         Package (0x02)
@@ -32864,7 +32864,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8994 ", 0x00000003)
                     {
                         "COMPONENT", 
                         0x04, 
-                        ToUUID ("d0e1bb1a-703d-4be8-b450-64a4fbfca6a8"), 
+                        ToUUID ("d0e1bb1a-703d-4be8-b450-64a4fbfca6a8") /* Unknown UUID */, 
                         "VIDEO_POWER_STATES", 
                         "HW_BLOCK_VIDEO", 
                         Package (0x02)
@@ -33132,7 +33132,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8994 ", 0x00000003)
                     {
                         "COMPONENT", 
                         0x05, 
-                        ToUUID ("cc4d73fa-c3c2-4c7e-a217-d468f4611bbd"), 
+                        ToUUID ("cc4d73fa-c3c2-4c7e-a217-d468f4611bbd") /* Unknown UUID */, 
                         "CRYPTO_POWER_STATES", 
                         "HW_BLOCK_NONE", 
                         Package (0x02)
@@ -33238,7 +33238,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8994 ", 0x00000003)
                     {
                         "COMPONENT", 
                         0x06, 
-                        ToUUID ("1a134877-a115-49b8-bda1-382b78bba62d"), 
+                        ToUUID ("1a134877-a115-49b8-bda1-382b78bba62d") /* Unknown UUID */, 
                         "HDMI_POWER_STATES", 
                         "HW_BLOCK_MDP", 
                         Package (0x02)
@@ -33708,7 +33708,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8994 ", 0x00000003)
                     {
                         "COMPONENT", 
                         0x07, 
-                        ToUUID ("2feff049-f0c7-46fd-a9d8-6cf70e83ec9b"), 
+                        ToUUID ("2feff049-f0c7-46fd-a9d8-6cf70e83ec9b") /* Unknown UUID */, 
                         "HDMI_HOTPLUG_DETECT", 
                         "HW_BLOCK_NONE", 
                         Package (0x01)
@@ -33743,7 +33743,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8994 ", 0x00000003)
                     {
                         "COMPONENT", 
                         0x08, 
-                        ToUUID ("8dd40bdf-6fbd-45ed-8538-711d434b6ba1"), 
+                        ToUUID ("8dd40bdf-6fbd-45ed-8538-711d434b6ba1") /* Unknown UUID */, 
                         "ALWAYS_ACTIVE_WP", 
                         "HW_BLOCK_NONE", 
                         Package (0x01)
@@ -41691,7 +41691,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8994 ", 0x00000003)
             {
                 Name (RBUF, ResourceTemplate ()
                 {
-                    I2cSerialBusV2 (0x0020, ControllerInitiated, 0x00061A80,
+                    I2cSerialBusV2 (0x0070, ControllerInitiated, 0x00061A80,
                         AddressingMode7Bit, "\\_SB.I2C2",
                         0x00, ResourceConsumer, , Exclusive,
                         RawDataBuffer (0x08)  // Vendor Data
@@ -41702,7 +41702,13 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8994 ", 0x00000003)
                         "\\_SB.GIO0", 0x00, ResourceConsumer, ,
                         )
                         {   // Pin list
-                            0x003D
+                            0x004D
+                        }
+                    GpioIo (Exclusive, PullNone, 0x0000, 0x0000, IoRestrictionNone,
+                        "\\_SB.GIO0", 0x00, ResourceConsumer, ,
+                        )
+                        {   // Pin list
+                            0x0060
                         }
                 })
                 Return (RBUF) /* \_SB_.TSC1._CRS.RBUF */
@@ -42930,7 +42936,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8994 ", 0x00000003)
 
             Name (_DSD, Package (0x02)  // _DSD: Device-Specific Data
             {
-                ToUUID ("fa6bd625-9ce8-470d-a2c7-b3ca36c4282e"), 
+                ToUUID ("fa6bd625-9ce8-470d-a2c7-b3ca36c4282e") /* Generic Buttons Device */, 
                 Package (0x04)
                 {
                     Package (0x05)
@@ -43219,39 +43225,6 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8994 ", 0x00000003)
             Name (_HID, "QCOM2412")  // _HID: Hardware ID
         }
 
-        Device (FMSL)
-        {
-            Name (_DEP, Package (0x02)  // _DEP: Dependencies
-            {
-                \_SB.PEP0, 
-                \_SB.IC11
-            })
-            Name (_HID, "QCOM24B1")  // _HID: Hardware ID
-            Method (_CRS, 0, NotSerialized)  // _CRS: Current Resource Settings
-            {
-                Name (RBUF, ResourceTemplate ()
-                {
-                    I2cSerialBusV2 (0x0011, ControllerInitiated, 0x00061A80,
-                        AddressingMode7Bit, "\\_SB.IC11",
-                        0x00, ResourceConsumer, , Exclusive,
-                        )
-                    GpioInt (Edge, ActiveLow, Exclusive, PullUp, 0x0000,
-                        "\\_SB.GIO0", 0x00, ResourceConsumer, ,
-                        )
-                        {   // Pin list
-                            0x0009
-                        }
-                    GpioIo (Exclusive, PullUp, 0x0000, 0x0000, IoRestrictionNone,
-                        "\\_SB.GIO0", 0x00, ResourceConsumer, ,
-                        )
-                        {   // Pin list
-                            0x003E
-                        }
-                })
-                Return (RBUF) /* \_SB_.FMSL._CRS.RBUF */
-            }
-        }
-
         Device (BTH0)
         {
             Name (_HID, "QCOM24B2")  // _HID: Hardware ID
@@ -43377,7 +43350,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8994 ", 0x00000003)
                              0x00                                             // .
                         })
                         CopyObject (ToBuffer (Arg0), _T_0) /* \_SB_.URS0.UFN0._DSM._T_0 */
-                        If ((_T_0 == ToUUID ("fe56cfeb-49d5-4378-a8a2-2978dbe54ad2")))
+                        If ((_T_0 == ToUUID ("fe56cfeb-49d5-4378-a8a2-2978dbe54ad2") /* Unknown UUID */))
                         {
                             While (One)
                             {
@@ -43432,7 +43405,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8994 ", 0x00000003)
                                 Break
                             }
                         }
-                        ElseIf ((_T_0 == ToUUID ("18de299f-9476-4fc9-b43b-8aeb713ed751")))
+                        ElseIf ((_T_0 == ToUUID ("18de299f-9476-4fc9-b43b-8aeb713ed751") /* Unknown UUID */))
                         {
                             While (One)
                             {
@@ -43597,7 +43570,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8994 ", 0x00000003)
                          0x00                                             // .
                     })
                     CopyObject (ToBuffer (Arg0), _T_0) /* \_SB_.UFN1._DSM._T_0 */
-                    If ((_T_0 == ToUUID ("fe56cfeb-49d5-4378-a8a2-2978dbe54ad2")))
+                    If ((_T_0 == ToUUID ("fe56cfeb-49d5-4378-a8a2-2978dbe54ad2") /* Unknown UUID */))
                     {
                         While (One)
                         {
@@ -43652,7 +43625,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8994 ", 0x00000003)
                             Break
                         }
                     }
-                    ElseIf ((_T_0 == ToUUID ("18de299f-9476-4fc9-b43b-8aeb713ed751")))
+                    ElseIf ((_T_0 == ToUUID ("18de299f-9476-4fc9-b43b-8aeb713ed751") /* Unknown UUID */))
                     {
                         While (One)
                         {

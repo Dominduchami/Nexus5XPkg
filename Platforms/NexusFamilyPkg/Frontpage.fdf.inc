@@ -14,6 +14,7 @@
   INF DfciPkg/DfciManager/DfciManager.inf
   INF MsGraphicsPkg/OnScreenKeyboardDxe/OnScreenKeyboardDxe.inf
   INF MsGraphicsPkg/SimpleWindowManagerDxe/SimpleWindowManagerDxe.inf
+  INF MsGraphicsPkg/MsEarlyGraphics/Dxe/MsEarlyGraphics.inf
 
   INF MsWheaPkg/HwErrBert/HwErrBert.inf
   INF MsWheaPkg/MsWheaReport/Dxe/MsWheaReportDxe.inf
@@ -25,11 +26,6 @@
 
   INF DfciPkg/Application/DfciMenu/DfciMenu.inf
 
-  # # Change AARCH64 to the appropriate architecture for your platform.
-  # FILE APPLICATION=PCD(gPcBdsPkgTokenSpaceGuid.PcdShellFile) {
-  #   SECTION PE32=$(OUTPUT_DIRECTORY)/$(TARGET)_$(TOOL_CHAIN_TAG)/AARCH64/Shell.efi
-  #   SECTION UI= "EdkShell"
-  # }
   FILE FREEFORM = PCD(gOemPkgTokenSpaceGuid.PcdLogoFile) {
     SECTION RAW = NexusFamilyPkg/Include/Resources/BootLogo.bmp
     SECTION UI = "Logo"

@@ -1,3 +1,23 @@
+/*
+ * Intel ACPI Component Architecture
+ * AML/ASL+ Disassembler version 20210105 (32-bit version)
+ * Copyright (c) 2000 - 2021 Intel Corporation
+ * 
+ * Disassembling to symbolic ASL+ operators
+ *
+ * Disassembly of ./DSDT_MTP.aml, Fri Oct 20 11:25:08 2023
+ *
+ * Original Table Header:
+ *     Signature        "DSDT"
+ *     Length           0x00024384 (148356)
+ *     Revision         0x02
+ *     Checksum         0x31
+ *     OEM ID           "QCOMM "
+ *     OEM Table ID     "MSM8992 "
+ *     OEM Revision     0x00000003 (3)
+ *     Compiler ID      "MSFT"
+ *     Compiler Version 0x05000000 (83886080)
+ */
 DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8992 ", 0x00000003)
 {
     Scope (\_SB)
@@ -24644,7 +24664,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8992 ", 0x00000003)
                             "TLMMGPIO", 
                             Package (0x06)
                             {
-                                0x3C, 
+                                0x08, 
                                 Zero, 
                                 Zero, 
                                 One, 
@@ -37460,7 +37480,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8992 ", 0x00000003)
                         {   // Pin list
                             0x0040
                         }
-                    GpioInt (Edge, ActiveBoth, ExclusiveAndWake, PullUp, 0x0000,
+                    GpioInt (Edge, ActiveBoth, SharedAndWake, PullUp, 0x0000,
                         "\\_SB.PM01", 0x00, ResourceConsumer, ,
                         RawDataBuffer (0x03)  // Vendor Data
                         {
@@ -37475,24 +37495,6 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8992 ", 0x00000003)
                         {   // Pin list
                             0x0041
                         }
-                    GpioInt (Edge, ActiveBoth, Exclusive, PullUp, 0x0000,
-                        "\\_SB.PM01", 0x00, ResourceConsumer, ,
-                        RawDataBuffer (0x03)  // Vendor Data
-                        {
-                            0x40, 0x40, 0x01
-                        })
-                        {   // Pin list
-                            0x0620
-                        }
-                    GpioInt (Edge, ActiveBoth, ExclusiveAndWake, PullUp, 0x0000,
-                        "\\_SB.PM01", 0x00, ResourceConsumer, ,
-                        RawDataBuffer (0x03)  // Vendor Data
-                        {
-                            0x40, 0x40, 0x01
-                        })
-                        {   // Pin list
-                            0x0618
-                        }
                 })
                 Return (RBUF) /* \_SB_.BTNS._CRS.RBUF */
             }
@@ -37500,7 +37502,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8992 ", 0x00000003)
             Name (_DSD, Package (0x02)  // _DSD: Device-Specific Data
             {
                 ToUUID ("fa6bd625-9ce8-470d-a2c7-b3ca36c4282e") /* Generic Buttons Device */, 
-                Package (0x06)
+                Package (0x04)
                 {
                     Package (0x05)
                     {
@@ -37536,24 +37538,6 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8992 ", 0x00000003)
                         One, 
                         0x0C, 
                         0xEA
-                    }, 
-
-                    Package (0x05)
-                    {
-                        One, 
-                        0x03, 
-                        One, 
-                        0x90, 
-                        0x20
-                    }, 
-
-                    Package (0x05)
-                    {
-                        One, 
-                        0x04, 
-                        One, 
-                        0x90, 
-                        0x21
                     }
                 }
             })

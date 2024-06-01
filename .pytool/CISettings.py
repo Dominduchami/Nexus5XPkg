@@ -41,7 +41,7 @@ class Settings(CiSetupSettingsManager, CiBuildSettingsManager, UpdateSettingsMan
         ''' return iterable of edk2 packages supported by this build.
         These should be edk2 workspace relative paths '''
 
-        return ("Nexus5XPkg",)
+        return ("Nexus5XPkg","Nexus6PPkg")
 
     def GetArchitecturesSupported(self):
         ''' return iterable of edk2 architectures supported by this build '''
@@ -49,7 +49,7 @@ class Settings(CiSetupSettingsManager, CiBuildSettingsManager, UpdateSettingsMan
 
     def GetTargetsSupported(self):
         ''' return iterable of edk2 target tags supported by this build '''
-        return ("NO-TARGET", "NOOPT")
+        return ("DEBUG", "RELEASE", "NO-TARGET", "NOOPT")
 
     # ####################################################################################### #
     #                     Verify and Save requested Ci Build Config                           #
@@ -146,7 +146,7 @@ class Settings(CiSetupSettingsManager, CiBuildSettingsManager, UpdateSettingsMan
         return rs
 
     def GetName(self):
-        return "MuPlatformsNexus5XPkg"
+        return "Nexus6PPkg"
 
     def GetDependencies(self):
         ''' Return Git Repository Dependencies
@@ -165,7 +165,12 @@ class Settings(CiSetupSettingsManager, CiBuildSettingsManager, UpdateSettingsMan
 
     def GetPackagesPath(self):
         ''' Return a list of workspace relative paths that should be mapped as edk2 PackagesPath '''
-        result = ["Platforms", "MU_BASECORE", "Common/MU", "Common/MU_TIANO", "Common/MU_OEM_SAMPLE", "Silicon/ARM/TIANO", "Silicon/QC/Msm8994"]
+
+        # Include all submodule paths
+        result = ["Platforms"]
+        for submodule in self.GetRequiredSubmodules():
+            result.append(submodule.path)
+
         return result
 
     def GetWorkspaceRoot(self):

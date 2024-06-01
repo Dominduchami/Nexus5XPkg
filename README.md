@@ -4,9 +4,14 @@
 
 This repository hosts the code and underlying work behind the Windows UEFI firmware "bootstrapper" for Nexus 5X and Nexus 6P.
 
-## Windows support notes
+## Compatibility
 
-Windows boots on both devices, however with only framebuffer and internal storage working for now
+| Device Name | Codenames/Internal Names | UEFI Port Status | Windows Bootability Status |
+|---------------|--------------------------|------------------|----------------------------|
+| Huawei Nexus 6P  | Angler | ✅ | ✅ |
+| LG Nexus 5X | Bullhead | ✅ | ⚠️* |
+
+*Only EMMC and framebuffer will work in Windows currently, ACPI tables need adjustemnts.
 
 ## Build
 
@@ -31,11 +36,9 @@ Windows boots on both devices, however with only framebuffer and internal storag
 - Run the following commands in order, with 0 typo, and without copy pasting all of them blindly all at once:
 
 ```
-# Stamp
-./build_releaseinfo.ps1
-
 # Build UEFI
 pip install --upgrade -r pip-requirements.txt
+./build_uefi_angler.sh
 ./build_uefi_bullhead.sh
 ./build_boot_shim.sh
 

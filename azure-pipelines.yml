@@ -51,6 +51,7 @@ steps:
 #- script: chmod +x ./build_uefi_bullhead.sh && ./build_uefi_bullhead.sh
 #  displayName: 'UEFI build (Nexus 5X)'
 
+
 #- script: chmod +x ./build_uefi_angler.sh && ./build_uefi_angler.sh
 #  displayName: 'UEFI build (Nexus 6P)'
 

@@ -19,19 +19,27 @@ BOOLEAN IsLinuxBootRequested(VOID)
   return FALSE;
 }
 
+/* 
+ * Reconfigure the framebuffer to a BGRA 32bpp one (windows requirements)
+ *
+ * Uses code from https://imbushuo.net/blog/archives/590/ (Little-kernel section)
+ * 
+ * TODO: Dynamically detect pipes
+ */
 VOID CheckMdpConfig(VOID)
 {
-  /* Windows requires a BGRA FB */
+  UINT32 Width = FixedPcdGet32(PcdMipiFrameBufferWidth);
+
 #if SILICON_PLATFORM == 8992
   MmioWrite32(BULLHEAD_PIPE_BASE + PIPE_SSPP_SRC_FORMAT, 0x000236FF);
   MmioWrite32(BULLHEAD_PIPE_BASE + PIPE_SSPP_SRC_UNPACK_PATTERN, 0x03020001);
-  MmioWrite32(BULLHEAD_PIPE_BASE + PIPE_SSPP_SRC_YSTRIDE, 1080*4);
+  MmioWrite32(BULLHEAD_PIPE_BASE + PIPE_SSPP_SRC_YSTRIDE, Width * 4);
   MmioWrite32(MDP_CTL_0_BASE + CTL_FLUSH, (1 << (3)));
 #else
   /* Angler uses dual pipe framebuffer */
   /*MmioWrite32(ANGLER_PIPE_BASE + PIPE_SSPP_SRC_FORMAT, 0x000237FF);
   MmioWrite32(ANGLER_PIPE_BASE + PIPE_SSPP_SRC_UNPACK_PATTERN, 0x03020001);
-  MmioWrite32(ANGLER_PIPE_BASE + PIPE_SSPP_SRC_YSTRIDE, 1440*4);
+  MmioWrite32(ANGLER_PIPE_BASE + PIPE_SSPP_SRC_YSTRIDE, Width * 4);
   MmioWrite32(MDP_CTL_0_BASE + CTL_FLUSH, (1 << (0)));
 
   MmioWrite32(ANGLER_PIPE2_BASE + PIPE_SSPP_SRC_FORMAT, 0x000237FF);
@@ -47,7 +55,12 @@ VOID CheckMdpConfig(VOID)
 #endif
 }
 
-#if ENABLE_REFRESH == 1
+  MmioWrite32(ANGLER_PIPE2_BASE + PIPE_SSPP_SRC_YSTRIDE, Width * 4);
+  MmioWrite32(MDP_CTL_1_BASE + CTL_FLUSH, (1 << (1)));
+#endif
+}
+
+
 /* 
  * Turn on autorefresh on command-mode panels 
  * (stock bootloader disables it here).
@@ -59,6 +72,7 @@ STATIC
 VOID
 DisplayEnableRefresh(VOID)
 {
+#if ENABLE_REFRESH == 1
   UINT32 Height = FixedPcdGet32(PcdMipiFrameBufferHeight);
   UINT32 VsyncCount = 19200000 / (Height * 60);
   UINT32 MdssMdpRev = MmioRead32(MDP_HW_REV);
@@ -76,13 +90,11 @@ DisplayEnableRefresh(VOID)
   /* Enable autorefresh and flush */
   MmioWrite32(pp0_base + MDP_PP_AUTOREFRESH_CONFIG, BIT(31) | AUTOREFRESH_FRAMENUM);
   MmioWrite32(MDP_CTL_0_BASE + CTL_START, 1);
-}
 #endif
+}
 
 VOID PlatformInitialize(VOID)
 {
-#if ENABLE_REFRESH == 1
   DisplayEnableRefresh();
-#endif
   CheckMdpConfig();
 }
