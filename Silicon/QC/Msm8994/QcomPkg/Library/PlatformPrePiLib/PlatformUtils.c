@@ -55,12 +55,6 @@ VOID CheckMdpConfig(VOID)
 #endif
 }
 
-  MmioWrite32(ANGLER_PIPE2_BASE + PIPE_SSPP_SRC_YSTRIDE, Width * 4);
-  MmioWrite32(MDP_CTL_1_BASE + CTL_FLUSH, (1 << (1)));
-#endif
-}
-
-
 /* 
  * Turn on autorefresh on command-mode panels 
  * (stock bootloader disables it here).
