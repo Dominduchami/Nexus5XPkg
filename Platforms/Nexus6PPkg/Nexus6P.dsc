@@ -32,7 +32,7 @@
   MEMORY_3GB                     = TRUE
 
 [BuildOptions.common]
-  GCC:*_*_AARCH64_CC_FLAGS = -DSILICON_PLATFORM=8994
+  GCC:*_*_AARCH64_CC_FLAGS = -DSILICON_PLATFORM=8994 -DENABLE_REFRESH=1
 
 [PcdsFixedAtBuild.common]
   # Platform-specific

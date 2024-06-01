@@ -31,7 +31,7 @@
   SEND_HEARTBEAT_TO_SERIAL       = 0
 
 [BuildOptions.common]
-  GCC:*_*_AARCH64_CC_FLAGS = -DSILICON_PLATFORM=8992
+  GCC:*_*_AARCH64_CC_FLAGS = -DSILICON_PLATFORM=8992 -DENABLE_REFRESH=1
 
 [PcdsFixedAtBuild.common]
   # Platform-specific
