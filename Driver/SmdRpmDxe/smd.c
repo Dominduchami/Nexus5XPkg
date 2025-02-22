@@ -31,7 +31,7 @@
 
 #include <Library/LKEnvLib.h>
 
-#include <Library/EfiResetSystemLib.h>
+#include <Library/ResetSystemLib.h>
 #include <Library/InterruptsLib.h>
 #include <Library/MallocLib.h>
 #include <Library/QcomSmemLib.h>

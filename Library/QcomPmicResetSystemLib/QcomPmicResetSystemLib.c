@@ -21,7 +21,7 @@ be found at http://opensource.org/licenses/bsd-license.php
 #include <Library/ArmLib.h>
 #include <Library/BaseLib.h>
 #include <Library/DebugLib.h>
-#include <Library/EfiResetSystemLib.h>
+#include <Library/ResetSystemLib.h>
 #include <Library/UefiBootServicesTableLib.h>
 #include <Library/UefiRuntimeServicesTableLib.h>
 

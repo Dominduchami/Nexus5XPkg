@@ -378,7 +378,7 @@
 
   # System Reset
   ArmHvcLib|ArmPkg/Library/ArmHvcLib/ArmHvcLib.inf
-  EfiResetSystemLib|Nexus5XPkg/Library/QcomPmicResetSystemLib/QcomPmicResetSystemLib.inf
+  RuntimeResetSystemLib|Nexus5XPkg/Library/QcomPmicResetSystemLib/QcomPmicResetSystemLib.inf
   RuntimeSpmiLib|Nexus5XPkg/Library/RuntimeSpmiLib/RuntimeSpmiLib.inf
   RuntimeSpmiMemoryConfiguratorLib|Nexus5XPkg/Library/RuntimeSpmiMemoryConfiguratorLib/RuntimeSpmiMemoryConfiguratorLib.inf
 
@@ -510,7 +510,7 @@
 
   # System Reset
   ArmHvcLib|ArmPkg/Library/ArmHvcLib/ArmHvcLib.inf
-  EfiResetSystemLib|Nexus5XPkg/Library/QcomPmicResetSystemLib/QcomPmicResetSystemLib.inf
+  RuntimeResetSystemLib|Nexus5XPkg/Library/QcomPmicResetSystemLib/QcomPmicResetSystemLib.inf
 
   VariablePolicyLib|MdeModulePkg/Library/VariablePolicyLib/VariablePolicyLibRuntimeDxe.inf
 
