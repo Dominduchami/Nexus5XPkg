@@ -14,6 +14,8 @@
 #
 #
 
+!include MdePkg/MdeLibs.dsc.inc
+
 [BuildOptions.common]
   *_GCC5_AARCH64_CC_FLAGS = -mfix-cortex-a53-835769 -mfix-cortex-a53-843419
   *_GCC5_AARCH64_DLINK_FLAGS = -mfix-cortex-a53-835769 -mfix-cortex-a53-843419

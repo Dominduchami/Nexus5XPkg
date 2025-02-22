@@ -40,6 +40,8 @@ if ($null -eq (Test-Path -Path "Nexus5XPkg")) {
 Write-Output "Set legacy environment."
 $env:PATH = "/opt/gcc-linaro-7.5.0-2019.12-x86_64_aarch64-elf/bin:/opt/gcc-linaro-7.5.0-2019.12-x86_64_arm-eabi/bin:$($env:PATH)"
 
+$NUM_CPUS = $((getconf _NPROCESSORS_ONLN)+2)
+
 # Probe GCC
 # Probe GCC. Use the most suitable one
 $ccprefix = Get-GnuAarch64CrossCollectionPath -AllowFallback
@@ -71,9 +73,11 @@ if ($Clean -eq $true) {
         Write-Output "Clean target $($target)."
 
         if ($Release) {
-            build -a AARCH64 -p Nexus5XPkg/$($target).dsc -t GCC5 clean -b RELEASE
+            build -n $NUM_CPUS -a AARCH64 -t CLANGDWARF -p Nexus5XPkg/$($target).dsc -b RELEASE
+            #build -a AARCH64 -p Nexus5XPkg/$($target).dsc -t GCC5 clean -b RELEASE
         } else {
-            build -a AARCH64 -p Nexus5XPkg/$($target).dsc -t GCC5 clean
+            build -n $NUM_CPUS -a AARCH64 -t CLANGDWARF -p Nexus5XPkg/$($target).dsc clean
+            #build -a AARCH64 -p Nexus5XPkg/$($target).dsc -t GCC5 clean
         }
 
         if (-not $?) {
@@ -158,9 +162,9 @@ if ($commit) {
 foreach ($target in $availableTargets) {
     Write-Output "Build Nexus5XPkg for $($target) (Release = $($Release))."
     if ($Release) {
-        build -a AARCH64 -p Nexus5XPkg/$($target).dsc -t GCC5 -b RELEASE
+        build -n $NUM_CPUS -a AARCH64 -t CLANGDWARF -p Nexus5XPkg/$($target).dsc -b RELEASE
     } else {
-        build -a AARCH64 -p Nexus5XPkg/$($target).dsc -t GCC5
+        build -n $NUM_CPUS -a AARCH64 -t CLANGDWARF -p Nexus5XPkg/$($target).dsc
     }
 
     if (-not $?) {
