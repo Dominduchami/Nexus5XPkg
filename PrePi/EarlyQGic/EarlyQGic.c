@@ -174,7 +174,7 @@ QGicPeim(VOID)
 
 UINTN
 EFIAPI
-ArmGicV2AcknowledgeInterrupt(IN UINTN GicInterruptInterfaceBase)
+EarlyEarlyArmGicV2AcknowledgeInterrupt(IN UINTN GicInterruptInterfaceBase)
 {
   // Read the Interrupt Acknowledge Register
   return MmioRead32(GicInterruptInterfaceBase + ARM_GIC_ICCIAR);
@@ -182,12 +182,12 @@ ArmGicV2AcknowledgeInterrupt(IN UINTN GicInterruptInterfaceBase)
 
 UINTN
 EFIAPI
-ArmGicAcknowledgeInterrupt(
+EarlyArmGicAcknowledgeInterrupt(
     IN UINTN GicInterruptInterfaceBase, OUT UINTN *InterruptId)
 {
   UINTN Value;
 
-  Value = ArmGicV2AcknowledgeInterrupt(GicInterruptInterfaceBase);
+  Value = EarlyEarlyArmGicV2AcknowledgeInterrupt(GicInterruptInterfaceBase);
   if (InterruptId != NULL) {
     *InterruptId = Value & ARM_GIC_ICCIAR_ACKINTID;
   }
@@ -195,7 +195,7 @@ ArmGicAcknowledgeInterrupt(
   return Value;
 }
 
-VOID EFIAPI ArmGicSendSgiTo(
+VOID EFIAPI EarlyEarlyArmGicSendSgiTo(
     IN INTN GicDistributorBase, IN INTN TargetListFilter, IN INTN CPUTargetList,
     IN INTN SgiId)
 {
@@ -205,7 +205,7 @@ VOID EFIAPI ArmGicSendSgiTo(
                                                 SgiId);
 }
 
-VOID EFIAPI ArmGicV2EnableInterruptInterface(IN INTN GicInterruptInterfaceBase)
+VOID EFIAPI EarlyEarlyArmGicV2EnableInterruptInterface(IN INTN GicInterruptInterfaceBase)
 {
   /*
    * Enable the CPU interface in Non-Secure world
@@ -215,26 +215,26 @@ VOID EFIAPI ArmGicV2EnableInterruptInterface(IN INTN GicInterruptInterfaceBase)
   MmioWrite32(GicInterruptInterfaceBase + ARM_GIC_ICCICR, 0x1);
 }
 
-VOID EFIAPI ArmGicEnableInterruptInterface(IN INTN GicInterruptInterfaceBase)
+VOID EFIAPI EarlyArmGicEnableInterruptInterface(IN INTN GicInterruptInterfaceBase)
 {
-  ArmGicV2EnableInterruptInterface(GicInterruptInterfaceBase);
+  EarlyEarlyArmGicV2EnableInterruptInterface(GicInterruptInterfaceBase);
 }
 
 VOID EFIAPI
-     ArmGicV2EndOfInterrupt(IN UINTN GicInterruptInterfaceBase, IN UINTN Source)
+     EarlyEarlyArmGicV2EndOfInterrupt(IN UINTN GicInterruptInterfaceBase, IN UINTN Source)
 {
   MmioWrite32(GicInterruptInterfaceBase + ARM_GIC_ICCEIOR, Source);
 }
 
 UINTN
 EFIAPI
-ArmGicGetMaxNumInterrupts(IN INTN GicDistributorBase)
+EarlyArmGicGetMaxNumInterrupts(IN INTN GicDistributorBase)
 {
   return 32 * ((MmioRead32(GicDistributorBase + ARM_GIC_ICDICTR) & 0x1F) + 1);
 }
 
 VOID EFIAPI
-     ArmGicEndOfInterrupt(IN UINTN GicInterruptInterfaceBase, IN UINTN Source)
+     EarlyArmGicEndOfInterrupt(IN UINTN GicInterruptInterfaceBase, IN UINTN Source)
 {
-  ArmGicV2EndOfInterrupt(GicInterruptInterfaceBase, Source);
+  EarlyEarlyArmGicV2EndOfInterrupt(GicInterruptInterfaceBase, Source);
 }

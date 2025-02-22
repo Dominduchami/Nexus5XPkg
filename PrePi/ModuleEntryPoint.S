@@ -1,6 +1,6 @@
 #include <Library/PcdLib.h>
-#include <AsmMacroLibV8.h>
-#include <Chipset/AArch64.h>
+#include <AsmMacroLib.h>
+#include <AArch64/AArch64.h>
 
 .text
 .align 3
