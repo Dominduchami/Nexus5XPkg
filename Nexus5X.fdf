@@ -50,7 +50,7 @@ READ_LOCK_STATUS   = TRUE
   INF Nexus5XPkg/Driver/TimerDxe/TimerDxe.inf
   INF MdeModulePkg/Universal/WatchdogTimerDxe/WatchdogTimer.inf
   INF EmbeddedPkg/MetronomeDxe/MetronomeDxe.inf
-  INF EmbeddedPkg/ResetRuntimeDxe/ResetRuntimeDxe.inf
+  # INF EmbeddedPkg/ResetRuntimeDxe/ResetRuntimeDxe.inf
   INF EmbeddedPkg/RealTimeClockRuntimeDxe/RealTimeClockRuntimeDxe.inf
 
   # SoC Drivers (Cross-referenced from EFIDroid)

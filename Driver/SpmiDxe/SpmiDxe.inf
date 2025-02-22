@@ -23,7 +23,6 @@
   IoLib
   MemoryAllocationLib
   MallocLib
-  CompilerIntrinsicsLib
   CacheMaintenanceLib
 
 [Pcd.common]

@@ -30,7 +30,6 @@
   BaseLib
   DebugLib
   PrintLib
-  CompilerIntrinsicsLib
   CacheMaintenanceLib
   UefiLib
 

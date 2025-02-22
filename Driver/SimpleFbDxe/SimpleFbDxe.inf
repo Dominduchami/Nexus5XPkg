@@ -29,7 +29,6 @@
   UefiDriverEntryPoint
   BaseMemoryLib
   DebugLib
-  CompilerIntrinsicsLib
   CacheMaintenanceLib
   FrameBufferBltLib
   PcdLib

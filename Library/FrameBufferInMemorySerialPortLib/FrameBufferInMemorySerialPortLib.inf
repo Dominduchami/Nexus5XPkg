@@ -20,7 +20,6 @@
   PcdLib
   IoLib
   HobLib
-  CompilerIntrinsicsLib
   CacheMaintenanceLib
 
 [Pcd]

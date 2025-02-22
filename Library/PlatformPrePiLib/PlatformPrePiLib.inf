@@ -33,7 +33,6 @@
   PrePiMemoryAllocationLib
   PerformanceLib
   HobLib
-  CompilerIntrinsicsLib
   # Platform-specific libraries
   MemoryInitPeiLib
   PlatformPeiLib
