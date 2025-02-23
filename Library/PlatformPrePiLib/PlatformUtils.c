@@ -67,7 +67,7 @@ STATIC VOID UartInit(VOID)
   SerialPortInitialize();
   InitializeSharedUartBuffers();
 
-  DEBUG((EFI_D_INFO, "\nTianoCore on Nexus 5X (AArch64)\n"));
+  DEBUG((EFI_D_INFO | EFI_D_LOAD, "\nTianoCore on Nexus 5X (AArch64)\n"));
   DEBUG(
       (EFI_D_INFO, "Firmware version %s built %a %a\n\n",
        (CHAR16 *)PcdGetPtr(PcdFirmwareVersionString), __TIME__, __DATE__));
