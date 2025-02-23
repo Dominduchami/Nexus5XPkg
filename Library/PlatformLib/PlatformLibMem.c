@@ -15,9 +15,6 @@
 #include <Library/PcdLib.h>
 
 
-// The total number of descriptors, including the final "end-of-table" descriptor.
-#define MAX_VIRTUAL_MEMORY_MAP_DESCRIPTORS 11
-
 /**
   Return the Virtual Memory Map of your platform
 

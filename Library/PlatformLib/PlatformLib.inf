@@ -31,6 +31,7 @@
   MemoryAllocationLib
   PcdLib
   PrintLib
+  PlatformPrePiLib
 
 [Sources.common]
   PlatformLib.c

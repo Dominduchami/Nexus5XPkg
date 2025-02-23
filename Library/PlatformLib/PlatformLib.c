@@ -11,6 +11,7 @@
 
 #include <Library/IoLib.h>
 #include <Library/ArmPlatformLib.h>
+#include <Library/PlatformPrePiLib.h>
 #include <Library/DebugLib.h>
 #include <Pi/PiBootMode.h>
 
@@ -40,6 +41,8 @@ ArmPlatformInitialize (
   IN  UINTN  MpId
   )
 {
+  // code here
+  PlatformInitialize();
   return RETURN_SUCCESS;
 }
 
