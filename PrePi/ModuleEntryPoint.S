@@ -12,6 +12,17 @@ GCC_ASM_IMPORT (ArmEnableInstructionCache)
 GCC_ASM_IMPORT (ArmEnableDataCache)
 GCC_ASM_IMPORT (ArmInvalidateTlb)
 
+// CurrentEL : 0xC = EL3; 8 = EL2; 4 = EL1
+// This only selects between EL1 and EL2 and EL3, else we die.
+// Provide the Macro with a safe temp xreg to use.
+#define EL1_OR_EL2_OR_EL3(SAFE_XREG) \
+        mrs    SAFE_XREG, CurrentEL ;\
+        cmp    SAFE_XREG, #0x8      ;\
+        b.gt   3f                   ;\
+        b.eq   2f                   ;\
+        cbnz   SAFE_XREG, 1f        ;\
+        b      .                    ;// We should never get here
+
 .global _StackBase 
 .global _StackSize
 .global CNTFRQ 
@@ -67,7 +78,7 @@ _SetupPrimaryCoreStack:
   add sp, x4, #0
   
 _EnableCache: 
-  bl ArmInvalidateDataCache
+  //bl ArmInvalidateDataCache
   bl ASM_PFX(ArmEnableInstructionCache)
   bl ASM_PFX(ArmEnableDataCache)
 

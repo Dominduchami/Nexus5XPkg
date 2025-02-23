@@ -53,7 +53,7 @@
 
 [PcdsFixedAtBuild.common]
   gArmTokenSpaceGuid.PcdSystemMemoryBase|0x00000000         # Starting address
-  gArmTokenSpaceGuid.PcdCpuVectorBaseAddress|0x00C40000
+  # gArmTokenSpaceGuid.PcdCpuVectorBaseAddress|0x00C40000
   # gArmTokenSpaceGuid.PcdArmArchTimerFreqInHz|19200000
   gArmTokenSpaceGuid.PcdArmArchTimerSecIntrNum|18
   gArmTokenSpaceGuid.PcdArmArchTimerIntrNum|19
@@ -249,11 +249,9 @@
 [LibraryClasses.common]
   ArmLib|ArmPkg/Library/ArmLib/ArmBaseLib.inf
   ArmMmuLib|ArmPkg/Library/ArmMmuLib/ArmMmuBaseLib.inf
+  ArmPlatformLib|Nexus5XPkg/Library/PlatformLib/PlatformLib.inf
   ArmGenericTimerCounterLib|ArmPkg/Library/ArmGenericTimerPhyCounterLib/ArmGenericTimerPhyCounterLib.inf
-  ArmDisassemblerLib|ArmPkg/Library/ArmDisassemblerLib/ArmDisassemblerLib.inf
-  ArmGicLib|ArmPkg/Drivers/ArmGic/ArmGicLib.inf
   ArmSmcLib|ArmPkg/Library/ArmSmcLib/ArmSmcLib.inf
-  ArmGicArchLib|ArmPkg/Library/ArmGicArchLib/ArmGicArchLib.inf
   TimerLib|ArmPkg/Library/ArmArchTimerLib/ArmArchTimerLib.inf
   BaseLib|MdePkg/Library/BaseLib/BaseLib.inf
   BaseMemoryLib|MdePkg/Library/BaseMemoryLib/BaseMemoryLib.inf
@@ -520,8 +518,10 @@
 
 [Components.common]
   # PrePI
-  Nexus5XPkg/PrePi/PrePi.inf {
+  # Nexus5XPkg/PrePi/PrePi.inf {
+  ArmPlatformPkg/PeilessSec/PeilessSec.inf {
     <LibraryClasses>
+    NULL|MdeModulePkg/Library/LzmaCustomDecompressLib/LzmaCustomDecompressLib.inf
     !if $(USE_SCREEN_FOR_SERIAL_OUTPUT) == 1
     !if $(USE_MEMORY_FOR_SERIAL_OUTPUT) == 1
       SerialPortLib|Nexus5XPkg/Library/FrameBufferInMemorySerialPortLib/FrameBufferInMemorySerialPortLib.inf
@@ -556,7 +556,7 @@
   # Even though we switch to QTimer / armv7-timer
   # We are still building it
   ArmPkg/Drivers/TimerDxe/TimerDxe.inf
-  ArmPkg/Drivers/ArmGic/ArmGicDxe.inf
+  ArmPkg/Drivers/ArmGicDxe/ArmGicDxe.inf
   MdeModulePkg/Universal/WatchdogTimerDxe/WatchdogTimer.inf
   EmbeddedPkg/MetronomeDxe/MetronomeDxe.inf
   # EmbeddedPkg/ResetRuntimeDxe/ResetRuntimeDxe.inf
