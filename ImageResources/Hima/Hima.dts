@@ -1,0 +1,22 @@
+// SPDX-License-Identifier: BSD-3-Clause
+
+/dts-v1/;
+
+/ {
+    model = "HTC Corporation. MSM8994v2.1 HIMA PVT";
+	compatible = "qcom,msm8994-mtp\0qcom,msm8994\0qcom,mtp";
+	qcom,msm-id = <0x170 0x20001 0x16b 0x20001 0x174 0x20001 0x169 0x20001 0x16f 0x20001 0x16a 0x20001 0x163 0x20001>;
+	qcom,pmic-id = <0x10009 0x1000a 0x00 0x00>;
+	interrupt-parent = <0x01>;
+	qcom,board-id = <0x80 0x00>;
+    
+	#address-cells = <2>;
+	#size-cells = <2>;
+
+	chosen { };
+
+	memory@0 {
+		device_type = "memory";
+		reg = <0 0 0 0>;
+	};
+};
