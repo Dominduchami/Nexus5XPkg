@@ -9,4 +9,4 @@ gzip -c < Build/Nexus5X-AARCH64/DEBUG_GCC5/FV/BootShimMSM8992_EFI.fd >Build/Nexu
 # Rev 1.0 and Rev 1.01
 cat ./Build/Nexus5X-AARCH64/DEBUG_GCC5/FV/BootShimMSM8992_EFI.fd.gz ./Nexus5XPkg/device-specific/msm8992-lg-bullhead-rev-10.dtb ./Nexus5XPkg/device-specific/msm8992-lg-bullhead-rev-101.dtb >> Build/Nexus5X-AARCH64/DEBUG_GCC5/FV/Image.gz-dtb
 
-mkbootimg --kernel ./Build/Nexus5X-AARCH64/DEBUG_GCC5/FV/Image.gz-dtb --ramdisk ./Nexus5XPkg/device-specific/ramdisk-null --base 0x00000000 --pagesize 4096 --ramdisk_offset 0x02000000 --tags_offset 0x01e00000 -o ./Build/Nexus5X-AARCH64/DEBUG_GCC5/FV/uefi.img
+python Nexus5XPkg/mkbootimg.py --kernel ./Build/Nexus5X-AARCH64/DEBUG_GCC5/FV/Image.gz-dtb --ramdisk ./Nexus5XPkg/device-specific/ramdisk-null --base 0x00000000 --pagesize 4096 --ramdisk_offset 0x02000000 --tags_offset 0x01e00000 -o ./Build/Nexus5X-AARCH64/DEBUG_GCC5/FV/uefi.img

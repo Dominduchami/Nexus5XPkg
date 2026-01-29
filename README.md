@@ -11,6 +11,9 @@ This implementation reuses PrePi from [SurfaceDuoPkg](https://github.com/WOA-Pro
 the stock bootloader loads uefi at the kernel load adress, which isn't really suitable. Surface Duo's PrePi implements relocation
 to copy the payload to the right space.
 
+## Compile
+Last known good edk2 commit is 838c730fe61578847823da1b815e4c9c5ee1bed4 (thx Gus for pinning)
+
 ## Windows Notes
 
 Windows boots fine now (although with only emmc and display via framebuffer working for now)
