@@ -57,11 +57,8 @@ steps:
 - script: chmod +x ./Tools/CI/Builder/build_boot_shim.sh && ./Tools/CI/Builder/build_boot_shim.sh
   displayName: 'BootShim build'
 
-- script: ./Tools/CI/Builder/Build.sh
+- script: ./Tools/CI/Builder/BuildAngler.sh #FIXME
   displayName: 'UEFI build'
-
-- script: chmod +x ./build_boot_images.sh && ./build_boot_images.sh
-  displayName: 'UEFI boot images build'
 
 # Publish UEFI (2 targets)
 - task: PublishBuildArtifacts@1
@@ -69,3 +66,9 @@ steps:
   inputs:
     pathtoPublish: ../edk2/Build/Nexus5X-AARCH64/DEBUG_GCC5/FV/uefi.img
     artifactName: MSM8992 UEFI (Nexus 5X)
+
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish UEFI build (Nexus 6P)'
+  inputs:
+    pathtoPublish: ../edk2/Build/Nexus6P-AARCH64/DEBUG_GCC5/FV/uefi.img
+    artifactName: MSM8994 UEFI (Nexus 6P)

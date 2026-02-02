@@ -21,6 +21,7 @@ Write-Host "Task: EDK2 build"
 if ($null -ne $env:BUILDALL) {
     Write-Output "User requested build all available targets."
     $availableTargets = @(
+        "Nexus6P",
         "Nexus5X"
     )
 }
@@ -169,5 +170,4 @@ foreach ($target in $availableTargets) {
     }
 }
 
-# Invoke ELF build.
-Copy-ElfImages
+

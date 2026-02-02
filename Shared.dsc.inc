@@ -172,12 +172,6 @@
   # SoC Drivers I2C
   gQcomTokenSpaceGuid.PcdGicSpiStart|32
 
-  # Device Driver Synaptics 3202
-  gNexus5XPkgTokenSpaceGuid.SynapticsCtlrAddress|0x20
-  gNexus5XPkgTokenSpaceGuid.SynapticsCtlrResetPin|8
-  gNexus5XPkgTokenSpaceGuid.SynapticsCtlrIntPin|22
-  gNexus5XPkgTokenSpaceGuid.SynapticsCtlrI2cDevice|2
-
   # RPM
   gQcomTokenSpaceGuid.PcdApcsAlias0IpcInterrupt|0xF900D008
   gQcomTokenSpaceGuid.PcdSmdIrq|200
@@ -233,14 +227,6 @@
   gEfiMdeModulePkgTokenSpaceGuid.PcdMaxAuthVariableSize|0x2800
   gEfiSecurityPkgTokenSpaceGuid.PcdUserPhysicalPresence|TRUE
 !endif
-
-[PcdsDynamicDefault.common]
-  gEfiMdeModulePkgTokenSpaceGuid.PcdVideoHorizontalResolution|1080
-  gEfiMdeModulePkgTokenSpaceGuid.PcdVideoVerticalResolution|1920
-  gEfiMdeModulePkgTokenSpaceGuid.PcdSetupVideoHorizontalResolution|1080
-  gEfiMdeModulePkgTokenSpaceGuid.PcdSetupVideoVerticalResolution|1920
-  gEfiMdeModulePkgTokenSpaceGuid.PcdSetupConOutRow|160
-  gEfiMdeModulePkgTokenSpaceGuid.PcdSetupConOutColumn|120
 
 !include MdePkg/MdeLibs.dsc.inc
 	  
