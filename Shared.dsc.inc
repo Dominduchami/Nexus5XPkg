@@ -234,14 +234,6 @@
   gEfiSecurityPkgTokenSpaceGuid.PcdUserPhysicalPresence|TRUE
 !endif
 
-[PcdsDynamicDefault.common]
-  gEfiMdeModulePkgTokenSpaceGuid.PcdVideoHorizontalResolution|1080
-  gEfiMdeModulePkgTokenSpaceGuid.PcdVideoVerticalResolution|1920
-  gEfiMdeModulePkgTokenSpaceGuid.PcdSetupVideoHorizontalResolution|1080
-  gEfiMdeModulePkgTokenSpaceGuid.PcdSetupVideoVerticalResolution|1920
-  gEfiMdeModulePkgTokenSpaceGuid.PcdSetupConOutRow|160
-  gEfiMdeModulePkgTokenSpaceGuid.PcdSetupConOutColumn|120
-
 !include MdePkg/MdeLibs.dsc.inc
 	  
 [LibraryClasses.common]

@@ -4,7 +4,7 @@ SCRIPTNAME="rundbbuild.sh"
 RECONFIG=FALSE
 DEVBUILD=FALSE
 CIBUILD=FALSE
-DB820C=FALSE
+NEXUS6P=FALSE
 NEXUS5X=FALSE
 
 function HelpMsg()
@@ -19,9 +19,9 @@ function HelpMsg()
   echo
   echo "  --development, -dev   Run development build (dirty)."
   echo
-  echo "  --820c, -820c         Run build for Dragonboard 820c."
+  echo "  --angler, -angler       Run build for HUAWEI NEXUS 6P."
   echo
-  echo "  --nexus5x, -nexus5x       Run build for LG NEXUS 5X."
+  echo "  --bullhead, -bullhead       Run build for LG NEXUS 5X."
   echo
   echo "  --production, -ci     Run CI build (clean)."
   echo
@@ -103,8 +103,8 @@ function SourceEnv()
 
 function DevelopmentBuild()
 {
-  if [ "$DB820C" = TRUE ]; then
-    ./Dragonboard820cPkg/Tools/edk2-build.ps1
+  if [ "$NEXUS6P" = TRUE ]; then
+    ./Nexus5XPkg/Tools/edk2-build.ps1
   elif [ "$NEXUS5X" = TRUE ]; then
     ./Nexus5XPkg/Tools/edk2-build.ps1
   else
@@ -120,12 +120,12 @@ function DevelopmentBuild()
 
 function CIBuild()
 {
-  if [ "$DB820C" = TRUE ]; then
-    ./Dragonboard820cPkg/Tools/edk2-build.ps1 -Clean
-  elif [ "$LUMIA950XL" = TRUE ]; then
-    ./Nexus5XPkg/Tools/edk2-build.ps1 -Clean
+  if [ "$NEXUS6P" = TRUE ]; then
+    ./Nexus5XPkg/Tools/edk2-build.ps1
+  elif [ "$NEXUS5X" = TRUE ]; then
+    ./Nexus5XPkg/Tools/edk2-build.ps1
   else
-    ./DragonboardPkg/Tools/edk2-build.ps1 -Clean
+    ./DragonboardPkg/Tools/edk2-build.ps1
   fi
 
   if [ ! $? -eq 0 ]; then
@@ -161,13 +161,13 @@ do
       fi
       shift
     ;;
-    --820c|-820c)
+    --angler|-angler)
       # 820C build
-      echo "[Builder] Run Dragonboard 820c Build."
-      DB820C=TRUE
+      echo "[Builder] Run Nexus 6P Build."
+      NEXUS6P=TRUE
       shift
     ;;
-    --nexus5x|-nexus5x)
+    --bullhead|-bullhead)
       # 950XL build
       echo "[Builder] Run Nexus 5X Build."
       NEXUS5X=TRUE
