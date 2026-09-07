@@ -46,6 +46,7 @@
   # Platform-specific libraries
   MemoryInitPeiLib
   PlatformPeiLib
+  PlatformPrePiLib
   # MpPark
   ArmHvcLib
   ArmSmcLib

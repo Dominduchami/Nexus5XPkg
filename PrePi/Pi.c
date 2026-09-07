@@ -23,56 +23,21 @@
 #include <Library/PerformanceLib.h>
 #include <Library/PrePiHobListPointerLib.h>
 #include <Library/PrePiLib.h>
+#include <Library/PlatformPrePiLib.h>
 #include <Library/SerialPortLib.h>
-
-#include <Library/LKEnvLib.h>
-#include <Chipset/mdp5.h>
-#include <Platform/iomap.h>
 
 VOID EFIAPI ProcessLibraryConstructorList(VOID);
 
-STATIC VOID UartInit(VOID)
-{
-  SerialPortInitialize();
-
-  DEBUG((EFI_D_INFO, "\nTianoCore on Nexus 5X (AArch64)\n"));
-  DEBUG(
-      (EFI_D_INFO, "Firmware version %s built %a %a\n\n",
-       (CHAR16 *)PcdGetPtr(PcdFirmwareVersionString), __TIME__, __DATE__));
-}
-
-STATIC VOID CheckMdpConfig(VOID)
-{
-  UINT32 Base = 0xfd915000;
-
-  /* Windows requires a BGRA FB */
-  DEBUG((EFI_D_INFO, "\nChanging FB format\n"));
-	writel(0x000236FF, Base + PIPE_SSPP_SRC_FORMAT);
-	writel(0x03020001, Base + PIPE_SSPP_SRC_UNPACK_PATTERN);
-
-  DEBUG((EFI_D_INFO, "\nChanging FB stride\n"));
-	writel(1080*4, Base + PIPE_SSPP_SRC_YSTRIDE);
-	writel(BIT(3), MDP_CTL_0_BASE + CTL_FLUSH);
-}
-
-VOID Main(IN VOID *StackBase, IN UINTN StackSize)
+VOID PrePiMain(IN VOID *StackBase, IN UINTN StackSize)
 {
 
   EFI_HOB_HANDOFF_INFO_TABLE *HobList;
   EFI_STATUS                  Status;
 
-  UINTN MemoryBase     = 0;
-  UINTN MemorySize     = 0;
-  UINTN UefiMemoryBase = 0;
-  UINTN UefiMemorySize = 0;
-
-#if USE_MEMORY_FOR_SERIAL_OUTPUT == 1
-  // Clear PStore area
-  UINT8 *base = (UINT8 *)0x1ff00000ull;
-  for (UINTN i = 0; i < 0x40000; i++) {
-    base[i] = 0;
-  }
-#endif
+  UINTN MemoryBase       = 0;
+  UINTN MemorySize       = 0;
+  UINTN UefiMemoryBase   = 0;
+  UINTN UefiMemorySize   = 0;
 
   // Architecture-specific initialization
   // Enable Floating Point
@@ -80,8 +45,6 @@ VOID Main(IN VOID *StackBase, IN UINTN StackSize)
 
   /* Enable program flow prediction, if supported */
   ArmEnableBranchPrediction();
-
-  CheckMdpConfig();
 
   // Initialize (fake) UART.
   UartInit();
@@ -165,7 +128,18 @@ VOID Main(IN VOID *StackBase, IN UINTN StackSize)
   CpuDeadLoop();
 }
 
-VOID CEntryPoint(IN VOID *StackBase, IN UINTN StackSize)
+VOID
+CEntryPoint(
+  IN VOID *StackBase, 
+  IN UINTN StackSize
+  )
 {
-  Main(StackBase, StackSize);
+  // Do platform specific initialization here
+  PlatformInitialize();
+
+  // Goto primary Main.
+  PrePiMain(StackBase, StackSize);
+
+  // DXE Core should always load and never return
+  ASSERT(FALSE);
 }
