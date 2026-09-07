@@ -40,7 +40,7 @@
 [PcdsFixedAtBuild.common]
   # Platform-specific
   gArmTokenSpaceGuid.PcdSystemMemoryBase|0x00000000         # 0GB Base
-  gArmTokenSpaceGuid.PcdSystemMemorySize|0xC0000000         # 3GB Size
+  gArmTokenSpaceGuid.PcdSystemMemorySize|0x80000000         # 2GB Size
   gArmPlatformTokenSpaceGuid.PcdCoreCount|6
   gArmPlatformTokenSpaceGuid.PcdClusterCount|2
   gNexus5XPkgTokenSpaceGuid.PcdSmbiosSystemModel|"LG Nexus 5X"

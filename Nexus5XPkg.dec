@@ -39,7 +39,7 @@
 
 [PcdsFixedAtBuild.common]
   # Simple FrameBuffer
-  gNexus5XPkgTokenSpaceGuid.PcdMipiFrameBufferAddress|0x00400000|UINT32|0x0000a400
+  gNexus5XPkgTokenSpaceGuid.PcdMipiFrameBufferAddress|0x03400000|UINT32|0x0000a400
   gNexus5XPkgTokenSpaceGuid.PcdMipiFrameBufferWidth|1080|UINT32|0x0000a401
   gNexus5XPkgTokenSpaceGuid.PcdMipiFrameBufferHeight|1920|UINT32|0x0000a402
   gNexus5XPkgTokenSpaceGuid.PcdMipiFrameBufferPixelBpp|32|UINT32|0x0000a403
