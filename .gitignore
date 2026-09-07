@@ -24,3 +24,7 @@ Library/QcomPmicRealTimeClockLib
 AcpiTables/8992/generated
 AcpiTables/8994/generated
 AcpiTables/Hapanero/generated
+
+# BootShim
+BootShim/BootShim.bin
+BootShim/BootShim.elf

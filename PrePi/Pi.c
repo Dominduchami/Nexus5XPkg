@@ -46,9 +46,6 @@ VOID PrePiMain(IN VOID *StackBase, IN UINTN StackSize)
   /* Enable program flow prediction, if supported */
   ArmEnableBranchPrediction();
 
-  // Initialize (fake) UART.
-  UartInit();
-
   // Declare UEFI region
   MemoryBase     = FixedPcdGet32(PcdSystemMemoryBase);
   MemorySize     = FixedPcdGet32(PcdSystemMemorySize);

@@ -58,5 +58,5 @@ steps:
 - task: PublishBuildArtifacts@1
   displayName: 'Publish UEFI build (Nexus 5X)'
   inputs:
-    pathtoPublish: ../edk2/Build/Nexus5X-AARCH64/DEBUG_GCC5/FV/uefi.img
+    pathtoPublish: ../edk2/Build/Nexus5X-AARCH64/DEBUG_GCC5/FV/uefi_bullhead.img
     artifactName: MSM8992 UEFI (Nexus 5X)

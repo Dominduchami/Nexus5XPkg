@@ -31,7 +31,7 @@
   FLASH_DEFINITION               = Nexus5XPkg/Nexus5X.fdf
 
   DEFINE SECURE_BOOT_ENABLE           = TRUE
-  DEFINE USE_SCREEN_FOR_SERIAL_OUTPUT = 0
+  DEFINE USE_SCREEN_FOR_SERIAL_OUTPUT = TRUE
   DEFINE MEMORY_4GB                   = 0
 
 [BuildOptions.common]
