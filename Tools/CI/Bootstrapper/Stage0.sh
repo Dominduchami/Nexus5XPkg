@@ -20,18 +20,19 @@ apt-get install build-essential
 apt-get install python3
 apt-get install mkbootimg
 
-# PowerShell
-# Import the public repository GPG keys
-curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add -
-
-# Register the Microsoft Ubuntu repository
-curl https://packages.microsoft.com/config/ubuntu/20.04/prod.list | tee /etc/apt/sources.list.d/microsoft.list
-
-# Update the list of products
-apt-get update
-
 # Install PowerShell
-apt-get install -y powershell
+
+# Download the PowerShell package file
+wget https://github.com/PowerShell/PowerShell/releases/download/v7.6.5/powershell-lts_7.6.5-1.deb_amd64.deb
+
+# Install the PowerShell package
+sudo dpkg -i powershell-lts_7.6.5-1.deb_amd64.deb
+
+# Resolve missing dependencies and finish the install (if necessary)
+sudo apt-get install -f
+
+# Delete the downloaded package file
+rm powershell-lts_7.6.5-1.deb_amd64.deb
 
 # Linaro Toolchains
 cd /opt
