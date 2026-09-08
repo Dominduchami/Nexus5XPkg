@@ -25,9 +25,17 @@ if ($null -ne $env:BUILDALL) {
         "Nexus5X"
     )
 }
-else {
+if ($null -ne $env:BUILD_BULLHEAD) {
+    Write-Output "User requested build bullhead."
     $availableTargets = @(
         "Nexus5X"
+    )
+}
+
+if ($null -ne $env:BUILD_ANGLER) {
+    Write-Output "User requested build angler."
+    $availableTargets = @(
+        "Nexus6P"
     )
 }
 
