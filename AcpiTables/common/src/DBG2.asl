@@ -158,7 +158,7 @@
 [2B8h 0696   2]              OEM Data Length : 0074
 [2BAh 0698   2]              OEM Data Offset : 0046
 [2BCh 0700   2]                    Port Type : 8002
-[2BEh 0702   2]                 Port Subtype : 0000
+[2BEh 0702   2]                 Port Subtype : 0001
 [2C0h 0704   2]                     Reserved : 0000
 [2C2h 0706   2]          Base Address Offset : 0016
 [2C4h 0708   2]          Address Size Offset : 0022

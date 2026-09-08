@@ -1,29 +1,28 @@
-DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
+// CreatorID=MSFT	CreatorRev=5.0.0
+// FileLength=148356	FileChkSum=0x31
+
+DefinitionBlock(".\DSDT_MTP.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
 {
     Scope(\_SB_)
     {
-        Name(SOID, 0x000000FB)
-        Name(SIDS, "MSM8992")
-        Name(SIDV, 0x00010000)
-        Name(SVMJ, 0x0001)
-        Name(SVMI, 0x0000)
-        Name(SDFE, 0x0039)
+        Name(SOID, 0xfb)
+        Name(SIDS, "MSM899200000000")
+        Name(SIDV, 0x10000)
+        Name(SVMJ, One)
+        Name(SVMI, Zero)
+        Name(SDFE, 0x39)
         Name(SFES, "899200000000000")
-        Name(SIDM, 0xFFFF00FF)
+        Name(SIDM, 0xffff00ff)
         Name(NCPU, "6")
-        Name(PSCI, "003")
-        Name(RMTB, 0x06F00000)
-        Name(RMTX, 0x00180000)
-        Name(RFMB, 0x07090000)
-        Name(RFMS, 0x00010000)
-        Name(RFAB, 0x07080000)
-        Name(RFAS, 0x00010000)
+        Name(PSCI, "002")
+        Name(RMTB, 0x6f00000)
+        Name(RMTX, 0x180000)
+        Name(RFMB, 0x7090000)
+        Name(RFMS, 0x10000)
+        Name(RFAB, 0x7080000)
+        Name(RFAS, 0x10000)
         Device(SDC1)
         {
-            Name(_DEP, Package(One)
-            {
-                \_SB_.PEP0
-            })
             Name(_HID, "QCOM24BF")
             Name(_CID, "ACPIQCOM24BF")
             Name(_UID, Zero)
@@ -47,41 +46,6 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
                 {
                     Return(Zero)
                 }
-            }
-            Method(_DIS, 0x0, NotSerialized)
-            {
-            }
-            Method(_STA, 0x0, NotSerialized)
-            {
-                Return(0xf)
-            }
-        }
-        Device(SDC2)
-        {
-            Name(_DEP, Package(0x2)
-            {
-                \_SB_.PEP0,
-                \_SB_.GIO0
-            })
-            Name(_HID, "QCOM2466")
-            Name(_CID, "ACPIQCOM2466")
-            Name(_UID, One)
-            Name(_CCA, Zero)
-            Method(_CRS, 0x0, NotSerialized)
-            {
-                Name(RBUF, Buffer(0x61)
-                {
-	0x86, 0x09, 0x00, 0x01, 0x00, 0x49, 0x8a, 0xf9, 0x00, 0x02, 0x00, 0x00,
-	0x89, 0x06, 0x00, 0x01, 0x01, 0x9d, 0x00, 0x00, 0x00, 0x8c, 0x24, 0x00,
-	0x01, 0x00, 0x01, 0x00, 0x1d, 0x00, 0x03, 0x00, 0x00, 0x30, 0x75, 0x17,
-	0x00, 0x00, 0x19, 0x00, 0x23, 0x00, 0x04, 0x00, 0x38, 0x06, 0x5c, 0x5f,
-	0x53, 0x42, 0x2e, 0x50, 0x4d, 0x30, 0x31, 0x00, 0x02, 0x03, 0x01, 0x00,
-	0x8c, 0x20, 0x00, 0x01, 0x01, 0x01, 0x00, 0x08, 0x00, 0x03, 0x00, 0x00,
-	0x00, 0x00, 0x17, 0x00, 0x00, 0x19, 0x00, 0x23, 0x00, 0x00, 0x00, 0x38,
-	0x06, 0x5c, 0x5f, 0x53, 0x42, 0x2e, 0x50, 0x4d, 0x30, 0x31, 0x00, 0x79,
-	0x00
-                })
-                Return(RBUF)
             }
             Method(_DIS, 0x0, NotSerialized)
             {
@@ -133,10 +97,6 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
         Device(GIO0)
         {
             Name(_HID, "QCOM2405")
-            Name(_DEP, Package (One)
-            {
-                \_SB_.I2C7
-            })
             Name(_UID, Zero)
             Method(_CRS, 0x0, NotSerialized)
             {
@@ -368,28 +328,16 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
                 }
             }
         }
-        Scope(\_SB_.GIO0)
-        {
-            OperationRegion(GPOR, GeneralPurposeIO, Zero, One)
-            Field(\_SB_.GIO0.GPOR, ByteAcc, NoLock, Preserve)
-            {
-                Connection(
-                    GpioIO(Exclusive, PullUp, 0, 0, IoRestrictionNone, "\\_SB.GIO0", 0, ResourceConsumer, , ) {0x79}
-                ),
-                BMHW, 1
-            }
-        }
         Device(PMBT)
         {
             Name(_HID, "QCOM2453")
-            Name(_DEP, Package(0x2)
+            Name(_DEP, Package(One)
             {
-                \_SB_.PMIC, 
-                \_SB_.ADC1
+                \_SB_.PMIC
             })
             Method(_CRS, 0x0, NotSerialized)
             {
-                Name(RBUF, Buffer(0x20f)
+                Name(RBUF, Buffer(0x160)
                 {
 	0x8c, 0x20, 0x00, 0x01, 0x00, 0x01, 0x00, 0x0d, 0x00, 0x01, 0x00, 0x00,
 	0x00, 0x00, 0x17, 0x00, 0x00, 0x19, 0x00, 0x23, 0x00, 0x00, 0x00, 0x80,
@@ -414,27 +362,13 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
 	0x50, 0x4d, 0x30, 0x32, 0x00, 0x8c, 0x20, 0x00, 0x01, 0x00, 0x01, 0x00,
 	0x01, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x17, 0x00, 0x00, 0x19, 0x00,
 	0x23, 0x00, 0x00, 0x00, 0x0e, 0x02, 0x5c, 0x5f, 0x53, 0x42, 0x2e, 0x50,
-	0x4d, 0x30, 0x32, 0x00, 0x8c, 0x20, 0x00, 0x01, 0x00, 0x01, 0x00, 0x0d,
+	0x4d, 0x30, 0x32, 0x00, 0x8c, 0x20, 0x00, 0x01, 0x00, 0x01, 0x00, 0x09,
 	0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x17, 0x00, 0x00, 0x19, 0x00, 0x23,
-	0x00, 0x00, 0x00, 0xa0, 0x00, 0x5c, 0x5f, 0x53, 0x42, 0x2e, 0x50, 0x4d,
-	0x30, 0x32, 0x00, 0x8c, 0x20, 0x00, 0x01, 0x00, 0x01, 0x00, 0x1d, 0x00,
+	0x00, 0x00, 0x00, 0x9d, 0x00, 0x5c, 0x5f, 0x53, 0x42, 0x2e, 0x50, 0x4d,
+	0x30, 0x32, 0x00, 0x8c, 0x20, 0x00, 0x01, 0x00, 0x01, 0x00, 0x09, 0x00,
 	0x01, 0x00, 0x00, 0x00, 0x00, 0x17, 0x00, 0x00, 0x19, 0x00, 0x23, 0x00,
-	0x00, 0x00, 0x68, 0x06, 0x5c, 0x5f, 0x53, 0x42, 0x2e, 0x50, 0x4d, 0x30,
-	0x31, 0x00, 0x8c, 0x20, 0x00, 0x01, 0x01, 0x01, 0x00, 0x08, 0x00, 0x03,
-	0x00, 0x00, 0x00, 0x00, 0x17, 0x00, 0x00, 0x19, 0x00, 0x23, 0x00, 0x00,
-	0x00, 0x08, 0x06, 0x5c, 0x5f, 0x53, 0x42, 0x2e, 0x50, 0x4d, 0x30, 0x31,
-	0x00, 0x8c, 0x20, 0x00, 0x01, 0x01, 0x01, 0x00, 0x08, 0x00, 0x01, 0x00,
-	0x00, 0x00, 0x00, 0x17, 0x00, 0x00, 0x19, 0x00, 0x23, 0x00, 0x00, 0x00,
-	0x68, 0x06, 0x5c, 0x5f, 0x53, 0x42, 0x2e, 0x50, 0x4d, 0x30, 0x31, 0x00,
-	0x8c, 0x20, 0x00, 0x01, 0x01, 0x01, 0x00, 0x08, 0x00, 0x01, 0x00, 0x00,
-	0x00, 0x00, 0x17, 0x00, 0x00, 0x19, 0x00, 0x23, 0x00, 0x00, 0x00, 0x16,
-	0x00, 0x5c, 0x5f, 0x53, 0x42, 0x2e, 0x47, 0x49, 0x4f, 0x30, 0x00, 0x8c,
-	0x20, 0x00, 0x01, 0x00, 0x01, 0x00, 0x09, 0x00, 0x01, 0x00, 0x00, 0x00,
-	0x00, 0x17, 0x00, 0x00, 0x19, 0x00, 0x23, 0x00, 0x00, 0x00, 0x9d, 0x00,
-	0x5c, 0x5f, 0x53, 0x42, 0x2e, 0x50, 0x4d, 0x30, 0x32, 0x00, 0x8c, 0x20,
-	0x00, 0x01, 0x00, 0x01, 0x00, 0x09, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00,
-	0x17, 0x00, 0x00, 0x19, 0x00, 0x23, 0x00, 0x00, 0x00, 0x98, 0x00, 0x5c,
-	0x5f, 0x53, 0x42, 0x2e, 0x50, 0x4d, 0x30, 0x32, 0x00, 0x79, 0x00
+	0x00, 0x00, 0x98, 0x00, 0x5c, 0x5f, 0x53, 0x42, 0x2e, 0x50, 0x4d, 0x30,
+	0x32, 0x00, 0x79, 0x00
                 })
                 Return(RBUF)
             }
@@ -453,17 +387,6 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
             {
                 Name(CFG0, Package(0x8)
                 {
-                    0x2710,
-                    0x2710,
-                    0x493e0,
-                    0x1d4c0,
-                    Zero,
-                    Zero,
-                    0x1ac7780,
-                    Zero
-                })
-                Name(CFG1, Package(0x8)
-                {
                     0x7530,
                     0x2710,
                     0x493e0,
@@ -473,16 +396,7 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
                     0x1ac7780,
                     Zero
                 })
-                Name(HWID, Zero)
-                Store(\_SB_.GIO0.BMHW, HWID)
-                If(And(HWID, One, ))
-                {
-                    Return(CFG0)
-                }
-                Else
-                {
-                    Return(CFG1)
-                }
+                Return(CFG0)
             }
             Method(BBAT, 0x0, NotSerialized)
             {
@@ -542,7 +456,7 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
             }
             Method(BIRQ, 0x0, NotSerialized)
             {
-                Name(CFG0, Package(0xc)
+                Name(CFG0, Package(0xa)
                 {
                     "ChgError",
                     "BclIrq1",
@@ -552,20 +466,8 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
                     "TccReached",
                     "VbatLow",
                     "BattMissing",
-                    "DcInUv",
-                    "WcDet",
                     "AiclDone",
                     "UsbUv"
-                })
-                Return(CFG0)
-            }
-            Method(BGIO, 0x0, NotSerialized)
-            {
-                Name(CFG0, Package(0x3)
-                {
-                    "WC_EN",
-                    "WC_DET",
-                    "PLUG_DET"
                 })
                 Return(CFG0)
             }
@@ -599,68 +501,19 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
                     0x12c,
                     0x1f4,
                     0x5dc,
-                    0xf,
-                    0x11,
+                    0x14,
+                    0x16,
                     0x2ee,
-                    0x8,
                     One,
-                    0x1004,
+                    One,
+                    0x1068,
                     0x32,
                     One,
                     Zero,
                     Zero,
                     One
                 })
-                Name(CFG1, Package(0x25)
-                {
-                    0x3fc,
-                    0xed8,
-                    0xdac,
-                    0xd48,
-                    0x384,
-                    One,
-                    0x32,
-                    0x32,
-                    0x1388,
-                    0x8,
-                    One,
-                    0x50,
-                    0xffffffec,
-                    0x48,
-                    0x64,
-                    0x1e,
-                    0x5,
-                    0x6,
-                    0x1f4,
-                    0x7e,
-                    0x190,
-                    0x1194,
-                    0xbb8,
-                    0x12c,
-                    0x1f4,
-                    0x5dc,
-                    0xf,
-                    0x11,
-                    0x2ee,
-                    One,
-                    One,
-                    0x1004,
-                    0x32,
-                    Zero,
-                    Zero,
-                    Zero,
-                    One
-                })
-                Name(HWID, Zero)
-                Store(\_SB_.GIO0.BMHW, HWID)
-                If(And(HWID, One, ))
-                {
-                    Return(CFG0)
-                }
-                Else
-                {
-                    Return(CFG1)
-                }
+                Return(CFG0)
             }
             Method(BPTM, 0x0, NotSerialized)
             {
@@ -684,12 +537,12 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
                     0x4,
                     0x2,
                     0x10fe,
-                    0x41a,
+                    0x3e8,
                     0xa,
-                    0x1097,
+                    0x1090,
                     0x834,
                     0x2d,
-                    0x1064,
+                    0x1054,
                     0x834,
                     0x32
                 })
@@ -717,32 +570,12 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
                     0x8,
                     One,
                     One,
-                    One,
-                    0x4,
                     0x2,
-                    0x4
-                })
-                Name(CFG1, Package(0x8)
-                {
-                    One,
-                    0x8,
-                    One,
-                    One,
-                    One,
-                    0x4,
                     0x2,
-                    0x4
+                    0x2,
+                    0x8
                 })
-                Name(HWID, Zero)
-                Store(\_SB_.GIO0.BMHW, HWID)
-                If(And(HWID, One, ))
-                {
-                    Return(CFG0)
-                }
-                Else
-                {
-                    Return(CFG1)
-                }
+                Return(CFG0)
             }
             Method(CTMC, 0x0, NotSerialized)
             {
@@ -1065,9 +898,9 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
                 Return(RBUF)
             }
         }
-        Device(BIFA)
+        Device(PBAD)
         {
-            Name(_HID, "MSHW1002")
+            Name(_HID, "QCOM24C4")
             Method(_CRS, 0x0, NotSerialized)
             {
                 Name(RBUF, Buffer(0x2)
@@ -1183,7 +1016,7 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
                 "DMPI",
                 "DMWE",
                 "DMHC",
-                "DMPN",
+                "XMPN",
                 "XMPC",
                 "XMPL",
                 "XMID",
@@ -1218,42 +1051,42 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
             {
                 Package(0x2)
                 {
-                    "\\_SB.SYSM.APC0.CL0.CPU0",
+                    "\\_SB.CPU0",
                     0x10
                 },
                 Package(0x2)
                 {
-                    "\\_SB.SYSM.APC0.CL0.CPU1",
+                    "\\_SB.CPU1",
                     0x11
                 },
                 Package(0x2)
                 {
-                    "\\_SB.SYSM.APC0.CL0.CPU2",
+                    "\\_SB.CPU2",
                     0x12
                 },
                 Package(0x2)
                 {
-                    "\\_SB.SYSM.APC0.CL0.CPU3",
+                    "\\_SB.CPU3",
                     0x13
                 },
                 Package(0x2)
                 {
-                    "\\_SB.SYSM.APC0.CL1.CPU4",
+                    "\\_SB.CPU4",
                     0x14
                 },
                 Package(0x2)
                 {
-                    "\\_SB.SYSM.APC0.CL1.CPU5",
+                    "\\_SB.CPU5",
                     0x15
                 },
                 Package(0x2)
                 {
-                    "\\_SB.SYSM.APC0.CL1.CPU6",
+                    "\\_SB.CPU6",
                     0x16
                 },
                 Package(0x2)
                 {
-                    "\\_SB.SYSM.APC0.CL1.CPU7",
+                    "\\_SB.CPU7",
                     0x17
                 }
             })
@@ -4441,9 +4274,9 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
             {
                 Return(APCC)
             }
-            Name(APCC, Package(0x2)
+            Name(APCC, Package(0x1)
             {
-                Package(0x13)
+                Package(0xd)
                 {
                     "DEVICE",
                     "\\_SB.ADSP.SLM1.ADCM.AUDD",
@@ -4467,7 +4300,7 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
                                     0x2,
                                     0x4,
                                     0x3,
-                                    0x5
+                                    Zero
                                 }
                             },
                             Package(0x2)
@@ -4528,7 +4361,7 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
                                     0x2,
                                     0x4,
                                     One,
-                                    0x5
+                                    Zero
                                 }
                             },
                             Package(0x2)
@@ -4659,15 +4492,37 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
                     {
                         "COMPONENT",
                         One,
-                        Package(0x2)
+                        Package(0x3)
                         {
                             "FSTATE",
-                            Zero
+                            Zero,
+                            Package(0x2)
+                            {
+                                "PMICVREGVOTE",
+                                Package(0x4)
+                                {
+                                    "PPP_RESOURCE_ID_BOOST1_B",
+                                    0x8,
+                                    Zero,
+                                    One
+                                }
+                            }
                         },
-                        Package(0x2)
+                        Package(0x3)
                         {
                             "FSTATE",
-                            One
+                            One,
+                            Package(0x2)
+                            {
+                                "PMICVREGVOTE",
+                                Package(0x4)
+                                {
+                                    "PPP_RESOURCE_ID_BOOST1_B",
+                                    0x8,
+                                    Zero,
+                                    Zero
+                                }
+                            }
                         }
                     },
                     Package(0x4)
@@ -4685,11 +4540,11 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
                             One
                         }
                     },
-                    Package(0x4)
+                    Package(0x5)
                     {
                         "COMPONENT",
                         0x3,
-                        Package(0x5)
+                        Package(0x6)
                         {
                             "FSTATE",
                             Zero,
@@ -4701,8 +4556,8 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
                                     0x43,
                                     One,
                                     One,
-                                    One,
                                     Zero,
+                                    One,
                                     Zero
                                 }
                             },
@@ -4715,7 +4570,7 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
                                     One,
                                     One,
                                     One,
-                                    Zero,
+                                    One,
                                     Zero
                                 }
                             },
@@ -4728,7 +4583,20 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
                                     One,
                                     One,
                                     One,
-                                    Zero,
+                                    One,
+                                    Zero
+                                }
+                            },
+                            Package(0x2)
+                            {
+                                "TLMMGPIO",
+                                Package(0x6)
+                                {
+                                    0x40,
+                                    One,
+                                    One,
+                                    One,
+                                    One,
                                     Zero
                                 }
                             }
@@ -4775,6 +4643,19 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
                                     One,
                                     Zero
                                 }
+                            }
+                        },
+                        Package(0x2)
+                        {
+                            "TLMMGPIO",
+                            Package(0x6)
+                            {
+                                0x40,
+                                Zero,
+                                Zero,
+                                Zero,
+                                One,
+                                Zero
                             }
                         }
                     },
@@ -4842,571 +4723,471 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
                     {
                         "COMPONENT",
                         0x8,
-                        Package(0x5)
+                        Package(0x2)
                         {
                             "FSTATE",
-                            Zero,
-                            Package(0x2)
-                            {
-                                "TLMMGPIO",
-                                Package(0x6)
-                                {
-                                    0x3e,
-                                    One,
-                                    One,
-                                    One,
-                                    One,
-                                    One
-                                }
-                            },
-                            Package(0x2)
-                            {
-                                "TLMMGPIO",
-                                Package(0x6)
-                                {
-                                    0x3a,
-                                    One,
-                                    One,
-                                    One,
-                                    One,
-                                    One
-                                }
-                            },
-                            Package(0x2)
-                            {
-                                "TLMMGPIO",
-                                Package(0x6)
-                                {
-                                    0x3b,
-                                    One,
-                                    One,
-                                    One,
-                                    One,
-                                    One
-                                }
-                            }
+                            Zero
                         },
-                        Package(0x5)
+                        Package(0x2)
                         {
                             "FSTATE",
-                            One,
-                            Package(0x2)
-                            {
-                                "TLMMGPIO",
-                                Package(0x6)
-                                {
-                                    0x3e,
-                                    Zero,
-                                    Zero,
-                                    Zero,
-                                    One,
-                                    Zero
-                                }
-                            },
-                            Package(0x2)
-                            {
-                                "TLMMGPIO",
-                                Package(0x6)
-                                {
-                                    0x3a,
-                                    Zero,
-                                    Zero,
-                                    Zero,
-                                    One,
-                                    Zero
-                                }
-                            },
-                            Package(0x2)
-                            {
-                                "TLMMGPIO",
-                                Package(0x6)
-                                {
-                                    0x3b,
-                                    Zero,
-                                    Zero,
-                                    Zero,
-                                    One,
-                                    Zero
-                                }
-                            }
+                            One
                         }
                     },
-                    Package(0x4)
+                    Package(0xb)
                     {
                         "COMPONENT",
                         0x9,
-                        Package(0x3)
-                        {
-                            "FSTATE",
-                            Zero,
-                            Package(0x2)
-                            {
-                                "TLMMGPIO",
-                                Package(0x6)
-                                {
-                                    0x3c,
-                                    One,
-                                    One,
-                                    Zero,
-                                    One,
-                                    Zero
-                                }
-                            }
-                        },
-                        Package(0x3)
-                        {
-                            "FSTATE",
-                            One,
-                            Package(0x2)
-                            {
-                                "TLMMGPIO",
-                                Package(0x6)
-                                {
-                                    0x3c,
-                                    Zero,
-                                    Zero,
-                                    Zero,
-                                    One,
-                                    Zero
-                                }
-                            }
-                        }
-                    },
-                    Package(0x4)
-                    {
-                        "COMPONENT",
-                        0xa,
                         Package(0x2)
                         {
                             "FSTATE",
                             Zero
                         },
-                        Package(0x2)
-                        {
-                            "FSTATE",
-                            One
-                        }
-                    },
-                    Package(0x4)
-                    {
-                        "COMPONENT",
-                        0xb,
-                        Package(0x2)
-                        {
-                            "FSTATE",
-                            Zero
-                        },
-                        Package(0x2)
-                        {
-                            "FSTATE",
-                            One
-                        }
-                    },
-                    Package(0x4)
-                    {
-                        "COMPONENT",
-                        0xc,
-                        Package(0x5)
-                        {
-                            "FSTATE",
-                            Zero,
-                            Package(0x2)
-                            {
-                                "TLMMGPIO",
-                                Package(0x6)
-                                {
-                                    0x52,
-                                    One,
-                                    One,
-                                    One,
-                                    Zero,
-                                    0x3
-                                }
-                            },
-                            Package(0x2)
-                            {
-                                "TLMMGPIO",
-                                Package(0x6)
-                                {
-                                    0x4f,
-                                    One,
-                                    One,
-                                    One,
-                                    Zero,
-                                    0x3
-                                }
-                            },
-                            Package(0x2)
-                            {
-                                "TLMMGPIO",
-                                Package(0x6)
-                                {
-                                    0x50,
-                                    One,
-                                    One,
-                                    One,
-                                    Zero,
-                                    0x3
-                                }
-                            }
-                        },
-                        Package(0x5)
-                        {
-                            "FSTATE",
-                            One,
-                            Package(0x2)
-                            {
-                                "TLMMGPIO",
-                                Package(0x6)
-                                {
-                                    0x52,
-                                    Zero,
-                                    Zero,
-                                    Zero,
-                                    One,
-                                    Zero
-                                }
-                            },
-                            Package(0x2)
-                            {
-                                "TLMMGPIO",
-                                Package(0x6)
-                                {
-                                    0x4f,
-                                    Zero,
-                                    Zero,
-                                    Zero,
-                                    One,
-                                    Zero
-                                }
-                            },
-                            Package(0x2)
-                            {
-                                "TLMMGPIO",
-                                Package(0x6)
-                                {
-                                    0x50,
-                                    Zero,
-                                    Zero,
-                                    Zero,
-                                    One,
-                                    Zero
-                                }
-                            }
-                        }
-                    },
-                    Package(0x4)
-                    {
-                        "COMPONENT",
-                        0xd,
-                        Package(0x5)
-                        {
-                            "FSTATE",
-                            Zero,
-                            Package(0x2)
-                            {
-                                "TLMMGPIO",
-                                Package(0x6)
-                                {
-                                    0x51,
-                                    One,
-                                    One,
-                                    Zero,
-                                    Zero,
-                                    0x3
-                                }
-                            },
-                            Package(0x2)
-                            {
-                                "TLMMGPIO",
-                                Package(0x6)
-                                {
-                                    0x4f,
-                                    One,
-                                    One,
-                                    One,
-                                    Zero,
-                                    0x3
-                                }
-                            },
-                            Package(0x2)
-                            {
-                                "TLMMGPIO",
-                                Package(0x6)
-                                {
-                                    0x50,
-                                    One,
-                                    One,
-                                    One,
-                                    Zero,
-                                    0x3
-                                }
-                            }
-                        },
-                        Package(0x5)
-                        {
-                            "FSTATE",
-                            One,
-                            Package(0x2)
-                            {
-                                "TLMMGPIO",
-                                Package(0x6)
-                                {
-                                    0x51,
-                                    Zero,
-                                    Zero,
-                                    Zero,
-                                    One,
-                                    Zero
-                                }
-                            },
-                            Package(0x2)
-                            {
-                                "TLMMGPIO",
-                                Package(0x6)
-                                {
-                                    0x4f,
-                                    Zero,
-                                    Zero,
-                                    Zero,
-                                    One,
-                                    Zero
-                                }
-                            },
-                            Package(0x2)
-                            {
-                                "TLMMGPIO",
-                                Package(0x6)
-                                {
-                                    0x50,
-                                    Zero,
-                                    Zero,
-                                    Zero,
-                                    One,
-                                    Zero
-                                }
-                            }
-                        }
-                    },
-                    Package(0x4)
-                    {
-                        "COMPONENT",
-                        0xe,
-                        Package(0x2)
-                        {
-                            "FSTATE",
-                            Zero
-                        },
-                        Package(0x2)
-                        {
-                            "FSTATE",
-                            One
-                        }
-                    },
-                    Package(0x4)
-                    {
-                        "COMPONENT",
-                        0xf,
-                        Package(0x3)
-                        {
-                            "FSTATE",
-                            Zero,
-                            Package(0x2)
-                            {
-                                "PMICVREGVOTE",
-                                Package(0x7)
-                                {
-                                    "PPP_RESOURCE_ID_BOOST_BYPASS1_B",
-                                    0x9,
-                                    0x325aa0,
-                                    One,
-                                    Zero,
-                                    Zero,
-                                    Zero
-                                }
-                            }
-                        },
                         Package(0x3)
                         {
                             "FSTATE",
                             One,
-                            Package(0x2)
+                            Package(0x1)
                             {
-                                "PMICVREGVOTE",
-                                Package(0x7)
-                                {
-                                    "PPP_RESOURCE_ID_BOOST_BYPASS1_B",
-                                    0x9,
-                                    0x325aa0,
-                                    Zero,
-                                    Zero,
-                                    Zero,
-                                    Zero
-                                }
-                            }
-                        }
-                    },
-                    Package(0x4)
-                    {
-                        "COMPONENT",
-                        0x10,
-                        Package(0x5)
-                        {
-                            "FSTATE",
-                            Zero,
-                            Package(0x2)
-                            {
-                                "FOOTSWITCH",
-                                Package(0x2)
-                                {
-                                    "VDD_MDSS",
-                                    One
-                                }
-                            },
-                            Package(0x2)
-                            {
-                                "CLOCK",
-                                Package(0x4)
-                                {
-                                    "mdss_ahb_clk",
-                                    One,
-                                    Zero,
-                                    One
-                                }
-                            },
-                            Package(0x2)
-                            {
-                                "REQUIRED_RESOURCE",
-                                Package(0x3)
-                                {
-                                    One,
-                                    "/clk/mmnoc_ahb",
-                                    0x9c40
-                                }
+                                "TLMMGPIO"
                             }
                         },
-                        Package(0x5)
-                        {
-                            "FSTATE",
-                            One,
-                            Package(0x2)
-                            {
-                                "CLOCK",
-                                Package(0x4)
-                                {
-                                    "mdss_ahb_clk",
-                                    0x2,
-                                    Zero,
-                                    One
-                                }
-                            },
-                            Package(0x2)
-                            {
-                                "FOOTSWITCH",
-                                Package(0x2)
-                                {
-                                    "VDD_MDSS",
-                                    0x2
-                                }
-                            },
-                            Package(0x2)
-                            {
-                                "REQUIRED_RESOURCE",
-                                Package(0x3)
-                                {
-                                    One,
-                                    "/clk/mmnoc_ahb",
-                                    Zero
-                                }
-                            }
-                        }
-                    }
-                },
-                Package(0x3)
-                {
-                    "DEVICE",
-                    "\\_SB.ADSP.SLM1.ADCM.AUDD.MBHC",
-                    Package(0x4)
-                    {
-                        "COMPONENT",
-                        Zero,
                         Package(0x4)
                         {
-                            "FSTATE",
-                            Zero,
+                            "COMPONENT",
+                            0xa,
                             Package(0x2)
                             {
-                                "PMICVREGVOTE",
-                                Package(0xe)
-                                {
-                                    "PPP_RESOURCE_ID_SMPS5_A",
-                                    0x2,
-                                    0x20ce70,
-                                    0x9eb10,
-                                    One,
-                                    Zero,
-                                    Zero,
-                                    Zero,
-                                    Zero,
-                                    0x5,
-                                    Zero,
-                                    Zero,
-                                    Zero,
-                                    Zero
-                                }
+                                "FSTATE",
+                                Zero
                             },
                             Package(0x2)
                             {
-                                "PMICVREGVOTE",
-                                Package(0x7)
+                                "FSTATE",
+                                One
+                            }
+                        },
+                        Package(0x4)
+                        {
+                            "COMPONENT",
+                            0xb,
+                            Package(0x2)
+                            {
+                                "FSTATE",
+                                Zero
+                            },
+                            Package(0x2)
+                            {
+                                "FSTATE",
+                                One
+                            }
+                        },
+                        Package(0x4)
+                        {
+                            "COMPONENT",
+                            0xc,
+                            Package(0x5)
+                            {
+                                "FSTATE",
+                                Zero,
+                                Package(0x2)
                                 {
-                                    "PPP_RESOURCE_ID_BOOST_BYPASS1_B",
-                                    0x9,
-                                    0x325aa0,
-                                    One,
-                                    Zero,
-                                    Zero,
-                                    Zero
+                                    "TLMMGPIO",
+                                    Package(0x6)
+                                    {
+                                        0x52,
+                                        One,
+                                        One,
+                                        One,
+                                        Zero,
+                                        0x3
+                                    }
+                                },
+                                Package(0x2)
+                                {
+                                    "TLMMGPIO",
+                                    Package(0x6)
+                                    {
+                                        0x4f,
+                                        One,
+                                        One,
+                                        One,
+                                        Zero,
+                                        0x3
+                                    }
+                                },
+                                Package(0x2)
+                                {
+                                    "TLMMGPIO",
+                                    Package(0x6)
+                                    {
+                                        0x50,
+                                        One,
+                                        One,
+                                        One,
+                                        Zero,
+                                        0x3
+                                    }
+                                }
+                            },
+                            Package(0x5)
+                            {
+                                "FSTATE",
+                                One,
+                                Package(0x2)
+                                {
+                                    "TLMMGPIO",
+                                    Package(0x6)
+                                    {
+                                        0x52,
+                                        Zero,
+                                        Zero,
+                                        Zero,
+                                        One,
+                                        Zero
+                                    }
+                                },
+                                Package(0x2)
+                                {
+                                    "TLMMGPIO",
+                                    Package(0x6)
+                                    {
+                                        0x4f,
+                                        Zero,
+                                        Zero,
+                                        Zero,
+                                        One,
+                                        Zero
+                                    }
+                                },
+                                Package(0x2)
+                                {
+                                    "TLMMGPIO",
+                                    Package(0x6)
+                                    {
+                                        0x50,
+                                        Zero,
+                                        Zero,
+                                        Zero,
+                                        One,
+                                        Zero
+                                    }
                                 }
                             }
                         },
                         Package(0x4)
                         {
-                            "FSTATE",
-                            One,
+                            "COMPONENT",
+                            0xd,
+                            Package(0x5)
+                            {
+                                "FSTATE",
+                                Zero,
+                                Package(0x2)
+                                {
+                                    "TLMMGPIO",
+                                    Package(0x6)
+                                    {
+                                        0x51,
+                                        One,
+                                        One,
+                                        Zero,
+                                        Zero,
+                                        0x3
+                                    }
+                                },
+                                Package(0x2)
+                                {
+                                    "TLMMGPIO",
+                                    Package(0x6)
+                                    {
+                                        0x4f,
+                                        One,
+                                        One,
+                                        One,
+                                        Zero,
+                                        0x3
+                                    }
+                                },
+                                Package(0x2)
+                                {
+                                    "TLMMGPIO",
+                                    Package(0x6)
+                                    {
+                                        0x50,
+                                        One,
+                                        One,
+                                        One,
+                                        Zero,
+                                        0x3
+                                    }
+                                }
+                            },
+                            Package(0x5)
+                            {
+                                "FSTATE",
+                                One,
+                                Package(0x2)
+                                {
+                                    "TLMMGPIO",
+                                    Package(0x6)
+                                    {
+                                        0x51,
+                                        Zero,
+                                        Zero,
+                                        Zero,
+                                        One,
+                                        Zero
+                                    }
+                                },
+                                Package(0x2)
+                                {
+                                    "TLMMGPIO",
+                                    Package(0x6)
+                                    {
+                                        0x4f,
+                                        Zero,
+                                        Zero,
+                                        Zero,
+                                        One,
+                                        Zero
+                                    }
+                                },
+                                Package(0x2)
+                                {
+                                    "TLMMGPIO",
+                                    Package(0x6)
+                                    {
+                                        0x50,
+                                        Zero,
+                                        Zero,
+                                        Zero,
+                                        One,
+                                        Zero
+                                    }
+                                }
+                            }
+                        },
+                        Package(0x4)
+                        {
+                            "COMPONENT",
+                            0xe,
                             Package(0x2)
                             {
-                                "PMICVREGVOTE",
-                                Package(0xe)
-                                {
-                                    "PPP_RESOURCE_ID_SMPS5_A",
-                                    0x2,
-                                    Zero,
-                                    Zero,
-                                    One,
-                                    Zero,
-                                    Zero,
-                                    Zero,
-                                    Zero,
-                                    0x5,
-                                    Zero,
-                                    Zero,
-                                    Zero,
-                                    Zero
-                                }
+                                "FSTATE",
+                                Zero
                             },
                             Package(0x2)
                             {
-                                "PMICVREGVOTE",
-                                Package(0x7)
+                                "FSTATE",
+                                One
+                            }
+                        },
+                        Package(0x4)
+                        {
+                            "COMPONENT",
+                            0xf,
+                            Package(0x3)
+                            {
+                                "FSTATE",
+                                Zero,
+                                Package(0x2)
                                 {
-                                    "PPP_RESOURCE_ID_BOOST_BYPASS1_B",
-                                    0x9,
-                                    Zero,
-                                    One,
-                                    Zero,
-                                    Zero,
-                                    Zero
+                                    "PMICVREGVOTE",
+                                    Package(0x7)
+                                    {
+                                        "PPP_RESOURCE_ID_BOOST_BYPASS1_B",
+                                        0x9,
+                                        0x325aa0,
+                                        One,
+                                        Zero,
+                                        Zero,
+                                        Zero
+                                    }
+                                }
+                            },
+                            Package(0x3)
+                            {
+                                "FSTATE",
+                                One,
+                                Package(0x2)
+                                {
+                                    "PMICVREGVOTE",
+                                    Package(0x7)
+                                    {
+                                        "PPP_RESOURCE_ID_BOOST_BYPASS1_B",
+                                        0x9,
+                                        0x325aa0,
+                                        Zero,
+                                        Zero,
+                                        Zero,
+                                        Zero
+                                    }
+                                }
+                            }
+                        },
+                        Package(0x4)
+                        {
+                            "COMPONENT",
+                            0x10,
+                            Package(0x5)
+                            {
+                                "FSTATE",
+                                Zero,
+                                Package(0x2)
+                                {
+                                    "FOOTSWITCH",
+                                    Package(0x2)
+                                    {
+                                        "VDD_MDSS",
+                                        One
+                                    }
+                                },
+                                Package(0x2)
+                                {
+                                    "CLOCK",
+                                    Package(0x4)
+                                    {
+                                        "mdss_ahb_clk",
+                                        One,
+                                        Zero,
+                                        One
+                                    }
+                                },
+                                Package(0x2)
+                                {
+                                    "REQUIRED_RESOURCE",
+                                    Package(0x3)
+                                    {
+                                        One,
+                                        "/clk/mmnoc_ahb",
+                                        0x9c40
+                                    }
+                                }
+                            },
+                            Package(0x5)
+                            {
+                                "FSTATE",
+                                One,
+                                Package(0x2)
+                                {
+                                    "CLOCK",
+                                    Package(0x4)
+                                    {
+                                        "mdss_ahb_clk",
+                                        0x2,
+                                        Zero,
+                                        One
+                                    }
+                                },
+                                Package(0x2)
+                                {
+                                    "FOOTSWITCH",
+                                    Package(0x2)
+                                    {
+                                        "VDD_MDSS",
+                                        0x2
+                                    }
+                                },
+                                Package(0x2)
+                                {
+                                    "REQUIRED_RESOURCE",
+                                    Package(0x3)
+                                    {
+                                        One,
+                                        "/clk/mmnoc_ahb",
+                                        Zero
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    Package(0x3)
+                    {
+                        "DEVICE",
+                        "\\_SB.ADSP.SLM1.ADCM.AUDD.MBHC",
+                        Package(0x4)
+                        {
+                            "COMPONENT",
+                            Zero,
+                            Package(0x4)
+                            {
+                                "FSTATE",
+                                Zero,
+                                Package(0x2)
+                                {
+                                    "PMICVREGVOTE",
+                                    Package(0xe)
+                                    {
+                                        "PPP_RESOURCE_ID_SMPS5_A",
+                                        0x2,
+                                        0x20ce70,
+                                        0x9eb10,
+                                        One,
+                                        Zero,
+                                        Zero,
+                                        Zero,
+                                        Zero,
+                                        0x5,
+                                        Zero,
+                                        Zero,
+                                        Zero,
+                                        Zero
+                                    }
+                                },
+                                Package(0x2)
+                                {
+                                    "PMICVREGVOTE",
+                                    Package(0x7)
+                                    {
+                                        "PPP_RESOURCE_ID_BOOST_BYPASS1_B",
+                                        0x9,
+                                        0x325aa0,
+                                        One,
+                                        Zero,
+                                        Zero,
+                                        Zero
+                                    }
+                                }
+                            },
+                            Package(0x4)
+                            {
+                                "FSTATE",
+                                One,
+                                Package(0x2)
+                                {
+                                    "PMICVREGVOTE",
+                                    Package(0xe)
+                                    {
+                                        "PPP_RESOURCE_ID_SMPS5_A",
+                                        0x2,
+                                        Zero,
+                                        Zero,
+                                        One,
+                                        Zero,
+                                        Zero,
+                                        Zero,
+                                        Zero,
+                                        0x5,
+                                        Zero,
+                                        Zero,
+                                        Zero,
+                                        Zero
+                                    }
+                                },
+                                Package(0x2)
+                                {
+                                    "PMICVREGVOTE",
+                                    Package(0x7)
+                                    {
+                                        "PPP_RESOURCE_ID_BOOST_BYPASS1_B",
+                                        0x9,
+                                        Zero,
+                                        One,
+                                        Zero,
+                                        Zero,
+                                        Zero
+                                    }
                                 }
                             }
                         }
@@ -5556,7 +5337,7 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
                             {
                                 "FSTATE",
                                 One,
-                                Package(0xd)
+                                Package(0x15)
                                 {
                                     "ENTER",
                                     Package(0x1)
@@ -5658,11 +5439,71 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
                                         "PMICVREGVOTE",
                                         Package(0xa)
                                         {
+                                            "PPP_RESOURCE_ID_LDO14_A",
+                                            One,
+                                            Zero,
+                                            Zero,
+                                            Zero,
+                                            Zero,
+                                            Zero,
+                                            Zero,
+                                            Zero,
+                                            Zero
+                                        }
+                                    },
+                                    Package(0x2)
+                                    {
+                                        "PMICVREGVOTE",
+                                        Package(0xa)
+                                        {
                                             "PPP_RESOURCE_ID_LDO28_A",
                                             One,
                                             Zero,
                                             Zero,
                                             Zero,
+                                            Zero,
+                                            Zero,
+                                            Zero,
+                                            Zero,
+                                            Zero
+                                        }
+                                    },
+                                    Package(0x2)
+                                    {
+                                        "PMICVREGVOTE",
+                                        Package(0xa)
+                                        {
+                                            "PPP_RESOURCE_ID_LDO18_A",
+                                            One,
+                                            Zero,
+                                            Zero,
+                                            Zero,
+                                            Zero,
+                                            Zero,
+                                            Zero,
+                                            Zero,
+                                            Zero
+                                        }
+                                    },
+                                    Package(0x2)
+                                    {
+                                        "PMICIBBLAB",
+                                        Package(0x4)
+                                        {
+                                            "IOCTL_PM_IBBLAB_MODULE_ENABLE",
+                                            One,
+                                            Zero,
+                                            0x3
+                                        }
+                                    },
+                                    Package(0x2)
+                                    {
+                                        "PMICLPG",
+                                        Package(0x8)
+                                        {
+                                            "IOCTL_PM_LPG_ENABLE_CONTROL",
+                                            One,
+                                            0x3,
                                             Zero,
                                             Zero,
                                             Zero,
@@ -5682,6 +5523,16 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
                                     },
                                     Package(0x2)
                                     {
+                                        "PMICWLED",
+                                        Package(0x3)
+                                        {
+                                            "IOCTL_PM_WLED_MODULE_ENABLE",
+                                            One,
+                                            Zero
+                                        }
+                                    },
+                                    Package(0x2)
+                                    {
                                         "TLMMGPIO",
                                         Package(0x6)
                                         {
@@ -5692,9 +5543,42 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
                                             One,
                                             Zero
                                         }
+                                    },
+                                    Package(0x2)
+                                    {
+                                        "PMICMPP",
+                                        Package(0x4)
+                                        {
+                                            "IOCTL_PM_MPP_CONFIG_DIGITAL_OUTPUT",
+                                            One,
+                                            0x3,
+                                            Zero
+                                        }
+                                    },
+                                    Package(0x2)
+                                    {
+                                        "PMICMPP",
+                                        Package(0x4)
+                                        {
+                                            "IOCTL_PM_MPP_SET_OUTPUT_STATE",
+                                            One,
+                                            0x3,
+                                            0xa
+                                        }
+                                    },
+                                    Package(0x2)
+                                    {
+                                        "PMICMPP",
+                                        Package(0x4)
+                                        {
+                                            "IOCTL_PM_MPP_SET_OUTPUT_STATE",
+                                            One,
+                                            Zero,
+                                            Zero
+                                        }
                                     }
                                 },
-                                Package(0xa)
+                                Package(0x11)
                                 {
                                     "EXIT",
                                     Package(0x2)
@@ -5769,6 +5653,23 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
                                         "PMICVREGVOTE",
                                         Package(0xa)
                                         {
+                                            "PPP_RESOURCE_ID_LDO14_A",
+                                            One,
+                                            0x124f80,
+                                            0xcb20,
+                                            One,
+                                            Zero,
+                                            One,
+                                            Zero,
+                                            Zero,
+                                            Zero
+                                        }
+                                    },
+                                    Package(0x2)
+                                    {
+                                        "PMICVREGVOTE",
+                                        Package(0xa)
+                                        {
                                             "PPP_RESOURCE_ID_LDO28_A",
                                             One,
                                             0xf4240,
@@ -5783,11 +5684,49 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
                                     },
                                     Package(0x2)
                                     {
+                                        "PMICVREGVOTE",
+                                        Package(0xa)
+                                        {
+                                            "PPP_RESOURCE_ID_LDO18_A",
+                                            One,
+                                            0x2b7cd0,
+                                            0x64,
+                                            One,
+                                            Zero,
+                                            One,
+                                            Zero,
+                                            Zero,
+                                            Zero
+                                        }
+                                    },
+                                    Package(0x2)
+                                    {
+                                        "PMICIBBLAB",
+                                        Package(0x4)
+                                        {
+                                            "IOCTL_PM_IBBLAB_MODULE_ENABLE",
+                                            One,
+                                            One,
+                                            0x3
+                                        }
+                                    },
+                                    Package(0x2)
+                                    {
                                         "REQUIRED_RESOURCE",
                                         Package(0x3)
                                         {
                                             One,
                                             "/pmic/client/hfpll1",
+                                            One
+                                        }
+                                    },
+                                    Package(0x2)
+                                    {
+                                        "PMICWLED",
+                                        Package(0x3)
+                                        {
+                                            "IOCTL_PM_WLED_MODULE_ENABLE",
+                                            One,
                                             One
                                         }
                                     },
@@ -5802,6 +5741,39 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
                                             Zero,
                                             Zero,
                                             Zero
+                                        }
+                                    },
+                                    Package(0x2)
+                                    {
+                                        "PMICMPP",
+                                        Package(0x4)
+                                        {
+                                            "IOCTL_PM_MPP_CONFIG_DIGITAL_OUTPUT",
+                                            One,
+                                            0x3,
+                                            Zero
+                                        }
+                                    },
+                                    Package(0x2)
+                                    {
+                                        "PMICMPP",
+                                        Package(0x4)
+                                        {
+                                            "IOCTL_PM_MPP_SET_OUTPUT_STATE",
+                                            One,
+                                            0x3,
+                                            Zero
+                                        }
+                                    },
+                                    Package(0x2)
+                                    {
+                                        "PMICMPP",
+                                        Package(0x4)
+                                        {
+                                            "IOCTL_PM_MPP_SET_OUTPUT_STATE",
+                                            One,
+                                            Zero,
+                                            0x8
                                         }
                                     }
                                 }
@@ -13643,7 +13615,7 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
                             {
                                 "FSTATE",
                                 One,
-                                Package(0xc)
+                                Package(0xd)
                                 {
                                     "ENTER",
                                     Package(0x2)
@@ -13655,7 +13627,7 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
                                             One,
                                             Zero,
                                             Zero,
-                                            Zero,
+                                            One,
                                             Zero
                                         }
                                     },
@@ -13681,7 +13653,7 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
                                             One,
                                             Zero,
                                             Zero,
-                                            Zero,
+                                            One,
                                             Zero
                                         }
                                     },
@@ -13694,7 +13666,16 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
                                             One,
                                             Zero,
                                             Zero,
-                                            One,
+                                            Zero,
+                                            Zero
+                                        }
+                                    },
+                                    Package(0x2)
+                                    {
+                                        "DISCRETE_VREGVOTE",
+                                        Package(0x2)
+                                        {
+                                            "PPP_RESOURCE_ID_PMIC_MPP_DV1",
                                             Zero
                                         }
                                     },
@@ -13783,7 +13764,7 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
                                         }
                                     }
                                 },
-                                Package(0xc)
+                                Package(0xd)
                                 {
                                     "EXIT",
                                     Package(0x2)
@@ -13857,7 +13838,7 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
                                             "PPP_RESOURCE_ID_SMPS4_A",
                                             0x2,
                                             0x1b7740,
-                                            0x32c8,
+                                            0x4f588,
                                             One,
                                             Zero,
                                             Zero,
@@ -13868,6 +13849,15 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
                                             Zero,
                                             Zero,
                                             Zero
+                                        }
+                                    },
+                                    Package(0x2)
+                                    {
+                                        "DISCRETE_VREGVOTE",
+                                        Package(0x2)
+                                        {
+                                            "PPP_RESOURCE_ID_PMIC_MPP_DV1",
+                                            One
                                         }
                                     },
                                     Package(0x2)
@@ -13892,7 +13882,7 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
                                             One,
                                             One,
                                             One,
-                                            Zero,
+                                            0x3,
                                             Zero
                                         }
                                     },
@@ -14169,7 +14159,7 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
                 {
                     "DEVICE",
                     "\\_SB.ADSP",
-                    Package(0x6)
+                    Package(0x5)
                     {
                         "COMPONENT",
                         Zero,
@@ -14187,26 +14177,6 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
                         {
                             "PSTATE",
                             One
-                        },
-                        Package(0x3)
-                        {
-                            "PSTATE",
-                            0x2,
-                            Package(0x2)
-                            {
-                                "PMICGPIO",
-                                Package(0x8)
-                                {
-                                    "IOCTL_PM_GPIO_CONFIG_DIGITAL_OUTPUT",
-                                    Zero,
-                                    0xb,
-                                    Zero,
-                                    0x2,
-                                    Zero,
-                                    0x3,
-                                    0x5
-                                }
-                            }
                         }
                     },
                     Package(0x2)
@@ -14312,648 +14282,10 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
                             "FSTATE",
                             0x2
                         },
-                        Package(0x31)
+                        Package(0x2)
                         {
                             "FSTATE",
-                            0x3,
-                            Package(0x2)
-                            {
-                                "TLMMGPIO",
-                                Package(0x6)
-                                {
-                                    Zero,
-                                    Zero,
-                                    Zero,
-                                    Zero,
-                                    One,
-                                    Zero
-                                }
-                            },
-                            Package(0x2)
-                            {
-                                "TLMMGPIO",
-                                Package(0x6)
-                                {
-                                    One,
-                                    Zero,
-                                    Zero,
-                                    Zero,
-                                    One,
-                                    Zero
-                                }
-                            },
-                            Package(0x2)
-                            {
-                                "TLMMGPIO",
-                                Package(0x6)
-                                {
-                                    0xb,
-                                    Zero,
-                                    Zero,
-                                    Zero,
-                                    One,
-                                    Zero
-                                }
-                            },
-                            Package(0x2)
-                            {
-                                "TLMMGPIO",
-                                Package(0x6)
-                                {
-                                    0x10,
-                                    Zero,
-                                    Zero,
-                                    Zero,
-                                    One,
-                                    Zero
-                                }
-                            },
-                            Package(0x2)
-                            {
-                                "TLMMGPIO",
-                                Package(0x6)
-                                {
-                                    0x19,
-                                    Zero,
-                                    Zero,
-                                    Zero,
-                                    One,
-                                    Zero
-                                }
-                            },
-                            Package(0x2)
-                            {
-                                "TLMMGPIO",
-                                Package(0x6)
-                                {
-                                    0x27,
-                                    Zero,
-                                    Zero,
-                                    One,
-                                    One,
-                                    Zero
-                                }
-                            },
-                            Package(0x2)
-                            {
-                                "TLMMGPIO",
-                                Package(0x6)
-                                {
-                                    0x3d,
-                                    Zero,
-                                    Zero,
-                                    Zero,
-                                    One,
-                                    Zero
-                                }
-                            },
-                            Package(0x2)
-                            {
-                                "TLMMGPIO",
-                                Package(0x6)
-                                {
-                                    0x3f,
-                                    Zero,
-                                    Zero,
-                                    Zero,
-                                    One,
-                                    Zero
-                                }
-                            },
-                            Package(0x2)
-                            {
-                                "TLMMGPIO",
-                                Package(0x6)
-                                {
-                                    0x45,
-                                    Zero,
-                                    Zero,
-                                    Zero,
-                                    One,
-                                    Zero
-                                }
-                            },
-                            Package(0x2)
-                            {
-                                "TLMMGPIO",
-                                Package(0x6)
-                                {
-                                    0x4c,
-                                    Zero,
-                                    Zero,
-                                    Zero,
-                                    One,
-                                    Zero
-                                }
-                            },
-                            Package(0x2)
-                            {
-                                "TLMMGPIO",
-                                Package(0x6)
-                                {
-                                    0x55,
-                                    Zero,
-                                    Zero,
-                                    Zero,
-                                    One,
-                                    Zero
-                                }
-                            },
-                            Package(0x2)
-                            {
-                                "TLMMGPIO",
-                                Package(0x6)
-                                {
-                                    0x56,
-                                    Zero,
-                                    Zero,
-                                    Zero,
-                                    One,
-                                    Zero
-                                }
-                            },
-                            Package(0x2)
-                            {
-                                "TLMMGPIO",
-                                Package(0x6)
-                                {
-                                    0x57,
-                                    Zero,
-                                    Zero,
-                                    Zero,
-                                    One,
-                                    Zero
-                                }
-                            },
-                            Package(0x2)
-                            {
-                                "TLMMGPIO",
-                                Package(0x6)
-                                {
-                                    0x58,
-                                    Zero,
-                                    Zero,
-                                    Zero,
-                                    One,
-                                    Zero
-                                }
-                            },
-                            Package(0x2)
-                            {
-                                "TLMMGPIO",
-                                Package(0x6)
-                                {
-                                    0x59,
-                                    Zero,
-                                    Zero,
-                                    Zero,
-                                    One,
-                                    Zero
-                                }
-                            },
-                            Package(0x2)
-                            {
-                                "TLMMGPIO",
-                                Package(0x6)
-                                {
-                                    0x5a,
-                                    Zero,
-                                    Zero,
-                                    Zero,
-                                    One,
-                                    Zero
-                                }
-                            },
-                            Package(0x2)
-                            {
-                                "TLMMGPIO",
-                                Package(0x6)
-                                {
-                                    0x5b,
-                                    Zero,
-                                    Zero,
-                                    Zero,
-                                    One,
-                                    Zero
-                                }
-                            },
-                            Package(0x2)
-                            {
-                                "TLMMGPIO",
-                                Package(0x6)
-                                {
-                                    0x5c,
-                                    Zero,
-                                    Zero,
-                                    Zero,
-                                    One,
-                                    Zero
-                                }
-                            },
-                            Package(0x2)
-                            {
-                                "TLMMGPIO",
-                                Package(0x6)
-                                {
-                                    0x60,
-                                    Zero,
-                                    Zero,
-                                    Zero,
-                                    0x3,
-                                    Zero
-                                }
-                            },
-                            Package(0x2)
-                            {
-                                "TLMMGPIO",
-                                Package(0x6)
-                                {
-                                    0x69,
-                                    Zero,
-                                    Zero,
-                                    Zero,
-                                    One,
-                                    Zero
-                                }
-                            },
-                            Package(0x2)
-                            {
-                                "TLMMGPIO",
-                                Package(0x6)
-                                {
-                                    0x6a,
-                                    Zero,
-                                    Zero,
-                                    Zero,
-                                    One,
-                                    Zero
-                                }
-                            },
-                            Package(0x2)
-                            {
-                                "TLMMGPIO",
-                                Package(0x6)
-                                {
-                                    0x6c,
-                                    Zero,
-                                    Zero,
-                                    Zero,
-                                    One,
-                                    Zero
-                                }
-                            },
-                            Package(0x2)
-                            {
-                                "TLMMGPIO",
-                                Package(0x6)
-                                {
-                                    0x6d,
-                                    Zero,
-                                    Zero,
-                                    Zero,
-                                    One,
-                                    Zero
-                                }
-                            },
-                            Package(0x2)
-                            {
-                                "TLMMGPIO",
-                                Package(0x6)
-                                {
-                                    0x6e,
-                                    Zero,
-                                    Zero,
-                                    Zero,
-                                    One,
-                                    Zero
-                                }
-                            },
-                            Package(0x2)
-                            {
-                                "TLMMGPIO",
-                                Package(0x6)
-                                {
-                                    0x72,
-                                    Zero,
-                                    Zero,
-                                    Zero,
-                                    One,
-                                    Zero
-                                }
-                            },
-                            Package(0x2)
-                            {
-                                "PMICGPIO",
-                                Package(0x8)
-                                {
-                                    "IOCTL_PM_GPIO_CONFIG_DIGITAL_OUTPUT",
-                                    Zero,
-                                    Zero,
-                                    Zero,
-                                    0x2,
-                                    Zero,
-                                    Zero,
-                                    0x5
-                                }
-                            },
-                            Package(0x2)
-                            {
-                                "PMICGPIO",
-                                Package(0x6)
-                                {
-                                    "IOCTL_PM_GPIO_CONFIG_DIGITAL_INPUT",
-                                    Zero,
-                                    Zero,
-                                    0x4,
-                                    0x2,
-                                    Zero
-                                }
-                            },
-                            Package(0x2)
-                            {
-                                "PMICGPIO",
-                                Package(0x8)
-                                {
-                                    "IOCTL_PM_GPIO_CONFIG_DIGITAL_OUTPUT",
-                                    Zero,
-                                    0x5,
-                                    Zero,
-                                    0x2,
-                                    Zero,
-                                    Zero,
-                                    0x5
-                                }
-                            },
-                            Package(0x2)
-                            {
-                                "PMICGPIO",
-                                Package(0x6)
-                                {
-                                    "IOCTL_PM_GPIO_CONFIG_DIGITAL_INPUT",
-                                    Zero,
-                                    0x5,
-                                    0x4,
-                                    0x2,
-                                    Zero
-                                }
-                            },
-                            Package(0x2)
-                            {
-                                "PMICGPIO",
-                                Package(0x8)
-                                {
-                                    "IOCTL_PM_GPIO_CONFIG_DIGITAL_OUTPUT",
-                                    Zero,
-                                    0xc,
-                                    Zero,
-                                    0x2,
-                                    One,
-                                    0x3,
-                                    0x5
-                                }
-                            },
-                            Package(0x2)
-                            {
-                                "PMICGPIO",
-                                Package(0x8)
-                                {
-                                    "IOCTL_PM_GPIO_CONFIG_DIGITAL_OUTPUT",
-                                    Zero,
-                                    0x10,
-                                    Zero,
-                                    0x2,
-                                    0x4,
-                                    0x3,
-                                    0x5
-                                }
-                            },
-                            Package(0x2)
-                            {
-                                "PMICGPIO",
-                                Package(0x8)
-                                {
-                                    "IOCTL_PM_GPIO_CONFIG_DIGITAL_OUTPUT",
-                                    Zero,
-                                    0x11,
-                                    Zero,
-                                    0x2,
-                                    0x6,
-                                    0x3,
-                                    0x5
-                                }
-                            },
-                            Package(0x2)
-                            {
-                                "PMICGPIO",
-                                Package(0x8)
-                                {
-                                    "IOCTL_PM_GPIO_CONFIG_DIGITAL_OUTPUT",
-                                    One,
-                                    Zero,
-                                    Zero,
-                                    0x2,
-                                    Zero,
-                                    Zero,
-                                    0x5
-                                }
-                            },
-                            Package(0x2)
-                            {
-                                "PMICGPIO",
-                                Package(0x6)
-                                {
-                                    "IOCTL_PM_GPIO_CONFIG_DIGITAL_INPUT",
-                                    One,
-                                    Zero,
-                                    0x4,
-                                    0x2,
-                                    Zero
-                                }
-                            },
-                            Package(0x2)
-                            {
-                                "PMICGPIO",
-                                Package(0x8)
-                                {
-                                    "IOCTL_PM_GPIO_CONFIG_DIGITAL_OUTPUT",
-                                    One,
-                                    0x2,
-                                    Zero,
-                                    0x2,
-                                    Zero,
-                                    Zero,
-                                    0x5
-                                }
-                            },
-                            Package(0x2)
-                            {
-                                "PMICGPIO",
-                                Package(0x6)
-                                {
-                                    "IOCTL_PM_GPIO_CONFIG_DIGITAL_INPUT",
-                                    One,
-                                    0x2,
-                                    0x4,
-                                    0x2,
-                                    Zero
-                                }
-                            },
-                            Package(0x2)
-                            {
-                                "PMICGPIO",
-                                Package(0x8)
-                                {
-                                    "IOCTL_PM_GPIO_CONFIG_DIGITAL_OUTPUT",
-                                    One,
-                                    0x7,
-                                    One,
-                                    One,
-                                    Zero,
-                                    One,
-                                    0x5
-                                }
-                            },
-                            Package(0x2)
-                            {
-                                "PMICGPIO",
-                                Package(0x8)
-                                {
-                                    "IOCTL_PM_GPIO_CONFIG_DIGITAL_OUTPUT",
-                                    One,
-                                    0x8,
-                                    One,
-                                    One,
-                                    Zero,
-                                    One,
-                                    0x5
-                                }
-                            },
-                            Package(0x2)
-                            {
-                                "PMICGPIO",
-                                Package(0x8)
-                                {
-                                    "IOCTL_PM_GPIO_CONFIG_DIGITAL_OUTPUT",
-                                    One,
-                                    0x9,
-                                    One,
-                                    One,
-                                    Zero,
-                                    One,
-                                    0x5
-                                }
-                            },
-                            Package(0x2)
-                            {
-                                "PMICMPP",
-                                Package(0x5)
-                                {
-                                    "IOCTL_PM_MPP_CONFIG_I_SINK",
-                                    Zero,
-                                    One,
-                                    Zero,
-                                    Zero
-                                }
-                            },
-                            Package(0x2)
-                            {
-                                "PMICMPP",
-                                Package(0x5)
-                                {
-                                    "IOCTL_PM_MPP_CONFIG_I_SINK",
-                                    Zero,
-                                    0x3,
-                                    Zero,
-                                    Zero
-                                }
-                            },
-                            Package(0x2)
-                            {
-                                "PMICMPP",
-                                Package(0x5)
-                                {
-                                    "IOCTL_PM_MPP_CONFIG_I_SINK",
-                                    Zero,
-                                    0x4,
-                                    Zero,
-                                    Zero
-                                }
-                            },
-                            Package(0x2)
-                            {
-                                "PMICMPP",
-                                Package(0x5)
-                                {
-                                    "IOCTL_PM_MPP_CONFIG_I_SINK",
-                                    Zero,
-                                    0x7,
-                                    Zero,
-                                    Zero
-                                }
-                            },
-                            Package(0x2)
-                            {
-                                "PMICMPP",
-                                Package(0x5)
-                                {
-                                    "IOCTL_PM_MPP_CONFIG_I_SINK",
-                                    One,
-                                    Zero,
-                                    Zero,
-                                    Zero
-                                }
-                            },
-                            Package(0x2)
-                            {
-                                "PMICVREGVOTE",
-                                Package(0xa)
-                                {
-                                    "PPP_RESOURCE_ID_LDO19_A",
-                                    One,
-                                    0x325aa0,
-                                    0x7a120,
-                                    One,
-                                    Zero,
-                                    One,
-                                    Zero,
-                                    Zero,
-                                    Zero
-                                }
-                            },
-                            Package(0x2)
-                            {
-                                "PMICVREGVOTE",
-                                Package(0xa)
-                                {
-                                    "PPP_RESOURCE_ID_LDO27_A",
-                                    One,
-                                    0xf4240,
-                                    0x7a120,
-                                    One,
-                                    Zero,
-                                    One,
-                                    Zero,
-                                    Zero,
-                                    Zero
-                                }
-                            },
-                            Package(0x2)
-                            {
-                                "PMICVREGVOTE",
-                                Package(0xa)
-                                {
-                                    "PPP_RESOURCE_ID_LDO31_A",
-                                    One,
-                                    0x124f80,
-                                    0x927c0,
-                                    One,
-                                    Zero,
-                                    One,
-                                    Zero,
-                                    Zero,
-                                    Zero
-                                }
-                            }
+                            0x3
                         }
                     }
                 }
@@ -14965,7 +14297,7 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
             {
                 Return(BPCC)
             }
-            Name(BPCC, Package(0x5)
+            Name(BPCC, Package(0x4)
             {
                 Package(0x5)
                 {
@@ -15721,7 +15053,7 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
                             {
                                 0x2044,
                                 0x1ffff,
-                                0x9f5a
+                                0x9e99
                             }
                         },
                         Package(0x2)
@@ -15821,902 +15153,6 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
                                 0x2044,
                                 0x1ffff,
                                 0xa00
-                            }
-                        }
-                    }
-                },
-                Package(0x5)
-                {
-                    "DEVICE",
-                    "\\_SB.SDC2",
-                    Package(0x8)
-                    {
-                        "COMPONENT",
-                        Zero,
-                        Package(0x2)
-                        {
-                            "FSTATE",
-                            Zero
-                        },
-                        Package(0x2)
-                        {
-                            "FSTATE",
-                            One
-                        },
-                        Package(0x19)
-                        {
-                            "PSTATE_SET",
-                            Zero,
-                            Package(0x3)
-                            {
-                                "PSTATE",
-                                Zero,
-                                Package(0x2)
-                                {
-                                    "DELAY",
-                                    Package(0x1)
-                                    {
-                                        One
-                                    }
-                                }
-                            },
-                            Package(0x3)
-                            {
-                                "PSTATE",
-                                One,
-                                Package(0x2)
-                                {
-                                    "DELAY",
-                                    Package(0x1)
-                                    {
-                                        One
-                                    }
-                                }
-                            },
-                            Package(0x3)
-                            {
-                                "PSTATE",
-                                0x2,
-                                Package(0x2)
-                                {
-                                    "DELAY",
-                                    Package(0x1)
-                                    {
-                                        One
-                                    }
-                                }
-                            },
-                            Package(0x3)
-                            {
-                                "PSTATE",
-                                0x3,
-                                Package(0x2)
-                                {
-                                    "DELAY",
-                                    Package(0x1)
-                                    {
-                                        One
-                                    }
-                                }
-                            },
-                            Package(0x3)
-                            {
-                                "PSTATE",
-                                0x4,
-                                Package(0x2)
-                                {
-                                    "DELAY",
-                                    Package(0x1)
-                                    {
-                                        One
-                                    }
-                                }
-                            },
-                            Package(0x3)
-                            {
-                                "PSTATE",
-                                0x5,
-                                Package(0x2)
-                                {
-                                    "DELAY",
-                                    Package(0x1)
-                                    {
-                                        One
-                                    }
-                                }
-                            },
-                            Package(0x3)
-                            {
-                                "PSTATE",
-                                0x6,
-                                Package(0x2)
-                                {
-                                    "DELAY",
-                                    Package(0x1)
-                                    {
-                                        One
-                                    }
-                                }
-                            },
-                            Package(0x3)
-                            {
-                                "PSTATE",
-                                0x7,
-                                Package(0x2)
-                                {
-                                    "DELAY",
-                                    Package(0x1)
-                                    {
-                                        One
-                                    }
-                                }
-                            },
-                            Package(0x3)
-                            {
-                                "PSTATE",
-                                0x8,
-                                Package(0x2)
-                                {
-                                    "DELAY",
-                                    Package(0x1)
-                                    {
-                                        One
-                                    }
-                                }
-                            },
-                            Package(0x3)
-                            {
-                                "PSTATE",
-                                0x9,
-                                Package(0x2)
-                                {
-                                    "DELAY",
-                                    Package(0x1)
-                                    {
-                                        One
-                                    }
-                                }
-                            },
-                            Package(0x3)
-                            {
-                                "PSTATE",
-                                0xb,
-                                Package(0x2)
-                                {
-                                    "DELAY",
-                                    Package(0x1)
-                                    {
-                                        One
-                                    }
-                                }
-                            },
-                            Package(0x3)
-                            {
-                                "PSTATE",
-                                0xc,
-                                Package(0x2)
-                                {
-                                    "DELAY",
-                                    Package(0x1)
-                                    {
-                                        One
-                                    }
-                                }
-                            },
-                            Package(0x3)
-                            {
-                                "PSTATE",
-                                0xd,
-                                Package(0x2)
-                                {
-                                    "DELAY",
-                                    Package(0x1)
-                                    {
-                                        One
-                                    }
-                                }
-                            },
-                            Package(0x3)
-                            {
-                                "PSTATE",
-                                0xe,
-                                Package(0x2)
-                                {
-                                    "DELAY",
-                                    Package(0x1)
-                                    {
-                                        One
-                                    }
-                                }
-                            },
-                            Package(0x3)
-                            {
-                                "PSTATE",
-                                0xf,
-                                Package(0x2)
-                                {
-                                    "DELAY",
-                                    Package(0x1)
-                                    {
-                                        One
-                                    }
-                                }
-                            },
-                            Package(0x3)
-                            {
-                                "PSTATE",
-                                0x10,
-                                Package(0x2)
-                                {
-                                    "DELAY",
-                                    Package(0x1)
-                                    {
-                                        One
-                                    }
-                                }
-                            },
-                            Package(0x3)
-                            {
-                                "PSTATE",
-                                0x11,
-                                Package(0x2)
-                                {
-                                    "DELAY",
-                                    Package(0x1)
-                                    {
-                                        One
-                                    }
-                                }
-                            },
-                            Package(0x3)
-                            {
-                                "PSTATE",
-                                0x12,
-                                Package(0x2)
-                                {
-                                    "DELAY",
-                                    Package(0x1)
-                                    {
-                                        One
-                                    }
-                                }
-                            },
-                            Package(0x3)
-                            {
-                                "PSTATE",
-                                0x13,
-                                Package(0x2)
-                                {
-                                    "DELAY",
-                                    Package(0x1)
-                                    {
-                                        One
-                                    }
-                                }
-                            },
-                            Package(0x8)
-                            {
-                                "PSTATE",
-                                0x14,
-                                Package(0x2)
-                                {
-                                    "PMICVREGVOTE",
-                                    Package(0xa)
-                                    {
-                                        "PPP_RESOURCE_ID_LDO21_A",
-                                        One,
-                                        Zero,
-                                        Zero,
-                                        Zero,
-                                        Zero,
-                                        Zero,
-                                        Zero,
-                                        Zero,
-                                        Zero
-                                    }
-                                },
-                                Package(0x2)
-                                {
-                                    "PMICVREGVOTE",
-                                    Package(0xa)
-                                    {
-                                        "PPP_RESOURCE_ID_LDO13_A",
-                                        One,
-                                        Zero,
-                                        Zero,
-                                        Zero,
-                                        Zero,
-                                        Zero,
-                                        Zero,
-                                        Zero,
-                                        Zero
-                                    }
-                                },
-                                Package(0x2)
-                                {
-                                    "DELAY",
-                                    Package(0x1)
-                                    {
-                                        0x23
-                                    }
-                                },
-                                Package(0x2)
-                                {
-                                    "PMICVREGVOTE",
-                                    Package(0xa)
-                                    {
-                                        "PPP_RESOURCE_ID_LDO21_A",
-                                        One,
-                                        0x2d0370,
-                                        0xc3500,
-                                        One,
-                                        Zero,
-                                        One,
-                                        Zero,
-                                        Zero,
-                                        Zero
-                                    }
-                                },
-                                Package(0x2)
-                                {
-                                    "PMICVREGVOTE",
-                                    Package(0xa)
-                                    {
-                                        "PPP_RESOURCE_ID_LDO13_A",
-                                        One,
-                                        0x2d0370,
-                                        0x55f0,
-                                        One,
-                                        Zero,
-                                        One,
-                                        Zero,
-                                        Zero,
-                                        Zero
-                                    }
-                                },
-                                Package(0x2)
-                                {
-                                    "DELAY",
-                                    Package(0x1)
-                                    {
-                                        0x23
-                                    }
-                                }
-                            },
-                            Package(0x4)
-                            {
-                                "PSTATE",
-                                0x15,
-                                Package(0x2)
-                                {
-                                    "PMICVREGVOTE",
-                                    Package(0xa)
-                                    {
-                                        "PPP_RESOURCE_ID_LDO13_A",
-                                        One,
-                                        0x1c3a90,
-                                        0x55f0,
-                                        One,
-                                        Zero,
-                                        One,
-                                        Zero,
-                                        Zero,
-                                        Zero
-                                    }
-                                },
-                                Package(0x2)
-                                {
-                                    "DELAY",
-                                    Package(0x1)
-                                    {
-                                        0x23
-                                    }
-                                }
-                            },
-                            Package(0x5)
-                            {
-                                "PSTATE",
-                                0x16,
-                                Package(0x2)
-                                {
-                                    "PMICVREGVOTE",
-                                    Package(0xa)
-                                    {
-                                        "PPP_RESOURCE_ID_LDO21_A",
-                                        One,
-                                        0x2d0370,
-                                        0xc3500,
-                                        One,
-                                        Zero,
-                                        One,
-                                        Zero,
-                                        Zero,
-                                        Zero
-                                    }
-                                },
-                                Package(0x2)
-                                {
-                                    "PMICVREGVOTE",
-                                    Package(0xa)
-                                    {
-                                        "PPP_RESOURCE_ID_LDO13_A",
-                                        One,
-                                        0x2d0370,
-                                        0x55f0,
-                                        One,
-                                        Zero,
-                                        One,
-                                        Zero,
-                                        Zero,
-                                        Zero
-                                    }
-                                },
-                                Package(0x2)
-                                {
-                                    "DELAY",
-                                    Package(0x1)
-                                    {
-                                        0x23
-                                    }
-                                }
-                            },
-                            Package(0x5)
-                            {
-                                "PSTATE",
-                                0x17,
-                                Package(0x2)
-                                {
-                                    "PMICVREGVOTE",
-                                    Package(0xa)
-                                    {
-                                        "PPP_RESOURCE_ID_LDO21_A",
-                                        One,
-                                        Zero,
-                                        Zero,
-                                        Zero,
-                                        Zero,
-                                        Zero,
-                                        Zero,
-                                        Zero,
-                                        Zero
-                                    }
-                                },
-                                Package(0x2)
-                                {
-                                    "PMICVREGVOTE",
-                                    Package(0xa)
-                                    {
-                                        "PPP_RESOURCE_ID_LDO13_A",
-                                        One,
-                                        Zero,
-                                        Zero,
-                                        Zero,
-                                        Zero,
-                                        Zero,
-                                        Zero,
-                                        Zero,
-                                        Zero
-                                    }
-                                },
-                                Package(0x2)
-                                {
-                                    "DELAY",
-                                    Package(0x1)
-                                    {
-                                        0x23
-                                    }
-                                }
-                            }
-                        },
-                        Package(0xb)
-                        {
-                            "PSTATE_SET",
-                            One,
-                            Package(0x3)
-                            {
-                                "PSTATE",
-                                Zero,
-                                Package(0x2)
-                                {
-                                    "CLOCK",
-                                    Package(0x4)
-                                    {
-                                        "gcc_sdcc2_apps_clk",
-                                        0x3,
-                                        0x61a80,
-                                        0x2
-                                    }
-                                }
-                            },
-                            Package(0x3)
-                            {
-                                "PSTATE",
-                                One,
-                                Package(0x2)
-                                {
-                                    "CLOCK",
-                                    Package(0x4)
-                                    {
-                                        "gcc_sdcc2_apps_clk",
-                                        0x3,
-                                        0x17d7840,
-                                        0x2
-                                    }
-                                }
-                            },
-                            Package(0x3)
-                            {
-                                "PSTATE",
-                                0x2,
-                                Package(0x2)
-                                {
-                                    "CLOCK",
-                                    Package(0x4)
-                                    {
-                                        "gcc_sdcc2_apps_clk",
-                                        0x3,
-                                        0x17d7840,
-                                        0x2
-                                    }
-                                }
-                            },
-                            Package(0x3)
-                            {
-                                "PSTATE",
-                                0x3,
-                                Package(0x2)
-                                {
-                                    "CLOCK",
-                                    Package(0x4)
-                                    {
-                                        "gcc_sdcc2_apps_clk",
-                                        0x3,
-                                        0x2faf080,
-                                        0x2
-                                    }
-                                }
-                            },
-                            Package(0x3)
-                            {
-                                "PSTATE",
-                                0x4,
-                                Package(0x2)
-                                {
-                                    "CLOCK",
-                                    Package(0x4)
-                                    {
-                                        "gcc_sdcc2_apps_clk",
-                                        0x3,
-                                        0x2faf080,
-                                        0x2
-                                    }
-                                }
-                            },
-                            Package(0x3)
-                            {
-                                "PSTATE",
-                                0x5,
-                                Package(0x2)
-                                {
-                                    "CLOCK",
-                                    Package(0x4)
-                                    {
-                                        "gcc_sdcc2_apps_clk",
-                                        0x3,
-                                        0x5f5e100,
-                                        0x2
-                                    }
-                                }
-                            },
-                            Package(0x3)
-                            {
-                                "PSTATE",
-                                0x6,
-                                Package(0x2)
-                                {
-                                    "CLOCK",
-                                    Package(0x4)
-                                    {
-                                        "gcc_sdcc2_apps_clk",
-                                        0x3,
-                                        0x5f5e100,
-                                        0x2
-                                    }
-                                }
-                            },
-                            Package(0x3)
-                            {
-                                "PSTATE",
-                                0x7,
-                                Package(0x2)
-                                {
-                                    "CLOCK",
-                                    Package(0x4)
-                                    {
-                                        "gcc_sdcc2_apps_clk",
-                                        0x3,
-                                        0xbebc200,
-                                        0x2
-                                    }
-                                }
-                            },
-                            Package(0x3)
-                            {
-                                "PSTATE",
-                                0x8,
-                                Package(0x2)
-                                {
-                                    "CLOCK",
-                                    Package(0x4)
-                                    {
-                                        "gcc_sdcc2_apps_clk",
-                                        0x3,
-                                        0xbebc200,
-                                        0x2
-                                    }
-                                }
-                            }
-                        },
-                        Package(0x6)
-                        {
-                            "PSTATE_SET",
-                            0x2,
-                            Package(0x3)
-                            {
-                                "PSTATE",
-                                Zero,
-                                Package(0x2)
-                                {
-                                    "BUSARB",
-                                    Package(0x5)
-                                    {
-                                        0x3,
-                                        "ICBID_MASTER_SDCC_2",
-                                        "ICBID_SLAVE_EBI1",
-                                        0x17d78400,
-                                        0xbebc200
-                                    }
-                                }
-                            },
-                            Package(0x3)
-                            {
-                                "PSTATE",
-                                One,
-                                Package(0x2)
-                                {
-                                    "BUSARB",
-                                    Package(0x5)
-                                    {
-                                        0x3,
-                                        "ICBID_MASTER_SDCC_2",
-                                        "ICBID_SLAVE_EBI1",
-                                        0xbebc200,
-                                        0x5f5e100
-                                    }
-                                }
-                            },
-                            Package(0x3)
-                            {
-                                "PSTATE",
-                                0x2,
-                                Package(0x2)
-                                {
-                                    "BUSARB",
-                                    Package(0x5)
-                                    {
-                                        0x3,
-                                        "ICBID_MASTER_SDCC_2",
-                                        "ICBID_SLAVE_EBI1",
-                                        0x5f5e100,
-                                        0x2faf080
-                                    }
-                                }
-                            },
-                            Package(0x3)
-                            {
-                                "PSTATE",
-                                0x3,
-                                Package(0x2)
-                                {
-                                    "BUSARB",
-                                    Package(0x5)
-                                    {
-                                        0x3,
-                                        "ICBID_MASTER_SDCC_2",
-                                        "ICBID_SLAVE_EBI1",
-                                        Zero,
-                                        Zero
-                                    }
-                                }
-                            }
-                        },
-                        Package(0x5)
-                        {
-                            "PSTATE_SET",
-                            0x3,
-                            Package(0x4)
-                            {
-                                "PSTATE",
-                                Zero,
-                                Package(0x2)
-                                {
-                                    "PSTATE_ADJUST",
-                                    Package(0x2)
-                                    {
-                                        One,
-                                        0x8
-                                    }
-                                },
-                                Package(0x2)
-                                {
-                                    "PSTATE_ADJUST",
-                                    Package(0x2)
-                                    {
-                                        0x2,
-                                        Zero
-                                    }
-                                }
-                            },
-                            Package(0x4)
-                            {
-                                "PSTATE",
-                                One,
-                                Package(0x2)
-                                {
-                                    "PSTATE_ADJUST",
-                                    Package(0x2)
-                                    {
-                                        One,
-                                        0x5
-                                    }
-                                },
-                                Package(0x2)
-                                {
-                                    "PSTATE_ADJUST",
-                                    Package(0x2)
-                                    {
-                                        0x2,
-                                        One
-                                    }
-                                }
-                            },
-                            Package(0x4)
-                            {
-                                "PSTATE",
-                                0x2,
-                                Package(0x2)
-                                {
-                                    "PSTATE_ADJUST",
-                                    Package(0x2)
-                                    {
-                                        One,
-                                        0x4
-                                    }
-                                },
-                                Package(0x2)
-                                {
-                                    "PSTATE_ADJUST",
-                                    Package(0x2)
-                                    {
-                                        0x2,
-                                        0x2
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    Package(0x8)
-                    {
-                        "DSTATE",
-                        Zero,
-                        Package(0x2)
-                        {
-                            "PSTATE_ADJUST",
-                            Package(0x2)
-                            {
-                                Zero,
-                                0x16
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "TLMMPORT",
-                            Package(0x3)
-                            {
-                                0x2048,
-                                0x7fff,
-                                0x1fe4
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "PSTATE_ADJUST",
-                            Package(0x2)
-                            {
-                                0x2,
-                                Zero
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "CLOCK",
-                            Package(0x2)
-                            {
-                                "gcc_sdcc2_ahb_clk",
-                                One
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "CLOCK",
-                            Package(0x2)
-                            {
-                                "gcc_sdcc2_apps_clk",
-                                One
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "PSTATE_ADJUST",
-                            Package(0x2)
-                            {
-                                One,
-                                0x8
-                            }
-                        }
-                    },
-                    Package(0x7)
-                    {
-                        "DSTATE",
-                        0x3,
-                        Package(0x2)
-                        {
-                            "CLOCK",
-                            Package(0x4)
-                            {
-                                "gcc_sdcc2_ahb_clk",
-                                0x2,
-                                Zero,
-                                0x2
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "CLOCK",
-                            Package(0x4)
-                            {
-                                "gcc_sdcc2_apps_clk",
-                                0x2,
-                                Zero,
-                                0x2
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "PSTATE_ADJUST",
-                            Package(0x2)
-                            {
-                                0x2,
-                                0x3
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "TLMMPORT",
-                            Package(0x3)
-                            {
-                                0x2048,
-                                0x7fff,
-                                0xa00
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "PSTATE_ADJUST",
-                            Package(0x2)
-                            {
-                                Zero,
-                                0x17
                             }
                         }
                     }
@@ -17079,823 +15515,6 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
                             One
                         }
                     },
-                    Package(0x2)
-                    {
-                        "DSTATE",
-                        Zero
-                    },
-                    Package(0x2)
-                    {
-                        "DSTATE",
-                        One
-                    },
-                    Package(0x2)
-                    {
-                        "DSTATE",
-                        0x2
-                    },
-                    Package(0x2)
-                    {
-                        "DSTATE",
-                        0x3
-                    }
-                }
-            })
-        }
-        Scope(\_SB_.PEP0)
-        {
-            Method(CHMD, 0x0, NotSerialized)
-            {
-                Return(CHCC)
-            }
-            Method(CHMX, 0x0, NotSerialized)
-            {
-                Return(CHXC)
-            }
-            Name(CHCC, Package(0x3)
-            {
-                Package(0x7)
-                {
-                    "DEVICE",
-                    "\\_SB.APS1",
-                    Package(0x3)
-                    {
-                        "COMPONENT",
-                        Zero,
-                        Package(0x2)
-                        {
-                            "FSTATE",
-                            Zero
-                        }
-                    },
-                    Package(0x6)
-                    {
-                        "DSTATE",
-                        Zero,
-                        Package(0x2)
-                        {
-                            "PMICVREGVOTE",
-                            Package(0xe)
-                            {
-                                "PPP_RESOURCE_ID_SMPS4_A",
-                                0x2,
-                                0x1b7740,
-                                0x493e0,
-                                One,
-                                Zero,
-                                Zero,
-                                Zero,
-                                Zero,
-                                0x5,
-                                Zero,
-                                Zero,
-                                Zero,
-                                Zero
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "PMICVREGVOTE",
-                            Package(0x6)
-                            {
-                                "PPP_RESOURCE_ID_LVS2_A",
-                                0x4,
-                                0x1b7740,
-                                0x493e0,
-                                One,
-                                Zero
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "PMICVREGVOTE",
-                            Package(0xa)
-                            {
-                                "PPP_RESOURCE_ID_LDO18_A",
-                                One,
-                                0x2b7cd0,
-                                0x927c0,
-                                One,
-                                Zero,
-                                One,
-                                Zero,
-                                Zero,
-                                Zero
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "DELAY",
-                            Package(0x1)
-                            {
-                                0x5
-                            }
-                        }
-                    },
-                    Package(0x2)
-                    {
-                        "DSTATE",
-                        One
-                    },
-                    Package(0x2)
-                    {
-                        "DSTATE",
-                        0x2
-                    },
-                    Package(0x5)
-                    {
-                        "DSTATE",
-                        0x3,
-                        Package(0x2)
-                        {
-                            "PMICVREGVOTE",
-                            Package(0xa)
-                            {
-                                "PPP_RESOURCE_ID_LDO18_A",
-                                One,
-                                Zero,
-                                Zero,
-                                Zero,
-                                Zero,
-                                Zero,
-                                Zero,
-                                Zero,
-                                Zero
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "PMICVREGVOTE",
-                            Package(0x6)
-                            {
-                                "PPP_RESOURCE_ID_LVS2_A",
-                                0x4,
-                                Zero,
-                                Zero,
-                                Zero,
-                                Zero
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "PMICVREGVOTE",
-                            Package(0xe)
-                            {
-                                "PPP_RESOURCE_ID_SMPS4_A",
-                                0x2,
-                                Zero,
-                                Zero,
-                                Zero,
-                                Zero,
-                                Zero,
-                                Zero,
-                                Zero,
-                                0x5,
-                                Zero,
-                                Zero,
-                                Zero,
-                                Zero
-                            }
-                        }
-                    }
-                },
-                Package(0x3)
-                {
-                    "DEVICE",
-                    "\\_SB.CPSW",
-                    Package(0x7)
-                    {
-                        "COMPONENT",
-                        Zero,
-                        Package(0x2)
-                        {
-                            "FSTATE",
-                            Zero
-                        },
-                        Package(0x7)
-                        {
-                            "PSTATE",
-                            Zero,
-                            Package(0x2)
-                            {
-                                "PMICVREGVOTE",
-                                Package(0x4)
-                                {
-                                    "PPP_RESOURCE_ID_BOOST1_B",
-                                    0x8,
-                                    One,
-                                    Zero
-                                }
-                            },
-                            Package(0x2)
-                            {
-                                "PMICGPIO",
-                                Package(0x8)
-                                {
-                                    "IOCTL_PM_GPIO_CONFIG_DIGITAL_OUTPUT",
-                                    One,
-                                    0x6,
-                                    Zero,
-                                    0x2,
-                                    Zero,
-                                    0x3,
-                                    0x5
-                                }
-                            },
-                            Package(0x2)
-                            {
-                                "DELAY",
-                                Package(0x1)
-                                {
-                                    0x14
-                                }
-                            },
-                            Package(0x2)
-                            {
-                                "PMICGPIO",
-                                Package(0x8)
-                                {
-                                    "IOCTL_PM_GPIO_CONFIG_DIGITAL_OUTPUT",
-                                    One,
-                                    0x5,
-                                    Zero,
-                                    0x2,
-                                    One,
-                                    0x3,
-                                    0x5
-                                }
-                            },
-                            Package(0x2)
-                            {
-                                "PMICDIVCLK",
-                                Package(0x3)
-                                {
-                                    "PPP_RESOURCE_ID_DIV_CLK_3_A",
-                                    Zero,
-                                    Zero
-                                }
-                            }
-                        },
-                        Package(0x7)
-                        {
-                            "PSTATE",
-                            One,
-                            Package(0x2)
-                            {
-                                "PMICVREGVOTE",
-                                Package(0x4)
-                                {
-                                    "PPP_RESOURCE_ID_BOOST1_B",
-                                    0x8,
-                                    Zero,
-                                    Zero
-                                }
-                            },
-                            Package(0x2)
-                            {
-                                "PMICGPIO",
-                                Package(0x8)
-                                {
-                                    "IOCTL_PM_GPIO_CONFIG_DIGITAL_OUTPUT",
-                                    One,
-                                    0x6,
-                                    Zero,
-                                    0x2,
-                                    Zero,
-                                    0x3,
-                                    0x5
-                                }
-                            },
-                            Package(0x2)
-                            {
-                                "DELAY",
-                                Package(0x1)
-                                {
-                                    0x14
-                                }
-                            },
-                            Package(0x2)
-                            {
-                                "PMICGPIO",
-                                Package(0x8)
-                                {
-                                    "IOCTL_PM_GPIO_CONFIG_DIGITAL_OUTPUT",
-                                    One,
-                                    0x5,
-                                    Zero,
-                                    0x2,
-                                    One,
-                                    0x3,
-                                    0x5
-                                }
-                            },
-                            Package(0x2)
-                            {
-                                "PMICDIVCLK",
-                                Package(0x3)
-                                {
-                                    "PPP_RESOURCE_ID_DIV_CLK_3_A",
-                                    Zero,
-                                    Zero
-                                }
-                            }
-                        },
-                        Package(0x8)
-                        {
-                            "PSTATE",
-                            0x2,
-                            Package(0x2)
-                            {
-                                "PMICDIVCLK",
-                                Package(0x3)
-                                {
-                                    "PPP_RESOURCE_ID_DIV_CLK_3_A",
-                                    One,
-                                    One
-                                }
-                            },
-                            Package(0x2)
-                            {
-                                "DELAY",
-                                Package(0x1)
-                                {
-                                    One
-                                }
-                            },
-                            Package(0x2)
-                            {
-                                "PMICVREGVOTE",
-                                Package(0x4)
-                                {
-                                    "PPP_RESOURCE_ID_BOOST1_B",
-                                    0x8,
-                                    One,
-                                    Zero
-                                }
-                            },
-                            Package(0x2)
-                            {
-                                "PMICGPIO",
-                                Package(0x8)
-                                {
-                                    "IOCTL_PM_GPIO_CONFIG_DIGITAL_OUTPUT",
-                                    One,
-                                    0x5,
-                                    Zero,
-                                    0x2,
-                                    Zero,
-                                    0x3,
-                                    0x5
-                                }
-                            },
-                            Package(0x2)
-                            {
-                                "DELAY",
-                                Package(0x1)
-                                {
-                                    0x14
-                                }
-                            },
-                            Package(0x2)
-                            {
-                                "PMICGPIO",
-                                Package(0x8)
-                                {
-                                    "IOCTL_PM_GPIO_CONFIG_DIGITAL_OUTPUT",
-                                    One,
-                                    0x6,
-                                    Zero,
-                                    0x2,
-                                    One,
-                                    0x3,
-                                    0x5
-                                }
-                            }
-                        },
-                        Package(0x8)
-                        {
-                            "PSTATE",
-                            0x3,
-                            Package(0x2)
-                            {
-                                "PMICDIVCLK",
-                                Package(0x3)
-                                {
-                                    "PPP_RESOURCE_ID_DIV_CLK_3_A",
-                                    One,
-                                    One
-                                }
-                            },
-                            Package(0x2)
-                            {
-                                "DELAY",
-                                Package(0x1)
-                                {
-                                    One
-                                }
-                            },
-                            Package(0x2)
-                            {
-                                "PMICVREGVOTE",
-                                Package(0x4)
-                                {
-                                    "PPP_RESOURCE_ID_BOOST1_B",
-                                    0x8,
-                                    Zero,
-                                    Zero
-                                }
-                            },
-                            Package(0x2)
-                            {
-                                "PMICGPIO",
-                                Package(0x8)
-                                {
-                                    "IOCTL_PM_GPIO_CONFIG_DIGITAL_OUTPUT",
-                                    One,
-                                    0x5,
-                                    Zero,
-                                    0x2,
-                                    Zero,
-                                    0x3,
-                                    0x5
-                                }
-                            },
-                            Package(0x2)
-                            {
-                                "DELAY",
-                                Package(0x1)
-                                {
-                                    0x14
-                                }
-                            },
-                            Package(0x2)
-                            {
-                                "PMICGPIO",
-                                Package(0x8)
-                                {
-                                    "IOCTL_PM_GPIO_CONFIG_DIGITAL_OUTPUT",
-                                    One,
-                                    0x6,
-                                    Zero,
-                                    0x2,
-                                    One,
-                                    0x3,
-                                    0x5
-                                }
-                            }
-                        }
-                    }
-                },
-                Package(0x3)
-                {
-                    "DEVICE",
-                    "\\_SB.TECC",
-                    Package(0x5)
-                    {
-                        "COMPONENT",
-                        Zero,
-                        Package(0x2)
-                        {
-                            "FSTATE",
-                            Zero
-                        },
-                        Package(0x4)
-                        {
-                            "PSTATE",
-                            Zero,
-                            Package(0x2)
-                            {
-                                "CLOCK",
-                                Package(0x4)
-                                {
-                                    "gcc_gp1_clk",
-                                    0x8,
-                                    0x124f800,
-                                    0x3
-                                }
-                            },
-                            Package(0x2)
-                            {
-                                "TLMMGPIO",
-                                Package(0x6)
-                                {
-                                    0x39,
-                                    One,
-                                    0x2,
-                                    One,
-                                    Zero,
-                                    0x3
-                                }
-                            }
-                        },
-                        Package(0x4)
-                        {
-                            "PSTATE",
-                            One,
-                            Package(0x2)
-                            {
-                                "TLMMGPIO",
-                                Package(0x6)
-                                {
-                                    0x39,
-                                    Zero,
-                                    Zero,
-                                    Zero,
-                                    One,
-                                    Zero
-                                }
-                            },
-                            Package(0x2)
-                            {
-                                "CLOCK",
-                                Package(0x4)
-                                {
-                                    "gcc_gp1_clk",
-                                    0x2,
-                                    Zero,
-                                    Zero
-                                }
-                            }
-                        }
-                    }
-                }
-            })
-            Name(CHXC, Package(0x5)
-            {
-                Package (0x06)
-                {
-                    "DEVICE",
-                    "\\_SB.SIAD", 		
-                    Package (0x06)		
-                    {		
-                        "DSTATE", 		
-                        Zero, 		
-                        Package (0x02)		
-                        {		
-                            "PMICVREGVOTE", 		
-                            Package (0x0E)		
-                            {		
-                                "PPP_RESOURCE_ID_SMPS4_A", 		
-                                0x02, 		
-                                0x001B7740, 		
-                                0x000493E0, 		
-                                One, 		
-                                Zero, 		
-                                Zero, 		
-                                Zero, 		
-                                Zero, 		
-                                0x05, 		
-                                Zero, 		
-                                Zero, 		
-                                Zero, 		
-                                Zero		
-                            }		
-                        }, 		
-                        Package (0x02)		
-                        {		
-                            "PMICVREGVOTE", 		
-                            Package (0x06)		
-                            {		
-                                "PPP_RESOURCE_ID_LVS2_A", 		
-                                0x04, 		
-                                0x001B7740, 		
-                                0x000493E0, 		
-                                One, 		
-                                Zero		
-                            }		
-                        }, 		
-                        Package (0x02)		
-                        {		
-                            "PMICVREGVOTE", 		
-                            Package (0x0A)		
-                            {		
-                                "PPP_RESOURCE_ID_LDO18_A", 		
-                                One, 		
-                                0x002B7CD0, 		
-                                0x000927C0, 		
-                                One, 		
-                                Zero, 		
-                                One, 		
-                                Zero, 		
-                                Zero, 		
-                                Zero		
-                            }		
-                        }, 		
-                        Package (0x02)		
-                        {		
-                            "TLMMGPIO", 		
-                            Package (0x06)		
-                            {		
-                                0x27, 		
-                                One, 		
-                                Zero, 		
-                                One, 		
-                                Zero, 		
-                                Zero		
-                            }		
-                        }		
-                    }, 		
-                    Package (0x02)		
-                    {		
-                        "DSTATE", 		
-                        One		
-                    }, 		
-                    Package (0x02)		
-                    {		
-                        "DSTATE", 		
-                        0x02		
-                    }, 		
-                    Package (0x06)		
-                    {		
-                        "DSTATE", 		
-                        0x03, 		
-                        Package (0x02)		
-                        {		
-                            "PMICVREGVOTE", 		
-                            Package (0x0E)		
-                            {		
-                                "PPP_RESOURCE_ID_SMPS4_A", 		
-                                0x02, 		
-                                0x001B7740, 		
-                                0x000493E0, 		
-                                One, 		
-                                Zero, 		
-                                Zero, 		
-                                Zero, 		
-                                Zero, 		
-                                0x05, 		
-                                Zero, 		
-                                Zero, 		
-                                Zero, 		
-                                Zero		
-                            }		
-                        }, 		
-                        Package (0x02)		
-                        {		
-                            "PMICVREGVOTE", 		
-                            Package (0x06)		
-                            {		
-                                "PPP_RESOURCE_ID_LVS2_A", 		
-                                0x04, 		
-                                0x001B7740, 		
-                                0x000493E0, 		
-                                One, 		
-                                Zero		
-                            }		
-                        }, 		
-                        Package (0x02)		
-                        {		
-                            "PMICVREGVOTE", 		
-                            Package (0x0A)		
-                            {		
-                                "PPP_RESOURCE_ID_LDO18_A", 		
-                                One, 		
-                                0x002B7CD0, 		
-                                0x000927C0, 		
-                                One, 		
-                                Zero, 		
-                                One, 		
-                                Zero, 		
-                                Zero, 		
-                                Zero		
-                            }		
-                        }, 		
-                        Package (0x02)		
-                        {		
-                            "TLMMGPIO", 		
-                            Package (0x06)		
-                            {		
-                                0x27, 		
-                                Zero, 		
-                                Zero, 		
-                                One, 		
-                                Zero, 		
-                                Zero		
-                            }		
-                        }		
-                    }		
-                }, 		
-                Package(0x6)
-                {
-                    "DEVICE",
-                    "\\_SB.LICE",
-                    Package(0x2)
-                    {
-                        "DSTATE",
-                        Zero
-                    },
-                    Package(0x2)
-                    {
-                        "DSTATE",
-                        One
-                    },
-                    Package(0x2)
-                    {
-                        "DSTATE",
-                        0x2
-                    },
-                    Package(0x2)
-                    {
-                        "DSTATE",
-                        0x3
-                    }
-                },
-                Package(0x6)
-                {
-                    "DEVICE",
-                    "\\_SB.HALL",
-                    Package(0x3)
-                    {
-                        "DSTATE",
-                        Zero,
-                        Package(0x2)
-                        {
-                            "PMICVREGVOTE",
-                            Package(0xe)
-                            {
-                                "PPP_RESOURCE_ID_SMPS4_A",
-                                0x2,
-                                0x1b7740,
-                                0x493e0,
-                                One,
-                                Zero,
-                                Zero,
-                                Zero,
-                                Zero,
-                                0x5,
-                                Zero,
-                                Zero,
-                                Zero,
-                                Zero
-                            }
-                        }
-                    },
-                    Package(0x2)
-                    {
-                        "DSTATE",
-                        One
-                    },
-                    Package(0x2)
-                    {
-                        "DSTATE",
-                        0x2
-                    },
-                    Package(0x3)
-                    {
-                        "DSTATE",
-                        0x3,
-                        Package(0x2)
-                        {
-                            "PMICVREGVOTE",
-                            Package(0xe)
-                            {
-                                "PPP_RESOURCE_ID_SMPS4_A",
-                                0x2,
-                                Zero,
-                                Zero,
-                                Zero,
-                                Zero,
-                                Zero,
-                                Zero,
-                                Zero,
-                                0x5,
-                                Zero,
-                                Zero,
-                                Zero,
-                                Zero
-                            }
-                        }
-                    }
-                },
-                Package(0x6)
-                {
-                    "DEVICE",
-                    "\\_SB.HDDP",
-                    Package(0x2)
-                    {
-                        "DSTATE",
-                        Zero
-                    },
-                    Package(0x2)
-                    {
-                        "DSTATE",
-                        One
-                    },
-                    Package(0x2)
-                    {
-                        "DSTATE",
-                        0x2
-                    },
-                    Package(0x2)
-                    {
-                        "DSTATE",
-                        0x3
-                    }
-                },
-                Package(0x6)
-                {
-                    "DEVICE",
-                    "\\_SB.TCIC",
                     Package(0x2)
                     {
                         "DSTATE",
@@ -19468,7 +17087,7 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
                                     {
                                         "PPP_RESOURCE_ID_LDO21_A",
                                         One,
-                                        0x2d0370,
+                                        0x1b7740,
                                         0x2328,
                                         One,
                                         Zero,
@@ -19605,8 +17224,90 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
             {
                 Return(CPXC)
             }
-            Name(CPCC, Package(0x3)
+            Name(CPCC, Package(0x4)
             {
+                Package(0x3)
+                {
+                    "DEVICE",
+                    "\\_SB.FLSH",
+                    Package(0x5)
+                    {
+                        "COMPONENT",
+                        Zero,
+                        Package(0x2)
+                        {
+                            "FSTATE",
+                            Zero
+                        },
+                        Package(0x2)
+                        {
+                            "FSTATE",
+                            One
+                        },
+                        Package(0x5)
+                        {
+                            "PSTATE_SET",
+                            Zero,
+                            Package(0x3)
+                            {
+                                "PSTATE",
+                                Zero,
+                                Package(0x2)
+                                {
+                                    "PMICVREGVOTE",
+                                    Package(0x7)
+                                    {
+                                        "PPP_RESOURCE_ID_BOOST_BYPASS1_B",
+                                        0x9,
+                                        0x36ee80,
+                                        One,
+                                        One,
+                                        Zero,
+                                        Zero
+                                    }
+                                }
+                            },
+                            Package(0x3)
+                            {
+                                "PSTATE",
+                                One,
+                                Package(0x2)
+                                {
+                                    "PMICVREGVOTE",
+                                    Package(0x7)
+                                    {
+                                        "PPP_RESOURCE_ID_BOOST_BYPASS1_B",
+                                        0x9,
+                                        0x325aa0,
+                                        One,
+                                        One,
+                                        Zero,
+                                        Zero
+                                    }
+                                }
+                            },
+                            Package(0x3)
+                            {
+                                "PSTATE",
+                                0x2,
+                                Package(0x2)
+                                {
+                                    "PMICVREGVOTE",
+                                    Package(0x7)
+                                    {
+                                        "PPP_RESOURCE_ID_BOOST_BYPASS1_B",
+                                        0x9,
+                                        Zero,
+                                        Zero,
+                                        One,
+                                        Zero,
+                                        Zero
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
                 Package(0x5)
                 {
                     "DEVICE",
@@ -20513,7 +18214,7 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
                     {
                         "COMPONENT",
                         Zero,
-                        Package(0x14)
+                        Package(0x18)
                         {
                             "FSTATE",
                             Zero,
@@ -20524,23 +18225,6 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
                                 {
                                     "VDD_CAMSS_TOP",
                                     One
-                                }
-                            },
-                            Package(0x2)
-                            {
-                                "PMICVREGVOTE",
-                                Package(0xa)
-                                {
-                                    "PPP_RESOURCE_ID_LDO2_A",
-                                    One,
-                                    0x1312d0,
-                                    0x1040,
-                                    One,
-                                    Zero,
-                                    One,
-                                    Zero,
-                                    Zero,
-                                    Zero
                                 }
                             },
                             Package(0x2)
@@ -20619,53 +18303,6 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
                             },
                             Package(0x2)
                             {
-                                "PMICVREGVOTE",
-                                Package(0x6)
-                                {
-                                    "PPP_RESOURCE_ID_LVS1_A",
-                                    0x4,
-                                    0x1b7740,
-                                    0x493e0,
-                                    One,
-                                    Zero
-                                }
-                            },
-                            Package(0x2)
-                            {
-                                "DELAY",
-                                Package(0x1)
-                                {
-                                    One
-                                }
-                            },
-                            Package(0x2)
-                            {
-                                "TLMMGPIO",
-                                Package(0x6)
-                                {
-                                    0x13,
-                                    One,
-                                    One,
-                                    One,
-                                    Zero,
-                                    Zero
-                                }
-                            },
-                            Package(0x2)
-                            {
-                                "TLMMGPIO",
-                                Package(0x6)
-                                {
-                                    0x14,
-                                    One,
-                                    One,
-                                    One,
-                                    Zero,
-                                    Zero
-                                }
-                            },
-                            Package(0x2)
-                            {
                                 "TLMMGPIO",
                                 Package(0x6)
                                 {
@@ -20673,7 +18310,7 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
                                     One,
                                     One,
                                     One,
-                                    Zero,
+                                    0x3,
                                     Zero
                                 }
                             },
@@ -20686,7 +18323,7 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
                                     One,
                                     One,
                                     One,
-                                    Zero,
+                                    0x3,
                                     Zero
                                 }
                             },
@@ -20695,25 +18332,162 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
                                 "TLMMGPIO",
                                 Package(0x6)
                                 {
-                                    0x15,
+                                    0x13,
                                     One,
                                     One,
                                     One,
+                                    0x3,
+                                    Zero
+                                }
+                            },
+                            Package(0x2)
+                            {
+                                "TLMMGPIO",
+                                Package(0x6)
+                                {
+                                    0x14,
+                                    One,
+                                    One,
+                                    One,
+                                    0x3,
+                                    Zero
+                                }
+                            },
+                            Package(0x2)
+                            {
+                                "TLMMGPIO",
+                                Package(0x6)
+                                {
+                                    0xd,
+                                    One,
+                                    One,
+                                    One,
+                                    Zero,
+                                    0x2
+                                }
+                            },
+                            Package(0x2)
+                            {
+                                "TLMMGPIO",
+                                Package(0x6)
+                                {
+                                    0xf,
+                                    One,
+                                    One,
+                                    One,
+                                    Zero,
+                                    0x2
+                                }
+                            },
+                            Package(0x2)
+                            {
+                                "TLMMGPIO",
+                                Package(0x6)
+                                {
+                                    0x10,
+                                    One,
+                                    One,
+                                    One,
+                                    Zero,
+                                    0x2
+                                }
+                            },
+                            Package(0x2)
+                            {
+                                "PMICVREGVOTE",
+                                Package(0xa)
+                                {
+                                    "PPP_RESOURCE_ID_LDO3_A",
+                                    One,
+                                    0x124f80,
+                                    0x222e0,
+                                    One,
+                                    Zero,
+                                    One,
+                                    Zero,
                                     Zero,
                                     Zero
                                 }
                             },
                             Package(0x2)
                             {
-                                "PMICMPP",
+                                "PMICVREGVOTE",
+                                Package(0xa)
+                                {
+                                    "PPP_RESOURCE_ID_LDO27_A",
+                                    One,
+                                    0x100590,
+                                    0x514c8,
+                                    One,
+                                    Zero,
+                                    One,
+                                    Zero,
+                                    Zero,
+                                    Zero
+                                }
+                            },
+                            Package(0x2)
+                            {
+                                "PMICVREGVOTE",
+                                Package(0xa)
+                                {
+                                    "PPP_RESOURCE_ID_LDO23_A",
+                                    One,
+                                    0x2ab980,
+                                    0x73b90,
+                                    One,
+                                    Zero,
+                                    One,
+                                    Zero,
+                                    Zero,
+                                    Zero
+                                }
+                            },
+                            Package(0x2)
+                            {
+                                "PMICVREGVOTE",
+                                Package(0xa)
+                                {
+                                    "PPP_RESOURCE_ID_LDO29_A",
+                                    One,
+                                    0x2ab980,
+                                    0x186a0,
+                                    One,
+                                    Zero,
+                                    One,
+                                    Zero,
+                                    Zero,
+                                    Zero
+                                }
+                            },
+                            Package(0x2)
+                            {
+                                "PMICVREGVOTE",
+                                Package(0xa)
+                                {
+                                    "PPP_RESOURCE_ID_LDO17_A",
+                                    One,
+                                    0x2932e0,
+                                    0x1b198,
+                                    One,
+                                    Zero,
+                                    One,
+                                    Zero,
+                                    Zero,
+                                    Zero
+                                }
+                            },
+                            Package(0x2)
+                            {
+                                "PMICVREGVOTE",
                                 Package(0x6)
                                 {
-                                    "IOCTL_PM_MPP_CONFIG_DIGITAL_INPUT",
+                                    "PPP_RESOURCE_ID_LVS1_A",
+                                    0x4,
+                                    0xf4240,
+                                    0x1a9c8,
                                     One,
-                                    One,
-                                    0x2,
-                                    Zero,
-                                    0x4
+                                    Zero
                                 }
                             },
                             Package(0x2)
@@ -20725,10 +18499,62 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
                                 }
                             }
                         },
-                        Package(0x12)
+                        Package(0x17)
                         {
                             "FSTATE",
                             One,
+                            Package(0x2)
+                            {
+                                "TLMMGPIO",
+                                Package(0x6)
+                                {
+                                    0x10,
+                                    Zero,
+                                    Zero,
+                                    Zero,
+                                    One,
+                                    Zero
+                                }
+                            },
+                            Package(0x2)
+                            {
+                                "TLMMGPIO",
+                                Package(0x6)
+                                {
+                                    0xf,
+                                    Zero,
+                                    Zero,
+                                    Zero,
+                                    One,
+                                    Zero
+                                }
+                            },
+                            Package(0x2)
+                            {
+                                "TLMMGPIO",
+                                Package(0x6)
+                                {
+                                    0xe,
+                                    Zero,
+                                    Zero,
+                                    Zero,
+                                    One,
+                                    Zero
+                                }
+                            },
+                            Package(0x2)
+                            {
+                                "TLMMGPIO",
+                                Package(0x6)
+                                {
+                                    0xd,
+                                    Zero,
+                                    Zero,
+                                    Zero,
+                                    One,
+                                    Zero
+                                }
+                            },
                             Package(0x2)
                             {
                                 "TLMMGPIO",
@@ -20779,27 +18605,6 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
                                     Zero,
                                     One,
                                     Zero
-                                }
-                            },
-                            Package(0x2)
-                            {
-                                "PMICVREGVOTE",
-                                Package(0x6)
-                                {
-                                    "PPP_RESOURCE_ID_LVS1_A",
-                                    0x4,
-                                    Zero,
-                                    Zero,
-                                    Zero,
-                                    Zero
-                                }
-                            },
-                            Package(0x2)
-                            {
-                                "DELAY",
-                                Package(0x1)
-                                {
-                                    One
                                 }
                             },
                             Package(0x2)
@@ -20879,9 +18684,22 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
                             Package(0x2)
                             {
                                 "PMICVREGVOTE",
+                                Package(0x6)
+                                {
+                                    "PPP_RESOURCE_ID_LVS1_A",
+                                    0x4,
+                                    Zero,
+                                    Zero,
+                                    Zero,
+                                    Zero
+                                }
+                            },
+                            Package(0x2)
+                            {
+                                "PMICVREGVOTE",
                                 Package(0xa)
                                 {
-                                    "PPP_RESOURCE_ID_LDO2_A",
+                                    "PPP_RESOURCE_ID_LDO17_A",
                                     One,
                                     Zero,
                                     Zero,
@@ -20895,28 +18713,70 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
                             },
                             Package(0x2)
                             {
-                                "TLMMGPIO",
-                                Package(0x6)
+                                "PMICVREGVOTE",
+                                Package(0xa)
                                 {
-                                    0x15,
-                                    Zero,
-                                    Zero,
-                                    Zero,
+                                    "PPP_RESOURCE_ID_LDO29_A",
                                     One,
+                                    Zero,
+                                    Zero,
+                                    Zero,
+                                    Zero,
+                                    Zero,
+                                    Zero,
+                                    Zero,
                                     Zero
                                 }
                             },
                             Package(0x2)
                             {
-                                "PMICMPP",
-                                Package(0x6)
+                                "PMICVREGVOTE",
+                                Package(0xa)
                                 {
-                                    "IOCTL_PM_MPP_CONFIG_DIGITAL_INPUT",
+                                    "PPP_RESOURCE_ID_LDO23_A",
                                     One,
-                                    One,
-                                    0x2,
                                     Zero,
-                                    0x4
+                                    Zero,
+                                    Zero,
+                                    Zero,
+                                    Zero,
+                                    Zero,
+                                    Zero,
+                                    Zero
+                                }
+                            },
+                            Package(0x2)
+                            {
+                                "PMICVREGVOTE",
+                                Package(0xa)
+                                {
+                                    "PPP_RESOURCE_ID_LDO27_A",
+                                    One,
+                                    Zero,
+                                    Zero,
+                                    Zero,
+                                    Zero,
+                                    Zero,
+                                    Zero,
+                                    Zero,
+                                    Zero
+                                }
+                            },
+                            Package(0x2)
+                            {
+                                "PMICVREGVOTE",
+                                Package(0xa)
+                                {
+                                    "PPP_RESOURCE_ID_LDO3_A",
+                                    One,
+                                    Zero,
+                                    Zero,
+                                    Zero,
+                                    Zero,
+                                    Zero,
+                                    Zero,
+                                    Zero,
+                                    Zero
                                 }
                             }
                         },
@@ -20959,7 +18819,7 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
                         }
                     }
                 },
-                Package(0x5)
+                Package(0x6)
                 {
                     "DEVICE",
                     "\\_SB.VFE0",
@@ -22371,88 +20231,146 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
                                 }
                             }
                         }
+                    },
+                    Package(0x4)
+                    {
+                        "COMPONENT",
+                        0x3,
+                        Package(0x7)
+                        {
+                            "FSTATE",
+                            Zero,
+                            Package(0x2)
+                            {
+                                "FOOTSWITCH",
+                                Package(0x2)
+                                {
+                                    "VDD_FD",
+                                    One
+                                }
+                            },
+                            Package(0x2)
+                            {
+                                "CLOCK",
+                                Package(0x4)
+                                {
+                                    "fd_ahb_clk",
+                                    One,
+                                    Zero,
+                                    One
+                                }
+                            },
+                            Package(0x2)
+                            {
+                                "CLOCK",
+                                Package(0x4)
+                                {
+                                    "fd_axi_clk",
+                                    One,
+                                    Zero,
+                                    One
+                                }
+                            },
+                            Package(0x2)
+                            {
+                                "CLOCK",
+                                Package(0x4)
+                                {
+                                    "fd_core_uar_clk",
+                                    One,
+                                    Zero,
+                                    One
+                                }
+                            },
+                            Package(0x2)
+                            {
+                                "CLOCK",
+                                Package(0x4)
+                                {
+                                    "fd_core_clk",
+                                    0x8,
+                                    0xfdad680,
+                                    0x3
+                                }
+                            }
+                        },
+                        Package(0x7)
+                        {
+                            "FSTATE",
+                            One,
+                            Package(0x2)
+                            {
+                                "CLOCK",
+                                Package(0x4)
+                                {
+                                    "fd_core_clk",
+                                    0x2,
+                                    Zero,
+                                    One
+                                }
+                            },
+                            Package(0x2)
+                            {
+                                "CLOCK",
+                                Package(0x4)
+                                {
+                                    "fd_core_uar_clk",
+                                    0x2,
+                                    Zero,
+                                    Zero
+                                }
+                            },
+                            Package(0x2)
+                            {
+                                "CLOCK",
+                                Package(0x4)
+                                {
+                                    "fd_axi_clk",
+                                    0x2,
+                                    Zero,
+                                    Zero
+                                }
+                            },
+                            Package(0x2)
+                            {
+                                "CLOCK",
+                                Package(0x4)
+                                {
+                                    "fd_ahb_clk",
+                                    0x2,
+                                    Zero,
+                                    Zero
+                                }
+                            },
+                            Package(0x2)
+                            {
+                                "FOOTSWITCH",
+                                Package(0x2)
+                                {
+                                    "VDD_FD",
+                                    0x2
+                                }
+                            }
+                        }
                     }
                 }
             })
-            Name(CPXC, Package(0x3)
+            Name(CPXC, Package(0x2)
             {
                 Package(0x4)
                 {
                     "DEVICE",
                     "\\_SB.CAMS",
-                    Package(0x14)
+                    Package(0xd)
                     {
                         "DSTATE",
                         Zero,
                         Package(0x2)
                         {
-                            "PMICVREGVOTE",
-                            Package(0xa)
+                            "FOOTSWITCH",
+                            Package(0x2)
                             {
-                                "PPP_RESOURCE_ID_LDO23_A",
-                                One,
-                                0x2b7cd0,
-                                0x13880,
-                                One,
-                                Zero,
-                                One,
-                                Zero,
-                                Zero,
-                                Zero
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "PMICVREGVOTE",
-                            Package(0xa)
-                            {
-                                "PPP_RESOURCE_ID_LDO29_A",
-                                One,
-                                0x2b7cd0,
-                                0x13880,
-                                One,
-                                Zero,
-                                One,
-                                Zero,
-                                Zero,
-                                Zero
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "PMICVREGVOTE",
-                            Package(0xa)
-                            {
-                                "PPP_RESOURCE_ID_LDO25_A",
-                                One,
-                                0x118c30,
-                                0x13880,
-                                One,
-                                Zero,
-                                One,
-                                Zero,
-                                Zero,
-                                Zero
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "PMICVREGVOTE",
-                            Package(0x6)
-                            {
-                                "PPP_RESOURCE_ID_LVS1_A",
-                                0x4,
-                                0x1b7740,
-                                0x493e0,
-                                One,
-                                Zero
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "DELAY",
-                            Package(0x1)
-                            {
+                                "VDD_CAMSS_TOP",
                                 One
                             }
                         },
@@ -22485,7 +20403,7 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
                             {
                                 "camss_mclk0_clk",
                                 0x8,
-                                0x927c00,
+                                0x16e3600,
                                 0x3
                             }
                         },
@@ -22565,62 +20483,12 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
                                 Zero,
                                 One
                             }
-                        },
-                        Package(0x2)
-                        {
-                            "TLMMGPIO",
-                            Package(0x6)
-                            {
-                                0xd,
-                                One,
-                                One,
-                                One,
-                                Zero,
-                                0x2
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "DELAY",
-                            Package(0x1)
-                            {
-                                One
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "DELAY",
-                            Package(0x1)
-                            {
-                                0x19
-                            }
                         }
                     },
-                    Package(0x15)
+                    Package(0xd)
                     {
                         "DSTATE",
                         0x3,
-                        Package(0x2)
-                        {
-                            "DELAY",
-                            Package(0x1)
-                            {
-                                One
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "TLMMGPIO",
-                            Package(0x6)
-                            {
-                                0xd,
-                                Zero,
-                                Zero,
-                                One,
-                                Zero,
-                                Zero
-                            }
-                        },
                         Package(0x2)
                         {
                             "CLOCK",
@@ -22733,90 +20601,11 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
                         },
                         Package(0x2)
                         {
-                            "DELAY",
-                            Package(0x1)
+                            "FOOTSWITCH",
+                            Package(0x2)
                             {
-                                0x5
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "PMICVREGVOTE",
-                            Package(0x6)
-                            {
-                                "PPP_RESOURCE_ID_LVS1_A",
-                                0x4,
-                                Zero,
-                                Zero,
-                                Zero,
-                                Zero
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "DELAY",
-                            Package(0x1)
-                            {
-                                One
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "PMICVREGVOTE",
-                            Package(0xa)
-                            {
-                                "PPP_RESOURCE_ID_LDO25_A",
-                                One,
-                                Zero,
-                                Zero,
-                                Zero,
-                                Zero,
-                                One,
-                                Zero,
-                                Zero,
-                                Zero
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "PMICVREGVOTE",
-                            Package(0xa)
-                            {
-                                "PPP_RESOURCE_ID_LDO29_A",
-                                One,
-                                Zero,
-                                Zero,
-                                Zero,
-                                Zero,
-                                One,
-                                Zero,
-                                Zero,
-                                Zero
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "PMICVREGVOTE",
-                            Package(0xa)
-                            {
-                                "PPP_RESOURCE_ID_LDO23_A",
-                                One,
-                                Zero,
-                                Zero,
-                                Zero,
-                                Zero,
-                                One,
-                                Zero,
-                                Zero,
-                                Zero
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "DELAY",
-                            Package(0x1)
-                            {
-                                0xa
+                                "VDD_CAMSS_TOP",
+                                0x2
                             }
                         }
                     }
@@ -22825,53 +20614,16 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
                 {
                     "DEVICE",
                     "\\_SB.CAMF",
-                    Package(0x15)
+                    Package(0xe)
                     {
                         "DSTATE",
                         Zero,
                         Package(0x2)
                         {
-                            "PMICVREGVOTE",
-                            Package(0xa)
+                            "FOOTSWITCH",
+                            Package(0x2)
                             {
-                                "PPP_RESOURCE_ID_LDO17_A",
-                                One,
-                                0x2ab980,
-                                0x493e0,
-                                One,
-                                Zero,
-                                One,
-                                Zero,
-                                Zero,
-                                Zero
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "DELAY",
-                            Package(0x1)
-                            {
-                                One
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "PMICVREGVOTE",
-                            Package(0x6)
-                            {
-                                "PPP_RESOURCE_ID_LVS1_A",
-                                0x4,
-                                0x1b7740,
-                                0x493e0,
-                                One,
-                                Zero
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "DELAY",
-                            Package(0x1)
-                            {
+                                "VDD_CAMSS_TOP",
                                 One
                             }
                         },
@@ -22915,7 +20667,7 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
                             {
                                 "camss_mclk2_clk",
                                 0x8,
-                                0x927c00,
+                                0x16e3600,
                                 0x3
                             }
                         },
@@ -22995,88 +20747,12 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
                                 Zero,
                                 One
                             }
-                        },
-                        Package(0x2)
-                        {
-                            "TLMMGPIO",
-                            Package(0x6)
-                            {
-                                0xf,
-                                One,
-                                One,
-                                One,
-                                Zero,
-                                0x2
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "DELAY",
-                            Package(0x1)
-                            {
-                                One
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "TLMMGPIO",
-                            Package(0x6)
-                            {
-                                0x68,
-                                One,
-                                Zero,
-                                One,
-                                Zero,
-                                Zero
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "DELAY",
-                            Package(0x1)
-                            {
-                                0x3
-                            }
                         }
                     },
-                    Package(0x15)
+                    Package(0xe)
                     {
                         "DSTATE",
                         0x3,
-                        Package(0x2)
-                        {
-                            "TLMMGPIO",
-                            Package(0x6)
-                            {
-                                0x68,
-                                Zero,
-                                Zero,
-                                One,
-                                Zero,
-                                Zero
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "DELAY",
-                            Package(0x1)
-                            {
-                                One
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "TLMMGPIO",
-                            Package(0x6)
-                            {
-                                0xf,
-                                Zero,
-                                Zero,
-                                One,
-                                Zero,
-                                Zero
-                            }
-                        },
                         Package(0x2)
                         {
                             "CLOCK",
@@ -23200,677 +20876,11 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
                         },
                         Package(0x2)
                         {
-                            "DELAY",
-                            Package(0x1)
+                            "FOOTSWITCH",
+                            Package(0x2)
                             {
-                                0x5
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "PMICVREGVOTE",
-                            Package(0x6)
-                            {
-                                "PPP_RESOURCE_ID_LVS1_A",
-                                0x4,
-                                Zero,
-                                Zero,
-                                Zero,
-                                Zero
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "DELAY",
-                            Package(0x1)
-                            {
-                                One
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "PMICVREGVOTE",
-                            Package(0xa)
-                            {
-                                "PPP_RESOURCE_ID_LDO17_A",
-                                One,
-                                Zero,
-                                Zero,
-                                Zero,
-                                Zero,
-                                One,
-                                Zero,
-                                Zero,
-                                Zero
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "DELAY",
-                            Package(0x1)
-                            {
-                                0xa
-                            }
-                        }
-                    }
-                },
-                Package(0x4)
-                {
-                    "DEVICE",
-                    "\\_SB.CAMT",
-                    Package(0x1d)
-                    {
-                        "DSTATE",
-                        Zero,
-                        Package(0x2)
-                        {
-                            "PMICVREGVOTE",
-                            Package(0x7)
-                            {
-                                "PPP_RESOURCE_ID_BOOST_BYPASS1_B",
-                                0x9,
-                                0x3d0900,
-                                One,
-                                Zero,
-                                Zero,
-                                Zero
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "DELAY",
-                            Package(0x1)
-                            {
-                                One
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "PMICVREGVOTE",
-                            Package(0xa)
-                            {
-                                "PPP_RESOURCE_ID_LDO17_A",
-                                One,
-                                0x2ab980,
-                                0x493e0,
-                                One,
-                                Zero,
-                                One,
-                                Zero,
-                                Zero,
-                                Zero
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "DELAY",
-                            Package(0x1)
-                            {
-                                One
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "PMICVREGVOTE",
-                            Package(0x6)
-                            {
-                                "PPP_RESOURCE_ID_LVS1_A",
-                                0x4,
-                                0x1b7740,
-                                0x493e0,
-                                One,
-                                Zero
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "DELAY",
-                            Package(0x1)
-                            {
-                                One
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "PMICVREGVOTE",
-                            Package(0xe)
-                            {
-                                "PPP_RESOURCE_ID_SMPS3_A",
-                                0x2,
-                                0x13d620,
-                                0x493e0,
-                                One,
-                                Zero,
-                                Zero,
-                                Zero,
-                                Zero,
-                                0x5,
-                                Zero,
-                                Zero,
-                                Zero,
-                                Zero
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "DELAY",
-                            Package(0x1)
-                            {
-                                One
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "PMICVREGVOTE",
-                            Package(0xa)
-                            {
-                                "PPP_RESOURCE_ID_LDO3_A",
-                                One,
-                                0x124f80,
-                                0x13880,
-                                One,
-                                Zero,
-                                One,
-                                Zero,
-                                Zero,
-                                Zero
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "DELAY",
-                            Package(0x1)
-                            {
-                                One
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "CLOCK",
-                            Package(0x4)
-                            {
-                                "camss_csi0_clk",
-                                0x8,
-                                0xfe50fb0,
-                                0x3
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "CLOCK",
-                            Package(0x4)
-                            {
-                                "camss_csi2_clk",
-                                0x8,
-                                0xfe50fb0,
-                                0x3
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "CLOCK",
-                            Package(0x4)
-                            {
-                                "camss_csi3_clk",
-                                0x8,
-                                0xfe50fb0,
-                                0x3
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "CLOCK",
-                            Package(0x4)
-                            {
-                                "camss_phy2_csi2phytimer_clk",
-                                0x8,
-                                0xbebc200,
-                                0x3
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "CLOCK",
-                            Package(0x4)
-                            {
-                                "camss_mclk1_clk",
-                                0x8,
-                                0x927c00,
-                                0x3
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "CLOCK",
-                            Package(0x4)
-                            {
-                                "camss_csi_vfe0_clk",
-                                One,
-                                Zero,
-                                One
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "CLOCK",
-                            Package(0x4)
-                            {
-                                "camss_csi_vfe1_clk",
-                                One,
-                                Zero,
-                                One
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "CLOCK",
-                            Package(0x4)
-                            {
-                                "camss_csi3phy_clk",
-                                One,
-                                Zero,
-                                One
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "CLOCK",
-                            Package(0x4)
-                            {
-                                "camss_csi3pix_clk",
-                                One,
-                                Zero,
-                                One
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "CLOCK",
-                            Package(0x4)
-                            {
-                                "camss_csi3rdi_clk",
-                                One,
-                                Zero,
-                                One
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "CLOCK",
-                            Package(0x4)
-                            {
-                                "camss_csi2_ahb_clk",
-                                One,
-                                Zero,
-                                One
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "CLOCK",
-                            Package(0x4)
-                            {
-                                "camss_csi3_ahb_clk",
-                                One,
-                                Zero,
-                                One
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "CLOCK",
-                            Package(0x4)
-                            {
-                                "camss_ispif_ahb_clk",
-                                One,
-                                Zero,
-                                One
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "TLMMGPIO",
-                            Package(0x6)
-                            {
-                                0xe,
-                                One,
-                                One,
-                                One,
-                                Zero,
+                                "VDD_CAMSS_TOP",
                                 0x2
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "DELAY",
-                            Package(0x1)
-                            {
-                                One
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "TLMMGPIO",
-                            Package(0x6)
-                            {
-                                0x66,
-                                One,
-                                Zero,
-                                One,
-                                Zero,
-                                Zero
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "DELAY",
-                            Package(0x1)
-                            {
-                                0x3
-                            }
-                        }
-                    },
-                    Package(0x1c)
-                    {
-                        "DSTATE",
-                        0x3,
-                        Package(0x2)
-                        {
-                            "TLMMGPIO",
-                            Package(0x6)
-                            {
-                                0x66,
-                                Zero,
-                                Zero,
-                                One,
-                                Zero,
-                                Zero
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "DELAY",
-                            Package(0x1)
-                            {
-                                One
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "TLMMGPIO",
-                            Package(0x6)
-                            {
-                                0xe,
-                                Zero,
-                                Zero,
-                                One,
-                                Zero,
-                                Zero
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "CLOCK",
-                            Package(0x4)
-                            {
-                                "camss_ispif_ahb_clk",
-                                0x2,
-                                Zero,
-                                Zero
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "CLOCK",
-                            Package(0x4)
-                            {
-                                "camss_csi3_ahb_clk",
-                                0x2,
-                                Zero,
-                                Zero
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "CLOCK",
-                            Package(0x4)
-                            {
-                                "camss_csi2_ahb_clk",
-                                0x2,
-                                Zero,
-                                Zero
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "CLOCK",
-                            Package(0x4)
-                            {
-                                "camss_csi3rdi_clk",
-                                0x2,
-                                Zero,
-                                Zero
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "CLOCK",
-                            Package(0x4)
-                            {
-                                "camss_csi3pix_clk",
-                                0x2,
-                                Zero,
-                                Zero
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "CLOCK",
-                            Package(0x4)
-                            {
-                                "camss_csi3phy_clk",
-                                0x2,
-                                Zero,
-                                Zero
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "CLOCK",
-                            Package(0x4)
-                            {
-                                "camss_csi_vfe0_clk",
-                                0x2,
-                                Zero,
-                                Zero
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "CLOCK",
-                            Package(0x4)
-                            {
-                                "camss_csi_vfe1_clk",
-                                0x2,
-                                Zero,
-                                Zero
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "CLOCK",
-                            Package(0x4)
-                            {
-                                "camss_mclk1_clk",
-                                0x2,
-                                Zero,
-                                Zero
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "CLOCK",
-                            Package(0x4)
-                            {
-                                "camss_phy2_csi2phytimer_clk",
-                                0x2,
-                                Zero,
-                                Zero
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "CLOCK",
-                            Package(0x4)
-                            {
-                                "camss_csi3_clk",
-                                0x2,
-                                Zero,
-                                Zero
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "CLOCK",
-                            Package(0x4)
-                            {
-                                "camss_csi2_clk",
-                                0x2,
-                                Zero,
-                                Zero
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "CLOCK",
-                            Package(0x4)
-                            {
-                                "camss_csi0_clk",
-                                0x2,
-                                Zero,
-                                Zero
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "DELAY",
-                            Package(0x1)
-                            {
-                                0x5
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "PMICVREGVOTE",
-                            Package(0xa)
-                            {
-                                "PPP_RESOURCE_ID_LDO3_A",
-                                One,
-                                Zero,
-                                Zero,
-                                Zero,
-                                Zero,
-                                One,
-                                Zero,
-                                Zero,
-                                Zero
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "PMICVREGVOTE",
-                            Package(0xe)
-                            {
-                                "PPP_RESOURCE_ID_SMPS3_A",
-                                0x2,
-                                Zero,
-                                Zero,
-                                One,
-                                Zero,
-                                Zero,
-                                Zero,
-                                Zero,
-                                0x5,
-                                Zero,
-                                Zero,
-                                Zero,
-                                Zero
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "DELAY",
-                            Package(0x1)
-                            {
-                                One
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "PMICVREGVOTE",
-                            Package(0x6)
-                            {
-                                "PPP_RESOURCE_ID_LVS1_A",
-                                0x4,
-                                Zero,
-                                Zero,
-                                Zero,
-                                Zero
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "DELAY",
-                            Package(0x1)
-                            {
-                                One
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "PMICVREGVOTE",
-                            Package(0xa)
-                            {
-                                "PPP_RESOURCE_ID_LDO17_A",
-                                One,
-                                Zero,
-                                Zero,
-                                Zero,
-                                Zero,
-                                One,
-                                Zero,
-                                Zero,
-                                Zero
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "DELAY",
-                            Package(0x1)
-                            {
-                                0xa
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "PMICVREGVOTE",
-                            Package(0x7)
-                            {
-                                "PPP_RESOURCE_ID_BOOST_BYPASS1_B",
-                                0x9,
-                                Zero,
-                                Zero,
-                                Zero,
-                                Zero,
-                                Zero
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "DELAY",
-                            Package(0x1)
-                            {
-                                One
                             }
                         }
                     }
@@ -23927,28 +20937,10 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
                             }
                         }
                     },
-                    Package(0x4)
+                    Package(0x2)
                     {
                         "DSTATE",
-                        Zero,
-                        Package(0x2)
-                        {
-                            "PMICDIVCLK",
-                            Package(0x3)
-                            {
-                                "PPP_RESOURCE_ID_DIV_CLK_3_A",
-                                One,
-                                One
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "DELAY",
-                            Package(0x1)
-                            {
-                                One
-                            }
-                        }
+                        Zero
                     },
                     Package(0x2)
                     {
@@ -23960,20 +20952,10 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
                         "DSTATE",
                         0x2
                     },
-                    Package(0x3)
+                    Package(0x2)
                     {
                         "DSTATE",
-                        0x3,
-                        Package(0x2)
-                        {
-                            "PMICDIVCLK",
-                            Package(0x3)
-                            {
-                                "PPP_RESOURCE_ID_DIV_CLK_3_A",
-                                Zero,
-                                Zero
-                            }
-                        }
+                        0x3
                     }
                 },
                 Package(0x8)
@@ -24308,12 +21290,10 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
                         Package(0x2)
                         {
                             "CLOCK",
-                            Package(0x4)
+                            Package(0x2)
                             {
                                 "gcc_usb3_phy_aux_clk",
-                                0x8,
-                                0x4b0,
-                                0x7
+                                0x2
                             }
                         },
                         Package(0x2)
@@ -25642,278 +22622,6 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
         }
         Scope(\_SB_.PEP0)
         {
-            Method(DIMX, 0x0, NotSerialized)
-            {
-                Return(DIXC)
-            }
-            Name(DIXC, Package(0x1)
-            {
-                Package(0x6)
-                {
-                    "DEVICE",
-                    "\\_SB.DISP",
-                    Package(0x8)
-                    {
-                        "DSTATE",
-                        Zero,
-                        Package(0x2)
-                        {
-                            "PMICVREGVOTE",
-                            Package(0xa)
-                            {
-                                "PPP_RESOURCE_ID_LDO12_A",
-                                One,
-                                0x1b7740,
-                                0x2af8,
-                                One,
-                                Zero,
-                                One,
-                                Zero,
-                                Zero,
-                                Zero
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "PMICVREGVOTE",
-                            Package(0xa)
-                            {
-                                "PPP_RESOURCE_ID_LDO14_A",
-                                One,
-                                0x1b7740,
-                                0xcb20,
-                                One,
-                                Zero,
-                                One,
-                                Zero,
-                                Zero,
-                                Zero
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "DELAY",
-                            Package(0x1)
-                            {
-                                One
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "PMICMPP",
-                            Package(0x4)
-                            {
-                                "IOCTL_PM_MPP_CONFIG_DIGITAL_OUTPUT",
-                                One,
-                                0x3,
-                                Zero
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "PMICMPP",
-                            Package(0x4)
-                            {
-                                "IOCTL_PM_MPP_SET_OUTPUT_STATE",
-                                One,
-                                0x3,
-                                0xa
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "DELAY",
-                            Package(0x1)
-                            {
-                                0xa
-                            }
-                        }
-                    },
-                    Package(0x2)
-                    {
-                        "DSTATE",
-                        One
-                    },
-                    Package(0x2)
-                    {
-                        "DSTATE",
-                        0x2
-                    },
-                    Package(0x9)
-                    {
-                        "DSTATE",
-                        0x3,
-                        Package(0x2)
-                        {
-                            "DELAY",
-                            Package(0x1)
-                            {
-                                0xa
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "PMICIBBLAB",
-                            Package(0x4)
-                            {
-                                "IOCTL_PM_IBBLAB_MODULE_ENABLE",
-                                One,
-                                Zero,
-                                0x3
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "PMICWLED",
-                            Package(0x3)
-                            {
-                                "IOCTL_PM_WLED_MODULE_ENABLE",
-                                One,
-                                Zero
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "PMICMPP",
-                            Package(0x4)
-                            {
-                                "IOCTL_PM_MPP_CONFIG_DIGITAL_OUTPUT",
-                                One,
-                                0x3,
-                                Zero
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "PMICMPP",
-                            Package(0x4)
-                            {
-                                "IOCTL_PM_MPP_SET_OUTPUT_STATE",
-                                One,
-                                0x3,
-                                0xa
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "PMICVREGVOTE",
-                            Package(0xa)
-                            {
-                                "PPP_RESOURCE_ID_LDO14_A",
-                                One,
-                                Zero,
-                                Zero,
-                                Zero,
-                                Zero,
-                                Zero,
-                                Zero,
-                                Zero,
-                                Zero
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "PMICVREGVOTE",
-                            Package(0xa)
-                            {
-                                "PPP_RESOURCE_ID_LDO12_A",
-                                One,
-                                Zero,
-                                Zero,
-                                Zero,
-                                Zero,
-                                Zero,
-                                Zero,
-                                Zero,
-                                Zero
-                            }
-                        }
-                    }
-                }
-            })
-        }
-        Scope(\_SB_.PEP0)
-        {
-            Method(NPMD, 0x0, NotSerialized)
-            {
-                Return(NPCC)
-            }
-            Name(NPCC, Package(0x1)
-            {
-                Package(0x7)
-                {
-                    "DEVICE",
-                    "\\_SB.NFC1",
-                    Package(0x3)
-                    {
-                        "COMPONENT",
-                        Zero,
-                        Package(0x2)
-                        {
-                            "FSTATE",
-                            Zero
-                        }
-                    },
-                    Package(0x4)
-                    {
-                        "DSTATE",
-                        Zero,
-                        Package(0x2)
-                        {
-                            "PMICGPIO",
-                            Package(0x6)
-                            {
-                                "IOCTL_PM_GPIO_CONFIG_DIGITAL_INPUT",
-                                Zero,
-                                0x9,
-                                0x4,
-                                0x2,
-                                Zero
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "PMICVREGVOTE",
-                            Package(0x4)
-                            {
-                                "PPP_RESOURCE_ID_CXO_BUFFERS_BBCLK2_A",
-                                0x6,
-                                Zero,
-                                One
-                            }
-                        }
-                    },
-                    Package(0x2)
-                    {
-                        "DSTATE",
-                        One
-                    },
-                    Package(0x2)
-                    {
-                        "DSTATE",
-                        0x2
-                    },
-                    Package(0x3)
-                    {
-                        "DSTATE",
-                        0x3,
-                        Package(0x2)
-                        {
-                            "PMICVREGVOTE",
-                            Package(0x4)
-                            {
-                                "PPP_RESOURCE_ID_CXO_BUFFERS_BBCLK2_A",
-                                0x6,
-                                Zero,
-                                Zero
-                            }
-                        }
-                    }
-                }
-            })
-        }
-        Scope(\_SB_.PEP0)
-        {
             Method(LPMX, 0x0, NotSerialized)
             {
                 Return(LPXC)
@@ -25924,10 +22632,40 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
                 {
                     "DEVICE",
                     "\\_SB.TSC1",
-                    Package(0x6)
+                    Package(0x9)
                     {
                         "DSTATE",
                         Zero,
+                        Package(0x2)
+                        {
+                            "TLMMGPIO",
+                            Package(0x6)
+                            {
+                                0x8,
+                                Zero,
+                                Zero,
+                                One,
+                                Zero,
+                                Zero
+                            }
+                        },
+                        Package(0x2)
+                        {
+                            "PMICVREGVOTE",
+                            Package(0xa)
+                            {
+                                "PPP_RESOURCE_ID_LDO25_A",
+                                One,
+                                0x1b7740,
+                                0x47e,
+                                One,
+                                Zero,
+                                One,
+                                Zero,
+                                Zero,
+                                Zero
+                            }
+                        },
                         Package(0x2)
                         {
                             "PMICVREGVOTE",
@@ -25935,8 +22673,8 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
                             {
                                 "PPP_RESOURCE_ID_LDO22_A",
                                 One,
-                                0x2dc6c0,
-                                0x249f0,
+                                0x2f4d60,
+                                0x11904,
                                 One,
                                 Zero,
                                 One,
@@ -25958,7 +22696,7 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
                             "TLMMGPIO",
                             Package(0x6)
                             {
-                                0x26,
+                                0x8,
                                 One,
                                 Zero,
                                 One,
@@ -25968,17 +22706,47 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
                         },
                         Package(0x2)
                         {
+                            "TLMMGPIO",
+                            Package(0x6)
+                            {
+                                0x16,
+                                One,
+                                Zero,
+                                Zero,
+                                One,
+                                Zero
+                            }
+                        },
+                        Package(0x2)
+                        {
                             "DELAY",
                             Package(0x1)
                             {
-                                0x3c
+                                0xc8
                             }
                         }
                     },
-                    Package(0x4)
+                    Package(0x6)
                     {
                         "DSTATE",
                         0x3,
+                        Package(0x2)
+                        {
+                            "PMICVREGVOTE",
+                            Package(0xa)
+                            {
+                                "PPP_RESOURCE_ID_LDO25_A",
+                                One,
+                                Zero,
+                                Zero,
+                                Zero,
+                                Zero,
+                                Zero,
+                                Zero,
+                                Zero,
+                                Zero
+                            }
+                        },
                         Package(0x2)
                         {
                             "PMICVREGVOTE",
@@ -26001,10 +22769,23 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
                             "TLMMGPIO",
                             Package(0x6)
                             {
-                                0x26,
+                                0x8,
                                 Zero,
                                 Zero,
                                 One,
+                                Zero,
+                                Zero
+                            }
+                        },
+                        Package(0x2)
+                        {
+                            "TLMMGPIO",
+                            Package(0x6)
+                            {
+                                0x16,
+                                One,
+                                Zero,
+                                Zero,
                                 Zero,
                                 Zero
                             }
@@ -26183,10 +22964,6 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
             Name(_HID, "QCOM2424")
             Name(_UID, 0x2)
             Name(_CCA, Zero)
-            Name(_DEP, Package (0x01)
-            {
-                \_SB_.PEP0
-            })
             Method(_CRS, 0x0, NotSerialized)
             {
                 Name(RBUF, Buffer(0x3a)
@@ -26232,10 +23009,6 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
             Name(_HID, "QCOM2424")
             Name(_UID, 0x8)
             Name(_CCA, Zero)
-            Name(_DEP, Package (0x01)
-            {
-                \_SB_.PEP0
-            })
             Method(_CRS, 0x0, NotSerialized)
             {
                 Name(RBUF, Buffer(0x3a)
@@ -26276,35 +23049,6 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
                     0x2e,
                     "GpioTxData",
                     0x2d
-                })
-                Return(RBUF)
-            }
-        }
-        Device(I2C1)
-        {
-            Name(_HID, "QCOM240E")
-            Name(_UID, One)
-            Name(_CCA, Zero)
-            Name(_DEP, Package(0x2)
-            {
-                \_SB_.BAM3,
-                \_SB_.PEP0
-            })
-            Method(_CRS, 0x0, NotSerialized)
-            {
-                Name(RBUF, Buffer(0x17)
-                {
-	0x86, 0x09, 0x00, 0x01, 0x00, 0x30, 0x92, 0xf9, 0x00, 0x08, 0x00, 0x00,
-	0x89, 0x06, 0x00, 0x01, 0x01, 0x7f, 0x00, 0x00, 0x00, 0x79, 0x00
-                })
-                Return(RBUF)
-            }
-            Method(FNOC, 0x0, NotSerialized)
-            {
-                Name(RBUF, Buffer(0xe)
-                {
-	0x01, 0x01, 0x00, 0x40, 0x90, 0xf9, 0x0d, 0x0c, 0x00, 0x04, 0x00, 0xf8,
-	0x24, 0x01
                 })
                 Return(RBUF)
             }
@@ -26367,35 +23111,6 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
                 Return(RBUF)
             }
         }
-        Device(I2C7)
-        {
-            Name(_HID, "QCOM240E")
-            Name(_UID, 0x7)
-            Name(_CCA, Zero)
-            Name(_DEP, Package(0x2)
-            {
-                \_SB_.BAM4,
-                \_SB_.PEP0
-            })
-            Method(_CRS, 0x0, NotSerialized)
-            {
-                Name(RBUF, Buffer(0x17)
-                {
-	0x86, 0x09, 0x00, 0x01, 0x00, 0x30, 0x96, 0xf9, 0x00, 0x08, 0x00, 0x00,
-	0x89, 0x06, 0x00, 0x01, 0x01, 0x85, 0x00, 0x00, 0x00, 0x79, 0x00
-                })
-                Return(RBUF)
-            }
-            Method(FNOC, 0x0, NotSerialized)
-            {
-                Name(RBUF, Buffer(0xe)
-                {
-	0x07, 0x00, 0x00, 0x40, 0x94, 0xf9, 0x0d, 0x0c, 0x00, 0x04, 0x00, 0xf8,
-	0x24, 0x01
-                })
-                Return(RBUF)
-            }
-        }
         Device(IC11)
         {
             Name(_HID, "QCOM240E")
@@ -26424,22 +23139,22 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
                 Return(RBUF)
             }
         }
-        Device(SP10)
+        Device(SPI1)
         {
             Name(_HID, "QCOM240C")
-            Name(_UID, 0xa)
+            Name(_UID, One)
             Name(_DEP, Package(0x2)
             {
                 \_SB_.PEP0,
-                \_SB_.BAM4
+                \_SB_.BAM3
             })
             Name(_CCA, Zero)
             Method(_CRS, 0x0, NotSerialized)
             {
                 Name(RBUF, Buffer(0x17)
                 {
-	0x86, 0x09, 0x00, 0x01, 0x00, 0x60, 0x96, 0xf9, 0x00, 0x08, 0x00, 0x00,
-	0x89, 0x06, 0x00, 0x01, 0x01, 0x88, 0x00, 0x00, 0x00, 0x79, 0x00
+	0x86, 0x09, 0x00, 0x01, 0x00, 0x30, 0x92, 0xf9, 0x00, 0x08, 0x00, 0x00,
+	0x89, 0x06, 0x00, 0x01, 0x01, 0x7f, 0x00, 0x00, 0x00, 0x79, 0x00
                 })
                 Return(RBUF)
             }
@@ -26447,7 +23162,7 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
             {
                 Name(RBUF, Buffer(0x9)
                 {
-	0x0a, 0x00, 0x40, 0x94, 0xf9, 0x13, 0x12, 0x00, 0x01
+	0x01, 0x00, 0x40, 0x90, 0xf9, 0x0d, 0x0c, 0x00, 0x01
                 })
                 Return(RBUF)
             }
@@ -26458,7 +23173,7 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
             {
                 Return(BSRC)
             }
-            Name(BSRC, Package(0x8)
+            Name(BSRC, Package(0x6)
             {
                 Package(0x4)
                 {
@@ -27197,161 +23912,6 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
                 Package(0x7)
                 {
                     "DEVICE",
-                    "\\_SB.I2C1",
-                    Package(0x3)
-                    {
-                        "COMPONENT",
-                        Zero,
-                        Package(0x2)
-                        {
-                            "FSTATE",
-                            Zero
-                        }
-                    },
-                    Package(0x7)
-                    {
-                        "DSTATE",
-                        Zero,
-                        Package(0x2)
-                        {
-                            "CLOCK",
-                            Package(0x4)
-                            {
-                                "gcc_blsp1_ahb_clk",
-                                One,
-                                0x5f5e100,
-                                One
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "CLOCK",
-                            Package(0x4)
-                            {
-                                "gcc_blsp1_qup1_i2c_apps_clk",
-                                0x8,
-                                0x124f800,
-                                0x4
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "BUSARB",
-                            Package(0x5)
-                            {
-                                0x3,
-                                "ICBID_MASTER_BLSP_1",
-                                "ICBID_SLAVE_EBI1",
-                                0x927c000,
-                                Zero
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "TLMMGPIO",
-                            Package(0x6)
-                            {
-                                0x2,
-                                One,
-                                0x3,
-                                One,
-                                Zero,
-                                Zero
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "TLMMGPIO",
-                            Package(0x6)
-                            {
-                                0x3,
-                                One,
-                                0x3,
-                                One,
-                                Zero,
-                                Zero
-                            }
-                        }
-                    },
-                    Package(0x2)
-                    {
-                        "DSTATE",
-                        One
-                    },
-                    Package(0x2)
-                    {
-                        "DSTATE",
-                        0x2
-                    },
-                    Package(0x7)
-                    {
-                        "DSTATE",
-                        0x3,
-                        Package(0x2)
-                        {
-                            "CLOCK",
-                            Package(0x4)
-                            {
-                                "gcc_blsp1_ahb_clk",
-                                0x2,
-                                0x5f5e100,
-                                One
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "CLOCK",
-                            Package(0x4)
-                            {
-                                "gcc_blsp1_qup1_i2c_apps_clk",
-                                0x2,
-                                0x124f800,
-                                One
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "BUSARB",
-                            Package(0x5)
-                            {
-                                0x3,
-                                "ICBID_MASTER_BLSP_1",
-                                "ICBID_SLAVE_EBI1",
-                                Zero,
-                                Zero
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "TLMMGPIO",
-                            Package(0x6)
-                            {
-                                0x3,
-                                Zero,
-                                Zero,
-                                Zero,
-                                One,
-                                Zero
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "TLMMGPIO",
-                            Package(0x6)
-                            {
-                                0x2,
-                                Zero,
-                                Zero,
-                                Zero,
-                                One,
-                                Zero
-                            }
-                        }
-                    }
-                },
-                Package(0x7)
-                {
-                    "DEVICE",
                     "\\_SB.I2C2",
                     Package(0x3)
                     {
@@ -27565,7 +24125,7 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
                                 One,
                                 0x3,
                                 One,
-                                Zero,
+                                0x3,
                                 Zero
                             }
                         },
@@ -27578,7 +24138,7 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
                                 One,
                                 0x3,
                                 One,
-                                Zero,
+                                0x3,
                                 Zero
                             }
                         }
@@ -27640,7 +24200,7 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
                                 Zero,
                                 Zero,
                                 Zero,
-                                Zero,
+                                0x3,
                                 Zero
                             }
                         },
@@ -27653,230 +24213,7 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
                                 Zero,
                                 Zero,
                                 Zero,
-                                Zero,
-                                Zero
-                            }
-                        }
-                    }
-                },
-                Package(0x7)
-                {
-                    "DEVICE",
-                    "\\_SB.I2C7",
-                    Package(0x3)
-                    {
-                        "COMPONENT",
-                        Zero,
-                        Package(0x2)
-                        {
-                            "FSTATE",
-                            Zero
-                        }
-                    },
-                    Package(0x9)
-                    {
-                        "DSTATE",
-                        Zero,
-                        Package(0x2)
-                        {
-                            "PMICVREGVOTE",
-                            Package(0xe)
-                            {
-                                "PPP_RESOURCE_ID_SMPS4_A",
-                                0x2,
-                                0x1b7740,
-                                0x493e0,
-                                One,
-                                Zero,
-                                Zero,
-                                Zero,
-                                Zero,
-                                0x5,
-                                Zero,
-                                Zero,
-                                Zero,
-                                Zero
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "PMICVREGVOTE",
-                            Package(0x6)
-                            {
-                                "PPP_RESOURCE_ID_LVS2_A",
-                                0x4,
-                                0x1b7740,
-                                0x493e0,
-                                One,
-                                Zero
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "CLOCK",
-                            Package(0x4)
-                            {
-                                "gcc_blsp2_ahb_clk",
-                                One,
-                                0x5f5e100,
-                                One
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "CLOCK",
-                            Package(0x4)
-                            {
-                                "gcc_blsp2_qup1_i2c_apps_clk",
-                                0x8,
-                                0x124f800,
-                                0x4
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "BUSARB",
-                            Package(0x5)
-                            {
                                 0x3,
-                                "ICBID_MASTER_BLSP_2",
-                                "ICBID_SLAVE_EBI1",
-                                0x927c000,
-                                Zero
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "TLMMGPIO",
-                            Package(0x6)
-                            {
-                                0x2b,
-                                One,
-                                0x3,
-                                One,
-                                Zero,
-                                Zero
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "TLMMGPIO",
-                            Package(0x6)
-                            {
-                                0x2c,
-                                One,
-                                0x3,
-                                One,
-                                Zero,
-                                Zero
-                            }
-                        }
-                    },
-                    Package(0x2)
-                    {
-                        "DSTATE",
-                        One
-                    },
-                    Package(0x2)
-                    {
-                        "DSTATE",
-                        0x2
-                    },
-                    Package(0x9)
-                    {
-                        "DSTATE",
-                        0x3,
-                        Package(0x2)
-                        {
-                            "CLOCK",
-                            Package(0x4)
-                            {
-                                "gcc_blsp2_ahb_clk",
-                                0x2,
-                                0x5f5e100,
-                                One
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "CLOCK",
-                            Package(0x4)
-                            {
-                                "gcc_blsp2_qup1_i2c_apps_clk",
-                                0x2,
-                                0x124f800,
-                                One
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "BUSARB",
-                            Package(0x5)
-                            {
-                                0x3,
-                                "ICBID_MASTER_BLSP_2",
-                                "ICBID_SLAVE_EBI1",
-                                Zero,
-                                Zero
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "TLMMGPIO",
-                            Package(0x6)
-                            {
-                                0x2c,
-                                Zero,
-                                Zero,
-                                Zero,
-                                One,
-                                Zero
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "TLMMGPIO",
-                            Package(0x6)
-                            {
-                                0x2b,
-                                Zero,
-                                Zero,
-                                Zero,
-                                One,
-                                Zero
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "PMICVREGVOTE",
-                            Package(0x6)
-                            {
-                                "PPP_RESOURCE_ID_LVS2_A",
-                                0x4,
-                                Zero,
-                                Zero,
-                                Zero,
-                                Zero
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "PMICVREGVOTE",
-                            Package(0xe)
-                            {
-                                "PPP_RESOURCE_ID_SMPS4_A",
-                                0x2,
-                                Zero,
-                                Zero,
-                                Zero,
-                                Zero,
-                                Zero,
-                                Zero,
-                                Zero,
-                                0x5,
-                                Zero,
-                                Zero,
-                                Zero,
                                 Zero
                             }
                         }
@@ -27943,7 +24280,7 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
                                 One,
                                 0x3,
                                 One,
-                                Zero,
+                                0x3,
                                 Zero
                             }
                         },
@@ -27956,7 +24293,7 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
                                 One,
                                 0x3,
                                 One,
-                                Zero,
+                                0x3,
                                 Zero
                             }
                         }
@@ -28018,7 +24355,7 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
                                 Zero,
                                 Zero,
                                 Zero,
-                                Zero,
+                                0x3,
                                 Zero
                             }
                         },
@@ -28031,7 +24368,7 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
                                 Zero,
                                 Zero,
                                 Zero,
-                                Zero,
+                                0x3,
                                 Zero
                             }
                         }
@@ -28040,7 +24377,7 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
                 Package(0x7)
                 {
                     "DEVICE",
-                    "\\_SB.SP10",
+                    "\\_SB.SPI1",
                     Package(0x7)
                     {
                         "COMPONENT",
@@ -28059,7 +24396,7 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
                                 "CLOCK",
                                 Package(0x4)
                                 {
-                                    "gcc_blsp2_qup4_spi_apps_clk",
+                                    "gcc_blsp1_qup1_spi_apps_clk",
                                     0x3,
                                     0x44aa20,
                                     0x3
@@ -28075,7 +24412,7 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
                                 "CLOCK",
                                 Package(0x4)
                                 {
-                                    "gcc_blsp2_qup4_spi_apps_clk",
+                                    "gcc_blsp1_qup1_spi_apps_clk",
                                     0x3,
                                     0x44aa20,
                                     0x3
@@ -28091,7 +24428,7 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
                                 "CLOCK",
                                 Package(0x4)
                                 {
-                                    "gcc_blsp2_qup4_spi_apps_clk",
+                                    "gcc_blsp1_qup1_spi_apps_clk",
                                     0x3,
                                     0x44aa20,
                                     0x3
@@ -28107,7 +24444,7 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
                                 "CLOCK",
                                 Package(0x4)
                                 {
-                                    "gcc_blsp2_qup4_spi_apps_clk",
+                                    "gcc_blsp1_qup1_spi_apps_clk",
                                     0x3,
                                     0x44aa20,
                                     0x3
@@ -28115,34 +24452,16 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
                             }
                         }
                     },
-                    Package(0xa)
+                    Package(0x8)
                     {
                         "DSTATE",
                         Zero,
                         Package(0x2)
                         {
-                            "PMICDIVCLK",
-                            Package(0x3)
-                            {
-                                "PPP_RESOURCE_ID_DIV_CLK_3_A",
-                                One,
-                                One
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "DELAY",
-                            Package(0x1)
-                            {
-                                One
-                            }
-                        },
-                        Package(0x2)
-                        {
                             "CLOCK",
                             Package(0x4)
                             {
-                                "gcc_blsp2_ahb_clk",
+                                "gcc_blsp1_ahb_clk",
                                 One,
                                 Zero,
                                 One
@@ -28153,7 +24472,7 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
                             "CLOCK",
                             Package(0x4)
                             {
-                                "gcc_blsp2_qup4_spi_apps_clk",
+                                "gcc_blsp1_qup1_spi_apps_clk",
                                 One,
                                 Zero,
                                 One
@@ -28164,23 +24483,10 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
                             "TLMMGPIO",
                             Package(0x6)
                             {
-                                0x35,
-                                One,
-                                0x2,
-                                One,
                                 Zero,
-                                Zero
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "TLMMGPIO",
-                            Package(0x6)
-                            {
-                                0x36,
                                 One,
-                                0x2,
-                                Zero,
+                                One,
+                                One,
                                 One,
                                 Zero
                             }
@@ -28190,11 +24496,11 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
                             "TLMMGPIO",
                             Package(0x6)
                             {
-                                0x37,
                                 One,
-                                0x2,
+                                One,
                                 One,
                                 Zero,
+                                One,
                                 Zero
                             }
                         },
@@ -28203,11 +24509,24 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
                             "TLMMGPIO",
                             Package(0x6)
                             {
-                                0x38,
-                                One,
                                 0x2,
                                 One,
-                                Zero,
+                                One,
+                                One,
+                                0x3,
+                                Zero
+                            }
+                        },
+                        Package(0x2)
+                        {
+                            "TLMMGPIO",
+                            Package(0x6)
+                            {
+                                0x3,
+                                One,
+                                One,
+                                One,
+                                0x3,
                                 Zero
                             }
                         }
@@ -28222,7 +24541,7 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
                         "DSTATE",
                         0x2
                     },
-                    Package(0x9)
+                    Package(0x8)
                     {
                         "DSTATE",
                         0x3,
@@ -28231,7 +24550,7 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
                             "CLOCK",
                             Package(0x4)
                             {
-                                "gcc_blsp2_ahb_clk",
+                                "gcc_blsp1_ahb_clk",
                                 0x2,
                                 Zero,
                                 One
@@ -28242,7 +24561,7 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
                             "CLOCK",
                             Package(0x4)
                             {
-                                "gcc_blsp2_qup4_spi_apps_clk",
+                                "gcc_blsp1_qup1_spi_apps_clk",
                                 0x2,
                                 Zero,
                                 One
@@ -28253,20 +24572,7 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
                             "TLMMGPIO",
                             Package(0x6)
                             {
-                                0x35,
                                 Zero,
-                                Zero,
-                                Zero,
-                                One,
-                                Zero
-                            }
-                        },
-                        Package(0x2)
-                        {
-                            "TLMMGPIO",
-                            Package(0x6)
-                            {
-                                0x36,
                                 Zero,
                                 Zero,
                                 Zero,
@@ -28279,7 +24585,7 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
                             "TLMMGPIO",
                             Package(0x6)
                             {
-                                0x37,
+                                One,
                                 Zero,
                                 Zero,
                                 Zero,
@@ -28292,21 +24598,24 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
                             "TLMMGPIO",
                             Package(0x6)
                             {
-                                0x38,
+                                0x2,
                                 Zero,
                                 Zero,
                                 Zero,
-                                One,
+                                0x3,
                                 Zero
                             }
                         },
                         Package(0x2)
                         {
-                            "PMICDIVCLK",
-                            Package(0x3)
+                            "TLMMGPIO",
+                            Package(0x6)
                             {
-                                "PPP_RESOURCE_ID_DIV_CLK_3_A",
+                                0x3,
                                 Zero,
+                                Zero,
+                                Zero,
+                                One,
                                 Zero
                             }
                         }
@@ -28388,7 +24697,7 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
 	0xdc, 0x50, 0x8e, 0x7f, 0xd4, 0xfa, 0x31, 0x4a, 0xa2, 0x43, 0x3a, 0xb8,
 	0x37, 0x08, 0xe4, 0x9f
                     },
-                    One,
+                    Zero,
                     One,
                     0x3,
                     0xfc100000,
@@ -28498,12 +24807,10 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
         }
         Device(ADSP)
         {
-            Name(_DEP, Package(0x6)
+            Name(_DEP, Package(0x4)
             {
                 \_SB_.PEP0,
-                \_SB_.I2C2,
-                \_SB_.PILC, 
-                \_SB_.IPC0,
+                \_SB_.PILC,
                 \_SB_.SMD0,
                 \_SB_.RPEN
             })
@@ -28600,7 +24907,7 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
                         {
                             Package(0x4)
                             {
-                                0x4000,
+                                0x2000,
                                 0x60,
                                 Package(0x1)
                                 {
@@ -28681,29 +24988,19 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
                             "ADCM\\QCOM242E"
                         })
                     }
-                    Method(NOKI, 0x0, NotSerialized)
-                    {
-                        Return(Package(0x1)
-                        {
-                            0x2
-                        })
-                    }
                     Device(AUDD)
                     {
                         Name(_ADR, Zero)
                         Method(_CRS, 0x0, NotSerialized)
                         {
-                            Name(RBUF, Buffer(0x6b)
+                            Name(RBUF, Buffer(0x48)
                             {
 	0x8c, 0x20, 0x00, 0x01, 0x01, 0x01, 0x00, 0x00, 0x00, 0x03, 0x00, 0x00,
 	0x00, 0x00, 0x17, 0x00, 0x00, 0x19, 0x00, 0x23, 0x00, 0x00, 0x00, 0x44,
 	0x00, 0x5c, 0x5f, 0x53, 0x42, 0x2e, 0x47, 0x49, 0x4f, 0x30, 0x00, 0x8c,
-	0x20, 0x00, 0x01, 0x01, 0x01, 0x00, 0x00, 0x00, 0x02, 0x00, 0x00, 0x00,
-	0x00, 0x17, 0x00, 0x00, 0x19, 0x00, 0x23, 0x00, 0x00, 0x00, 0x58, 0x06,
-	0x5c, 0x5f, 0x53, 0x42, 0x2e, 0x50, 0x4d, 0x30, 0x31, 0x00, 0x8c, 0x20,
-	0x00, 0x01, 0x00, 0x01, 0x00, 0x01, 0x00, 0x02, 0x00, 0x00, 0x00, 0x00,
-	0x17, 0x00, 0x00, 0x19, 0x00, 0x23, 0x00, 0x00, 0x00, 0x48, 0x00, 0x5c,
-	0x5f, 0x53, 0x42, 0x2e, 0x47, 0x49, 0x4f, 0x30, 0x00, 0x79, 0x00
+	0x20, 0x00, 0x01, 0x00, 0x01, 0x00, 0x01, 0x00, 0x02, 0x00, 0x00, 0x00,
+	0x00, 0x17, 0x00, 0x00, 0x19, 0x00, 0x23, 0x00, 0x00, 0x00, 0x48, 0x00,
+	0x5c, 0x5f, 0x53, 0x42, 0x2e, 0x47, 0x49, 0x4f, 0x30, 0x00, 0x79, 0x00
                             })
                             Return(RBUF)
                         }
@@ -28795,135 +25092,16 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
                         }
                         Method(GPNF, 0x0, NotSerialized)
                         {
-                            Name(GPIO, Package(0x2)
+                            Name(GPIO, Package(0x1)
                             {
                                 Package(0x3)
                                 {
                                     Zero,
                                     Zero,
-                                    Zero
-                                },
-                                Package(0x3)
-                                {
-                                    0x6,
-                                    One,
                                     Zero
                                 }
                             })
                             Return(GPIO)
-                        }
-                        Scope(\_SB_.I2C2)
-                        {
-                            OperationRegion(TOP1, GenericSerialBus, Zero, 0x100)
-                        }
-                        Field(\_SB_.I2C2.TOP1, BufferAcc, NoLock, Preserve)
-                        {
-                            Connection(
-                                I2CSerialBus(0x40, ControllerInitiated, 0x61a80, AddressingMode7Bit, "\\_SB_.I2C2", 0, ResourceConsumer, , )
-                            ),
-                            AccessAs(BufferAcc, 0x6),
-                            RG00, 8,
-                            RG01, 8,
-                            RG02, 8,
-                            RG03, 8,
-                            RG04, 8,
-                            RG05, 8,
-                            RG06, 8,
-                            RG07, 8,
-                            RG08, 8,
-                            RG09, 8,
-                            RG0A, 8,
-                            RG0B, 8,
-                            RG0C, 8,
-                            RG0D, 8,
-                            RG0E, 8,
-                            RG0F, 8,
-                            RG10, 8,
-                            RG11, 8,
-                            RG12, 8,
-                            RG13, 8,
-                            RG14, 8,
-                            RG15, 8,
-                            RG16, 8,
-                            RG17, 8,
-                            RG18, 8,
-                            RG19, 8,
-                            Offset(0x20),
-                            RG20, 8,
-                            RG21, 8
-                        }
-                        Method(HPAM, 0x2, NotSerialized)
-                        {
-                            Name(BUFF, Buffer(0x3)
-                            {
-                            })
-                            CreateByteField(BUFF, Zero, STAT)
-                            CreateByteField(BUFF, 0x2, DATA)
-                            If(LEqual(Arg1, Zero))
-                            {
-                                Store(0x12, DATA)
-                                Store(BUFF, RG01)
-                            }
-                            Else
-                            {
-                                Sleep(One)
-                                Store(0x12, DATA)
-                                Store(BUFF, RG01)
-                                Store(Zero, DATA)
-                                Store(BUFF, RG03)
-                                Store(0x4d, DATA)
-                                Store(BUFF, RG03)
-                                Store(Zero, DATA)
-                                Store(BUFF, RG05)
-                                Store(0xc1, DATA)
-                                Store(BUFF, RG07)
-                                Store(0x20, DATA)
-                                Store(BUFF, RG08)
-                                Store(0x80, DATA)
-                                Store(BUFF, RG0B)
-                                Store(0x81, DATA)
-                                Store(BUFF, RG0C)
-                                Store(0x8, DATA)
-                                Store(BUFF, RG0F)
-                                Store(0x16, DATA)
-                                Store(BUFF, RG12)
-                                Store(0x7, DATA)
-                                Store(BUFF, RG14)
-                                Store(Zero, DATA)
-                                Store(BUFF, RG00)
-                                Store(0xa9, DATA)
-                                Store(BUFF, RG0D)
-                                Store(0x38, DATA)
-                                Store(BUFF, RG0E)
-                                Store(0xee, DATA)
-                                Store(BUFF, RG02)
-                                Store(0x10, DATA)
-                                Store(BUFF, RG01)
-                            }
-                            Return(Buffer(One)
-                            {
-	0x01
-                            })
-                        }
-                        Device(VISA)
-                        {
-                            Name(_HID, "MSHW1019")
-                            Name(_UID, One)
-                            Name(_DEP, Package(0x2)
-                            {
-                                \_SB_.PEP0,
-                                \_SB_.I2C2
-                            })
-                            Method(_CRS, 0x0, NotSerialized)
-                            {
-                                Name(RBUF, Buffer(0x1e)
-                                {
-	0x8e, 0x19, 0x00, 0x01, 0x00, 0x01, 0x02, 0x00, 0x00, 0x01, 0x06, 0x00,
-	0x80, 0x1a, 0x06, 0x00, 0x40, 0x00, 0x5c, 0x5f, 0x53, 0x42, 0x2e, 0x49,
-	0x32, 0x43, 0x32, 0x00, 0x79, 0x00
-                                })
-                                Return(RBUF)
-                            }
                         }
                         Method(CHLD, 0x0, NotSerialized)
                         {
@@ -29017,26 +25195,14 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
                                             One
                                         }
                                     },
-                                    Package(0x4)
+                                    Package(0x2)
                                     {
                                         0x46,
                                         Package(0x3)
                                         {
                                             Zero,
-                                            0x8,
+                                            0x4,
                                             One
-                                        },
-                                        Package(0x3)
-                                        {
-                                            One,
-                                            0x6,
-                                            0x2
-                                        },
-                                        Package(0x3)
-                                        {
-                                            0x2,
-                                            Zero,
-                                            0x2
                                         }
                                     },
                                     Package(0x2)
@@ -29045,7 +25211,7 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
                                         Package(0x3)
                                         {
                                             Zero,
-                                            0x9,
+                                            0x5,
                                             One
                                         }
                                     },
@@ -29168,9 +25334,12 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
                             Name(_ADR, Zero)
                             Method(_CRS, 0x0, NotSerialized)
                             {
-                                Name(RBUF, Buffer(0x2)
+                                Name(RBUF, Buffer(0x25)
                                 {
-	0x79, 0x00
+	0x8c, 0x20, 0x00, 0x01, 0x01, 0x01, 0x00, 0x00, 0x00, 0x02, 0x00, 0x00,
+	0x00, 0x00, 0x17, 0x00, 0x00, 0x19, 0x00, 0x23, 0x00, 0x00, 0x00, 0x08,
+	0x05, 0x5c, 0x5f, 0x53, 0x42, 0x2e, 0x50, 0x4d, 0x30, 0x31, 0x00, 0x79,
+	0x00
                                 })
                                 Return(RBUF)
                             }
@@ -29184,8 +25353,14 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
                             }
                             Method(GPNF, 0x0, NotSerialized)
                             {
-                                Name(GPIO, Package(0x0)
+                                Name(GPIO, Package(0x1)
                                 {
+                                    Package(0x3)
+                                    {
+                                        One,
+                                        Zero,
+                                        Zero
+                                    }
                                 })
                                 Return(GPIO)
                             }
@@ -29286,10 +25461,6 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
                         }
                     }
                 }
-                Device(ATTS)
-                {
-                    Name(_HID, "MSHW1018")
-                }
             }
             Device(SLM2)
             {
@@ -29321,10 +25492,9 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
         }
         Device(AMSS)
         {
-            Name(_DEP, Package(0x6)
+            Name(_DEP, Package(0x5)
             {
                 \_SB_.PEP0,
-                \_SB_.IPC0,
                 \_SB_.SMD0,
                 \_SB_.PILC,
                 \_SB_.RFS0,
@@ -29464,10 +25634,6 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
         {
             Name(_HID, "QCOM2400")
             Name(_UID, Zero)
-            Name(_DEP, Package (0x01)
-            {
-                \_SB_.PEP0
-            })
             Method(_CRS, 0x0, NotSerialized)
             {
                 Return(Buffer(0x32)
@@ -29534,10 +25700,6 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
         {
             Name(_HID, "QCOM2400")
             Name(_UID, One)
-            Name(_DEP, Package (0x01)
-            {
-                \_SB_.PEP0
-            })
             Method(_CRS, 0x0, NotSerialized)
             {
                 Return(Buffer(0x32)
@@ -29611,10 +25773,6 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
         {
             Name(_HID, "QCOM2400")
             Name(_UID, 0x2)
-            Name(_DEP, Package (0x01)
-            {
-                \_SB_.PEP0
-            })
             Method(_CRS, 0x0, NotSerialized)
             {
                 Return(Buffer(0x3b)
@@ -29681,10 +25839,6 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
         {
             Name(_HID, "QCOM2400")
             Name(_UID, 0x3)
-            Name(_DEP, Package (0x01)
-            {
-                \_SB_.PEP0
-            })
             Method(_CRS, 0x0, NotSerialized)
             {
                 Return(Buffer(0x32)
@@ -29758,10 +25912,6 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
         {
             Name(_HID, "QCOM2400")
             Name(_UID, 0x4)
-            Name(_DEP, Package (0x01)
-            {
-                \_SB_.PEP0
-            })
             Method(_CRS, 0x0, NotSerialized)
             {
                 Return(Buffer(0x32)
@@ -30045,10 +26195,6 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
         {
             Name(_HID, "QCOM2400")
             Name(_UID, 0x5)
-            Name(_DEP, Package (0x01)
-            {
-                \_SB_.PEP0
-            })
             Method(_CRS, 0x0, NotSerialized)
             {
                 Return(Buffer(0x32)
@@ -30201,80 +26347,15 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
         }
         Device(DISP)
         {
-            Name(_HID, "MSHW1004")
-            Name(_CID, "ACPIMSHW1004")
+            Name(_HID, "QCOM2126")
             Name(_UID, Zero)
-            Name(_DEP, Package(0x2)
-            {
-                \_SB_.PEP0,
-                \_SB_.GIO0
-            })
-            Method(PINS, 0x0, NotSerialized)
-            {
-                Name(RBUF, Buffer(One)
-                {
-	0x01
-                })
-                Return(RBUF)
-            }
             Method(_CRS, 0x0, NotSerialized)
             {
-                Name(RBUF, Buffer(0x48)
+                Name(RBUF, Buffer(0x2)
                 {
-	0x8c, 0x20, 0x00, 0x01, 0x00, 0x01, 0x00, 0x01, 0x00, 0x02, 0x00, 0x00,
-	0x00, 0x00, 0x17, 0x00, 0x00, 0x19, 0x00, 0x23, 0x00, 0x00, 0x00, 0x0a,
-	0x00, 0x5c, 0x5f, 0x53, 0x42, 0x2e, 0x47, 0x49, 0x4f, 0x30, 0x00, 0x8c,
-	0x20, 0x00, 0x01, 0x01, 0x01, 0x00, 0x08, 0x00, 0x03, 0x00, 0x00, 0x00,
-	0x00, 0x17, 0x00, 0x00, 0x19, 0x00, 0x23, 0x00, 0x00, 0x00, 0x4e, 0x00,
-	0x5c, 0x5f, 0x53, 0x42, 0x2e, 0x47, 0x49, 0x4f, 0x30, 0x00, 0x79, 0x00
+	0x79, 0x00
                 })
                 Return(RBUF)
-            }
-            Name(PGID, Buffer(0xa)
-            {
-	0x5c, 0x5f, 0x53, 0x42, 0x2e, 0x44, 0x49, 0x53, 0x50, 0x00
-            })
-            Name(DBUF, Buffer(DBFL)
-            {
-            })
-            CreateByteField(DBUF, Zero, STAT)
-            CreateByteField(DBUF, 0x2, DVAL)
-            CreateField(DBUF, 0x18, 0xa0, DEID)
-            Method(_S1D, 0x0, NotSerialized)
-            {
-                Return(0x3)
-            }
-            Method(_S2D, 0x0, NotSerialized)
-            {
-                Return(0x3)
-            }
-            Method(_S3D, 0x0, NotSerialized)
-            {
-                Return(0x3)
-            }
-            Method(_PS0, 0x0, NotSerialized)
-            {
-                Store(Buffer(ESNL)
-                {
-                }, DEID)
-                Store(Zero, DVAL)
-                Store(PGID, DEID)
-                If(\_SB_.ABD_.AVBL)
-                {
-                    Store(DBUF, \_SB_.PEP0.FLD0)
-                }
-            }
-            Method(_PS3, 0x0, NotSerialized)
-            {
-                Store(Buffer(ESNL)
-                {
-                }, DEID)
-                Store(0x3, DVAL)
-                Store(PGID, DEID)
-                If(\_SB_.ABD_.AVBL)
-                {
-                    Store(DBUF, \_SB_.PEP0.FLD0)
-                }
             }
         }
         Device(GPU0)
@@ -30283,6 +26364,7 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
             Name(_CID, "ACPIQCOM246F")
             Name(_UID, Zero)
             Name(_CCA, Zero)
+            Name(_CLS, 0x3000000000000)
             Device(MON0)
             {
                 Method(_ADR, 0x0, NotSerialized)
@@ -30290,20 +26372,14 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
                     Return(Zero)
                 }
             }
-            Name(_DEP, Package(0xC)
+            Name(_DEP, Package(0x6)
             {
                 \_SB_.MMU0,
                 \_SB_.MMU3,
                 \_SB_.MMU4,
                 \_SB_.PEP0,
                 \_SB_.OMEM,
-                \_SB_.PMIC,
-                \_SB_.PILC,
-                \_SB_.RPEN,
-                \_SB_.TREE,
-                \_SB_.SCM0,
-                \_SB_.DISP,
-                \_SB_.HDDP
+                \_SB_.PMIC
             })
             Method(_CRS, 0x0, NotSerialized)
             {
@@ -30319,7 +26395,7 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
 	0xcc, 0xfd, 0x00, 0x00, 0x04, 0x00, 0x89, 0x06, 0x00, 0x01, 0x01, 0x4c,
 	0x00, 0x00, 0x00, 0x86, 0x09, 0x00, 0x01, 0x00, 0x80, 0x4b, 0xfc, 0x00,
 	0x80, 0x00, 0x00, 0x8c, 0x20, 0x00, 0x01, 0x01, 0x01, 0x00, 0x08, 0x00,
-	0x03, 0x00, 0x00, 0x00, 0x00, 0x17, 0x00, 0x00, 0x19, 0x00, 0x23, 0x00,
+	0x01, 0x00, 0x00, 0x00, 0x00, 0x17, 0x00, 0x00, 0x19, 0x00, 0x23, 0x00,
 	0x00, 0x00, 0x4e, 0x00, 0x5c, 0x5f, 0x53, 0x42, 0x2e, 0x47, 0x49, 0x4f,
 	0x30, 0x00, 0x79, 0x00
                 })
@@ -33204,23 +29280,7 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
             }
             Method(_ROM, 0x3, NotSerialized)
             {
-                Name(PCF1, Buffer(One)
-                {
-	0x00
-                })
-                Name(PCF2, Buffer(One)
-                {
-	0x00
-                })
-                Name(PCF3, Buffer(One)
-                {
-	0x00
-                })
-                Name(PCF4, Buffer(One)
-                {
-	0x00
-                })
-                Name(PCFG, Buffer(0x1930)
+                Name(PCFG, Buffer(0x16dc)
                 {
 	0x3c, 0x3f, 0x78, 0x6d, 0x6c, 0x20, 0x76, 0x65, 0x72, 0x73, 0x69, 0x6f,
 	0x6e, 0x3d, 0x27, 0x31, 0x2e, 0x30, 0x27, 0x20, 0x65, 0x6e, 0x63, 0x6f,
@@ -33232,567 +29292,490 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
 	0x31, 0x53, 0x58, 0x30, 0x31, 0x3c, 0x2f, 0x50, 0x61, 0x6e, 0x65, 0x6c,
 	0x4e, 0x61, 0x6d, 0x65, 0x3e, 0x0a, 0x20, 0x20, 0x20, 0x20, 0x3c, 0x50,
 	0x61, 0x6e, 0x65, 0x6c, 0x44, 0x65, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74,
-	0x69, 0x6f, 0x6e, 0x3e, 0x48, 0x44, 0x20, 0x44, 0x75, 0x61, 0x6c, 0x20,
-	0x44, 0x53, 0x49, 0x20, 0x48, 0x61, 0x70, 0x61, 0x6e, 0x65, 0x72, 0x6f,
-	0x20, 0x50, 0x61, 0x6e, 0x65, 0x6c, 0x20, 0x28, 0x31, 0x34, 0x34, 0x30,
-	0x78, 0x32, 0x35, 0x36, 0x30, 0x20, 0x32, 0x34, 0x62, 0x70, 0x70, 0x29,
-	0x3c, 0x2f, 0x50, 0x61, 0x6e, 0x65, 0x6c, 0x44, 0x65, 0x73, 0x63, 0x72,
-	0x69, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x3e, 0x0a, 0x20, 0x20, 0x20, 0x20,
-	0x3c, 0x47, 0x72, 0x6f, 0x75, 0x70, 0x20, 0x69, 0x64, 0x3d, 0x27, 0x45,
-	0x44, 0x49, 0x44, 0x20, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x75, 0x72,
-	0x61, 0x74, 0x69, 0x6f, 0x6e, 0x27, 0x3e, 0x0a, 0x20, 0x20, 0x20, 0x20,
-	0x20, 0x20, 0x20, 0x20, 0x3c, 0x4d, 0x61, 0x6e, 0x75, 0x66, 0x61, 0x63,
-	0x74, 0x75, 0x72, 0x65, 0x49, 0x44, 0x3e, 0x30, 0x78, 0x41, 0x46, 0x30,
-	0x44, 0x3c, 0x2f, 0x4d, 0x61, 0x6e, 0x75, 0x66, 0x61, 0x63, 0x74, 0x75,
-	0x72, 0x65, 0x49, 0x44, 0x3e, 0x0a, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,
-	0x20, 0x20, 0x3c, 0x50, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x43, 0x6f,
-	0x64, 0x65, 0x3e, 0x30, 0x78, 0x30, 0x30, 0x31, 0x31, 0x3c, 0x2f, 0x50,
-	0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x43, 0x6f, 0x64, 0x65, 0x3e, 0x0a,
-	0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3c, 0x53, 0x65, 0x72,
-	0x69, 0x61, 0x6c, 0x4e, 0x75, 0x6d, 0x62, 0x65, 0x72, 0x3e, 0x30, 0x78,
-	0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x3c, 0x2f, 0x53, 0x65, 0x72, 0x69,
-	0x61, 0x6c, 0x4e, 0x75, 0x6d, 0x62, 0x65, 0x72, 0x3e, 0x0a, 0x20, 0x20,
-	0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3c, 0x57, 0x65, 0x65, 0x6b, 0x6f,
-	0x66, 0x4d, 0x61, 0x6e, 0x75, 0x66, 0x61, 0x63, 0x74, 0x75, 0x72, 0x65,
-	0x3e, 0x30, 0x78, 0x30, 0x39, 0x3c, 0x2f, 0x57, 0x65, 0x65, 0x6b, 0x6f,
-	0x66, 0x4d, 0x61, 0x6e, 0x75, 0x66, 0x61, 0x63, 0x74, 0x75, 0x72, 0x65,
-	0x3e, 0x0a, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3c, 0x59,
-	0x65, 0x61, 0x72, 0x6f, 0x66, 0x4d, 0x61, 0x6e, 0x75, 0x66, 0x61, 0x63,
-	0x74, 0x75, 0x72, 0x65, 0x3e, 0x30, 0x78, 0x31, 0x33, 0x3c, 0x2f, 0x59,
-	0x65, 0x61, 0x72, 0x6f, 0x66, 0x4d, 0x61, 0x6e, 0x75, 0x66, 0x61, 0x63,
-	0x74, 0x75, 0x72, 0x65, 0x3e, 0x0a, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,
-	0x20, 0x20, 0x3c, 0x45, 0x44, 0x49, 0x44, 0x56, 0x65, 0x72, 0x73, 0x69,
-	0x6f, 0x6e, 0x3e, 0x31, 0x3c, 0x2f, 0x45, 0x44, 0x49, 0x44, 0x56, 0x65,
-	0x72, 0x73, 0x69, 0x6f, 0x6e, 0x3e, 0x0a, 0x20, 0x20, 0x20, 0x20, 0x20,
-	0x20, 0x20, 0x20, 0x3c, 0x45, 0x44, 0x49, 0x44, 0x52, 0x65, 0x76, 0x69,
-	0x73, 0x69, 0x6f, 0x6e, 0x3e, 0x33, 0x3c, 0x2f, 0x45, 0x44, 0x49, 0x44,
-	0x52, 0x65, 0x76, 0x69, 0x73, 0x69, 0x6f, 0x6e, 0x3e, 0x0a, 0x20, 0x20,
-	0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3c, 0x56, 0x69, 0x64, 0x65, 0x6f,
-	0x49, 0x6e, 0x70, 0x75, 0x74, 0x44, 0x65, 0x66, 0x69, 0x6e, 0x69, 0x74,
-	0x69, 0x6f, 0x6e, 0x3e, 0x30, 0x78, 0x38, 0x30, 0x3c, 0x2f, 0x56, 0x69,
-	0x64, 0x65, 0x6f, 0x49, 0x6e, 0x70, 0x75, 0x74, 0x44, 0x65, 0x66, 0x69,
-	0x6e, 0x69, 0x74, 0x69, 0x6f, 0x6e, 0x3e, 0x0a, 0x20, 0x20, 0x20, 0x20,
-	0x20, 0x20, 0x20, 0x20, 0x3c, 0x48, 0x6f, 0x72, 0x69, 0x7a, 0x6f, 0x6e,
-	0x74, 0x61, 0x6c, 0x53, 0x63, 0x72, 0x65, 0x65, 0x6e, 0x53, 0x69, 0x7a,
-	0x65, 0x3e, 0x30, 0x78, 0x31, 0x36, 0x3c, 0x2f, 0x48, 0x6f, 0x72, 0x69,
-	0x7a, 0x6f, 0x6e, 0x74, 0x61, 0x6c, 0x53, 0x63, 0x72, 0x65, 0x65, 0x6e,
-	0x53, 0x69, 0x7a, 0x65, 0x3e, 0x0a, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,
-	0x20, 0x20, 0x3c, 0x56, 0x65, 0x72, 0x74, 0x69, 0x63, 0x61, 0x6c, 0x53,
-	0x63, 0x72, 0x65, 0x65, 0x6e, 0x53, 0x69, 0x7a, 0x65, 0x3e, 0x30, 0x78,
-	0x30, 0x44, 0x3c, 0x2f, 0x56, 0x65, 0x72, 0x74, 0x69, 0x63, 0x61, 0x6c,
+	0x69, 0x6f, 0x6e, 0x3e, 0x53, 0x68, 0x61, 0x72, 0x70, 0x20, 0x44, 0x75,
+	0x61, 0x6c, 0x20, 0x44, 0x53, 0x49, 0x20, 0x50, 0x61, 0x6e, 0x65, 0x6c,
+	0x20, 0x28, 0x31, 0x36, 0x30, 0x30, 0x78, 0x32, 0x35, 0x36, 0x30, 0x20,
+	0x32, 0x34, 0x62, 0x70, 0x70, 0x29, 0x3c, 0x2f, 0x50, 0x61, 0x6e, 0x65,
+	0x6c, 0x44, 0x65, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x69, 0x6f, 0x6e,
+	0x3e, 0x0a, 0x20, 0x20, 0x20, 0x20, 0x3c, 0x47, 0x72, 0x6f, 0x75, 0x70,
+	0x20, 0x69, 0x64, 0x3d, 0x27, 0x45, 0x44, 0x49, 0x44, 0x20, 0x43, 0x6f,
+	0x6e, 0x66, 0x69, 0x67, 0x75, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x27,
+	0x3e, 0x0a, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3c, 0x4d,
+	0x61, 0x6e, 0x75, 0x66, 0x61, 0x63, 0x74, 0x75, 0x72, 0x65, 0x49, 0x44,
+	0x3e, 0x30, 0x78, 0x41, 0x46, 0x30, 0x36, 0x3c, 0x2f, 0x4d, 0x61, 0x6e,
+	0x75, 0x66, 0x61, 0x63, 0x74, 0x75, 0x72, 0x65, 0x49, 0x44, 0x3e, 0x0a,
+	0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3c, 0x50, 0x72, 0x6f,
+	0x64, 0x75, 0x63, 0x74, 0x43, 0x6f, 0x64, 0x65, 0x3e, 0x30, 0x78, 0x30,
+	0x41, 0x41, 0x41, 0x3c, 0x2f, 0x50, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74,
+	0x43, 0x6f, 0x64, 0x65, 0x3e, 0x0a, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,
+	0x20, 0x20, 0x3c, 0x53, 0x65, 0x72, 0x69, 0x61, 0x6c, 0x4e, 0x75, 0x6d,
+	0x62, 0x65, 0x72, 0x3e, 0x30, 0x78, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30,
+	0x3c, 0x2f, 0x53, 0x65, 0x72, 0x69, 0x61, 0x6c, 0x4e, 0x75, 0x6d, 0x62,
+	0x65, 0x72, 0x3e, 0x0a, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,
+	0x3c, 0x57, 0x65, 0x65, 0x6b, 0x6f, 0x66, 0x4d, 0x61, 0x6e, 0x75, 0x66,
+	0x61, 0x63, 0x74, 0x75, 0x72, 0x65, 0x3e, 0x30, 0x78, 0x31, 0x41, 0x3c,
+	0x2f, 0x57, 0x65, 0x65, 0x6b, 0x6f, 0x66, 0x4d, 0x61, 0x6e, 0x75, 0x66,
+	0x61, 0x63, 0x74, 0x75, 0x72, 0x65, 0x3e, 0x0a, 0x20, 0x20, 0x20, 0x20,
+	0x20, 0x20, 0x20, 0x20, 0x3c, 0x59, 0x65, 0x61, 0x72, 0x6f, 0x66, 0x4d,
+	0x61, 0x6e, 0x75, 0x66, 0x61, 0x63, 0x74, 0x75, 0x72, 0x65, 0x3e, 0x30,
+	0x78, 0x31, 0x33, 0x3c, 0x2f, 0x59, 0x65, 0x61, 0x72, 0x6f, 0x66, 0x4d,
+	0x61, 0x6e, 0x75, 0x66, 0x61, 0x63, 0x74, 0x75, 0x72, 0x65, 0x3e, 0x0a,
+	0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3c, 0x45, 0x44, 0x49,
+	0x44, 0x56, 0x65, 0x72, 0x73, 0x69, 0x6f, 0x6e, 0x3e, 0x31, 0x3c, 0x2f,
+	0x45, 0x44, 0x49, 0x44, 0x56, 0x65, 0x72, 0x73, 0x69, 0x6f, 0x6e, 0x3e,
+	0x0a, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3c, 0x45, 0x44,
+	0x49, 0x44, 0x52, 0x65, 0x76, 0x69, 0x73, 0x69, 0x6f, 0x6e, 0x3e, 0x33,
+	0x3c, 0x2f, 0x45, 0x44, 0x49, 0x44, 0x52, 0x65, 0x76, 0x69, 0x73, 0x69,
+	0x6f, 0x6e, 0x3e, 0x0a, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,
+	0x3c, 0x56, 0x69, 0x64, 0x65, 0x6f, 0x49, 0x6e, 0x70, 0x75, 0x74, 0x44,
+	0x65, 0x66, 0x69, 0x6e, 0x69, 0x74, 0x69, 0x6f, 0x6e, 0x3e, 0x30, 0x78,
+	0x38, 0x30, 0x3c, 0x2f, 0x56, 0x69, 0x64, 0x65, 0x6f, 0x49, 0x6e, 0x70,
+	0x75, 0x74, 0x44, 0x65, 0x66, 0x69, 0x6e, 0x69, 0x74, 0x69, 0x6f, 0x6e,
+	0x3e, 0x0a, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3c, 0x48,
+	0x6f, 0x72, 0x69, 0x7a, 0x6f, 0x6e, 0x74, 0x61, 0x6c, 0x53, 0x63, 0x72,
+	0x65, 0x65, 0x6e, 0x53, 0x69, 0x7a, 0x65, 0x3e, 0x30, 0x78, 0x30, 0x38,
+	0x3c, 0x2f, 0x48, 0x6f, 0x72, 0x69, 0x7a, 0x6f, 0x6e, 0x74, 0x61, 0x6c,
 	0x53, 0x63, 0x72, 0x65, 0x65, 0x6e, 0x53, 0x69, 0x7a, 0x65, 0x3e, 0x0a,
-	0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3c, 0x44, 0x69, 0x73,
-	0x70, 0x6c, 0x61, 0x79, 0x54, 0x72, 0x61, 0x6e, 0x73, 0x66, 0x65, 0x72,
-	0x43, 0x68, 0x61, 0x72, 0x61, 0x63, 0x74, 0x65, 0x72, 0x69, 0x73, 0x74,
-	0x69, 0x63, 0x73, 0x3e, 0x30, 0x78, 0x37, 0x38, 0x3c, 0x2f, 0x44, 0x69,
-	0x73, 0x70, 0x6c, 0x61, 0x79, 0x54, 0x72, 0x61, 0x6e, 0x73, 0x66, 0x65,
-	0x72, 0x43, 0x68, 0x61, 0x72, 0x61, 0x63, 0x74, 0x65, 0x72, 0x69, 0x73,
-	0x74, 0x69, 0x63, 0x73, 0x3e, 0x0a, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,
-	0x20, 0x20, 0x3c, 0x46, 0x65, 0x61, 0x74, 0x75, 0x72, 0x65, 0x53, 0x75,
-	0x70, 0x70, 0x6f, 0x72, 0x74, 0x3e, 0x30, 0x78, 0x41, 0x3c, 0x2f, 0x46,
-	0x65, 0x61, 0x74, 0x75, 0x72, 0x65, 0x53, 0x75, 0x70, 0x70, 0x6f, 0x72,
-	0x74, 0x3e, 0x0a, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3c,
-	0x52, 0x65, 0x64, 0x2e, 0x47, 0x72, 0x65, 0x65, 0x6e, 0x42, 0x69, 0x74,
-	0x73, 0x3e, 0x30, 0x78, 0x43, 0x46, 0x3c, 0x2f, 0x52, 0x65, 0x64, 0x2e,
-	0x47, 0x72, 0x65, 0x65, 0x6e, 0x42, 0x69, 0x74, 0x73, 0x3e, 0x0a, 0x20,
-	0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3c, 0x42, 0x6c, 0x75, 0x65,
-	0x2e, 0x57, 0x68, 0x69, 0x74, 0x65, 0x42, 0x69, 0x74, 0x73, 0x3e, 0x30,
-	0x78, 0x34, 0x35, 0x3c, 0x2f, 0x42, 0x6c, 0x75, 0x65, 0x2e, 0x57, 0x68,
-	0x69, 0x74, 0x65, 0x42, 0x69, 0x74, 0x73, 0x3e, 0x0a, 0x20, 0x20, 0x20,
-	0x20, 0x20, 0x20, 0x20, 0x20, 0x3c, 0x52, 0x65, 0x64, 0x58, 0x3e, 0x30,
-	0x78, 0x39, 0x30, 0x3c, 0x2f, 0x52, 0x65, 0x64, 0x58, 0x3e, 0x0a, 0x20,
-	0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3c, 0x52, 0x65, 0x64, 0x59,
-	0x3e, 0x30, 0x78, 0x35, 0x39, 0x3c, 0x2f, 0x52, 0x65, 0x64, 0x59, 0x3e,
+	0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3c, 0x56, 0x65, 0x72,
+	0x74, 0x69, 0x63, 0x61, 0x6c, 0x53, 0x63, 0x72, 0x65, 0x65, 0x6e, 0x53,
+	0x69, 0x7a, 0x65, 0x3e, 0x30, 0x78, 0x30, 0x44, 0x3c, 0x2f, 0x56, 0x65,
+	0x72, 0x74, 0x69, 0x63, 0x61, 0x6c, 0x53, 0x63, 0x72, 0x65, 0x65, 0x6e,
+	0x53, 0x69, 0x7a, 0x65, 0x3e, 0x0a, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,
+	0x20, 0x20, 0x3c, 0x44, 0x69, 0x73, 0x70, 0x6c, 0x61, 0x79, 0x54, 0x72,
+	0x61, 0x6e, 0x73, 0x66, 0x65, 0x72, 0x43, 0x68, 0x61, 0x72, 0x61, 0x63,
+	0x74, 0x65, 0x72, 0x69, 0x73, 0x74, 0x69, 0x63, 0x73, 0x3e, 0x30, 0x78,
+	0x37, 0x38, 0x3c, 0x2f, 0x44, 0x69, 0x73, 0x70, 0x6c, 0x61, 0x79, 0x54,
+	0x72, 0x61, 0x6e, 0x73, 0x66, 0x65, 0x72, 0x43, 0x68, 0x61, 0x72, 0x61,
+	0x63, 0x74, 0x65, 0x72, 0x69, 0x73, 0x74, 0x69, 0x63, 0x73, 0x3e, 0x0a,
+	0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3c, 0x46, 0x65, 0x61,
+	0x74, 0x75, 0x72, 0x65, 0x53, 0x75, 0x70, 0x70, 0x6f, 0x72, 0x74, 0x3e,
+	0x30, 0x78, 0x41, 0x3c, 0x2f, 0x46, 0x65, 0x61, 0x74, 0x75, 0x72, 0x65,
+	0x53, 0x75, 0x70, 0x70, 0x6f, 0x72, 0x74, 0x3e, 0x0a, 0x20, 0x20, 0x20,
+	0x20, 0x20, 0x20, 0x20, 0x20, 0x3c, 0x52, 0x65, 0x64, 0x2e, 0x47, 0x72,
+	0x65, 0x65, 0x6e, 0x42, 0x69, 0x74, 0x73, 0x3e, 0x30, 0x78, 0x31, 0x38,
+	0x3c, 0x2f, 0x52, 0x65, 0x64, 0x2e, 0x47, 0x72, 0x65, 0x65, 0x6e, 0x42,
+	0x69, 0x74, 0x73, 0x3e, 0x0a, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,
+	0x20, 0x3c, 0x42, 0x6c, 0x75, 0x65, 0x2e, 0x57, 0x68, 0x69, 0x74, 0x65,
+	0x42, 0x69, 0x74, 0x73, 0x3e, 0x30, 0x78, 0x44, 0x35, 0x3c, 0x2f, 0x42,
+	0x6c, 0x75, 0x65, 0x2e, 0x57, 0x68, 0x69, 0x74, 0x65, 0x42, 0x69, 0x74,
+	0x73, 0x3e, 0x0a, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3c,
+	0x52, 0x65, 0x64, 0x58, 0x3e, 0x30, 0x78, 0x41, 0x35, 0x3c, 0x2f, 0x52,
+	0x65, 0x64, 0x58, 0x3e, 0x0a, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,
+	0x20, 0x3c, 0x52, 0x65, 0x64, 0x59, 0x3e, 0x30, 0x78, 0x35, 0x34, 0x3c,
+	0x2f, 0x52, 0x65, 0x64, 0x59, 0x3e, 0x0a, 0x20, 0x20, 0x20, 0x20, 0x20,
+	0x20, 0x20, 0x20, 0x3c, 0x47, 0x72, 0x65, 0x65, 0x6e, 0x58, 0x3e, 0x30,
+	0x78, 0x34, 0x44, 0x3c, 0x2f, 0x47, 0x72, 0x65, 0x65, 0x6e, 0x58, 0x3e,
 	0x0a, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3c, 0x47, 0x72,
-	0x65, 0x65, 0x6e, 0x58, 0x3e, 0x30, 0x78, 0x35, 0x37, 0x3c, 0x2f, 0x47,
-	0x72, 0x65, 0x65, 0x6e, 0x58, 0x3e, 0x0a, 0x20, 0x20, 0x20, 0x20, 0x20,
-	0x20, 0x20, 0x20, 0x3c, 0x47, 0x72, 0x65, 0x65, 0x6e, 0x59, 0x3e, 0x30,
-	0x78, 0x39, 0x35, 0x3c, 0x2f, 0x47, 0x72, 0x65, 0x65, 0x6e, 0x59, 0x3e,
-	0x0a, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3c, 0x42, 0x6c,
-	0x75, 0x65, 0x58, 0x3e, 0x30, 0x78, 0x32, 0x39, 0x3c, 0x2f, 0x42, 0x6c,
-	0x75, 0x65, 0x58, 0x3e, 0x0a, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,
-	0x20, 0x3c, 0x42, 0x6c, 0x75, 0x65, 0x59, 0x3e, 0x30, 0x78, 0x31, 0x46,
-	0x3c, 0x2f, 0x42, 0x6c, 0x75, 0x65, 0x59, 0x3e, 0x0a, 0x20, 0x20, 0x20,
-	0x20, 0x20, 0x20, 0x20, 0x20, 0x3c, 0x57, 0x68, 0x69, 0x74, 0x65, 0x58,
-	0x3e, 0x30, 0x78, 0x35, 0x30, 0x3c, 0x2f, 0x57, 0x68, 0x69, 0x74, 0x65,
-	0x58, 0x3e, 0x0a, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3c,
-	0x57, 0x68, 0x69, 0x74, 0x65, 0x59, 0x3e, 0x30, 0x78, 0x35, 0x34, 0x3c,
-	0x2f, 0x57, 0x68, 0x69, 0x74, 0x65, 0x59, 0x3e, 0x0a, 0x20, 0x20, 0x20,
-	0x20, 0x20, 0x20, 0x20, 0x20, 0x3c, 0x45, 0x73, 0x74, 0x61, 0x62, 0x6c,
-	0x69, 0x73, 0x68, 0x65, 0x64, 0x54, 0x69, 0x6d, 0x69, 0x6e, 0x67, 0x73,
-	0x49, 0x3e, 0x30, 0x78, 0x30, 0x3c, 0x2f, 0x45, 0x73, 0x74, 0x61, 0x62,
+	0x65, 0x65, 0x6e, 0x59, 0x3e, 0x30, 0x78, 0x39, 0x41, 0x3c, 0x2f, 0x47,
+	0x72, 0x65, 0x65, 0x6e, 0x59, 0x3e, 0x0a, 0x20, 0x20, 0x20, 0x20, 0x20,
+	0x20, 0x20, 0x20, 0x3c, 0x42, 0x6c, 0x75, 0x65, 0x58, 0x3e, 0x30, 0x78,
+	0x32, 0x36, 0x3c, 0x2f, 0x42, 0x6c, 0x75, 0x65, 0x58, 0x3e, 0x0a, 0x20,
+	0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3c, 0x42, 0x6c, 0x75, 0x65,
+	0x59, 0x3e, 0x30, 0x78, 0x30, 0x46, 0x3c, 0x2f, 0x42, 0x6c, 0x75, 0x65,
+	0x59, 0x3e, 0x0a, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3c,
+	0x57, 0x68, 0x69, 0x74, 0x65, 0x58, 0x3e, 0x30, 0x78, 0x32, 0x46, 0x3c,
+	0x2f, 0x57, 0x68, 0x69, 0x74, 0x65, 0x58, 0x3e, 0x0a, 0x20, 0x20, 0x20,
+	0x20, 0x20, 0x20, 0x20, 0x20, 0x3c, 0x57, 0x68, 0x69, 0x74, 0x65, 0x59,
+	0x3e, 0x30, 0x78, 0x35, 0x34, 0x3c, 0x2f, 0x57, 0x68, 0x69, 0x74, 0x65,
+	0x59, 0x3e, 0x0a, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3c,
+	0x45, 0x73, 0x74, 0x61, 0x62, 0x6c, 0x69, 0x73, 0x68, 0x65, 0x64, 0x54,
+	0x69, 0x6d, 0x69, 0x6e, 0x67, 0x73, 0x49, 0x3e, 0x30, 0x78, 0x30, 0x3c,
+	0x2f, 0x45, 0x73, 0x74, 0x61, 0x62, 0x6c, 0x69, 0x73, 0x68, 0x65, 0x64,
+	0x54, 0x69, 0x6d, 0x69, 0x6e, 0x67, 0x73, 0x49, 0x3e, 0x0a, 0x20, 0x20,
+	0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3c, 0x45, 0x73, 0x74, 0x61, 0x62,
 	0x6c, 0x69, 0x73, 0x68, 0x65, 0x64, 0x54, 0x69, 0x6d, 0x69, 0x6e, 0x67,
-	0x73, 0x49, 0x3e, 0x0a, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,
-	0x3c, 0x45, 0x73, 0x74, 0x61, 0x62, 0x6c, 0x69, 0x73, 0x68, 0x65, 0x64,
-	0x54, 0x69, 0x6d, 0x69, 0x6e, 0x67, 0x73, 0x49, 0x49, 0x3e, 0x30, 0x78,
-	0x30, 0x3c, 0x2f, 0x45, 0x73, 0x74, 0x61, 0x62, 0x6c, 0x69, 0x73, 0x68,
-	0x65, 0x64, 0x54, 0x69, 0x6d, 0x69, 0x6e, 0x67, 0x73, 0x49, 0x49, 0x3e,
-	0x0a, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3c, 0x4d, 0x61,
-	0x6e, 0x75, 0x66, 0x61, 0x63, 0x74, 0x75, 0x72, 0x65, 0x73, 0x54, 0x69,
-	0x6d, 0x69, 0x6e, 0x67, 0x3e, 0x30, 0x78, 0x30, 0x3c, 0x2f, 0x4d, 0x61,
-	0x6e, 0x75, 0x66, 0x61, 0x63, 0x74, 0x75, 0x72, 0x65, 0x73, 0x54, 0x69,
-	0x6d, 0x69, 0x6e, 0x67, 0x3e, 0x0a, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,
-	0x20, 0x20, 0x3c, 0x53, 0x74, 0x61, 0x6e, 0x64, 0x61, 0x72, 0x64, 0x54,
-	0x69, 0x6d, 0x69, 0x6e, 0x67, 0x73, 0x31, 0x2f, 0x3e, 0x0a, 0x20, 0x20,
-	0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3c, 0x53, 0x74, 0x61, 0x6e, 0x64,
-	0x61, 0x72, 0x64, 0x54, 0x69, 0x6d, 0x69, 0x6e, 0x67, 0x73, 0x32, 0x2f,
-	0x3e, 0x0a, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3c, 0x53,
-	0x74, 0x61, 0x6e, 0x64, 0x61, 0x72, 0x64, 0x54, 0x69, 0x6d, 0x69, 0x6e,
-	0x67, 0x73, 0x33, 0x2f, 0x3e, 0x0a, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,
-	0x20, 0x20, 0x3c, 0x53, 0x74, 0x61, 0x6e, 0x64, 0x61, 0x72, 0x64, 0x54,
-	0x69, 0x6d, 0x69, 0x6e, 0x67, 0x73, 0x34, 0x2f, 0x3e, 0x0a, 0x20, 0x20,
-	0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3c, 0x53, 0x74, 0x61, 0x6e, 0x64,
-	0x61, 0x72, 0x64, 0x54, 0x69, 0x6d, 0x69, 0x6e, 0x67, 0x73, 0x35, 0x2f,
-	0x3e, 0x0a, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3c, 0x53,
-	0x74, 0x61, 0x6e, 0x64, 0x61, 0x72, 0x64, 0x54, 0x69, 0x6d, 0x69, 0x6e,
-	0x67, 0x73, 0x36, 0x2f, 0x3e, 0x0a, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,
-	0x20, 0x20, 0x3c, 0x53, 0x74, 0x61, 0x6e, 0x64, 0x61, 0x72, 0x64, 0x54,
-	0x69, 0x6d, 0x69, 0x6e, 0x67, 0x73, 0x37, 0x2f, 0x3e, 0x0a, 0x20, 0x20,
-	0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3c, 0x53, 0x69, 0x67, 0x6e, 0x61,
-	0x6c, 0x54, 0x69, 0x6d, 0x69, 0x6e, 0x67, 0x49, 0x6e, 0x74, 0x65, 0x72,
-	0x66, 0x61, 0x63, 0x65, 0x2f, 0x3e, 0x0a, 0x20, 0x20, 0x20, 0x20, 0x3c,
-	0x2f, 0x47, 0x72, 0x6f, 0x75, 0x70, 0x3e, 0x0a, 0x0a, 0x20, 0x20, 0x20,
-	0x20, 0x3c, 0x47, 0x72, 0x6f, 0x75, 0x70, 0x20, 0x69, 0x64, 0x3d, 0x27,
-	0x44, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x65, 0x64, 0x20, 0x54, 0x69, 0x6d,
-	0x69, 0x6e, 0x67, 0x27, 0x3e, 0x0a, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,
-	0x20, 0x20, 0x3c, 0x48, 0x6f, 0x72, 0x69, 0x7a, 0x6f, 0x6e, 0x74, 0x61,
+	0x73, 0x49, 0x49, 0x3e, 0x30, 0x78, 0x30, 0x3c, 0x2f, 0x45, 0x73, 0x74,
+	0x61, 0x62, 0x6c, 0x69, 0x73, 0x68, 0x65, 0x64, 0x54, 0x69, 0x6d, 0x69,
+	0x6e, 0x67, 0x73, 0x49, 0x49, 0x3e, 0x0a, 0x20, 0x20, 0x20, 0x20, 0x20,
+	0x20, 0x20, 0x20, 0x3c, 0x4d, 0x61, 0x6e, 0x75, 0x66, 0x61, 0x63, 0x74,
+	0x75, 0x72, 0x65, 0x73, 0x54, 0x69, 0x6d, 0x69, 0x6e, 0x67, 0x3e, 0x30,
+	0x78, 0x30, 0x3c, 0x2f, 0x4d, 0x61, 0x6e, 0x75, 0x66, 0x61, 0x63, 0x74,
+	0x75, 0x72, 0x65, 0x73, 0x54, 0x69, 0x6d, 0x69, 0x6e, 0x67, 0x3e, 0x0a,
+	0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3c, 0x53, 0x74, 0x61,
+	0x6e, 0x64, 0x61, 0x72, 0x64, 0x54, 0x69, 0x6d, 0x69, 0x6e, 0x67, 0x73,
+	0x31, 0x2f, 0x3e, 0x0a, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,
+	0x3c, 0x53, 0x74, 0x61, 0x6e, 0x64, 0x61, 0x72, 0x64, 0x54, 0x69, 0x6d,
+	0x69, 0x6e, 0x67, 0x73, 0x32, 0x2f, 0x3e, 0x0a, 0x20, 0x20, 0x20, 0x20,
+	0x20, 0x20, 0x20, 0x20, 0x3c, 0x53, 0x74, 0x61, 0x6e, 0x64, 0x61, 0x72,
+	0x64, 0x54, 0x69, 0x6d, 0x69, 0x6e, 0x67, 0x73, 0x33, 0x2f, 0x3e, 0x0a,
+	0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3c, 0x53, 0x74, 0x61,
+	0x6e, 0x64, 0x61, 0x72, 0x64, 0x54, 0x69, 0x6d, 0x69, 0x6e, 0x67, 0x73,
+	0x34, 0x2f, 0x3e, 0x0a, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,
+	0x3c, 0x53, 0x74, 0x61, 0x6e, 0x64, 0x61, 0x72, 0x64, 0x54, 0x69, 0x6d,
+	0x69, 0x6e, 0x67, 0x73, 0x35, 0x2f, 0x3e, 0x0a, 0x20, 0x20, 0x20, 0x20,
+	0x20, 0x20, 0x20, 0x20, 0x3c, 0x53, 0x74, 0x61, 0x6e, 0x64, 0x61, 0x72,
+	0x64, 0x54, 0x69, 0x6d, 0x69, 0x6e, 0x67, 0x73, 0x36, 0x2f, 0x3e, 0x0a,
+	0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3c, 0x53, 0x74, 0x61,
+	0x6e, 0x64, 0x61, 0x72, 0x64, 0x54, 0x69, 0x6d, 0x69, 0x6e, 0x67, 0x73,
+	0x37, 0x2f, 0x3e, 0x0a, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,
+	0x3c, 0x53, 0x69, 0x67, 0x6e, 0x61, 0x6c, 0x54, 0x69, 0x6d, 0x69, 0x6e,
+	0x67, 0x49, 0x6e, 0x74, 0x65, 0x72, 0x66, 0x61, 0x63, 0x65, 0x2f, 0x3e,
+	0x0a, 0x20, 0x20, 0x20, 0x20, 0x3c, 0x2f, 0x47, 0x72, 0x6f, 0x75, 0x70,
+	0x3e, 0x0a, 0x20, 0x0a, 0x20, 0x20, 0x20, 0x20, 0x3c, 0x47, 0x72, 0x6f,
+	0x75, 0x70, 0x20, 0x69, 0x64, 0x3d, 0x27, 0x44, 0x65, 0x74, 0x61, 0x69,
+	0x6c, 0x65, 0x64, 0x20, 0x54, 0x69, 0x6d, 0x69, 0x6e, 0x67, 0x27, 0x3e,
+	0x0a, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3c, 0x48, 0x6f,
+	0x72, 0x69, 0x7a, 0x6f, 0x6e, 0x74, 0x61, 0x6c, 0x53, 0x63, 0x72, 0x65,
+	0x65, 0x6e, 0x53, 0x69, 0x7a, 0x65, 0x4d, 0x4d, 0x3e, 0x30, 0x78, 0x35,
+	0x33, 0x3c, 0x2f, 0x48, 0x6f, 0x72, 0x69, 0x7a, 0x6f, 0x6e, 0x74, 0x61,
 	0x6c, 0x53, 0x63, 0x72, 0x65, 0x65, 0x6e, 0x53, 0x69, 0x7a, 0x65, 0x4d,
-	0x4d, 0x3e, 0x30, 0x78, 0x33, 0x45, 0x3c, 0x2f, 0x48, 0x6f, 0x72, 0x69,
-	0x7a, 0x6f, 0x6e, 0x74, 0x61, 0x6c, 0x53, 0x63, 0x72, 0x65, 0x65, 0x6e,
-	0x53, 0x69, 0x7a, 0x65, 0x4d, 0x4d, 0x3e, 0x0a, 0x20, 0x20, 0x20, 0x20,
-	0x20, 0x20, 0x20, 0x20, 0x3c, 0x56, 0x65, 0x72, 0x74, 0x69, 0x63, 0x61,
-	0x6c, 0x53, 0x63, 0x72, 0x65, 0x65, 0x6e, 0x53, 0x69, 0x7a, 0x65, 0x4d,
-	0x4d, 0x3e, 0x30, 0x78, 0x36, 0x45, 0x3c, 0x2f, 0x56, 0x65, 0x72, 0x74,
+	0x4d, 0x3e, 0x0a, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3c,
+	0x56, 0x65, 0x72, 0x74, 0x69, 0x63, 0x61, 0x6c, 0x53, 0x63, 0x72, 0x65,
+	0x65, 0x6e, 0x53, 0x69, 0x7a, 0x65, 0x4d, 0x4d, 0x3e, 0x30, 0x78, 0x38,
+	0x35, 0x3c, 0x2f, 0x56, 0x65, 0x72, 0x74, 0x69, 0x63, 0x61, 0x6c, 0x53,
+	0x63, 0x72, 0x65, 0x65, 0x6e, 0x53, 0x69, 0x7a, 0x65, 0x4d, 0x4d, 0x3e,
+	0x0a, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3c, 0x48, 0x6f,
+	0x72, 0x69, 0x7a, 0x6f, 0x6e, 0x74, 0x61, 0x6c, 0x56, 0x65, 0x72, 0x74,
 	0x69, 0x63, 0x61, 0x6c, 0x53, 0x63, 0x72, 0x65, 0x65, 0x6e, 0x53, 0x69,
-	0x7a, 0x65, 0x4d, 0x4d, 0x3e, 0x0a, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,
-	0x20, 0x20, 0x3c, 0x48, 0x6f, 0x72, 0x69, 0x7a, 0x6f, 0x6e, 0x74, 0x61,
-	0x6c, 0x56, 0x65, 0x72, 0x74, 0x69, 0x63, 0x61, 0x6c, 0x53, 0x63, 0x72,
-	0x65, 0x65, 0x6e, 0x53, 0x69, 0x7a, 0x65, 0x4d, 0x4d, 0x3e, 0x30, 0x78,
-	0x30, 0x30, 0x3c, 0x2f, 0x48, 0x6f, 0x72, 0x69, 0x7a, 0x6f, 0x6e, 0x74,
-	0x61, 0x6c, 0x56, 0x65, 0x72, 0x74, 0x69, 0x63, 0x61, 0x6c, 0x53, 0x63,
-	0x72, 0x65, 0x65, 0x6e, 0x53, 0x69, 0x7a, 0x65, 0x4d, 0x4d, 0x3e, 0x0a,
-	0x20, 0x20, 0x20, 0x20, 0x3c, 0x2f, 0x47, 0x72, 0x6f, 0x75, 0x70, 0x3e,
-	0x20, 0x0a, 0x0a, 0x20, 0x20, 0x20, 0x20, 0x3c, 0x47, 0x72, 0x6f, 0x75,
-	0x70, 0x20, 0x69, 0x64, 0x3d, 0x27, 0x41, 0x63, 0x74, 0x69, 0x76, 0x65,
-	0x20, 0x54, 0x69, 0x6d, 0x69, 0x6e, 0x67, 0x27, 0x3e, 0x0a, 0x20, 0x20,
-	0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3c, 0x48, 0x6f, 0x72, 0x69, 0x7a,
-	0x6f, 0x6e, 0x74, 0x61, 0x6c, 0x41, 0x63, 0x74, 0x69, 0x76, 0x65, 0x20,
-	0x75, 0x6e, 0x69, 0x74, 0x73, 0x3d, 0x27, 0x44, 0x6f, 0x74, 0x20, 0x43,
-	0x6c, 0x6f, 0x63, 0x6b, 0x73, 0x27, 0x3e, 0x31, 0x34, 0x34, 0x30, 0x3c,
-	0x2f, 0x48, 0x6f, 0x72, 0x69, 0x7a, 0x6f, 0x6e, 0x74, 0x61, 0x6c, 0x41,
-	0x63, 0x74, 0x69, 0x76, 0x65, 0x3e, 0x0a, 0x20, 0x20, 0x20, 0x20, 0x20,
-	0x20, 0x20, 0x20, 0x3c, 0x48, 0x6f, 0x72, 0x69, 0x7a, 0x6f, 0x6e, 0x74,
-	0x61, 0x6c, 0x46, 0x72, 0x6f, 0x6e, 0x74, 0x50, 0x6f, 0x72, 0x63, 0x68,
-	0x20, 0x75, 0x6e, 0x69, 0x74, 0x73, 0x3d, 0x27, 0x44, 0x6f, 0x74, 0x20,
-	0x43, 0x6c, 0x6f, 0x63, 0x6b, 0x73, 0x27, 0x3e, 0x31, 0x38, 0x30, 0x3c,
-	0x2f, 0x48, 0x6f, 0x72, 0x69, 0x7a, 0x6f, 0x6e, 0x74, 0x61, 0x6c, 0x46,
-	0x72, 0x6f, 0x6e, 0x74, 0x50, 0x6f, 0x72, 0x63, 0x68, 0x3e, 0x0a, 0x20,
-	0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3c, 0x48, 0x6f, 0x72, 0x69,
-	0x7a, 0x6f, 0x6e, 0x74, 0x61, 0x6c, 0x42, 0x61, 0x63, 0x6b, 0x50, 0x6f,
-	0x72, 0x63, 0x68, 0x20, 0x75, 0x6e, 0x69, 0x74, 0x73, 0x3d, 0x27, 0x44,
-	0x6f, 0x74, 0x20, 0x43, 0x6c, 0x6f, 0x63, 0x6b, 0x73, 0x27, 0x3e, 0x34,
-	0x34, 0x3c, 0x2f, 0x48, 0x6f, 0x72, 0x69, 0x7a, 0x6f, 0x6e, 0x74, 0x61,
-	0x6c, 0x42, 0x61, 0x63, 0x6b, 0x50, 0x6f, 0x72, 0x63, 0x68, 0x3e, 0x0a,
-	0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3c, 0x48, 0x6f, 0x72,
-	0x69, 0x7a, 0x6f, 0x6e, 0x74, 0x61, 0x6c, 0x53, 0x79, 0x6e, 0x63, 0x50,
-	0x75, 0x6c, 0x73, 0x65, 0x20, 0x75, 0x6e, 0x69, 0x74, 0x73, 0x3d, 0x27,
-	0x44, 0x6f, 0x74, 0x20, 0x43, 0x6c, 0x6f, 0x63, 0x6b, 0x73, 0x27, 0x3e,
-	0x33, 0x32, 0x3c, 0x2f, 0x48, 0x6f, 0x72, 0x69, 0x7a, 0x6f, 0x6e, 0x74,
-	0x61, 0x6c, 0x53, 0x79, 0x6e, 0x63, 0x50, 0x75, 0x6c, 0x73, 0x65, 0x3e,
-	0x0a, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3c, 0x48, 0x6f,
-	0x72, 0x69, 0x7a, 0x6f, 0x6e, 0x74, 0x61, 0x6c, 0x53, 0x79, 0x6e, 0x63,
-	0x53, 0x6b, 0x65, 0x77, 0x20, 0x75, 0x6e, 0x69, 0x74, 0x73, 0x3d, 0x27,
-	0x44, 0x6f, 0x74, 0x20, 0x43, 0x6c, 0x6f, 0x63, 0x6b, 0x73, 0x27, 0x3e,
-	0x30, 0x3c, 0x2f, 0x48, 0x6f, 0x72, 0x69, 0x7a, 0x6f, 0x6e, 0x74, 0x61,
-	0x6c, 0x53, 0x79, 0x6e, 0x63, 0x53, 0x6b, 0x65, 0x77, 0x3e, 0x0a, 0x20,
-	0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3c, 0x48, 0x6f, 0x72, 0x69,
-	0x7a, 0x6f, 0x6e, 0x74, 0x61, 0x6c, 0x4c, 0x65, 0x66, 0x74, 0x42, 0x6f,
-	0x72, 0x64, 0x65, 0x72, 0x20, 0x75, 0x6e, 0x69, 0x74, 0x73, 0x3d, 0x27,
-	0x44, 0x6f, 0x74, 0x20, 0x43, 0x6c, 0x6f, 0x63, 0x6b, 0x73, 0x27, 0x3e,
-	0x30, 0x3c, 0x2f, 0x48, 0x6f, 0x72, 0x69, 0x7a, 0x6f, 0x6e, 0x74, 0x61,
-	0x6c, 0x4c, 0x65, 0x66, 0x74, 0x42, 0x6f, 0x72, 0x64, 0x65, 0x72, 0x3e,
-	0x0a, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3c, 0x48, 0x6f,
-	0x72, 0x69, 0x7a, 0x6f, 0x6e, 0x74, 0x61, 0x6c, 0x52, 0x69, 0x67, 0x68,
-	0x74, 0x42, 0x6f, 0x72, 0x64, 0x65, 0x72, 0x20, 0x75, 0x6e, 0x69, 0x74,
+	0x7a, 0x65, 0x4d, 0x4d, 0x3e, 0x30, 0x78, 0x30, 0x30, 0x3c, 0x2f, 0x48,
+	0x6f, 0x72, 0x69, 0x7a, 0x6f, 0x6e, 0x74, 0x61, 0x6c, 0x56, 0x65, 0x72,
+	0x74, 0x69, 0x63, 0x61, 0x6c, 0x53, 0x63, 0x72, 0x65, 0x65, 0x6e, 0x53,
+	0x69, 0x7a, 0x65, 0x4d, 0x4d, 0x3e, 0x0a, 0x20, 0x20, 0x20, 0x20, 0x3c,
+	0x2f, 0x47, 0x72, 0x6f, 0x75, 0x70, 0x3e, 0x20, 0x0a, 0x0a, 0x20, 0x20,
+	0x20, 0x20, 0x3c, 0x47, 0x72, 0x6f, 0x75, 0x70, 0x20, 0x69, 0x64, 0x3d,
+	0x27, 0x41, 0x63, 0x74, 0x69, 0x76, 0x65, 0x20, 0x54, 0x69, 0x6d, 0x69,
+	0x6e, 0x67, 0x27, 0x3e, 0x0a, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,
+	0x20, 0x3c, 0x48, 0x6f, 0x72, 0x69, 0x7a, 0x6f, 0x6e, 0x74, 0x61, 0x6c,
+	0x41, 0x63, 0x74, 0x69, 0x76, 0x65, 0x20, 0x75, 0x6e, 0x69, 0x74, 0x73,
+	0x3d, 0x27, 0x44, 0x6f, 0x74, 0x20, 0x43, 0x6c, 0x6f, 0x63, 0x6b, 0x73,
+	0x27, 0x3e, 0x31, 0x36, 0x30, 0x30, 0x3c, 0x2f, 0x48, 0x6f, 0x72, 0x69,
+	0x7a, 0x6f, 0x6e, 0x74, 0x61, 0x6c, 0x41, 0x63, 0x74, 0x69, 0x76, 0x65,
+	0x3e, 0x0a, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3c, 0x48,
+	0x6f, 0x72, 0x69, 0x7a, 0x6f, 0x6e, 0x74, 0x61, 0x6c, 0x46, 0x72, 0x6f,
+	0x6e, 0x74, 0x50, 0x6f, 0x72, 0x63, 0x68, 0x20, 0x75, 0x6e, 0x69, 0x74,
 	0x73, 0x3d, 0x27, 0x44, 0x6f, 0x74, 0x20, 0x43, 0x6c, 0x6f, 0x63, 0x6b,
-	0x73, 0x27, 0x3e, 0x30, 0x3c, 0x2f, 0x48, 0x6f, 0x72, 0x69, 0x7a, 0x6f,
-	0x6e, 0x74, 0x61, 0x6c, 0x52, 0x69, 0x67, 0x68, 0x74, 0x42, 0x6f, 0x72,
-	0x64, 0x65, 0x72, 0x3e, 0x0a, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,
-	0x20, 0x3c, 0x56, 0x65, 0x72, 0x74, 0x69, 0x63, 0x61, 0x6c, 0x41, 0x63,
-	0x74, 0x69, 0x76, 0x65, 0x20, 0x75, 0x6e, 0x69, 0x74, 0x73, 0x3d, 0x27,
-	0x44, 0x6f, 0x74, 0x20, 0x43, 0x6c, 0x6f, 0x63, 0x6b, 0x73, 0x27, 0x3e,
-	0x32, 0x35, 0x36, 0x30, 0x3c, 0x2f, 0x56, 0x65, 0x72, 0x74, 0x69, 0x63,
-	0x61, 0x6c, 0x41, 0x63, 0x74, 0x69, 0x76, 0x65, 0x3e, 0x0a, 0x20, 0x20,
-	0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3c, 0x56, 0x65, 0x72, 0x74, 0x69,
-	0x63, 0x61, 0x6c, 0x46, 0x72, 0x6f, 0x6e, 0x74, 0x50, 0x6f, 0x72, 0x63,
-	0x68, 0x20, 0x75, 0x6e, 0x69, 0x74, 0x73, 0x3d, 0x27, 0x4c, 0x69, 0x6e,
-	0x65, 0x73, 0x27, 0x3e, 0x38, 0x3c, 0x2f, 0x56, 0x65, 0x72, 0x74, 0x69,
-	0x63, 0x61, 0x6c, 0x46, 0x72, 0x6f, 0x6e, 0x74, 0x50, 0x6f, 0x72, 0x63,
-	0x68, 0x3e, 0x0a, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3c,
-	0x56, 0x65, 0x72, 0x74, 0x69, 0x63, 0x61, 0x6c, 0x42, 0x61, 0x63, 0x6b,
-	0x50, 0x6f, 0x72, 0x63, 0x68, 0x20, 0x75, 0x6e, 0x69, 0x74, 0x73, 0x3d,
-	0x27, 0x4c, 0x69, 0x6e, 0x65, 0x73, 0x27, 0x3e, 0x34, 0x3c, 0x2f, 0x56,
-	0x65, 0x72, 0x74, 0x69, 0x63, 0x61, 0x6c, 0x42, 0x61, 0x63, 0x6b, 0x50,
+	0x73, 0x27, 0x3e, 0x37, 0x36, 0x3c, 0x2f, 0x48, 0x6f, 0x72, 0x69, 0x7a,
+	0x6f, 0x6e, 0x74, 0x61, 0x6c, 0x46, 0x72, 0x6f, 0x6e, 0x74, 0x50, 0x6f,
+	0x72, 0x63, 0x68, 0x3e, 0x0a, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,
+	0x20, 0x3c, 0x48, 0x6f, 0x72, 0x69, 0x7a, 0x6f, 0x6e, 0x74, 0x61, 0x6c,
+	0x42, 0x61, 0x63, 0x6b, 0x50, 0x6f, 0x72, 0x63, 0x68, 0x20, 0x75, 0x6e,
+	0x69, 0x74, 0x73, 0x3d, 0x27, 0x44, 0x6f, 0x74, 0x20, 0x43, 0x6c, 0x6f,
+	0x63, 0x6b, 0x73, 0x27, 0x3e, 0x33, 0x32, 0x3c, 0x2f, 0x48, 0x6f, 0x72,
+	0x69, 0x7a, 0x6f, 0x6e, 0x74, 0x61, 0x6c, 0x42, 0x61, 0x63, 0x6b, 0x50,
 	0x6f, 0x72, 0x63, 0x68, 0x3e, 0x0a, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,
-	0x20, 0x20, 0x3c, 0x56, 0x65, 0x72, 0x74, 0x69, 0x63, 0x61, 0x6c, 0x53,
-	0x79, 0x6e, 0x63, 0x50, 0x75, 0x6c, 0x73, 0x65, 0x20, 0x75, 0x6e, 0x69,
-	0x74, 0x73, 0x3d, 0x27, 0x4c, 0x69, 0x6e, 0x65, 0x73, 0x27, 0x3e, 0x34,
-	0x3c, 0x2f, 0x56, 0x65, 0x72, 0x74, 0x69, 0x63, 0x61, 0x6c, 0x53, 0x79,
-	0x6e, 0x63, 0x50, 0x75, 0x6c, 0x73, 0x65, 0x3e, 0x0a, 0x20, 0x20, 0x20,
-	0x20, 0x20, 0x20, 0x20, 0x20, 0x3c, 0x56, 0x65, 0x72, 0x74, 0x69, 0x63,
+	0x20, 0x20, 0x3c, 0x48, 0x6f, 0x72, 0x69, 0x7a, 0x6f, 0x6e, 0x74, 0x61,
+	0x6c, 0x53, 0x79, 0x6e, 0x63, 0x50, 0x75, 0x6c, 0x73, 0x65, 0x20, 0x75,
+	0x6e, 0x69, 0x74, 0x73, 0x3d, 0x27, 0x44, 0x6f, 0x74, 0x20, 0x43, 0x6c,
+	0x6f, 0x63, 0x6b, 0x73, 0x27, 0x3e, 0x31, 0x36, 0x3c, 0x2f, 0x48, 0x6f,
+	0x72, 0x69, 0x7a, 0x6f, 0x6e, 0x74, 0x61, 0x6c, 0x53, 0x79, 0x6e, 0x63,
+	0x50, 0x75, 0x6c, 0x73, 0x65, 0x3e, 0x0a, 0x20, 0x20, 0x20, 0x20, 0x20,
+	0x20, 0x20, 0x20, 0x3c, 0x48, 0x6f, 0x72, 0x69, 0x7a, 0x6f, 0x6e, 0x74,
 	0x61, 0x6c, 0x53, 0x79, 0x6e, 0x63, 0x53, 0x6b, 0x65, 0x77, 0x20, 0x75,
-	0x6e, 0x69, 0x74, 0x73, 0x3d, 0x27, 0x4c, 0x69, 0x6e, 0x65, 0x73, 0x27,
-	0x3e, 0x30, 0x3c, 0x2f, 0x56, 0x65, 0x72, 0x74, 0x69, 0x63, 0x61, 0x6c,
-	0x53, 0x79, 0x6e, 0x63, 0x53, 0x6b, 0x65, 0x77, 0x3e, 0x0a, 0x20, 0x20,
-	0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3c, 0x56, 0x65, 0x72, 0x74, 0x69,
-	0x63, 0x61, 0x6c, 0x54, 0x6f, 0x70, 0x42, 0x6f, 0x72, 0x64, 0x65, 0x72,
-	0x20, 0x75, 0x6e, 0x69, 0x74, 0x73, 0x3d, 0x27, 0x4c, 0x69, 0x6e, 0x65,
-	0x73, 0x27, 0x3e, 0x30, 0x3c, 0x2f, 0x56, 0x65, 0x72, 0x74, 0x69, 0x63,
-	0x61, 0x6c, 0x54, 0x6f, 0x70, 0x42, 0x6f, 0x72, 0x64, 0x65, 0x72, 0x3e,
-	0x0a, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3c, 0x56, 0x65,
-	0x72, 0x74, 0x69, 0x63, 0x61, 0x6c, 0x42, 0x6f, 0x74, 0x74, 0x6f, 0x6d,
+	0x6e, 0x69, 0x74, 0x73, 0x3d, 0x27, 0x44, 0x6f, 0x74, 0x20, 0x43, 0x6c,
+	0x6f, 0x63, 0x6b, 0x73, 0x27, 0x3e, 0x30, 0x3c, 0x2f, 0x48, 0x6f, 0x72,
+	0x69, 0x7a, 0x6f, 0x6e, 0x74, 0x61, 0x6c, 0x53, 0x79, 0x6e, 0x63, 0x53,
+	0x6b, 0x65, 0x77, 0x3e, 0x0a, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,
+	0x20, 0x3c, 0x48, 0x6f, 0x72, 0x69, 0x7a, 0x6f, 0x6e, 0x74, 0x61, 0x6c,
+	0x4c, 0x65, 0x66, 0x74, 0x42, 0x6f, 0x72, 0x64, 0x65, 0x72, 0x20, 0x75,
+	0x6e, 0x69, 0x74, 0x73, 0x3d, 0x27, 0x44, 0x6f, 0x74, 0x20, 0x43, 0x6c,
+	0x6f, 0x63, 0x6b, 0x73, 0x27, 0x3e, 0x30, 0x3c, 0x2f, 0x48, 0x6f, 0x72,
+	0x69, 0x7a, 0x6f, 0x6e, 0x74, 0x61, 0x6c, 0x4c, 0x65, 0x66, 0x74, 0x42,
+	0x6f, 0x72, 0x64, 0x65, 0x72, 0x3e, 0x0a, 0x20, 0x20, 0x20, 0x20, 0x20,
+	0x20, 0x20, 0x20, 0x3c, 0x48, 0x6f, 0x72, 0x69, 0x7a, 0x6f, 0x6e, 0x74,
+	0x61, 0x6c, 0x52, 0x69, 0x67, 0x68, 0x74, 0x42, 0x6f, 0x72, 0x64, 0x65,
+	0x72, 0x20, 0x75, 0x6e, 0x69, 0x74, 0x73, 0x3d, 0x27, 0x44, 0x6f, 0x74,
+	0x20, 0x43, 0x6c, 0x6f, 0x63, 0x6b, 0x73, 0x27, 0x3e, 0x30, 0x3c, 0x2f,
+	0x48, 0x6f, 0x72, 0x69, 0x7a, 0x6f, 0x6e, 0x74, 0x61, 0x6c, 0x52, 0x69,
+	0x67, 0x68, 0x74, 0x42, 0x6f, 0x72, 0x64, 0x65, 0x72, 0x3e, 0x0a, 0x20,
+	0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3c, 0x56, 0x65, 0x72, 0x74,
+	0x69, 0x63, 0x61, 0x6c, 0x41, 0x63, 0x74, 0x69, 0x76, 0x65, 0x20, 0x75,
+	0x6e, 0x69, 0x74, 0x73, 0x3d, 0x27, 0x44, 0x6f, 0x74, 0x20, 0x43, 0x6c,
+	0x6f, 0x63, 0x6b, 0x73, 0x27, 0x3e, 0x32, 0x35, 0x36, 0x30, 0x3c, 0x2f,
+	0x56, 0x65, 0x72, 0x74, 0x69, 0x63, 0x61, 0x6c, 0x41, 0x63, 0x74, 0x69,
+	0x76, 0x65, 0x3e, 0x0a, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,
+	0x3c, 0x56, 0x65, 0x72, 0x74, 0x69, 0x63, 0x61, 0x6c, 0x46, 0x72, 0x6f,
+	0x6e, 0x74, 0x50, 0x6f, 0x72, 0x63, 0x68, 0x20, 0x75, 0x6e, 0x69, 0x74,
+	0x73, 0x3d, 0x27, 0x4c, 0x69, 0x6e, 0x65, 0x73, 0x27, 0x3e, 0x34, 0x3c,
+	0x2f, 0x56, 0x65, 0x72, 0x74, 0x69, 0x63, 0x61, 0x6c, 0x46, 0x72, 0x6f,
+	0x6e, 0x74, 0x50, 0x6f, 0x72, 0x63, 0x68, 0x3e, 0x0a, 0x20, 0x20, 0x20,
+	0x20, 0x20, 0x20, 0x20, 0x20, 0x3c, 0x56, 0x65, 0x72, 0x74, 0x69, 0x63,
+	0x61, 0x6c, 0x42, 0x61, 0x63, 0x6b, 0x50, 0x6f, 0x72, 0x63, 0x68, 0x20,
+	0x75, 0x6e, 0x69, 0x74, 0x73, 0x3d, 0x27, 0x4c, 0x69, 0x6e, 0x65, 0x73,
+	0x27, 0x3e, 0x32, 0x3c, 0x2f, 0x56, 0x65, 0x72, 0x74, 0x69, 0x63, 0x61,
+	0x6c, 0x42, 0x61, 0x63, 0x6b, 0x50, 0x6f, 0x72, 0x63, 0x68, 0x3e, 0x0a,
+	0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3c, 0x56, 0x65, 0x72,
+	0x74, 0x69, 0x63, 0x61, 0x6c, 0x53, 0x79, 0x6e, 0x63, 0x50, 0x75, 0x6c,
+	0x73, 0x65, 0x20, 0x75, 0x6e, 0x69, 0x74, 0x73, 0x3d, 0x27, 0x4c, 0x69,
+	0x6e, 0x65, 0x73, 0x27, 0x3e, 0x32, 0x3c, 0x2f, 0x56, 0x65, 0x72, 0x74,
+	0x69, 0x63, 0x61, 0x6c, 0x53, 0x79, 0x6e, 0x63, 0x50, 0x75, 0x6c, 0x73,
+	0x65, 0x3e, 0x0a, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3c,
+	0x56, 0x65, 0x72, 0x74, 0x69, 0x63, 0x61, 0x6c, 0x53, 0x79, 0x6e, 0x63,
+	0x53, 0x6b, 0x65, 0x77, 0x20, 0x75, 0x6e, 0x69, 0x74, 0x73, 0x3d, 0x27,
+	0x4c, 0x69, 0x6e, 0x65, 0x73, 0x27, 0x3e, 0x30, 0x3c, 0x2f, 0x56, 0x65,
+	0x72, 0x74, 0x69, 0x63, 0x61, 0x6c, 0x53, 0x79, 0x6e, 0x63, 0x53, 0x6b,
+	0x65, 0x77, 0x3e, 0x0a, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,
+	0x3c, 0x56, 0x65, 0x72, 0x74, 0x69, 0x63, 0x61, 0x6c, 0x54, 0x6f, 0x70,
 	0x42, 0x6f, 0x72, 0x64, 0x65, 0x72, 0x20, 0x75, 0x6e, 0x69, 0x74, 0x73,
 	0x3d, 0x27, 0x4c, 0x69, 0x6e, 0x65, 0x73, 0x27, 0x3e, 0x30, 0x3c, 0x2f,
-	0x56, 0x65, 0x72, 0x74, 0x69, 0x63, 0x61, 0x6c, 0x42, 0x6f, 0x74, 0x74,
-	0x6f, 0x6d, 0x42, 0x6f, 0x72, 0x64, 0x65, 0x72, 0x3e, 0x0a, 0x20, 0x20,
-	0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3c, 0x49, 0x6e, 0x76, 0x65, 0x72,
-	0x74, 0x44, 0x61, 0x74, 0x61, 0x50, 0x6f, 0x6c, 0x61, 0x72, 0x69, 0x74,
-	0x79, 0x3e, 0x46, 0x61, 0x6c, 0x73, 0x65, 0x3c, 0x2f, 0x49, 0x6e, 0x76,
-	0x65, 0x72, 0x74, 0x44, 0x61, 0x74, 0x61, 0x50, 0x6f, 0x6c, 0x61, 0x72,
+	0x56, 0x65, 0x72, 0x74, 0x69, 0x63, 0x61, 0x6c, 0x54, 0x6f, 0x70, 0x42,
+	0x6f, 0x72, 0x64, 0x65, 0x72, 0x3e, 0x0a, 0x20, 0x20, 0x20, 0x20, 0x20,
+	0x20, 0x20, 0x20, 0x3c, 0x56, 0x65, 0x72, 0x74, 0x69, 0x63, 0x61, 0x6c,
+	0x42, 0x6f, 0x74, 0x74, 0x6f, 0x6d, 0x42, 0x6f, 0x72, 0x64, 0x65, 0x72,
+	0x20, 0x75, 0x6e, 0x69, 0x74, 0x73, 0x3d, 0x27, 0x4c, 0x69, 0x6e, 0x65,
+	0x73, 0x27, 0x3e, 0x30, 0x3c, 0x2f, 0x56, 0x65, 0x72, 0x74, 0x69, 0x63,
+	0x61, 0x6c, 0x42, 0x6f, 0x74, 0x74, 0x6f, 0x6d, 0x42, 0x6f, 0x72, 0x64,
+	0x65, 0x72, 0x3e, 0x0a, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,
+	0x3c, 0x49, 0x6e, 0x76, 0x65, 0x72, 0x74, 0x44, 0x61, 0x74, 0x61, 0x50,
+	0x6f, 0x6c, 0x61, 0x72, 0x69, 0x74, 0x79, 0x3e, 0x46, 0x61, 0x6c, 0x73,
+	0x65, 0x3c, 0x2f, 0x49, 0x6e, 0x76, 0x65, 0x72, 0x74, 0x44, 0x61, 0x74,
+	0x61, 0x50, 0x6f, 0x6c, 0x61, 0x72, 0x69, 0x74, 0x79, 0x3e, 0x0a, 0x20,
+	0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3c, 0x49, 0x6e, 0x76, 0x65,
+	0x72, 0x74, 0x56, 0x73, 0x79, 0x6e, 0x63, 0x50, 0x6f, 0x6c, 0x61, 0x69,
+	0x72, 0x74, 0x79, 0x3e, 0x46, 0x61, 0x6c, 0x73, 0x65, 0x3c, 0x2f, 0x49,
+	0x6e, 0x76, 0x65, 0x72, 0x74, 0x56, 0x73, 0x79, 0x6e, 0x63, 0x50, 0x6f,
+	0x6c, 0x61, 0x69, 0x72, 0x74, 0x79, 0x3e, 0x0a, 0x20, 0x20, 0x20, 0x20,
+	0x20, 0x20, 0x20, 0x20, 0x3c, 0x49, 0x6e, 0x76, 0x65, 0x72, 0x74, 0x48,
+	0x73, 0x79, 0x6e, 0x63, 0x50, 0x6f, 0x6c, 0x61, 0x72, 0x69, 0x74, 0x79,
+	0x3e, 0x46, 0x61, 0x6c, 0x73, 0x65, 0x3c, 0x2f, 0x49, 0x6e, 0x76, 0x65,
+	0x72, 0x74, 0x48, 0x73, 0x79, 0x6e, 0x63, 0x50, 0x6f, 0x6c, 0x61, 0x72,
 	0x69, 0x74, 0x79, 0x3e, 0x0a, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,
-	0x20, 0x3c, 0x49, 0x6e, 0x76, 0x65, 0x72, 0x74, 0x56, 0x73, 0x79, 0x6e,
-	0x63, 0x50, 0x6f, 0x6c, 0x61, 0x69, 0x72, 0x74, 0x79, 0x3e, 0x46, 0x61,
-	0x6c, 0x73, 0x65, 0x3c, 0x2f, 0x49, 0x6e, 0x76, 0x65, 0x72, 0x74, 0x56,
-	0x73, 0x79, 0x6e, 0x63, 0x50, 0x6f, 0x6c, 0x61, 0x69, 0x72, 0x74, 0x79,
-	0x3e, 0x0a, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3c, 0x49,
-	0x6e, 0x76, 0x65, 0x72, 0x74, 0x48, 0x73, 0x79, 0x6e, 0x63, 0x50, 0x6f,
-	0x6c, 0x61, 0x72, 0x69, 0x74, 0x79, 0x3e, 0x46, 0x61, 0x6c, 0x73, 0x65,
-	0x3c, 0x2f, 0x49, 0x6e, 0x76, 0x65, 0x72, 0x74, 0x48, 0x73, 0x79, 0x6e,
-	0x63, 0x50, 0x6f, 0x6c, 0x61, 0x72, 0x69, 0x74, 0x79, 0x3e, 0x0a, 0x20,
-	0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3c, 0x42, 0x6f, 0x72, 0x64,
-	0x65, 0x72, 0x43, 0x6f, 0x6c, 0x6f, 0x72, 0x3e, 0x30, 0x78, 0x30, 0x3c,
-	0x2f, 0x42, 0x6f, 0x72, 0x64, 0x65, 0x72, 0x43, 0x6f, 0x6c, 0x6f, 0x72,
-	0x3e, 0x0a, 0x20, 0x20, 0x20, 0x20, 0x3c, 0x2f, 0x47, 0x72, 0x6f, 0x75,
-	0x70, 0x3e, 0x0a, 0x20, 0x20, 0x20, 0x20, 0x3c, 0x47, 0x72, 0x6f, 0x75,
-	0x70, 0x20, 0x69, 0x64, 0x3d, 0x27, 0x44, 0x69, 0x73, 0x70, 0x6c, 0x61,
-	0x79, 0x20, 0x49, 0x6e, 0x74, 0x65, 0x72, 0x66, 0x61, 0x63, 0x65, 0x27,
-	0x3e, 0x0a, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3c, 0x49,
-	0x6e, 0x74, 0x65, 0x72, 0x66, 0x61, 0x63, 0x65, 0x54, 0x79, 0x70, 0x65,
-	0x20, 0x75, 0x6e, 0x69, 0x74, 0x73, 0x3d, 0x27, 0x51, 0x44, 0x49, 0x5f,
-	0x44, 0x69, 0x73, 0x70, 0x6c, 0x61, 0x79, 0x43, 0x6f, 0x6e, 0x6e, 0x65,
-	0x63, 0x74, 0x54, 0x79, 0x70, 0x65, 0x27, 0x3e, 0x38, 0x3c, 0x2f, 0x49,
-	0x6e, 0x74, 0x65, 0x72, 0x66, 0x61, 0x63, 0x65, 0x54, 0x79, 0x70, 0x65,
-	0x3e, 0x0a, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3c, 0x49,
-	0x6e, 0x74, 0x65, 0x72, 0x66, 0x61, 0x63, 0x65, 0x43, 0x6f, 0x6c, 0x6f,
-	0x72, 0x46, 0x6f, 0x72, 0x6d, 0x61, 0x74, 0x20, 0x75, 0x6e, 0x69, 0x74,
-	0x73, 0x3d, 0x27, 0x51, 0x44, 0x49, 0x5f, 0x50, 0x69, 0x78, 0x65, 0x6c,
-	0x46, 0x6f, 0x72, 0x6d, 0x61, 0x74, 0x54, 0x79, 0x70, 0x65, 0x27, 0x3e,
-	0x33, 0x3c, 0x2f, 0x49, 0x6e, 0x74, 0x65, 0x72, 0x66, 0x61, 0x63, 0x65,
-	0x43, 0x6f, 0x6c, 0x6f, 0x72, 0x46, 0x6f, 0x72, 0x6d, 0x61, 0x74, 0x3e,
-	0x0a, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3c, 0x45, 0x53,
-	0x44, 0x44, 0x65, 0x74, 0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x54, 0x69,
-	0x6d, 0x65, 0x3e, 0x30, 0x3c, 0x2f, 0x45, 0x53, 0x44, 0x44, 0x65, 0x74,
-	0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x54, 0x69, 0x6d, 0x65, 0x3e, 0x0a,
-	0x20, 0x20, 0x20, 0x20, 0x3c, 0x2f, 0x47, 0x72, 0x6f, 0x75, 0x70, 0x3e,
-	0x0a, 0x0a, 0x20, 0x20, 0x20, 0x20, 0x3c, 0x47, 0x72, 0x6f, 0x75, 0x70,
-	0x20, 0x69, 0x64, 0x3d, 0x27, 0x44, 0x53, 0x49, 0x20, 0x49, 0x6e, 0x74,
+	0x20, 0x3c, 0x42, 0x6f, 0x72, 0x64, 0x65, 0x72, 0x43, 0x6f, 0x6c, 0x6f,
+	0x72, 0x3e, 0x30, 0x78, 0x30, 0x3c, 0x2f, 0x42, 0x6f, 0x72, 0x64, 0x65,
+	0x72, 0x43, 0x6f, 0x6c, 0x6f, 0x72, 0x3e, 0x0a, 0x20, 0x20, 0x20, 0x20,
+	0x3c, 0x2f, 0x47, 0x72, 0x6f, 0x75, 0x70, 0x3e, 0x0a, 0x0a, 0x20, 0x20,
+	0x20, 0x20, 0x3c, 0x47, 0x72, 0x6f, 0x75, 0x70, 0x20, 0x69, 0x64, 0x3d,
+	0x27, 0x44, 0x69, 0x73, 0x70, 0x6c, 0x61, 0x79, 0x20, 0x49, 0x6e, 0x74,
 	0x65, 0x72, 0x66, 0x61, 0x63, 0x65, 0x27, 0x3e, 0x0a, 0x20, 0x20, 0x20,
-	0x20, 0x20, 0x20, 0x20, 0x20, 0x3c, 0x44, 0x53, 0x49, 0x43, 0x68, 0x61,
-	0x6e, 0x6e, 0x65, 0x6c, 0x49, 0x64, 0x20, 0x75, 0x6e, 0x69, 0x74, 0x73,
-	0x3d, 0x27, 0x44, 0x53, 0x49, 0x5f, 0x43, 0x68, 0x61, 0x6e, 0x6e, 0x65,
-	0x6c, 0x5f, 0x49, 0x44, 0x54, 0x79, 0x70, 0x65, 0x27, 0x3e, 0x31, 0x3c,
-	0x2f, 0x44, 0x53, 0x49, 0x43, 0x68, 0x61, 0x6e, 0x6e, 0x65, 0x6c, 0x49,
-	0x64, 0x3e, 0x0a, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3c,
-	0x44, 0x53, 0x49, 0x56, 0x69, 0x72, 0x74, 0x75, 0x61, 0x6c, 0x49, 0x64,
-	0x20, 0x75, 0x6e, 0x69, 0x74, 0x73, 0x3d, 0x27, 0x44, 0x53, 0x49, 0x5f,
-	0x44, 0x69, 0x73, 0x70, 0x6c, 0x61, 0x79, 0x5f, 0x56, 0x43, 0x54, 0x79,
-	0x70, 0x65, 0x27, 0x3e, 0x30, 0x3c, 0x2f, 0x44, 0x53, 0x49, 0x56, 0x69,
-	0x72, 0x74, 0x75, 0x61, 0x6c, 0x49, 0x64, 0x3e, 0x0a, 0x20, 0x20, 0x20,
-	0x20, 0x20, 0x20, 0x20, 0x20, 0x3c, 0x44, 0x53, 0x49, 0x43, 0x6f, 0x6c,
-	0x6f, 0x72, 0x46, 0x6f, 0x72, 0x6d, 0x61, 0x74, 0x20, 0x75, 0x6e, 0x69,
-	0x74, 0x73, 0x3d, 0x27, 0x44, 0x53, 0x49, 0x5f, 0x43, 0x6f, 0x6c, 0x6f,
-	0x72, 0x46, 0x6f, 0x72, 0x6d, 0x61, 0x74, 0x54, 0x79, 0x70, 0x65, 0x27,
-	0x3e, 0x33, 0x36, 0x3c, 0x2f, 0x44, 0x53, 0x49, 0x43, 0x6f, 0x6c, 0x6f,
-	0x72, 0x46, 0x6f, 0x72, 0x6d, 0x61, 0x74, 0x3e, 0x0a, 0x20, 0x20, 0x20,
-	0x20, 0x20, 0x20, 0x20, 0x20, 0x3c, 0x44, 0x53, 0x49, 0x54, 0x72, 0x61,
-	0x66, 0x66, 0x69, 0x63, 0x4d, 0x6f, 0x64, 0x65, 0x20, 0x75, 0x6e, 0x69,
-	0x74, 0x73, 0x3d, 0x27, 0x44, 0x53, 0x49, 0x5f, 0x54, 0x72, 0x61, 0x66,
-	0x66, 0x69, 0x63, 0x4d, 0x6f, 0x64, 0x65, 0x54, 0x79, 0x70, 0x65, 0x27,
-	0x3e, 0x32, 0x3c, 0x2f, 0x44, 0x53, 0x49, 0x54, 0x72, 0x61, 0x66, 0x66,
-	0x69, 0x63, 0x4d, 0x6f, 0x64, 0x65, 0x3e, 0x0a, 0x20, 0x20, 0x20, 0x20,
-	0x20, 0x20, 0x20, 0x20, 0x3c, 0x44, 0x53, 0x49, 0x4c, 0x61, 0x6e, 0x65,
-	0x73, 0x20, 0x75, 0x6e, 0x69, 0x74, 0x73, 0x3d, 0x27, 0x69, 0x6e, 0x74,
-	0x65, 0x67, 0x65, 0x72, 0x27, 0x3e, 0x34, 0x3c, 0x2f, 0x44, 0x53, 0x49,
-	0x4c, 0x61, 0x6e, 0x65, 0x73, 0x3e, 0x0a, 0x20, 0x20, 0x20, 0x20, 0x20,
-	0x20, 0x20, 0x20, 0x3c, 0x44, 0x53, 0x49, 0x48, 0x73, 0x61, 0x48, 0x73,
-	0x65, 0x41, 0x66, 0x74, 0x65, 0x72, 0x56, 0x73, 0x56, 0x65, 0x20, 0x75,
-	0x6e, 0x69, 0x74, 0x73, 0x3d, 0x27, 0x42, 0x6f, 0x6f, 0x6c, 0x27, 0x3e,
-	0x46, 0x61, 0x6c, 0x73, 0x65, 0x3c, 0x2f, 0x44, 0x53, 0x49, 0x48, 0x73,
-	0x61, 0x48, 0x73, 0x65, 0x41, 0x66, 0x74, 0x65, 0x72, 0x56, 0x73, 0x56,
+	0x20, 0x20, 0x20, 0x20, 0x20, 0x3c, 0x49, 0x6e, 0x74, 0x65, 0x72, 0x66,
+	0x61, 0x63, 0x65, 0x54, 0x79, 0x70, 0x65, 0x20, 0x75, 0x6e, 0x69, 0x74,
+	0x73, 0x3d, 0x27, 0x51, 0x44, 0x49, 0x5f, 0x44, 0x69, 0x73, 0x70, 0x6c,
+	0x61, 0x79, 0x43, 0x6f, 0x6e, 0x6e, 0x65, 0x63, 0x74, 0x54, 0x79, 0x70,
+	0x65, 0x27, 0x3e, 0x38, 0x3c, 0x2f, 0x49, 0x6e, 0x74, 0x65, 0x72, 0x66,
+	0x61, 0x63, 0x65, 0x54, 0x79, 0x70, 0x65, 0x3e, 0x0a, 0x20, 0x20, 0x20,
+	0x20, 0x20, 0x20, 0x20, 0x20, 0x3c, 0x49, 0x6e, 0x74, 0x65, 0x72, 0x66,
+	0x61, 0x63, 0x65, 0x43, 0x6f, 0x6c, 0x6f, 0x72, 0x46, 0x6f, 0x72, 0x6d,
+	0x61, 0x74, 0x20, 0x75, 0x6e, 0x69, 0x74, 0x73, 0x3d, 0x27, 0x51, 0x44,
+	0x49, 0x5f, 0x50, 0x69, 0x78, 0x65, 0x6c, 0x46, 0x6f, 0x72, 0x6d, 0x61,
+	0x74, 0x54, 0x79, 0x70, 0x65, 0x27, 0x3e, 0x33, 0x3c, 0x2f, 0x49, 0x6e,
+	0x74, 0x65, 0x72, 0x66, 0x61, 0x63, 0x65, 0x43, 0x6f, 0x6c, 0x6f, 0x72,
+	0x46, 0x6f, 0x72, 0x6d, 0x61, 0x74, 0x3e, 0x0a, 0x20, 0x20, 0x20, 0x20,
+	0x20, 0x20, 0x20, 0x20, 0x3c, 0x45, 0x53, 0x44, 0x44, 0x65, 0x74, 0x65,
+	0x63, 0x74, 0x69, 0x6f, 0x6e, 0x54, 0x69, 0x6d, 0x65, 0x3e, 0x30, 0x3c,
+	0x2f, 0x45, 0x53, 0x44, 0x44, 0x65, 0x74, 0x65, 0x63, 0x74, 0x69, 0x6f,
+	0x6e, 0x54, 0x69, 0x6d, 0x65, 0x3e, 0x0a, 0x20, 0x20, 0x20, 0x20, 0x3c,
+	0x2f, 0x47, 0x72, 0x6f, 0x75, 0x70, 0x3e, 0x0a, 0x0a, 0x20, 0x20, 0x20,
+	0x20, 0x3c, 0x47, 0x72, 0x6f, 0x75, 0x70, 0x20, 0x69, 0x64, 0x3d, 0x27,
+	0x44, 0x53, 0x49, 0x20, 0x49, 0x6e, 0x74, 0x65, 0x72, 0x66, 0x61, 0x63,
+	0x65, 0x27, 0x3e, 0x0a, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,
+	0x3c, 0x44, 0x53, 0x49, 0x43, 0x68, 0x61, 0x6e, 0x6e, 0x65, 0x6c, 0x49,
+	0x64, 0x20, 0x75, 0x6e, 0x69, 0x74, 0x73, 0x3d, 0x27, 0x44, 0x53, 0x49,
+	0x5f, 0x43, 0x68, 0x61, 0x6e, 0x6e, 0x65, 0x6c, 0x5f, 0x49, 0x44, 0x54,
+	0x79, 0x70, 0x65, 0x27, 0x3e, 0x31, 0x3c, 0x2f, 0x44, 0x53, 0x49, 0x43,
+	0x68, 0x61, 0x6e, 0x6e, 0x65, 0x6c, 0x49, 0x64, 0x3e, 0x0a, 0x20, 0x20,
+	0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3c, 0x44, 0x53, 0x49, 0x56, 0x69,
+	0x72, 0x74, 0x75, 0x61, 0x6c, 0x49, 0x64, 0x20, 0x75, 0x6e, 0x69, 0x74,
+	0x73, 0x3d, 0x27, 0x44, 0x53, 0x49, 0x5f, 0x44, 0x69, 0x73, 0x70, 0x6c,
+	0x61, 0x79, 0x5f, 0x56, 0x43, 0x54, 0x79, 0x70, 0x65, 0x27, 0x3e, 0x30,
+	0x3c, 0x2f, 0x44, 0x53, 0x49, 0x56, 0x69, 0x72, 0x74, 0x75, 0x61, 0x6c,
+	0x49, 0x64, 0x3e, 0x0a, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,
+	0x3c, 0x44, 0x53, 0x49, 0x43, 0x6f, 0x6c, 0x6f, 0x72, 0x46, 0x6f, 0x72,
+	0x6d, 0x61, 0x74, 0x20, 0x75, 0x6e, 0x69, 0x74, 0x73, 0x3d, 0x27, 0x44,
+	0x53, 0x49, 0x5f, 0x43, 0x6f, 0x6c, 0x6f, 0x72, 0x46, 0x6f, 0x72, 0x6d,
+	0x61, 0x74, 0x54, 0x79, 0x70, 0x65, 0x27, 0x3e, 0x33, 0x36, 0x3c, 0x2f,
+	0x44, 0x53, 0x49, 0x43, 0x6f, 0x6c, 0x6f, 0x72, 0x46, 0x6f, 0x72, 0x6d,
+	0x61, 0x74, 0x3e, 0x0a, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,
+	0x3c, 0x44, 0x53, 0x49, 0x54, 0x72, 0x61, 0x66, 0x66, 0x69, 0x63, 0x4d,
+	0x6f, 0x64, 0x65, 0x20, 0x75, 0x6e, 0x69, 0x74, 0x73, 0x3d, 0x27, 0x44,
+	0x53, 0x49, 0x5f, 0x54, 0x72, 0x61, 0x66, 0x66, 0x69, 0x63, 0x4d, 0x6f,
+	0x64, 0x65, 0x54, 0x79, 0x70, 0x65, 0x27, 0x3e, 0x31, 0x3c, 0x2f, 0x44,
+	0x53, 0x49, 0x54, 0x72, 0x61, 0x66, 0x66, 0x69, 0x63, 0x4d, 0x6f, 0x64,
 	0x65, 0x3e, 0x0a, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3c,
-	0x44, 0x53, 0x49, 0x4c, 0x6f, 0x77, 0x50, 0x6f, 0x77, 0x65, 0x72, 0x4d,
-	0x6f, 0x64, 0x65, 0x49, 0x6e, 0x48, 0x46, 0x50, 0x20, 0x75, 0x6e, 0x69,
-	0x74, 0x73, 0x3d, 0x27, 0x42, 0x6f, 0x6f, 0x6c, 0x27, 0x3e, 0x46, 0x61,
-	0x6c, 0x73, 0x65, 0x3c, 0x2f, 0x44, 0x53, 0x49, 0x4c, 0x6f, 0x77, 0x50,
-	0x6f, 0x77, 0x65, 0x72, 0x4d, 0x6f, 0x64, 0x65, 0x49, 0x6e, 0x48, 0x46,
-	0x50, 0x3e, 0x0a, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3c,
-	0x44, 0x53, 0x49, 0x4c, 0x6f, 0x77, 0x50, 0x6f, 0x77, 0x65, 0x72, 0x4d,
-	0x6f, 0x64, 0x65, 0x49, 0x6e, 0x48, 0x42, 0x50, 0x20, 0x75, 0x6e, 0x69,
-	0x74, 0x73, 0x3d, 0x27, 0x42, 0x6f, 0x6f, 0x6c, 0x27, 0x3e, 0x46, 0x61,
-	0x6c, 0x73, 0x65, 0x3c, 0x2f, 0x44, 0x53, 0x49, 0x4c, 0x6f, 0x77, 0x50,
-	0x6f, 0x77, 0x65, 0x72, 0x4d, 0x6f, 0x64, 0x65, 0x49, 0x6e, 0x48, 0x42,
-	0x50, 0x3e, 0x0a, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3c,
-	0x44, 0x53, 0x49, 0x4c, 0x6f, 0x77, 0x50, 0x6f, 0x77, 0x65, 0x72, 0x4d,
-	0x6f, 0x64, 0x65, 0x49, 0x6e, 0x48, 0x53, 0x41, 0x20, 0x75, 0x6e, 0x69,
-	0x74, 0x73, 0x3d, 0x27, 0x42, 0x6f, 0x6f, 0x6c, 0x27, 0x3e, 0x46, 0x61,
-	0x6c, 0x73, 0x65, 0x3c, 0x2f, 0x44, 0x53, 0x49, 0x4c, 0x6f, 0x77, 0x50,
-	0x6f, 0x77, 0x65, 0x72, 0x4d, 0x6f, 0x64, 0x65, 0x49, 0x6e, 0x48, 0x53,
-	0x41, 0x3e, 0x0a, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3c,
-	0x44, 0x53, 0x49, 0x4c, 0x6f, 0x77, 0x50, 0x6f, 0x77, 0x65, 0x72, 0x4d,
-	0x6f, 0x64, 0x65, 0x49, 0x6e, 0x42, 0x4c, 0x4c, 0x50, 0x45, 0x4f, 0x46,
-	0x20, 0x75, 0x6e, 0x69, 0x74, 0x73, 0x3d, 0x27, 0x42, 0x6f, 0x6f, 0x6c,
-	0x27, 0x3e, 0x54, 0x72, 0x75, 0x65, 0x3c, 0x2f, 0x44, 0x53, 0x49, 0x4c,
-	0x6f, 0x77, 0x50, 0x6f, 0x77, 0x65, 0x72, 0x4d, 0x6f, 0x64, 0x65, 0x49,
-	0x6e, 0x42, 0x4c, 0x4c, 0x50, 0x45, 0x4f, 0x46, 0x3e, 0x0a, 0x20, 0x20,
+	0x44, 0x53, 0x49, 0x4c, 0x61, 0x6e, 0x65, 0x73, 0x20, 0x75, 0x6e, 0x69,
+	0x74, 0x73, 0x3d, 0x27, 0x69, 0x6e, 0x74, 0x65, 0x67, 0x65, 0x72, 0x27,
+	0x3e, 0x34, 0x3c, 0x2f, 0x44, 0x53, 0x49, 0x4c, 0x61, 0x6e, 0x65, 0x73,
+	0x3e, 0x0a, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3c, 0x44,
+	0x53, 0x49, 0x48, 0x73, 0x61, 0x48, 0x73, 0x65, 0x41, 0x66, 0x74, 0x65,
+	0x72, 0x56, 0x73, 0x56, 0x65, 0x20, 0x75, 0x6e, 0x69, 0x74, 0x73, 0x3d,
+	0x27, 0x42, 0x6f, 0x6f, 0x6c, 0x27, 0x3e, 0x46, 0x61, 0x6c, 0x73, 0x65,
+	0x3c, 0x2f, 0x44, 0x53, 0x49, 0x48, 0x73, 0x61, 0x48, 0x73, 0x65, 0x41,
+	0x66, 0x74, 0x65, 0x72, 0x56, 0x73, 0x56, 0x65, 0x3e, 0x0a, 0x20, 0x20,
 	0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3c, 0x44, 0x53, 0x49, 0x4c, 0x6f,
 	0x77, 0x50, 0x6f, 0x77, 0x65, 0x72, 0x4d, 0x6f, 0x64, 0x65, 0x49, 0x6e,
-	0x42, 0x4c, 0x4c, 0x50, 0x20, 0x75, 0x6e, 0x69, 0x74, 0x73, 0x3d, 0x27,
-	0x42, 0x6f, 0x6f, 0x6c, 0x27, 0x3e, 0x54, 0x72, 0x75, 0x65, 0x3c, 0x2f,
+	0x48, 0x46, 0x50, 0x20, 0x75, 0x6e, 0x69, 0x74, 0x73, 0x3d, 0x27, 0x42,
+	0x6f, 0x6f, 0x6c, 0x27, 0x3e, 0x46, 0x61, 0x6c, 0x73, 0x65, 0x3c, 0x2f,
 	0x44, 0x53, 0x49, 0x4c, 0x6f, 0x77, 0x50, 0x6f, 0x77, 0x65, 0x72, 0x4d,
-	0x6f, 0x64, 0x65, 0x49, 0x6e, 0x42, 0x4c, 0x4c, 0x50, 0x3e, 0x0a, 0x20,
-	0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3c, 0x44, 0x53, 0x49, 0x52,
-	0x65, 0x66, 0x72, 0x65, 0x73, 0x68, 0x52, 0x61, 0x74, 0x65, 0x20, 0x75,
-	0x6e, 0x69, 0x74, 0x73, 0x3d, 0x27, 0x69, 0x6e, 0x74, 0x65, 0x67, 0x65,
-	0x72, 0x20, 0x51, 0x31, 0x36, 0x2e, 0x31, 0x36, 0x27, 0x3e, 0x30, 0x78,
-	0x33, 0x43, 0x30, 0x30, 0x30, 0x30, 0x3c, 0x2f, 0x44, 0x53, 0x49, 0x52,
-	0x65, 0x66, 0x72, 0x65, 0x73, 0x68, 0x52, 0x61, 0x74, 0x65, 0x3e, 0x0a,
-	0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3c, 0x44, 0x53, 0x49,
-	0x50, 0x68, 0x79, 0x44, 0x43, 0x44, 0x43, 0x4d, 0x6f, 0x64, 0x65, 0x20,
+	0x6f, 0x64, 0x65, 0x49, 0x6e, 0x48, 0x46, 0x50, 0x3e, 0x0a, 0x20, 0x20,
+	0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3c, 0x44, 0x53, 0x49, 0x4c, 0x6f,
+	0x77, 0x50, 0x6f, 0x77, 0x65, 0x72, 0x4d, 0x6f, 0x64, 0x65, 0x49, 0x6e,
+	0x48, 0x42, 0x50, 0x20, 0x75, 0x6e, 0x69, 0x74, 0x73, 0x3d, 0x27, 0x42,
+	0x6f, 0x6f, 0x6c, 0x27, 0x3e, 0x46, 0x61, 0x6c, 0x73, 0x65, 0x3c, 0x2f,
+	0x44, 0x53, 0x49, 0x4c, 0x6f, 0x77, 0x50, 0x6f, 0x77, 0x65, 0x72, 0x4d,
+	0x6f, 0x64, 0x65, 0x49, 0x6e, 0x48, 0x42, 0x50, 0x3e, 0x0a, 0x20, 0x20,
+	0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3c, 0x44, 0x53, 0x49, 0x4c, 0x6f,
+	0x77, 0x50, 0x6f, 0x77, 0x65, 0x72, 0x4d, 0x6f, 0x64, 0x65, 0x49, 0x6e,
+	0x48, 0x53, 0x41, 0x20, 0x75, 0x6e, 0x69, 0x74, 0x73, 0x3d, 0x27, 0x42,
+	0x6f, 0x6f, 0x6c, 0x27, 0x3e, 0x46, 0x61, 0x6c, 0x73, 0x65, 0x3c, 0x2f,
+	0x44, 0x53, 0x49, 0x4c, 0x6f, 0x77, 0x50, 0x6f, 0x77, 0x65, 0x72, 0x4d,
+	0x6f, 0x64, 0x65, 0x49, 0x6e, 0x48, 0x53, 0x41, 0x3e, 0x0a, 0x20, 0x20,
+	0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3c, 0x44, 0x53, 0x49, 0x4c, 0x6f,
+	0x77, 0x50, 0x6f, 0x77, 0x65, 0x72, 0x4d, 0x6f, 0x64, 0x65, 0x49, 0x6e,
+	0x42, 0x4c, 0x4c, 0x50, 0x45, 0x4f, 0x46, 0x20, 0x75, 0x6e, 0x69, 0x74,
+	0x73, 0x3d, 0x27, 0x42, 0x6f, 0x6f, 0x6c, 0x27, 0x3e, 0x54, 0x72, 0x75,
+	0x65, 0x3c, 0x2f, 0x44, 0x53, 0x49, 0x4c, 0x6f, 0x77, 0x50, 0x6f, 0x77,
+	0x65, 0x72, 0x4d, 0x6f, 0x64, 0x65, 0x49, 0x6e, 0x42, 0x4c, 0x4c, 0x50,
+	0x45, 0x4f, 0x46, 0x3e, 0x0a, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,
+	0x20, 0x3c, 0x44, 0x53, 0x49, 0x4c, 0x6f, 0x77, 0x50, 0x6f, 0x77, 0x65,
+	0x72, 0x4d, 0x6f, 0x64, 0x65, 0x49, 0x6e, 0x42, 0x4c, 0x4c, 0x50, 0x20,
 	0x75, 0x6e, 0x69, 0x74, 0x73, 0x3d, 0x27, 0x42, 0x6f, 0x6f, 0x6c, 0x27,
-	0x3e, 0x54, 0x72, 0x75, 0x65, 0x3c, 0x2f, 0x44, 0x53, 0x49, 0x50, 0x68,
-	0x79, 0x44, 0x43, 0x44, 0x43, 0x4d, 0x6f, 0x64, 0x65, 0x3e, 0x0a, 0x20,
-	0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3c, 0x44, 0x53, 0x49, 0x49,
-	0x6e, 0x69, 0x74, 0x4d, 0x61, 0x73, 0x74, 0x65, 0x72, 0x54, 0x69, 0x6d,
-	0x65, 0x20, 0x75, 0x6e, 0x69, 0x74, 0x73, 0x3d, 0x22, 0x6d, 0x73, 0x22,
-	0x3e, 0x30, 0x3c, 0x2f, 0x44, 0x53, 0x49, 0x49, 0x6e, 0x69, 0x74, 0x4d,
-	0x61, 0x73, 0x74, 0x65, 0x72, 0x54, 0x69, 0x6d, 0x65, 0x3e, 0x0a, 0x20,
-	0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3c, 0x44, 0x53, 0x49, 0x43,
-	0x6f, 0x6e, 0x74, 0x72, 0x6f, 0x6c, 0x6c, 0x65, 0x72, 0x4d, 0x61, 0x70,
-	0x70, 0x69, 0x6e, 0x67, 0x3e, 0x0a, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,
-	0x20, 0x20, 0x20, 0x20, 0x30, 0x30, 0x20, 0x30, 0x31, 0x0a, 0x20, 0x20,
-	0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3c, 0x2f, 0x44, 0x53, 0x49, 0x43,
-	0x6f, 0x6e, 0x74, 0x72, 0x6f, 0x6c, 0x6c, 0x65, 0x72, 0x4d, 0x61, 0x70,
-	0x70, 0x69, 0x6e, 0x67, 0x3e, 0x0a, 0x20, 0x20, 0x20, 0x20, 0x3c, 0x2f,
-	0x47, 0x72, 0x6f, 0x75, 0x70, 0x3e, 0x0a, 0x3c, 0x21, 0x2d, 0x2d, 0x0a,
-	0x20, 0x20, 0x20, 0x20, 0x3c, 0x44, 0x53, 0x49, 0x49, 0x6e, 0x69, 0x74,
-	0x53, 0x65, 0x71, 0x75, 0x65, 0x6e, 0x63, 0x65, 0x3e, 0x0a, 0x20, 0x20,
-	0x20, 0x20, 0x20, 0x20, 0x31, 0x35, 0x20, 0x33, 0x36, 0x20, 0x38, 0x30,
-	0x0a, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x31, 0x35, 0x20, 0x33, 0x41,
-	0x20, 0x37, 0x30, 0x0a, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x32, 0x33,
-	0x20, 0x42, 0x30, 0x20, 0x30, 0x34, 0x0a, 0x20, 0x20, 0x20, 0x20, 0x20,
-	0x20, 0x30, 0x35, 0x20, 0x30, 0x30, 0x20, 0x30, 0x30, 0x0a, 0x20, 0x20,
-	0x20, 0x20, 0x20, 0x20, 0x30, 0x35, 0x20, 0x30, 0x30, 0x20, 0x30, 0x30,
-	0x0a, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x32, 0x33, 0x20, 0x44, 0x36,
-	0x20, 0x30, 0x31, 0x0a, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x32, 0x39,
-	0x20, 0x42, 0x33, 0x20, 0x31, 0x34, 0x20, 0x30, 0x30, 0x20, 0x30, 0x30,
-	0x20, 0x30, 0x30, 0x20, 0x30, 0x30, 0x20, 0x30, 0x30, 0x0a, 0x20, 0x20,
-	0x20, 0x20, 0x20, 0x20, 0x32, 0x39, 0x20, 0x42, 0x34, 0x20, 0x30, 0x43,
-	0x20, 0x30, 0x30, 0x0a, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x32, 0x39,
-	0x20, 0x42, 0x36, 0x20, 0x33, 0x41, 0x20, 0x44, 0x33, 0x0a, 0x20, 0x20,
-	0x20, 0x20, 0x20, 0x20, 0x32, 0x39, 0x20, 0x43, 0x33, 0x20, 0x30, 0x31,
-	0x20, 0x30, 0x30, 0x20, 0x30, 0x46, 0x0a, 0x20, 0x20, 0x20, 0x20, 0x20,
-	0x20, 0x32, 0x39, 0x20, 0x43, 0x30, 0x20, 0x30, 0x30, 0x20, 0x30, 0x30,
-	0x20, 0x30, 0x30, 0x20, 0x30, 0x31, 0x20, 0x30, 0x30, 0x20, 0x30, 0x30,
-	0x0a, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x32, 0x39, 0x20, 0x43, 0x31,
-	0x20, 0x38, 0x34, 0x20, 0x36, 0x31, 0x20, 0x63, 0x30, 0x20, 0x32, 0x31,
-	0x20, 0x39, 0x44, 0x20, 0x33, 0x32, 0x20, 0x39, 0x36, 0x20, 0x37, 0x41,
-	0x20, 0x33, 0x30, 0x20, 0x43, 0x32, 0x20, 0x30, 0x38, 0x20, 0x30, 0x30,
-	0x20, 0x30, 0x30, 0x20, 0x30, 0x30, 0x20, 0x30, 0x30, 0x20, 0x31, 0x30,
-	0x20, 0x36, 0x31, 0x20, 0x38, 0x34, 0x20, 0x34, 0x46, 0x20, 0x32, 0x44,
-	0x20, 0x34, 0x31, 0x20, 0x30, 0x43, 0x20, 0x30, 0x32, 0x20, 0x30, 0x30,
-	0x20, 0x30, 0x30, 0x20, 0x30, 0x30, 0x20, 0x30, 0x30, 0x20, 0x30, 0x30,
-	0x20, 0x36, 0x32, 0x20, 0x30, 0x31, 0x20, 0x30, 0x38, 0x20, 0x30, 0x41,
-	0x20, 0x30, 0x30, 0x20, 0x30, 0x31, 0x20, 0x31, 0x31, 0x0a, 0x20, 0x20,
-	0x20, 0x20, 0x20, 0x20, 0x32, 0x39, 0x20, 0x43, 0x32, 0x20, 0x33, 0x31,
-	0x20, 0x46, 0x30, 0x20, 0x30, 0x41, 0x20, 0x30, 0x30, 0x20, 0x30, 0x38,
-	0x20, 0x30, 0x38, 0x20, 0x30, 0x30, 0x20, 0x30, 0x30, 0x0a, 0x20, 0x20,
-	0x20, 0x20, 0x20, 0x20, 0x32, 0x39, 0x20, 0x43, 0x34, 0x20, 0x37, 0x30,
-	0x20, 0x30, 0x30, 0x20, 0x30, 0x30, 0x20, 0x34, 0x34, 0x20, 0x30, 0x30,
-	0x20, 0x34, 0x34, 0x20, 0x34, 0x34, 0x20, 0x30, 0x30, 0x20, 0x34, 0x34,
-	0x20, 0x30, 0x30, 0x20, 0x30, 0x30, 0x20, 0x30, 0x36, 0x20, 0x30, 0x33,
-	0x20, 0x30, 0x30, 0x20, 0x30, 0x30, 0x20, 0x30, 0x30, 0x20, 0x34, 0x34,
-	0x20, 0x30, 0x30, 0x20, 0x34, 0x34, 0x20, 0x34, 0x34, 0x20, 0x30, 0x30,
-	0x20, 0x34, 0x34, 0x20, 0x30, 0x30, 0x20, 0x30, 0x30, 0x20, 0x30, 0x31,
-	0x20, 0x30, 0x33, 0x0a, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x32, 0x39,
-	0x20, 0x43, 0x36, 0x20, 0x35, 0x41, 0x20, 0x30, 0x36, 0x20, 0x35, 0x30,
-	0x20, 0x30, 0x36, 0x20, 0x35, 0x30, 0x20, 0x30, 0x30, 0x20, 0x30, 0x30,
-	0x20, 0x30, 0x30, 0x20, 0x30, 0x30, 0x20, 0x30, 0x30, 0x20, 0x30, 0x30,
-	0x20, 0x30, 0x30, 0x20, 0x30, 0x30, 0x20, 0x30, 0x30, 0x20, 0x30, 0x30,
-	0x20, 0x30, 0x30, 0x20, 0x30, 0x30, 0x20, 0x31, 0x33, 0x20, 0x31, 0x41,
-	0x20, 0x30, 0x37, 0x20, 0x35, 0x41, 0x20, 0x30, 0x36, 0x20, 0x35, 0x30,
-	0x20, 0x30, 0x36, 0x20, 0x35, 0x30, 0x20, 0x30, 0x30, 0x20, 0x30, 0x30,
-	0x20, 0x30, 0x30, 0x20, 0x30, 0x30, 0x20, 0x30, 0x30, 0x20, 0x30, 0x30,
-	0x20, 0x30, 0x30, 0x20, 0x30, 0x30, 0x20, 0x30, 0x30, 0x20, 0x30, 0x30,
-	0x20, 0x30, 0x30, 0x20, 0x30, 0x30, 0x20, 0x31, 0x33, 0x20, 0x31, 0x41,
-	0x20, 0x30, 0x37, 0x0a, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x32, 0x39,
-	0x20, 0x43, 0x42, 0x20, 0x31, 0x46, 0x20, 0x30, 0x46, 0x20, 0x46, 0x30,
-	0x20, 0x46, 0x38, 0x20, 0x32, 0x30, 0x20, 0x30, 0x30, 0x20, 0x30, 0x30,
-	0x20, 0x30, 0x34, 0x20, 0x43, 0x30, 0x20, 0x30, 0x30, 0x0a, 0x20, 0x20,
-	0x20, 0x20, 0x20, 0x20, 0x32, 0x33, 0x20, 0x43, 0x43, 0x20, 0x31, 0x45,
-	0x0a, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x32, 0x39, 0x20, 0x44, 0x32,
-	0x20, 0x30, 0x30, 0x20, 0x30, 0x30, 0x0a, 0x20, 0x20, 0x20, 0x20, 0x20,
-	0x20, 0x32, 0x39, 0x20, 0x44, 0x37, 0x20, 0x38, 0x34, 0x20, 0x46, 0x30,
-	0x20, 0x37, 0x46, 0x20, 0x41, 0x38, 0x20, 0x43, 0x45, 0x20, 0x33, 0x38,
-	0x20, 0x46, 0x43, 0x20, 0x43, 0x31, 0x20, 0x31, 0x38, 0x20, 0x45, 0x37,
-	0x20, 0x38, 0x46, 0x20, 0x31, 0x46, 0x20, 0x33, 0x43, 0x20, 0x31, 0x30,
-	0x20, 0x46, 0x41, 0x20, 0x43, 0x33, 0x20, 0x30, 0x46, 0x20, 0x30, 0x34,
-	0x20, 0x34, 0x31, 0x20, 0x30, 0x30, 0x20, 0x30, 0x30, 0x20, 0x30, 0x30,
-	0x20, 0x30, 0x30, 0x0a, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x32, 0x39,
-	0x20, 0x44, 0x39, 0x20, 0x30, 0x30, 0x20, 0x30, 0x30, 0x20, 0x30, 0x30,
-	0x0a, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x32, 0x39, 0x20, 0x43, 0x37,
-	0x20, 0x30, 0x32, 0x20, 0x31, 0x30, 0x20, 0x31, 0x35, 0x20, 0x31, 0x45,
-	0x20, 0x32, 0x41, 0x20, 0x33, 0x38, 0x20, 0x34, 0x33, 0x20, 0x35, 0x33,
-	0x20, 0x33, 0x37, 0x20, 0x33, 0x46, 0x20, 0x34, 0x43, 0x20, 0x35, 0x41,
-	0x20, 0x36, 0x36, 0x20, 0x37, 0x30, 0x20, 0x37, 0x43, 0x20, 0x30, 0x39,
-	0x20, 0x30, 0x45, 0x20, 0x31, 0x35, 0x20, 0x31, 0x45, 0x20, 0x32, 0x41,
-	0x20, 0x33, 0x38, 0x20, 0x34, 0x33, 0x20, 0x35, 0x33, 0x20, 0x33, 0x37,
-	0x20, 0x33, 0x46, 0x20, 0x34, 0x43, 0x20, 0x35, 0x41, 0x20, 0x36, 0x36,
-	0x20, 0x37, 0x30, 0x20, 0x37, 0x46, 0x0a, 0x20, 0x20, 0x20, 0x20, 0x20,
-	0x20, 0x32, 0x39, 0x20, 0x43, 0x38, 0x20, 0x30, 0x31, 0x20, 0x30, 0x30,
-	0x20, 0x30, 0x30, 0x20, 0x30, 0x30, 0x20, 0x30, 0x30, 0x20, 0x46, 0x43,
-	0x20, 0x30, 0x30, 0x20, 0x30, 0x30, 0x20, 0x30, 0x30, 0x20, 0x30, 0x30,
-	0x20, 0x30, 0x30, 0x20, 0x46, 0x43, 0x20, 0x30, 0x30, 0x20, 0x30, 0x30,
-	0x20, 0x30, 0x30, 0x20, 0x30, 0x30, 0x20, 0x30, 0x30, 0x20, 0x46, 0x43,
-	0x20, 0x30, 0x30, 0x0a, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x32, 0x39,
-	0x20, 0x44, 0x30, 0x20, 0x35, 0x35, 0x20, 0x38, 0x31, 0x20, 0x42, 0x42,
-	0x20, 0x31, 0x39, 0x20, 0x39, 0x41, 0x20, 0x34, 0x43, 0x20, 0x31, 0x39,
-	0x20, 0x31, 0x39, 0x20, 0x30, 0x43, 0x20, 0x30, 0x30, 0x0a, 0x20, 0x20,
-	0x20, 0x20, 0x20, 0x20, 0x32, 0x39, 0x20, 0x44, 0x33, 0x20, 0x31, 0x42,
-	0x20, 0x33, 0x33, 0x20, 0x42, 0x42, 0x20, 0x41, 0x42, 0x20, 0x41, 0x33,
-	0x20, 0x33, 0x33, 0x20, 0x33, 0x33, 0x20, 0x33, 0x33, 0x20, 0x30, 0x30,
-	0x20, 0x30, 0x31, 0x20, 0x30, 0x30, 0x20, 0x41, 0x30, 0x20, 0x46, 0x38,
-	0x20, 0x41, 0x30, 0x20, 0x30, 0x46, 0x20, 0x34, 0x37, 0x20, 0x34, 0x39,
-	0x20, 0x32, 0x32, 0x20, 0x33, 0x42, 0x20, 0x33, 0x37, 0x20, 0x37, 0x32,
-	0x20, 0x30, 0x37, 0x20, 0x33, 0x44, 0x20, 0x42, 0x46, 0x20, 0x33, 0x33,
-	0x0a, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x32, 0x39, 0x20, 0x44, 0x35,
-	0x20, 0x30, 0x36, 0x20, 0x30, 0x30, 0x20, 0x30, 0x30, 0x20, 0x30, 0x31,
-	0x20, 0x33, 0x35, 0x20, 0x30, 0x31, 0x20, 0x33, 0x35, 0x0a, 0x20, 0x20,
-	0x20, 0x20, 0x20, 0x20, 0x46, 0x46, 0x20, 0x37, 0x38, 0x0a, 0x20, 0x20,
-	0x20, 0x20, 0x20, 0x20, 0x30, 0x35, 0x20, 0x32, 0x39, 0x20, 0x30, 0x30,
-	0x0a, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x46, 0x46, 0x20, 0x37, 0x38,
-	0x0a, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x30, 0x35, 0x20, 0x31, 0x31,
-	0x20, 0x30, 0x30, 0x0a, 0x20, 0x20, 0x20, 0x20, 0x3c, 0x2f, 0x44, 0x53,
-	0x49, 0x49, 0x6e, 0x69, 0x74, 0x53, 0x65, 0x71, 0x75, 0x65, 0x6e, 0x63,
-	0x65, 0x3e, 0x0a, 0x0a, 0x20, 0x20, 0x20, 0x20, 0x3c, 0x44, 0x53, 0x49,
+	0x3e, 0x54, 0x72, 0x75, 0x65, 0x3c, 0x2f, 0x44, 0x53, 0x49, 0x4c, 0x6f,
+	0x77, 0x50, 0x6f, 0x77, 0x65, 0x72, 0x4d, 0x6f, 0x64, 0x65, 0x49, 0x6e,
+	0x42, 0x4c, 0x4c, 0x50, 0x3e, 0x0a, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,
+	0x20, 0x20, 0x3c, 0x44, 0x53, 0x49, 0x52, 0x65, 0x66, 0x72, 0x65, 0x73,
+	0x68, 0x52, 0x61, 0x74, 0x65, 0x20, 0x75, 0x6e, 0x69, 0x74, 0x73, 0x3d,
+	0x27, 0x69, 0x6e, 0x74, 0x65, 0x67, 0x65, 0x72, 0x20, 0x51, 0x31, 0x36,
+	0x2e, 0x31, 0x36, 0x27, 0x3e, 0x30, 0x78, 0x33, 0x43, 0x30, 0x30, 0x30,
+	0x30, 0x3c, 0x2f, 0x44, 0x53, 0x49, 0x52, 0x65, 0x66, 0x72, 0x65, 0x73,
+	0x68, 0x52, 0x61, 0x74, 0x65, 0x3e, 0x0a, 0x20, 0x20, 0x20, 0x20, 0x20,
+	0x20, 0x20, 0x20, 0x3c, 0x44, 0x53, 0x49, 0x50, 0x68, 0x79, 0x44, 0x43,
+	0x44, 0x43, 0x4d, 0x6f, 0x64, 0x65, 0x20, 0x75, 0x6e, 0x69, 0x74, 0x73,
+	0x3d, 0x27, 0x42, 0x6f, 0x6f, 0x6c, 0x27, 0x3e, 0x54, 0x72, 0x75, 0x65,
+	0x3c, 0x2f, 0x44, 0x53, 0x49, 0x50, 0x68, 0x79, 0x44, 0x43, 0x44, 0x43,
+	0x4d, 0x6f, 0x64, 0x65, 0x3e, 0x0a, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,
+	0x20, 0x20, 0x3c, 0x44, 0x53, 0x49, 0x49, 0x6e, 0x69, 0x74, 0x4d, 0x61,
+	0x73, 0x74, 0x65, 0x72, 0x54, 0x69, 0x6d, 0x65, 0x20, 0x75, 0x6e, 0x69,
+	0x74, 0x73, 0x3d, 0x22, 0x6d, 0x73, 0x22, 0x3e, 0x30, 0x78, 0x37, 0x38,
+	0x3c, 0x2f, 0x44, 0x53, 0x49, 0x49, 0x6e, 0x69, 0x74, 0x4d, 0x61, 0x73,
+	0x74, 0x65, 0x72, 0x54, 0x69, 0x6d, 0x65, 0x3e, 0x0a, 0x20, 0x20, 0x20,
+	0x20, 0x20, 0x20, 0x20, 0x20, 0x3c, 0x44, 0x53, 0x49, 0x44, 0x79, 0x6e,
+	0x61, 0x6d, 0x69, 0x63, 0x52, 0x65, 0x66, 0x72, 0x65, 0x73, 0x68, 0x52,
+	0x61, 0x74, 0x65, 0x73, 0x20, 0x75, 0x6e, 0x69, 0x74, 0x73, 0x3d, 0x27,
+	0x69, 0x6e, 0x74, 0x65, 0x67, 0x65, 0x72, 0x20, 0x51, 0x31, 0x36, 0x2e,
+	0x31, 0x36, 0x27, 0x3e, 0x30, 0x78, 0x33, 0x30, 0x30, 0x30, 0x30, 0x30,
+	0x20, 0x30, 0x78, 0x33, 0x43, 0x30, 0x30, 0x30, 0x30, 0x3c, 0x2f, 0x44,
+	0x53, 0x49, 0x44, 0x79, 0x6e, 0x61, 0x6d, 0x69, 0x63, 0x52, 0x65, 0x66,
+	0x72, 0x65, 0x73, 0x68, 0x52, 0x61, 0x74, 0x65, 0x73, 0x3e, 0x20, 0x20,
+	0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,
+	0x0a, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3c, 0x44, 0x53,
+	0x49, 0x43, 0x6f, 0x6e, 0x74, 0x72, 0x6f, 0x6c, 0x6c, 0x65, 0x72, 0x4d,
+	0x61, 0x70, 0x70, 0x69, 0x6e, 0x67, 0x3e, 0x0a, 0x20, 0x20, 0x20, 0x20,
+	0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x30, 0x30, 0x20, 0x30, 0x31, 0x0a,
+	0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3c, 0x2f, 0x44, 0x53,
+	0x49, 0x43, 0x6f, 0x6e, 0x74, 0x72, 0x6f, 0x6c, 0x6c, 0x65, 0x72, 0x4d,
+	0x61, 0x70, 0x70, 0x69, 0x6e, 0x67, 0x3e, 0x0a, 0x20, 0x20, 0x20, 0x20,
+	0x3c, 0x2f, 0x47, 0x72, 0x6f, 0x75, 0x70, 0x3e, 0x0a, 0x0a, 0x20, 0x20,
+	0x20, 0x20, 0x3c, 0x44, 0x53, 0x49, 0x49, 0x6e, 0x69, 0x74, 0x53, 0x65,
+	0x71, 0x75, 0x65, 0x6e, 0x63, 0x65, 0x3e, 0x0a, 0x20, 0x20, 0x20, 0x20,
+	0x20, 0x20, 0x31, 0x35, 0x20, 0x30, 0x31, 0x20, 0x30, 0x30, 0x20, 0x30,
+	0x30, 0x20, 0x30, 0x30, 0x20, 0x30, 0x30, 0x20, 0x30, 0x32, 0x20, 0x33,
+	0x35, 0x20, 0x30, 0x30, 0x0a, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x33,
+	0x39, 0x20, 0x30, 0x31, 0x20, 0x30, 0x30, 0x20, 0x30, 0x30, 0x20, 0x30,
+	0x30, 0x20, 0x30, 0x30, 0x20, 0x30, 0x33, 0x20, 0x34, 0x34, 0x20, 0x30,
+	0x37, 0x20, 0x37, 0x38, 0x0a, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x33,
+	0x39, 0x20, 0x30, 0x31, 0x20, 0x30, 0x30, 0x20, 0x30, 0x30, 0x20, 0x30,
+	0x30, 0x20, 0x30, 0x30, 0x20, 0x30, 0x43, 0x20, 0x43, 0x39, 0x20, 0x34,
+	0x39, 0x20, 0x30, 0x32, 0x20, 0x30, 0x35, 0x20, 0x30, 0x30, 0x20, 0x30,
+	0x46, 0x20, 0x30, 0x36, 0x20, 0x36, 0x37, 0x20, 0x30, 0x33, 0x20, 0x32,
+	0x45, 0x20, 0x31, 0x30, 0x20, 0x46, 0x30, 0x0a, 0x20, 0x20, 0x20, 0x20,
+	0x20, 0x20, 0x33, 0x39, 0x20, 0x30, 0x31, 0x20, 0x30, 0x30, 0x20, 0x30,
+	0x30, 0x20, 0x30, 0x30, 0x20, 0x30, 0x30, 0x20, 0x30, 0x35, 0x20, 0x32,
+	0x41, 0x20, 0x30, 0x30, 0x20, 0x30, 0x30, 0x20, 0x30, 0x34, 0x20, 0x33,
+	0x37, 0x0a, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x33, 0x39, 0x20, 0x30,
+	0x31, 0x20, 0x30, 0x30, 0x20, 0x30, 0x30, 0x20, 0x30, 0x30, 0x20, 0x30,
+	0x30, 0x20, 0x30, 0x35, 0x20, 0x32, 0x42, 0x20, 0x30, 0x30, 0x20, 0x30,
+	0x30, 0x20, 0x30, 0x37, 0x20, 0x37, 0x46, 0x0a, 0x20, 0x20, 0x20, 0x20,
+	0x20, 0x20, 0x32, 0x33, 0x20, 0x30, 0x31, 0x20, 0x30, 0x30, 0x20, 0x30,
+	0x30, 0x20, 0x30, 0x30, 0x20, 0x30, 0x30, 0x20, 0x30, 0x32, 0x20, 0x46,
+	0x42, 0x20, 0x30, 0x31, 0x0a, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x30,
+	0x35, 0x20, 0x30, 0x31, 0x20, 0x30, 0x30, 0x20, 0x30, 0x30, 0x20, 0x36,
+	0x35, 0x20, 0x30, 0x30, 0x20, 0x30, 0x32, 0x20, 0x31, 0x31, 0x20, 0x30,
+	0x30, 0x0a, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x30, 0x35, 0x20, 0x30,
+	0x31, 0x20, 0x30, 0x30, 0x20, 0x30, 0x30, 0x20, 0x32, 0x39, 0x20, 0x30,
+	0x30, 0x20, 0x30, 0x32, 0x20, 0x32, 0x39, 0x20, 0x30, 0x30, 0x0a, 0x20,
+	0x20, 0x20, 0x20, 0x3c, 0x2f, 0x44, 0x53, 0x49, 0x49, 0x6e, 0x69, 0x74,
+	0x53, 0x65, 0x71, 0x75, 0x65, 0x6e, 0x63, 0x65, 0x3e, 0x0a, 0x0a, 0x20,
+	0x20, 0x20, 0x20, 0x3c, 0x44, 0x53, 0x49, 0x54, 0x65, 0x72, 0x6d, 0x53,
+	0x65, 0x71, 0x75, 0x65, 0x6e, 0x63, 0x65, 0x3e, 0x0a, 0x20, 0x20, 0x20,
+	0x20, 0x20, 0x20, 0x30, 0x35, 0x20, 0x30, 0x31, 0x20, 0x30, 0x30, 0x20,
+	0x30, 0x30, 0x20, 0x30, 0x30, 0x20, 0x30, 0x30, 0x20, 0x30, 0x32, 0x20,
+	0x32, 0x38, 0x20, 0x30, 0x30, 0x0a, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,
+	0x30, 0x35, 0x20, 0x30, 0x31, 0x20, 0x30, 0x30, 0x20, 0x30, 0x30, 0x20,
+	0x33, 0x64, 0x20, 0x30, 0x30, 0x20, 0x30, 0x32, 0x20, 0x31, 0x30, 0x20,
+	0x30, 0x30, 0x0a, 0x20, 0x20, 0x20, 0x20, 0x3c, 0x2f, 0x44, 0x53, 0x49,
 	0x54, 0x65, 0x72, 0x6d, 0x53, 0x65, 0x71, 0x75, 0x65, 0x6e, 0x63, 0x65,
-	0x3e, 0x0a, 0x20, 0x20, 0x20, 0x20, 0x3c, 0x2f, 0x44, 0x53, 0x49, 0x54,
-	0x65, 0x72, 0x6d, 0x53, 0x65, 0x71, 0x75, 0x65, 0x6e, 0x63, 0x65, 0x3e,
-	0x0a, 0x0a, 0x20, 0x20, 0x20, 0x20, 0x3c, 0x47, 0x72, 0x6f, 0x75, 0x70,
-	0x20, 0x69, 0x64, 0x3d, 0x27, 0x42, 0x61, 0x63, 0x6b, 0x6c, 0x69, 0x67,
-	0x68, 0x74, 0x20, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x75, 0x72, 0x61,
-	0x74, 0x69, 0x6f, 0x6e, 0x27, 0x3e, 0x0a, 0x20, 0x20, 0x20, 0x20, 0x20,
-	0x20, 0x20, 0x20, 0x3c, 0x42, 0x61, 0x63, 0x6b, 0x6c, 0x69, 0x67, 0x68,
-	0x74, 0x54, 0x79, 0x70, 0x65, 0x20, 0x75, 0x6e, 0x69, 0x74, 0x73, 0x3d,
-	0x27, 0x51, 0x44, 0x49, 0x5f, 0x50, 0x61, 0x6e, 0x65, 0x6c, 0x5f, 0x42,
-	0x61, 0x63, 0x6b, 0x6c, 0x69, 0x67, 0x68, 0x74, 0x54, 0x79, 0x70, 0x65,
-	0x27, 0x3e, 0x31, 0x3c, 0x2f, 0x42, 0x61, 0x63, 0x6b, 0x6c, 0x69, 0x67,
-	0x68, 0x74, 0x54, 0x79, 0x70, 0x65, 0x3e, 0x0a, 0x20, 0x20, 0x20, 0x20,
-	0x20, 0x20, 0x20, 0x20, 0x3c, 0x42, 0x61, 0x63, 0x6b, 0x6c, 0x69, 0x67,
-	0x68, 0x74, 0x50, 0x6d, 0x69, 0x63, 0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x20,
-	0x75, 0x6e, 0x69, 0x74, 0x73, 0x3d, 0x27, 0x51, 0x44, 0x49, 0x5f, 0x50,
-	0x4d, 0x49, 0x43, 0x44, 0x65, 0x76, 0x69, 0x63, 0x65, 0x49, 0x64, 0x54,
-	0x79, 0x70, 0x65, 0x27, 0x3e, 0x31, 0x30, 0x3c, 0x2f, 0x42, 0x61, 0x63,
-	0x6b, 0x6c, 0x69, 0x67, 0x68, 0x74, 0x50, 0x6d, 0x69, 0x63, 0x4d, 0x6f,
-	0x64, 0x65, 0x6c, 0x3e, 0x0a, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,
-	0x20, 0x3c, 0x42, 0x61, 0x63, 0x6b, 0x6c, 0x69, 0x67, 0x68, 0x74, 0x50,
-	0x6d, 0x69, 0x63, 0x43, 0x6f, 0x6e, 0x74, 0x72, 0x6f, 0x6c, 0x54, 0x79,
+	0x3e, 0x20, 0x20, 0x0a, 0x0a, 0x20, 0x20, 0x20, 0x20, 0x3c, 0x44, 0x53,
+	0x49, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x53, 0x65, 0x71, 0x75, 0x65,
+	0x6e, 0x63, 0x65, 0x3e, 0x0a, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x30,
+	0x36, 0x20, 0x30, 0x61, 0x20, 0x31, 0x63, 0x20, 0x0a, 0x20, 0x20, 0x20,
+	0x20, 0x3c, 0x2f, 0x44, 0x53, 0x49, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73,
+	0x53, 0x65, 0x71, 0x75, 0x65, 0x6e, 0x63, 0x65, 0x3e, 0x0a, 0x0a, 0x20,
+	0x20, 0x20, 0x20, 0x3c, 0x47, 0x72, 0x6f, 0x75, 0x70, 0x20, 0x69, 0x64,
+	0x3d, 0x27, 0x42, 0x61, 0x63, 0x6b, 0x6c, 0x69, 0x67, 0x68, 0x74, 0x20,
+	0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x75, 0x72, 0x61, 0x74, 0x69, 0x6f,
+	0x6e, 0x27, 0x3e, 0x0a, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,
+	0x3c, 0x42, 0x61, 0x63, 0x6b, 0x6c, 0x69, 0x67, 0x68, 0x74, 0x54, 0x79,
 	0x70, 0x65, 0x20, 0x75, 0x6e, 0x69, 0x74, 0x73, 0x3d, 0x27, 0x51, 0x44,
-	0x49, 0x5f, 0x50, 0x6d, 0x69, 0x63, 0x4d, 0x6f, 0x64, 0x75, 0x6c, 0x65,
-	0x43, 0x6f, 0x6e, 0x74, 0x72, 0x6f, 0x6c, 0x54, 0x79, 0x70, 0x65, 0x27,
-	0x3e, 0x31, 0x3c, 0x2f, 0x42, 0x61, 0x63, 0x6b, 0x6c, 0x69, 0x67, 0x68,
-	0x74, 0x50, 0x6d, 0x69, 0x63, 0x43, 0x6f, 0x6e, 0x74, 0x72, 0x6f, 0x6c,
-	0x54, 0x79, 0x70, 0x65, 0x3e, 0x0a, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,
-	0x20, 0x20, 0x3c, 0x42, 0x61, 0x63, 0x6b, 0x6c, 0x69, 0x67, 0x68, 0x74,
-	0x50, 0x4d, 0x49, 0x43, 0x4e, 0x75, 0x6d, 0x20, 0x75, 0x6e, 0x69, 0x74,
-	0x73, 0x3d, 0x27, 0x69, 0x6e, 0x74, 0x27, 0x3e, 0x31, 0x3c, 0x2f, 0x42,
-	0x61, 0x63, 0x6b, 0x6c, 0x69, 0x67, 0x68, 0x74, 0x50, 0x4d, 0x49, 0x43,
-	0x4e, 0x75, 0x6d, 0x3e, 0x0a, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,
+	0x49, 0x5f, 0x50, 0x61, 0x6e, 0x65, 0x6c, 0x5f, 0x42, 0x61, 0x63, 0x6b,
+	0x6c, 0x69, 0x67, 0x68, 0x74, 0x54, 0x79, 0x70, 0x65, 0x27, 0x3e, 0x31,
+	0x3c, 0x2f, 0x42, 0x61, 0x63, 0x6b, 0x6c, 0x69, 0x67, 0x68, 0x74, 0x54,
+	0x79, 0x70, 0x65, 0x3e, 0x0a, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,
 	0x20, 0x3c, 0x42, 0x61, 0x63, 0x6b, 0x6c, 0x69, 0x67, 0x68, 0x74, 0x50,
+	0x6d, 0x69, 0x63, 0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x20, 0x75, 0x6e, 0x69,
+	0x74, 0x73, 0x3d, 0x27, 0x51, 0x44, 0x49, 0x5f, 0x50, 0x4d, 0x49, 0x43,
+	0x44, 0x65, 0x76, 0x69, 0x63, 0x65, 0x49, 0x64, 0x54, 0x79, 0x70, 0x65,
+	0x27, 0x3e, 0x31, 0x30, 0x3c, 0x2f, 0x42, 0x61, 0x63, 0x6b, 0x6c, 0x69,
+	0x67, 0x68, 0x74, 0x50, 0x6d, 0x69, 0x63, 0x4d, 0x6f, 0x64, 0x65, 0x6c,
+	0x3e, 0x0a, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3c, 0x42,
+	0x61, 0x63, 0x6b, 0x6c, 0x69, 0x67, 0x68, 0x74, 0x50, 0x6d, 0x69, 0x63,
+	0x43, 0x6f, 0x6e, 0x74, 0x72, 0x6f, 0x6c, 0x54, 0x79, 0x70, 0x65, 0x20,
+	0x75, 0x6e, 0x69, 0x74, 0x73, 0x3d, 0x27, 0x51, 0x44, 0x49, 0x5f, 0x50,
+	0x6d, 0x69, 0x63, 0x4d, 0x6f, 0x64, 0x75, 0x6c, 0x65, 0x43, 0x6f, 0x6e,
+	0x74, 0x72, 0x6f, 0x6c, 0x54, 0x79, 0x70, 0x65, 0x27, 0x3e, 0x31, 0x3c,
+	0x2f, 0x42, 0x61, 0x63, 0x6b, 0x6c, 0x69, 0x67, 0x68, 0x74, 0x50, 0x6d,
+	0x69, 0x63, 0x43, 0x6f, 0x6e, 0x74, 0x72, 0x6f, 0x6c, 0x54, 0x79, 0x70,
+	0x65, 0x3e, 0x0a, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3c,
+	0x42, 0x61, 0x63, 0x6b, 0x6c, 0x69, 0x67, 0x68, 0x74, 0x50, 0x4d, 0x49,
+	0x43, 0x4e, 0x75, 0x6d, 0x20, 0x75, 0x6e, 0x69, 0x74, 0x73, 0x3d, 0x27,
+	0x69, 0x6e, 0x74, 0x27, 0x3e, 0x31, 0x3c, 0x2f, 0x42, 0x61, 0x63, 0x6b,
+	0x6c, 0x69, 0x67, 0x68, 0x74, 0x50, 0x4d, 0x49, 0x43, 0x4e, 0x75, 0x6d,
+	0x3e, 0x0a, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3c, 0x42,
+	0x61, 0x63, 0x6b, 0x6c, 0x69, 0x67, 0x68, 0x74, 0x50, 0x4d, 0x49, 0x43,
+	0x42, 0x61, 0x6e, 0x6b, 0x53, 0x65, 0x6c, 0x65, 0x63, 0x74, 0x20, 0x75,
+	0x6e, 0x69, 0x74, 0x73, 0x3d, 0x27, 0x69, 0x6e, 0x74, 0x27, 0x3e, 0x37,
+	0x3c, 0x2f, 0x42, 0x61, 0x63, 0x6b, 0x6c, 0x69, 0x67, 0x68, 0x74, 0x50,
 	0x4d, 0x49, 0x43, 0x42, 0x61, 0x6e, 0x6b, 0x53, 0x65, 0x6c, 0x65, 0x63,
-	0x74, 0x20, 0x75, 0x6e, 0x69, 0x74, 0x73, 0x3d, 0x27, 0x69, 0x6e, 0x74,
-	0x27, 0x3e, 0x37, 0x3c, 0x2f, 0x42, 0x61, 0x63, 0x6b, 0x6c, 0x69, 0x67,
-	0x68, 0x74, 0x50, 0x4d, 0x49, 0x43, 0x42, 0x61, 0x6e, 0x6b, 0x53, 0x65,
-	0x6c, 0x65, 0x63, 0x74, 0x3e, 0x0a, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,
-	0x20, 0x20, 0x3c, 0x42, 0x61, 0x63, 0x6b, 0x6c, 0x69, 0x67, 0x68, 0x74,
-	0x50, 0x4d, 0x49, 0x43, 0x50, 0x57, 0x4d, 0x46, 0x72, 0x65, 0x71, 0x75,
-	0x65, 0x6e, 0x63, 0x79, 0x20, 0x75, 0x6e, 0x69, 0x74, 0x73, 0x3d, 0x27,
-	0x48, 0x7a, 0x27, 0x3e, 0x31, 0x36, 0x30, 0x30, 0x30, 0x30, 0x30, 0x3c,
-	0x2f, 0x42, 0x61, 0x63, 0x6b, 0x6c, 0x69, 0x67, 0x68, 0x74, 0x50, 0x4d,
-	0x49, 0x43, 0x50, 0x57, 0x4d, 0x46, 0x72, 0x65, 0x71, 0x75, 0x65, 0x6e,
-	0x63, 0x79, 0x3e, 0x0a, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,
-	0x3c, 0x42, 0x61, 0x63, 0x6b, 0x6c, 0x69, 0x67, 0x68, 0x74, 0x53, 0x74,
-	0x65, 0x70, 0x73, 0x20, 0x75, 0x6e, 0x69, 0x74, 0x73, 0x3d, 0x27, 0x50,
-	0x65, 0x72, 0x63, 0x65, 0x6e, 0x74, 0x61, 0x67, 0x65, 0x27, 0x3e, 0x31,
-	0x30, 0x30, 0x3c, 0x2f, 0x42, 0x61, 0x63, 0x6b, 0x6c, 0x69, 0x67, 0x68,
-	0x74, 0x53, 0x74, 0x65, 0x70, 0x73, 0x3e, 0x0a, 0x20, 0x20, 0x20, 0x20,
-	0x20, 0x20, 0x20, 0x20, 0x3c, 0x42, 0x61, 0x63, 0x6b, 0x6c, 0x69, 0x67,
-	0x68, 0x74, 0x44, 0x65, 0x66, 0x61, 0x75, 0x6c, 0x74, 0x20, 0x75, 0x6e,
-	0x69, 0x74, 0x73, 0x3d, 0x27, 0x50, 0x65, 0x72, 0x63, 0x65, 0x6e, 0x74,
-	0x61, 0x67, 0x65, 0x27, 0x3e, 0x38, 0x30, 0x3c, 0x2f, 0x42, 0x61, 0x63,
-	0x6b, 0x6c, 0x69, 0x67, 0x68, 0x74, 0x44, 0x65, 0x66, 0x61, 0x75, 0x6c,
 	0x74, 0x3e, 0x0a, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3c,
-	0x42, 0x61, 0x63, 0x6b, 0x6c, 0x69, 0x67, 0x68, 0x74, 0x4c, 0x6f, 0x77,
-	0x50, 0x6f, 0x77, 0x65, 0x72, 0x20, 0x75, 0x6e, 0x69, 0x74, 0x73, 0x3d,
-	0x27, 0x50, 0x65, 0x72, 0x63, 0x65, 0x6e, 0x74, 0x61, 0x67, 0x65, 0x27,
-	0x3e, 0x34, 0x30, 0x3c, 0x2f, 0x42, 0x61, 0x63, 0x6b, 0x6c, 0x69, 0x67,
-	0x68, 0x74, 0x4c, 0x6f, 0x77, 0x50, 0x6f, 0x77, 0x65, 0x72, 0x3e, 0x0a,
-	0x20, 0x20, 0x20, 0x20, 0x3c, 0x2f, 0x47, 0x72, 0x6f, 0x75, 0x70, 0x3e,
-	0x0a, 0x0a, 0x20, 0x20, 0x20, 0x20, 0x3c, 0x47, 0x72, 0x6f, 0x75, 0x70,
-	0x20, 0x69, 0x64, 0x3d, 0x27, 0x43, 0x6f, 0x6e, 0x6e, 0x65, 0x63, 0x74,
-	0x69, 0x6f, 0x6e, 0x20, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x75, 0x72,
-	0x61, 0x74, 0x69, 0x6f, 0x6e, 0x27, 0x3e, 0x0a, 0x20, 0x20, 0x20, 0x20,
-	0x20, 0x20, 0x20, 0x20, 0x3c, 0x44, 0x69, 0x73, 0x70, 0x6c, 0x61, 0x79,
-	0x31, 0x52, 0x65, 0x73, 0x65, 0x74, 0x31, 0x49, 0x6e, 0x66, 0x6f, 0x3e,
-	0x44, 0x53, 0x49, 0x5f, 0x50, 0x41, 0x4e, 0x45, 0x4c, 0x5f, 0x52, 0x45,
-	0x53, 0x45, 0x54, 0x2c, 0x20, 0x30, 0x2c, 0x20, 0x31, 0x30, 0x2c, 0x20,
-	0x54, 0x72, 0x75, 0x65, 0x3c, 0x2f, 0x44, 0x69, 0x73, 0x70, 0x6c, 0x61,
-	0x79, 0x31, 0x52, 0x65, 0x73, 0x65, 0x74, 0x31, 0x49, 0x6e, 0x66, 0x6f,
-	0x3e, 0x0a, 0x20, 0x20, 0x20, 0x20, 0x3c, 0x2f, 0x47, 0x72, 0x6f, 0x75,
-	0x70, 0x3e, 0x0a, 0x2d, 0x2d, 0x3e, 0x0a, 0x3c, 0x2f, 0x47, 0x72, 0x6f,
-	0x75, 0x70, 0x3e, 0x00
+	0x42, 0x61, 0x63, 0x6b, 0x6c, 0x69, 0x67, 0x68, 0x74, 0x50, 0x4d, 0x49,
+	0x43, 0x50, 0x57, 0x4d, 0x46, 0x72, 0x65, 0x71, 0x75, 0x65, 0x6e, 0x63,
+	0x79, 0x20, 0x75, 0x6e, 0x69, 0x74, 0x73, 0x3d, 0x27, 0x48, 0x7a, 0x27,
+	0x3e, 0x31, 0x36, 0x30, 0x30, 0x30, 0x30, 0x30, 0x3c, 0x2f, 0x42, 0x61,
+	0x63, 0x6b, 0x6c, 0x69, 0x67, 0x68, 0x74, 0x50, 0x4d, 0x49, 0x43, 0x50,
+	0x57, 0x4d, 0x46, 0x72, 0x65, 0x71, 0x75, 0x65, 0x6e, 0x63, 0x79, 0x3e,
+	0x0a, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3c, 0x42, 0x61,
+	0x63, 0x6b, 0x6c, 0x69, 0x67, 0x68, 0x74, 0x53, 0x74, 0x65, 0x70, 0x73,
+	0x20, 0x75, 0x6e, 0x69, 0x74, 0x73, 0x3d, 0x27, 0x50, 0x65, 0x72, 0x63,
+	0x65, 0x6e, 0x74, 0x61, 0x67, 0x65, 0x27, 0x3e, 0x31, 0x30, 0x30, 0x3c,
+	0x2f, 0x42, 0x61, 0x63, 0x6b, 0x6c, 0x69, 0x67, 0x68, 0x74, 0x53, 0x74,
+	0x65, 0x70, 0x73, 0x3e, 0x0a, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,
+	0x20, 0x3c, 0x42, 0x61, 0x63, 0x6b, 0x6c, 0x69, 0x67, 0x68, 0x74, 0x44,
+	0x65, 0x66, 0x61, 0x75, 0x6c, 0x74, 0x20, 0x75, 0x6e, 0x69, 0x74, 0x73,
+	0x3d, 0x27, 0x50, 0x65, 0x72, 0x63, 0x65, 0x6e, 0x74, 0x61, 0x67, 0x65,
+	0x27, 0x3e, 0x38, 0x30, 0x3c, 0x2f, 0x42, 0x61, 0x63, 0x6b, 0x6c, 0x69,
+	0x67, 0x68, 0x74, 0x44, 0x65, 0x66, 0x61, 0x75, 0x6c, 0x74, 0x3e, 0x0a,
+	0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3c, 0x42, 0x61, 0x63,
+	0x6b, 0x6c, 0x69, 0x67, 0x68, 0x74, 0x4c, 0x6f, 0x77, 0x50, 0x6f, 0x77,
+	0x65, 0x72, 0x20, 0x75, 0x6e, 0x69, 0x74, 0x73, 0x3d, 0x27, 0x50, 0x65,
+	0x72, 0x63, 0x65, 0x6e, 0x74, 0x61, 0x67, 0x65, 0x27, 0x3e, 0x34, 0x30,
+	0x3c, 0x2f, 0x42, 0x61, 0x63, 0x6b, 0x6c, 0x69, 0x67, 0x68, 0x74, 0x4c,
+	0x6f, 0x77, 0x50, 0x6f, 0x77, 0x65, 0x72, 0x3e, 0x0a, 0x20, 0x20, 0x20,
+	0x20, 0x3c, 0x2f, 0x47, 0x72, 0x6f, 0x75, 0x70, 0x3e, 0x0a, 0x20, 0x20,
+	0x20, 0x20, 0x3c, 0x47, 0x72, 0x6f, 0x75, 0x70, 0x20, 0x69, 0x64, 0x3d,
+	0x27, 0x43, 0x6f, 0x6e, 0x6e, 0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x20,
+	0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x75, 0x72, 0x61, 0x74, 0x69, 0x6f,
+	0x6e, 0x27, 0x3e, 0x0a, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,
+	0x3c, 0x44, 0x69, 0x73, 0x70, 0x6c, 0x61, 0x79, 0x31, 0x52, 0x65, 0x73,
+	0x65, 0x74, 0x31, 0x49, 0x6e, 0x66, 0x6f, 0x3e, 0x44, 0x53, 0x49, 0x5f,
+	0x50, 0x41, 0x4e, 0x45, 0x4c, 0x5f, 0x52, 0x45, 0x53, 0x45, 0x54, 0x2c,
+	0x20, 0x30, 0x2c, 0x20, 0x31, 0x30, 0x2c, 0x20, 0x54, 0x72, 0x75, 0x65,
+	0x3c, 0x2f, 0x44, 0x69, 0x73, 0x70, 0x6c, 0x61, 0x79, 0x31, 0x52, 0x65,
+	0x73, 0x65, 0x74, 0x31, 0x49, 0x6e, 0x66, 0x6f, 0x3e, 0x0a, 0x20, 0x20,
+	0x20, 0x20, 0x3c, 0x2f, 0x47, 0x72, 0x6f, 0x75, 0x70, 0x3e, 0x0a, 0x3c,
+	0x2f, 0x47, 0x72, 0x6f, 0x75, 0x70, 0x3e, 0x00
                 })
                 While(One)
                 {
-                    Name(_T_0, 0x0)
-                    Store(ToInteger(Arg2, ), _T_0)
-                    If(LEqual(_T_0, 0xc130b0))
+                    If(One)
                     {
-                        Store(PCF1, Local2)
-                    }
-                    Else
-                    {
-                        If(LEqual(_T_0, 0x900000))
-                        {
-                            Store(PCF2, Local2)
-                        }
-                        Else
-                        {
-                            If(LEqual(_T_0, 0xa58047))
-                            {
-                                Store(PCF3, Local2)
-                            }
-                            Else
-                            {
-                                If(LEqual(_T_0, 0x9550bc))
-                                {
-                                    Store(PCF4, Local2)
-                                }
-                                Else
-                                {
-                                    Store(PCFG, Local2)
-                                }
-                            }
-                        }
+                        Store(PCFG, Local2)
                     }
                     Break
                 }
@@ -34138,7 +30121,7 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
                         Package(0x2)
                         {
                             "EnableOEMDriverDependency",
-                            One
+                            Zero
                         }
                     }
                 })
@@ -34155,7 +30138,7 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
             Name(_HID, "QCOM24BA")
             Name(_UID, Zero)
         }
-        OperationRegion(CP00, SystemMemory, 0xfc526600, 0x130)
+        OperationRegion(CP00, SystemMemory, 0xfc52e600, 0x130)
         Field(CP00, DWordAcc, NoLock, Preserve)
         {
             PPSR, 32,
@@ -34169,7 +30152,7 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
             Offset(0x128),
             PPPS, 32
         }
-        OperationRegion(CP01, SystemMemory, 0xfc526000, 0x508)
+        OperationRegion(CP01, SystemMemory, 0xfc52e000, 0x508)
         Field(CP01, DWordAcc, NoLock, Preserve)
         {
             , 32,
@@ -34244,12 +30227,12 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
             QRSC, 32,
             QRSD, 32
         }
-        OperationRegion(CP02, SystemMemory, 0xfc521000, 0x4)
+        OperationRegion(CP02, SystemMemory, 0xfc529000, 0x4)
         Field(CP02, DWordAcc, NoLock, Preserve)
         {
             PPDT, 32
         }
-        OperationRegion(CP03, SystemMemory, 0xff000000, 0x1008)
+        OperationRegion(CP03, SystemMemory, 0xf8800000, 0x1008)
         Field(CP03, DWordAcc, NoLock, Preserve)
         {
             , 32,
@@ -34267,7 +30250,7 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
             Offset(0x1004),
             PESC, 32
         }
-        OperationRegion(CP04, SystemMemory, 0xff000900, 0x1000)
+        OperationRegion(CP04, SystemMemory, 0xf8800900, 0x1000)
         Field(CP04, DWordAcc, NoLock, Preserve)
         {
             IAVR, 32,
@@ -34279,14 +30262,14 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
             ILTR, 32,
             IUTR, 32
         }
-        OperationRegion(CP05, SystemMemory, 0xff000f20, 0xc)
+        OperationRegion(CP05, SystemMemory, 0xf8800f20, 0xc)
         Field(CP05, DWordAcc, NoLock, Preserve)
         {
             , 32,
             ESCT, 32,
             ESST, 32
         }
-        OperationRegion(CP06, SystemMemory, 0xfc520000, 0x1b8)
+        OperationRegion(CP06, SystemMemory, 0xfc528000, 0x1b8)
         Field(CP06, DWordAcc, NoLock, Preserve)
         {
             PPSC, 32,
@@ -34295,7 +30278,7 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
             Offset(0x1b0),
             PLTS, 32
         }
-        OperationRegion(CP07, SystemMemory, 0xfc401a80, 0xa0)
+        OperationRegion(CP07, SystemMemory, 0xfc401b00, 0xa0)
         Field(CP07, DWordAcc, NoLock, Preserve)
         {
             Offset(0x40),
@@ -34304,6 +30287,7 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
             GP1B, 32
         }
         Name(GTD3, Zero)
+        Name(PTOT, Zero)
         PowerResource(PHUB, 0x5, 0x0)
         {
             Name(_DEP, Package(One)
@@ -34427,7 +30411,6 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
             {
                 If(LEqual(GTD3, Zero))
                 {
-                    Name(PTOT, Zero)
                     Store(One, GTD3)
                     Store(PPSC, Local0)
                     Or(Local0, 0x10, Local0)
@@ -34436,6 +30419,7 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
                     Or(Local0, 0x10, Local0)
                     Store(Local0, ESCT)
                     Store(PPMS, Local0)
+                    Store(Zero, PTOT)
                     While(LNot(LEqual(And(Local0, 0x20, Local0), 0x20)))
                     {
                         Sleep(0xa)
@@ -35148,73 +31132,52 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
         }
         Device(SSM_)
         {
-            Name(_DEP, Package(0x3)
+            Name(_DEP, Package(0x2)
             {
                 \_SB_.SMD0,
-                \_SB_.SCM0, 
-                \_SB_.TREE
+                \_SB_.SCM0
             })
             Name(_HID, "QCOM2414")
         }
-        Device(SYSM)
+        Device(CPU0)
         {
-            Name (_HID, "ACPI0010")
-            Name (_UID, 0x00100000)
-            Device (APC0)
-            {
-                Name (_HID, "ACPI0010")
-                Name (_UID, 0x0100)
-                Device(CL0)
-                {
-                    Name(_HID, "ACPI0010")
-                    Name(_UID, 0x10)
-                    Device(CPU0)
-                    {
-                        Name(_HID, "ACPI0007")
-                        Name(_UID, Zero)
-                    }
-                    Device(CPU1)
-                    {
-                        Name(_HID, "ACPI0007")
-                        Name(_UID, One)
-                    }
-                    Device(CPU2)
-                    {
-                        Name(_HID, "ACPI0007")
-                        Name(_UID, 0x2)
-                    }
-                    Device(CPU3)
-                    {
-                        Name(_HID, "ACPI0007")
-                        Name(_UID, 0x3)
-                    }
-                }
-                Device(CL1)
-                {
-                    Name(_HID, "ACPI0010")
-                    Name(_UID, 0x20)
-                    Device(CPU4)
-                    {
-                        Name(_HID, "ACPI0007")
-                        Name(_UID, 0x4)
-                    }
-                    Device(CPU5)
-                    {
-                        Name(_HID, "ACPI0007")
-                        Name(_UID, 0x5)
-                    }
-                    Device(CPU6)
-                    {
-                        Name(_HID, "ACPI0007")
-                        Name(_UID, 0x6)
-                    }
-                    Device(CPU7)
-                    {
-                        Name(_HID, "ACPI0007")
-                        Name(_UID, 0x7)
-                    }
-                }
-            }
+            Name(_HID, "ACPI0007")
+            Name(_UID, Zero)
+        }
+        Device(CPU1)
+        {
+            Name(_HID, "ACPI0007")
+            Name(_UID, One)
+        }
+        Device(CPU2)
+        {
+            Name(_HID, "ACPI0007")
+            Name(_UID, 0x2)
+        }
+        Device(CPU3)
+        {
+            Name(_HID, "ACPI0007")
+            Name(_UID, 0x3)
+        }
+        Device(CPU4)
+        {
+            Name(_HID, "ACPI0007")
+            Name(_UID, 0x4)
+        }
+        Device(CPU5)
+        {
+            Name(_HID, "ACPI0007")
+            Name(_UID, 0x5)
+        }
+        Device(CPU6)
+        {
+            Name(_HID, "ACPI0007")
+            Name(_UID, 0x6)
+        }
+        Device(CPU7)
+        {
+            Name(_HID, "ACPI0007")
+            Name(_UID, 0x7)
         }
         Device(GPS_)
         {
@@ -35886,45 +31849,27 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
         {
             Name(_HID, "QCOM2487")
         }
-        Device(TECC)
-        {
-            Name(_HID, "MSHW1024")
-            Name(_UID, Zero)
-            Name(_DEP, Package(0x1)
-            {
-                \_SB_.PEP0
-            })
-        }
         Device(TSC1)
         {
             Name(_HID, "MSHW1003")
             Name(_UID, One)
-            Name(_DEP, Package(0x2)
+            Name(_DEP, Package(0x1)
             {
-                \_SB_.PEP0,
-                \_SB_.TECC
+                \_SB_.PEP0
             })
             Method(_CRS, 0x0, NotSerialized)
             {
-                Name(RBUF, Buffer(0x64)
+                Name(RBUF, Buffer(0x6c)
                 {
-	0x8e, 0x19, 0x00, 0x01, 0x00, 0x01, 0x02, 0x00, 0x00, 0x01, 0x06, 0x00,
-	0x80, 0x1a, 0x06, 0x00, 0x4b, 0x00, 0x5c, 0x5f, 0x53, 0x42, 0x2e, 0x49,
-	0x32, 0x43, 0x31, 0x00, 0x8c, 0x20, 0x00, 0x01, 0x00, 0x01, 0x00, 0x13,
-	0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x17, 0x00, 0x00, 0x19, 0x00, 0x23,
-	0x00, 0x00, 0x00, 0x4d, 0x00, 0x5c, 0x5f, 0x53, 0x42, 0x2e, 0x47, 0x49,
-	0x4f, 0x30, 0x00, 0x8c, 0x20, 0x00, 0x01, 0x01, 0x01, 0x00, 0x00, 0x00,
-	0x03, 0x00, 0x00, 0x00, 0x00, 0x17, 0x00, 0x00, 0x19, 0x00, 0x23, 0x00,
-	0x00, 0x00, 0x26, 0x00, 0x5c, 0x5f, 0x53, 0x42, 0x2e, 0x47, 0x49, 0x4f,
-	0x30, 0x00, 0x79, 0x00
-                })
-                Return(RBUF)
-            }
-            Method(INFO, 0x0, NotSerialized)
-            {
-                Name(RBUF, Buffer(0x4)
-                {
-	0x0f, 0x01, 0x00, 0x00
+	0x8e, 0x21, 0x00, 0x01, 0x00, 0x01, 0x02, 0x00, 0x00, 0x01, 0x0e, 0x00,
+	0x80, 0x1a, 0x06, 0x00, 0x20, 0x00, 0x50, 0xc3, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x5c, 0x5f, 0x53, 0x42, 0x2e, 0x49, 0x32, 0x43, 0x32, 0x00,
+	0x8c, 0x20, 0x00, 0x01, 0x00, 0x01, 0x00, 0x13, 0x00, 0x01, 0x00, 0x00,
+	0x00, 0x00, 0x17, 0x00, 0x00, 0x19, 0x00, 0x23, 0x00, 0x00, 0x00, 0x16,
+	0x00, 0x5c, 0x5f, 0x53, 0x42, 0x2e, 0x47, 0x49, 0x4f, 0x30, 0x00, 0x8c,
+	0x20, 0x00, 0x01, 0x01, 0x01, 0x00, 0x00, 0x00, 0x03, 0x00, 0x00, 0x00,
+	0x00, 0x17, 0x00, 0x00, 0x19, 0x00, 0x23, 0x00, 0x00, 0x00, 0x08, 0x00,
+	0x5c, 0x5f, 0x53, 0x42, 0x2e, 0x47, 0x49, 0x4f, 0x30, 0x00, 0x79, 0x00
                 })
                 Return(RBUF)
             }
@@ -35994,10 +31939,10 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
             Name(_UID, Zero)
             Name(_TZD, Package(0x4)
             {
-                \_SB_.SYSM.APC0.CL0.CPU0,
-                \_SB_.SYSM.APC0.CL0.CPU1,
-                \_SB_.SYSM.APC0.CL0.CPU2,
-                \_SB_.SYSM.APC0.CL0.CPU3
+                \_SB_.CPU0,
+                \_SB_.CPU1,
+                \_SB_.CPU2,
+                \_SB_.CPU3
             })
             Method(_PSV, 0x0, NotSerialized)
             {
@@ -36084,8 +32029,8 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
             Name(_UID, Zero)
             Name(_TZD, Package(0x2)
             {
-                \_SB_.SYSM.APC0.CL1.CPU4,
-                \_SB_.SYSM.APC0.CL1.CPU5
+                \_SB_.CPU4,
+                \_SB_.CPU5
             })
             Method(_PSV, 0x0, NotSerialized)
             {
@@ -36259,12 +32204,12 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
             Name(_UID, Zero)
             Name(_TZD, Package(0x8)
             {
-                \_SB_.SYSM.APC0.CL0.CPU0,
-                \_SB_.SYSM.APC0.CL0.CPU1,
-                \_SB_.SYSM.APC0.CL0.CPU2,
-                \_SB_.SYSM.APC0.CL0.CPU3,
-                \_SB_.SYSM.APC0.CL1.CPU4,
-                \_SB_.SYSM.APC0.CL1.CPU5,
+                \_SB_.CPU0,
+                \_SB_.CPU1,
+                \_SB_.CPU2,
+                \_SB_.CPU3,
+                \_SB_.CPU4,
+                \_SB_.CPU5,
                 \_SB_.PEP0,
                 \_SB_.AMSS
             })
@@ -36290,12 +32235,12 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
             Name(_UID, Zero)
             Name(_TZD, Package(0xa)
             {
-                \_SB_.SYSM.APC0.CL0.CPU0,
-                \_SB_.SYSM.APC0.CL0.CPU1,
-                \_SB_.SYSM.APC0.CL0.CPU2,
-                \_SB_.SYSM.APC0.CL0.CPU3,
-                \_SB_.SYSM.APC0.CL1.CPU4,
-                \_SB_.SYSM.APC0.CL1.CPU5,
+                \_SB_.CPU0,
+                \_SB_.CPU1,
+                \_SB_.CPU2,
+                \_SB_.CPU3,
+                \_SB_.CPU4,
+                \_SB_.CPU5,
                 \_SB_.PEP0,
                 \_SB_.AMSS,
                 \_SB_.DISP,
@@ -36323,12 +32268,12 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
             Name(_UID, Zero)
             Name(_TZD, Package(0xa)
             {
-                \_SB_.SYSM.APC0.CL0.CPU0,
-                \_SB_.SYSM.APC0.CL0.CPU1,
-                \_SB_.SYSM.APC0.CL0.CPU2,
-                \_SB_.SYSM.APC0.CL0.CPU3,
-                \_SB_.SYSM.APC0.CL1.CPU4,
-                \_SB_.SYSM.APC0.CL1.CPU5,
+                \_SB_.CPU0,
+                \_SB_.CPU1,
+                \_SB_.CPU2,
+                \_SB_.CPU3,
+                \_SB_.CPU4,
+                \_SB_.CPU5,
                 \_SB_.PEP0,
                 \_SB_.AMSS,
                 \_SB_.DISP,
@@ -36889,12 +32834,12 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
             Name(_UID, 0x9)
             Name(_TZD, Package(0x7)
             {
-                \_SB_.SYSM.APC0.CL0.CPU0,
-                \_SB_.SYSM.APC0.CL0.CPU1,
-                \_SB_.SYSM.APC0.CL0.CPU2,
-                \_SB_.SYSM.APC0.CL0.CPU3,
-                \_SB_.SYSM.APC0.CL1.CPU4,
-                \_SB_.SYSM.APC0.CL1.CPU5,
+                \_SB_.CPU0,
+                \_SB_.CPU1,
+                \_SB_.CPU2,
+                \_SB_.CPU3,
+                \_SB_.CPU4,
+                \_SB_.CPU5,
                 \_SB_.GPU0
             })
             Method(_PSV, 0x0, NotSerialized)
@@ -36962,12 +32907,12 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
             Name(_UID, One)
             Name(_TZD, Package(0xb)
             {
-                \_SB_.SYSM.APC0.CL0.CPU0,
-                \_SB_.SYSM.APC0.CL0.CPU1,
-                \_SB_.SYSM.APC0.CL0.CPU2,
-                \_SB_.SYSM.APC0.CL0.CPU3,
-                \_SB_.SYSM.APC0.CL1.CPU4,
-                \_SB_.SYSM.APC0.CL1.CPU5,
+                \_SB_.CPU0,
+                \_SB_.CPU1,
+                \_SB_.CPU2,
+                \_SB_.CPU3,
+                \_SB_.CPU4,
+                \_SB_.CPU5,
                 \_SB_.PEP0,
                 \_SB_.AMSS,
                 \_SB_.DISP,
@@ -37000,12 +32945,12 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
             Name(_UID, Zero)
             Name(_TZD, Package(0x6)
             {
-                \_SB_.SYSM.APC0.CL0.CPU0,
-                \_SB_.SYSM.APC0.CL0.CPU1,
-                \_SB_.SYSM.APC0.CL0.CPU2,
-                \_SB_.SYSM.APC0.CL0.CPU3,
-                \_SB_.SYSM.APC0.CL1.CPU4,
-                \_SB_.SYSM.APC0.CL1.CPU5
+                \_SB_.CPU0,
+                \_SB_.CPU1,
+                \_SB_.CPU2,
+                \_SB_.CPU3,
+                \_SB_.CPU4,
+                \_SB_.CPU5
             })
             Method(_PSV, 0x0, NotSerialized)
             {
@@ -37029,8 +32974,8 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
             Name(_UID, 0x2)
             Name(_TZD, Package(0x2)
             {
-                \_SB_.SYSM.APC0.CL1.CPU4,
-                \_SB_.SYSM.APC0.CL1.CPU5
+                \_SB_.CPU4,
+                \_SB_.CPU5
             })
             Method(_PSV, 0x0, NotSerialized)
             {
@@ -37093,10 +33038,10 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
             Name(_UID, 0x3)
             Name(_TZD, Package(0x4)
             {
-                \_SB_.SYSM.APC0.CL0.CPU0,
-                \_SB_.SYSM.APC0.CL0.CPU1,
-                \_SB_.SYSM.APC0.CL0.CPU2,
-                \_SB_.SYSM.APC0.CL0.CPU3
+                \_SB_.CPU0,
+                \_SB_.CPU1,
+                \_SB_.CPU2,
+                \_SB_.CPU3
             })
             Method(_PSV, 0x0, NotSerialized)
             {
@@ -37159,12 +33104,12 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
             Name(_UID, 0x4)
             Name(_TZD, Package(0x7)
             {
-                \_SB_.SYSM.APC0.CL0.CPU0,
-                \_SB_.SYSM.APC0.CL0.CPU1,
-                \_SB_.SYSM.APC0.CL0.CPU2,
-                \_SB_.SYSM.APC0.CL0.CPU3,
-                \_SB_.SYSM.APC0.CL1.CPU4,
-                \_SB_.SYSM.APC0.CL1.CPU5,
+                \_SB_.CPU0,
+                \_SB_.CPU1,
+                \_SB_.CPU2,
+                \_SB_.CPU3,
+                \_SB_.CPU4,
+                \_SB_.CPU5,
                 \_SB_.PEP0
             })
             Method(_PSV, 0x0, NotSerialized)
@@ -37193,12 +33138,12 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
             Name(_UID, Zero)
             Name(_TZD, Package(0x7)
             {
-                \_SB_.SYSM.APC0.CL0.CPU0,
-                \_SB_.SYSM.APC0.CL0.CPU1,
-                \_SB_.SYSM.APC0.CL0.CPU2,
-                \_SB_.SYSM.APC0.CL0.CPU3,
-                \_SB_.SYSM.APC0.CL1.CPU4,
-                \_SB_.SYSM.APC0.CL1.CPU5,
+                \_SB_.CPU0,
+                \_SB_.CPU1,
+                \_SB_.CPU2,
+                \_SB_.CPU3,
+                \_SB_.CPU4,
+                \_SB_.CPU5,
                 \_SB_.PEP0
             })
             Method(_PSV, 0x0, NotSerialized)
@@ -37262,12 +33207,12 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
             Name(_UID, 0x64)
             Name(_TZD, Package(0xd)
             {
-                \_SB_.SYSM.APC0.CL0.CPU0,
-                \_SB_.SYSM.APC0.CL0.CPU1,
-                \_SB_.SYSM.APC0.CL0.CPU2,
-                \_SB_.SYSM.APC0.CL0.CPU3,
-                \_SB_.SYSM.APC0.CL1.CPU4,
-                \_SB_.SYSM.APC0.CL1.CPU5,
+                \_SB_.CPU0,
+                \_SB_.CPU1,
+                \_SB_.CPU2,
+                \_SB_.CPU3,
+                \_SB_.CPU4,
+                \_SB_.CPU5,
                 \_SB_.PEP0,
                 \_SB_.AMSS,
                 \_SB_.DISP,
@@ -37763,12 +33708,12 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
             Name(_UID, 0x9)
             Name(_TZD, Package(0x7)
             {
-                \_SB_.SYSM.APC0.CL0.CPU0,
-                \_SB_.SYSM.APC0.CL0.CPU1,
-                \_SB_.SYSM.APC0.CL0.CPU2,
-                \_SB_.SYSM.APC0.CL0.CPU3,
-                \_SB_.SYSM.APC0.CL1.CPU4,
-                \_SB_.SYSM.APC0.CL1.CPU5,
+                \_SB_.CPU0,
+                \_SB_.CPU1,
+                \_SB_.CPU2,
+                \_SB_.CPU3,
+                \_SB_.CPU4,
+                \_SB_.CPU5,
                 \_SB_.GPU0
             })
             Method(_PSV, 0x0, NotSerialized)
@@ -37836,8 +33781,8 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
             Name(_UID, Zero)
             Name(_TZD, Package(0x2)
             {
-                \_SB_.SYSM.APC0.CL1.CPU4,
-                \_SB_.SYSM.APC0.CL1.CPU5
+                \_SB_.CPU4,
+                \_SB_.CPU5
             })
             Method(_PSV, 0x0, NotSerialized)
             {
@@ -37905,7 +33850,7 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
             Name(_UID, 0x1b)
             Method(_CRS, 0x0, NotSerialized)
             {
-                Name(RBUF, Buffer(0x181)
+                Name(RBUF, Buffer(0xf5)
                 {
 	0x86, 0x09, 0x00, 0x01, 0x00, 0xc0, 0xa0, 0xfd, 0xff, 0x3f, 0x00, 0x00,
 	0x86, 0x09, 0x00, 0x01, 0x00, 0x00, 0xa0, 0xfd, 0x47, 0x00, 0x00, 0x00,
@@ -37917,35 +33862,23 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
 	0x00, 0x19, 0x00, 0x23, 0x00, 0x00, 0x00, 0x5b, 0x00, 0x5c, 0x5f, 0x53,
 	0x42, 0x2e, 0x47, 0x49, 0x4f, 0x30, 0x00, 0x8c, 0x20, 0x00, 0x01, 0x01,
 	0x01, 0x00, 0x00, 0x00, 0x03, 0x00, 0x00, 0x00, 0x00, 0x17, 0x00, 0x00,
-	0x19, 0x00, 0x23, 0x00, 0x00, 0x00, 0x66, 0x00, 0x5c, 0x5f, 0x53, 0x42,
+	0x19, 0x00, 0x23, 0x00, 0x00, 0x00, 0x5e, 0x00, 0x5c, 0x5f, 0x53, 0x42,
 	0x2e, 0x47, 0x49, 0x4f, 0x30, 0x00, 0x8c, 0x20, 0x00, 0x01, 0x01, 0x01,
 	0x00, 0x00, 0x00, 0x03, 0x00, 0x00, 0x00, 0x00, 0x17, 0x00, 0x00, 0x19,
-	0x00, 0x23, 0x00, 0x00, 0x00, 0x6a, 0x00, 0x5c, 0x5f, 0x53, 0x42, 0x2e,
+	0x00, 0x23, 0x00, 0x00, 0x00, 0x5d, 0x00, 0x5c, 0x5f, 0x53, 0x42, 0x2e,
 	0x47, 0x49, 0x4f, 0x30, 0x00, 0x8c, 0x20, 0x00, 0x01, 0x01, 0x01, 0x00,
 	0x00, 0x00, 0x03, 0x00, 0x00, 0x00, 0x00, 0x17, 0x00, 0x00, 0x19, 0x00,
 	0x23, 0x00, 0x00, 0x00, 0x68, 0x00, 0x5c, 0x5f, 0x53, 0x42, 0x2e, 0x47,
 	0x49, 0x4f, 0x30, 0x00, 0x8c, 0x20, 0x00, 0x01, 0x01, 0x01, 0x00, 0x00,
 	0x00, 0x03, 0x00, 0x00, 0x00, 0x00, 0x17, 0x00, 0x00, 0x19, 0x00, 0x23,
 	0x00, 0x00, 0x00, 0x69, 0x00, 0x5c, 0x5f, 0x53, 0x42, 0x2e, 0x47, 0x49,
-	0x4f, 0x30, 0x00, 0x8c, 0x20, 0x00, 0x01, 0x01, 0x01, 0x00, 0x00, 0x00,
-	0x03, 0x00, 0x00, 0x00, 0x00, 0x17, 0x00, 0x00, 0x19, 0x00, 0x23, 0x00,
-	0x00, 0x00, 0x0c, 0x00, 0x5c, 0x5f, 0x53, 0x42, 0x2e, 0x47, 0x49, 0x4f,
-	0x30, 0x00, 0x8c, 0x20, 0x00, 0x01, 0x01, 0x01, 0x00, 0x00, 0x00, 0x03,
-	0x00, 0x00, 0x00, 0x00, 0x17, 0x00, 0x00, 0x19, 0x00, 0x23, 0x00, 0x00,
-	0x00, 0x08, 0x00, 0x5c, 0x5f, 0x53, 0x42, 0x2e, 0x47, 0x49, 0x4f, 0x30,
-	0x00, 0x8c, 0x20, 0x00, 0x01, 0x01, 0x01, 0x00, 0x00, 0x00, 0x03, 0x00,
-	0x00, 0x00, 0x00, 0x17, 0x00, 0x00, 0x19, 0x00, 0x23, 0x00, 0x00, 0x00,
-	0x15, 0x00, 0x5c, 0x5f, 0x53, 0x42, 0x2e, 0x47, 0x49, 0x4f, 0x30, 0x00,
-	0x8c, 0x20, 0x00, 0x01, 0x01, 0x01, 0x00, 0x00, 0x00, 0x02, 0x00, 0x00,
-	0x00, 0x00, 0x17, 0x00, 0x00, 0x19, 0x00, 0x23, 0x00, 0x00, 0x00, 0x08,
-	0x05, 0x5c, 0x5f, 0x53, 0x42, 0x2e, 0x50, 0x4d, 0x30, 0x32, 0x00, 0x79,
-	0x00
+	0x4f, 0x30, 0x00, 0x79, 0x00
                 })
                 Return(RBUF)
             }
             Method(INFO, 0x0, NotSerialized)
             {
-                Return(0x60000)
+                Return(0x10300)
             }
         }
         Device(CAMS)
@@ -38081,72 +34014,6 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
                 }
             }
         }
-        Device(CAMT)
-        {
-            Name(_DEP, Package(0x3)
-            {
-                \_SB_.CAMP,
-                \_SB_.PEP0,
-                \_SB_.CAMF
-            })
-            Name(_HID, "QCOM2436")
-            Name(_UID, 0x1c)
-            Method(_CRS, 0x0, NotSerialized)
-            {
-                Name(RBUF, Buffer(0x17)
-                {
-	0x86, 0x09, 0x00, 0x01, 0x00, 0x8c, 0xa0, 0xfd, 0xff, 0x03, 0x00, 0x00,
-	0x89, 0x06, 0x00, 0x03, 0x01, 0x56, 0x00, 0x00, 0x00, 0x79, 0x00
-                })
-                Return(RBUF)
-            }
-            Name(PGID, Buffer(0xa)
-            {
-	0x5c, 0x5f, 0x53, 0x42, 0x2e, 0x43, 0x41, 0x4d, 0x54, 0x00
-            })
-            Name(DBUF, Buffer(DBFL)
-            {
-            })
-            CreateByteField(DBUF, Zero, STAT)
-            CreateByteField(DBUF, 0x2, DVAL)
-            CreateField(DBUF, 0x18, 0xa0, DEID)
-            Method(_S1D, 0x0, NotSerialized)
-            {
-                Return(0x3)
-            }
-            Method(_S2D, 0x0, NotSerialized)
-            {
-                Return(0x3)
-            }
-            Method(_S3D, 0x0, NotSerialized)
-            {
-                Return(0x3)
-            }
-            Method(_PS0, 0x0, NotSerialized)
-            {
-                Store(Buffer(ESNL)
-                {
-                }, DEID)
-                Store(Zero, DVAL)
-                Store(PGID, DEID)
-                If(\_SB_.ABD_.AVBL)
-                {
-                    Store(DBUF, \_SB_.PEP0.FLD0)
-                }
-            }
-            Method(_PS3, 0x0, NotSerialized)
-            {
-                Store(Buffer(ESNL)
-                {
-                }, DEID)
-                Store(0x3, DVAL)
-                Store(PGID, DEID)
-                If(\_SB_.ABD_.AVBL)
-                {
-                    Store(DBUF, \_SB_.PEP0.FLD0)
-                }
-            }
-        }
         Device(FLSH)
         {
             Name(_DEP, Package(0x3)
@@ -38162,36 +34029,6 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
                 Name(RBUF, Buffer(0x2)
                 {
 	0x79, 0x00
-                })
-                Return(RBUF)
-            }
-        }
-        Device(FLHT)
-        {
-            Name(_DEP, Package(0x3)
-            {
-                \_SB_.CAMT,
-                \_SB_.PEP0,
-                \_SB_.FLSH
-            })
-            Name(_HID, "QCOM244C")
-            Name(_UID, 0x1d)
-            Method(_CRS, 0x0, NotSerialized)
-            {
-                Name(RBUF, Buffer(0x8e)
-                {
-	0x8c, 0x20, 0x00, 0x01, 0x00, 0x01, 0x00, 0x08, 0x00, 0x02, 0x00, 0x00,
-	0x00, 0x00, 0x17, 0x00, 0x00, 0x19, 0x00, 0x23, 0x00, 0x00, 0x00, 0x9f,
-	0x0e, 0x5c, 0x5f, 0x53, 0x42, 0x2e, 0x50, 0x4d, 0x30, 0x32, 0x00, 0x8c,
-	0x20, 0x00, 0x01, 0x00, 0x01, 0x00, 0x08, 0x00, 0x02, 0x00, 0x00, 0x00,
-	0x00, 0x17, 0x00, 0x00, 0x19, 0x00, 0x23, 0x00, 0x00, 0x00, 0x9e, 0x0e,
-	0x5c, 0x5f, 0x53, 0x42, 0x2e, 0x50, 0x4d, 0x30, 0x32, 0x00, 0x8c, 0x20,
-	0x00, 0x01, 0x01, 0x01, 0x00, 0x08, 0x00, 0x02, 0x00, 0x00, 0x00, 0x00,
-	0x17, 0x00, 0x00, 0x19, 0x00, 0x23, 0x00, 0x00, 0x00, 0x9f, 0x0e, 0x5c,
-	0x5f, 0x53, 0x42, 0x2e, 0x50, 0x4d, 0x30, 0x32, 0x00, 0x8c, 0x20, 0x00,
-	0x01, 0x01, 0x01, 0x00, 0x08, 0x00, 0x02, 0x00, 0x00, 0x00, 0x00, 0x17,
-	0x00, 0x00, 0x19, 0x00, 0x23, 0x00, 0x00, 0x00, 0x9e, 0x0e, 0x5c, 0x5f,
-	0x53, 0x42, 0x2e, 0x50, 0x4d, 0x30, 0x32, 0x00, 0x79, 0x00
                 })
                 Return(RBUF)
             }
@@ -38256,24 +34093,18 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
             Name(_UID, Zero)
             Method(_CRS, 0x0, NotSerialized)
             {
-                Name(RBUF, Buffer(0xba)
+                Name(RBUF, Buffer(0x6e)
                 {
-	0x8c, 0x20, 0x00, 0x01, 0x00, 0x01, 0x00, 0x0d, 0x00, 0x02, 0x00, 0x00,
+	0x8c, 0x20, 0x00, 0x01, 0x00, 0x01, 0x00, 0x05, 0x00, 0x02, 0x00, 0x00,
 	0x00, 0x00, 0x17, 0x00, 0x00, 0x19, 0x00, 0x23, 0x00, 0x00, 0x00, 0x40,
 	0x00, 0x5c, 0x5f, 0x53, 0x42, 0x2e, 0x50, 0x4d, 0x30, 0x31, 0x00, 0x8c,
 	0x23, 0x00, 0x01, 0x00, 0x01, 0x00, 0x1d, 0x00, 0x01, 0x00, 0x00, 0x00,
 	0x00, 0x17, 0x00, 0x00, 0x19, 0x00, 0x23, 0x00, 0x03, 0x00, 0x10, 0x06,
 	0x5c, 0x5f, 0x53, 0x42, 0x2e, 0x50, 0x4d, 0x30, 0x31, 0x00, 0x40, 0x40,
-	0x40, 0x8c, 0x20, 0x00, 0x01, 0x00, 0x01, 0x00, 0x1d, 0x00, 0x02, 0x00,
+	0x40, 0x8c, 0x20, 0x00, 0x01, 0x00, 0x01, 0x00, 0x15, 0x00, 0x02, 0x00,
 	0x00, 0x00, 0x00, 0x17, 0x00, 0x00, 0x19, 0x00, 0x23, 0x00, 0x00, 0x00,
 	0x41, 0x00, 0x5c, 0x5f, 0x53, 0x42, 0x2e, 0x50, 0x4d, 0x30, 0x31, 0x00,
-	0x8c, 0x23, 0x00, 0x01, 0x00, 0x01, 0x00, 0x0d, 0x00, 0x01, 0x00, 0x00,
-	0x00, 0x00, 0x17, 0x00, 0x00, 0x19, 0x00, 0x23, 0x00, 0x03, 0x00, 0x20,
-	0x06, 0x5c, 0x5f, 0x53, 0x42, 0x2e, 0x50, 0x4d, 0x30, 0x31, 0x00, 0x40,
-	0x40, 0x01, 0x8c, 0x23, 0x00, 0x01, 0x00, 0x01, 0x00, 0x1d, 0x00, 0x01,
-	0x00, 0x00, 0x00, 0x00, 0x17, 0x00, 0x00, 0x19, 0x00, 0x23, 0x00, 0x03,
-	0x00, 0x18, 0x06, 0x5c, 0x5f, 0x53, 0x42, 0x2e, 0x50, 0x4d, 0x30, 0x31,
-	0x00, 0x40, 0x40, 0x01, 0x79, 0x00
+	0x79, 0x00
                 })
                 Return(RBUF)
             }
@@ -38284,7 +34115,7 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
 	0x25, 0xd6, 0x6b, 0xfa, 0xe8, 0x9c, 0x0d, 0x47, 0xa2, 0xc7, 0xb3, 0xca,
 	0x36, 0xc4, 0x28, 0x2e
                 },
-                Package(0x6)
+                Package(0x4)
                 {
                     Package(0x5)
                     {
@@ -38317,22 +34148,6 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
                         One,
                         0xc,
                         0xea
-                    },
-                    Package(0x5)
-                    {
-                        One,
-                        0x3,
-                        One,
-                        0x90,
-                        0x20
-                    },
-                    Package(0x5)
-                    {
-                        One,
-                        0x4,
-                        One,
-                        0x90,
-                        0x21
                     }
                 }
             })
@@ -38341,10 +34156,6 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
         {
             Name(_HID, "QCOM24A4")
             Name(_UID, One)
-            Name(_DEP, Package (One)
-            {
-                \_SB_.PMIC
-            })
             Method(_CRS, 0x0, NotSerialized)
             {
                 Name(NAM_, Buffer(0xa)
@@ -38376,7 +34187,7 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
                 {
                     One,
                     One,
-                    One
+                    Zero
                 })
                 Return(CFG0)
             }
@@ -38384,23 +34195,23 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
             {
                 Name(CFG0, Package(0x14)
                 {
-                    One,
-                    0xe6,
-                    One,
-                    One,
+                    Zero,
+                    0x11a,
+                    Zero,
                     One,
                     One,
                     One,
                     One,
                     Zero,
-                    Zero,
-                    Zero,
+                    0x2,
+                    One,
+                    0x3,
                     0x14,
                     One,
-                    0xff,
+                    0x1b,
                     Zero,
                     One,
-                    0x14,
+                    0x6,
                     Zero,
                     Zero,
                     0x3cf
@@ -38527,9 +34338,9 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
             {
                 Name(RBUF, Package(0x3)
                 {
-                    "1 0 0",
                     "0 1 0",
-                    "0 0 1"
+                    "1 0 0",
+                    "0 0 -1"
                 })
                 Return(RBUF)
             }
@@ -38537,9 +34348,9 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
             {
                 Name(RBUF, Package(0x3)
                 {
-                    "1 0 0",
                     "0 1 0",
-                    "0 0 1"
+                    "1 0 0",
+                    "0 0 -1"
                 })
                 Return(RBUF)
             }
@@ -38547,8 +34358,8 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
             {
                 Name(RBUF, Package(0x3)
                 {
-                    "1 0 0",
-                    "0 1 0",
+                    "-1 0 0",
+                    "0 -1 0",
                     "0 0 1"
                 })
                 Return(RBUF)
@@ -38580,8 +34391,8 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
 	0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x17, 0x00, 0x00, 0x19, 0x00, 0x23,
 	0x00, 0x00, 0x00, 0x09, 0x00, 0x5c, 0x5f, 0x53, 0x42, 0x2e, 0x47, 0x49,
 	0x4f, 0x30, 0x00, 0x8c, 0x20, 0x00, 0x01, 0x01, 0x01, 0x00, 0x00, 0x00,
-	0x03, 0x00, 0x00, 0x00, 0x00, 0x17, 0x00, 0x00, 0x19, 0x00, 0x23, 0x00,
-	0x00, 0x00, 0x5d, 0x00, 0x5c, 0x5f, 0x53, 0x42, 0x2e, 0x47, 0x49, 0x4f,
+	0x01, 0x00, 0x00, 0x00, 0x00, 0x17, 0x00, 0x00, 0x19, 0x00, 0x23, 0x00,
+	0x00, 0x00, 0x3e, 0x00, 0x5c, 0x5f, 0x53, 0x42, 0x2e, 0x47, 0x49, 0x4f,
 	0x30, 0x00, 0x79, 0x00
                 })
                 Return(RBUF)
@@ -38630,9 +34441,12 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
                 \_SB_.PEP0,
                 \_SB_.BAMD
             })
-            Name(_CRS, Buffer(0xe)
+            Name(_CRS, Buffer(0x32)
             {
 	0x86, 0x09, 0x00, 0x01, 0x00, 0x00, 0x20, 0xf9, 0xff, 0xff, 0x0f, 0x00,
+	0x8c, 0x21, 0x00, 0x01, 0x00, 0x01, 0x00, 0x05, 0x00, 0x01, 0x00, 0x00,
+	0x00, 0x00, 0x17, 0x00, 0x00, 0x19, 0x00, 0x23, 0x00, 0x01, 0x00, 0x9e,
+	0x00, 0x5c, 0x5f, 0x53, 0x42, 0x2e, 0x50, 0x4d, 0x30, 0x32, 0x00, 0x80,
 	0x79, 0x00
             })
             Device(USB0)
@@ -38649,17 +34463,17 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
             {
                 Name(_ADR, One)
                 Name(_S0W, 0x3)
-                Name(_UPC, Package(0x4)
-                {
-                    One,
-                    0x9,
-                    Zero,
-                    Zero
-                })
-                Name(_CRS, Buffer(0x14)
+                Name(_CRS, Buffer(0x62)
                 {
 	0x89, 0x06, 0x00, 0x09, 0x01, 0xa3, 0x00, 0x00, 0x00, 0x89, 0x06, 0x00,
-	0x19, 0x01, 0xd4, 0x00, 0x00, 0x00, 0x79, 0x00
+	0x19, 0x01, 0xd4, 0x00, 0x00, 0x00, 0x8c, 0x24, 0x00, 0x01, 0x00, 0x01,
+	0x00, 0x15, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x17, 0x00, 0x00, 0x19,
+	0x00, 0x23, 0x00, 0x04, 0x00, 0x02, 0x10, 0x5c, 0x5f, 0x53, 0x42, 0x2e,
+	0x50, 0x4d, 0x30, 0x32, 0x00, 0x21, 0x01, 0x02, 0x1a, 0x8c, 0x24, 0x00,
+	0x01, 0x00, 0x01, 0x00, 0x15, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x17,
+	0x00, 0x00, 0x19, 0x00, 0x23, 0x00, 0x04, 0x00, 0x01, 0x10, 0x5c, 0x5f,
+	0x53, 0x42, 0x2e, 0x50, 0x4d, 0x30, 0x32, 0x00, 0x20, 0x01, 0x02, 0x1a,
+	0x79, 0x00
                 })
                 Method(_DSM, 0x4, NotSerialized)
                 {
@@ -38679,13 +34493,13 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
                             While(One)
                             {
                                 Name(_T_1, 0x0)
-                                Store(ToInteger(Arg2, ), _T_1)
+                                Store(Arg2, _T_1)
                                 If(LEqual(_T_1, Zero))
                                 {
                                     While(One)
                                     {
                                         Name(_T_2, 0x0)
-                                        Store(ToInteger(Arg1, ), _T_2)
+                                        Store(Arg1, _T_2)
                                         If(LEqual(_T_2, Zero))
                                         {
                                             Return(Buffer(One)
@@ -38740,13 +34554,13 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
                                 While(One)
                                 {
                                     Name(_T_3, 0x0)
-                                    Store(ToInteger(Arg2, ), _T_3)
+                                    Store(Arg2, _T_3)
                                     If(LEqual(_T_3, Zero))
                                     {
                                         While(One)
                                         {
                                             Name(_T_4, 0x0)
-                                            Store(ToInteger(Arg1, ), _T_4)
+                                            Store(Arg1, _T_4)
                                             If(LEqual(_T_4, Zero))
                                             {
                                                 Return(Buffer(One)
@@ -38894,13 +34708,13 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
                         While(One)
                         {
                             Name(_T_1, 0x0)
-                            Store(ToInteger(Arg2, ), _T_1)
+                            Store(Arg2, _T_1)
                             If(LEqual(_T_1, Zero))
                             {
                                 While(One)
                                 {
                                     Name(_T_2, 0x0)
-                                    Store(ToInteger(Arg1, ), _T_2)
+                                    Store(Arg1, _T_2)
                                     If(LEqual(_T_2, Zero))
                                     {
                                         Return(Buffer(One)
@@ -38955,13 +34769,13 @@ DefinitionBlock("dsdt.aml", "DSDT", 0x02, "QCOMM ", "MSM8992 ", 0x00000003)
                             While(One)
                             {
                                 Name(_T_3, 0x0)
-                                Store(ToInteger(Arg2, ), _T_3)
+                                Store(Arg2, _T_3)
                                 If(LEqual(_T_3, Zero))
                                 {
                                     While(One)
                                     {
                                         Name(_T_4, 0x0)
-                                        Store(ToInteger(Arg1, ), _T_4)
+                                        Store(Arg1, _T_4)
                                         If(LEqual(_T_4, Zero))
                                         {
                                             Return(Buffer(One)

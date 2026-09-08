@@ -147,5 +147,5 @@ VOID PlatformInitialize()
 
   /* Display refresh gets disabled by the stock bootloader.
   Enable it so that we'll get a proper framebuffer */
-  DisplayEnableRefresh();
+  DisplayEnableRefresh(); //TODO: Check cmd mode vs video mode and apply accordingly
 }
