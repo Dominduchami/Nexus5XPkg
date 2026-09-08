@@ -73,6 +73,15 @@
   gArmTokenSpaceGuid.PcdPciMmio64Base|0xFFFFFFFFFFFFFFFF
   gArmTokenSpaceGuid.PcdPciMmio64Size|0
 
+  gEfiMdeModulePkgTokenSpaceGuid.PcdPciDisableBusEnumeration|FALSE
+  gEfiMdeModulePkgTokenSpaceGuid.PcdPcieResizableBarSupport|FALSE
+  gEfiMdeModulePkgTokenSpaceGuid.PcdSrIovSupport|FALSE
+
+[PcdsFeatureFlag.common]
+  gQcomTokenSpaceGuid.PcdInstallRpmProtocol|TRUE
+  gEfiMdeModulePkgTokenSpaceGuid.PcdPciBusHotplugDeviceSupport|FALSE
+  gEfiMdeModulePkgTokenSpaceGuid.PcdPciDegradeResourceForOptionRom|TRUE
+
 [PcdsDynamicDefault.common]
   gEfiMdeModulePkgTokenSpaceGuid.PcdVideoHorizontalResolution|1080
   gEfiMdeModulePkgTokenSpaceGuid.PcdVideoVerticalResolution|1920
