@@ -28,7 +28,7 @@
 [Packages]
   ArmPkg/ArmPkg.dec
   MdeModulePkg/MdeModulePkg.dec
-  Lumia950XLPkg/Lumia950XLPkg.dec
+  Nexus5XPkg/Nexus5XPkg.dec
   MdePkg/MdePkg.dec
 
 [LibraryClasses]

@@ -91,5 +91,26 @@
   gEfiMdeModulePkgTokenSpaceGuid.PcdSetupConOutColumn|120
   gEfiMdeModulePkgTokenSpaceGuid.PcdConOutRow|160
   gEfiMdeModulePkgTokenSpaceGuid.PcdConOutColumn|120
+
+[LibraryClasses.common]
+  # PCIe things
+  PciLib|MdePkg/Library/BasePciLibPciExpress/BasePciLibPciExpress.inf
+  PciExpressLib|MdePkg/Library/BasePciExpressLib/BasePciExpressLib.inf
+  PciHostBridgeLib|Nexus5XPkg/Library/QcomPciHostBridgeLib/QcomPciHostBridgeLib.inf
+  PciSegmentLib|MdePkg/Library/BasePciSegmentLibPci/BasePciSegmentLibPci.inf
+  PciCapLib|OvmfPkg/Library/BasePciCapLib/BasePciCapLib.inf
+  PciCapPciSegmentLib|OvmfPkg/Library/BasePciCapPciSegmentLib/BasePciCapPciSegmentLib.inf
+
+[Components.common]
+  # PCIe things
+  ArmPkg/Drivers/ArmPciCpuIo2Dxe/ArmPciCpuIo2Dxe.inf
+  Nexus5XPkg/Driver/PciHostBridgeDxe/PciHostBridgeDxe.inf
+  MdeModulePkg/Bus/Pci/PciBusDxe/PciBusDxe.inf
+
+  # PCIe periph
+  MdeModulePkg/Bus/Pci/NvmExpressDxe/NvmExpressDxe.inf
+  MdeModulePkg/Bus/Pci/SataControllerDxe/SataControllerDxe.inf
+  MdeModulePkg/Bus/Pci/EhciDxe/EhciDxe.inf
+  MdeModulePkg/Bus/Pci/XhciDxe/XhciDxe.inf
   
 !include Nexus5XPkg/Shared.dsc.inc
