@@ -31,4 +31,4 @@ gzip -c < ./Build/Nexus6P-AARCH64/DEBUG_GCC5/FV/BootShimMSM8994_EFI.fd >./Build/
 
 cat ./Build/Nexus6P-AARCH64/DEBUG_GCC5/FV/BootShimMSM8994_EFI.fd.gz ./Nexus5XPkg/device-specific/msm8994-huawei-angler.dtb >Build/Nexus6P-AARCH64/DEBUG_GCC5/FV/Image.gz-dtb
 
-mkbootimg --kernel ./Build/Nexus6P-AARCH64/DEBUG_GCC5/FV/Image.gz-dtb --ramdisk ./Nexus5XPkg/device-specific/ramdisk-null --base 0x00000000 --pagesize 4096 --ramdisk_offset 0x02000000 --tags_offset 0x01e00000 -o ./Build/Nexus6P-AARCH64/DEBUG_GCC5/FV/uefi_angler.img
+python ./Nexus5XPkg/mkbootimg.py --kernel ./Build/Nexus6P-AARCH64/DEBUG_GCC5/FV/Image.gz-dtb --ramdisk ./Nexus5XPkg/device-specific/ramdisk-null --base 0x00000000 --pagesize 4096 --ramdisk_offset 0x02000000 --tags_offset 0x01e00000 -o ./Build/Nexus6P-AARCH64/DEBUG_GCC5/FV/uefi_angler.img
