@@ -89,7 +89,7 @@ function SetupEnv()
 function FixPermission()
 {
   if [ -d "Nexus5XPkg" ]; then
-   chmod +x Nexus5XPkg/Tools/*.ps1
+   chmod +x Nexus5XPkg/Tools/*.sh
    chmod +x Nexus5XPkg/Tools/PsModules/*.psm1
   fi
 }
@@ -104,11 +104,9 @@ function SourceEnv()
 function DevelopmentBuild()
 {
   if [ "$NEXUS6P" = TRUE ]; then
-    ./Nexus5XPkg/Tools/edk2-build.ps1
+    ./Nexus5XPkg/Tools/edk2-build.sh
   elif [ "$NEXUS5X" = TRUE ]; then
-    ./Nexus5XPkg/Tools/edk2-build.ps1
-  else
-    ./DragonboardPkg/Tools/edk2-build.ps1
+    ./Nexus5XPkg/Tools/edk2-build.sh
   fi
 
   if [ ! $? -eq 0 ]; then
@@ -121,11 +119,9 @@ function DevelopmentBuild()
 function CIBuild()
 {
   if [ "$NEXUS6P" = TRUE ]; then
-    ./Nexus5XPkg/Tools/edk2-build.ps1
+    ./Nexus5XPkg/Tools/edk2-build.sh
   elif [ "$NEXUS5X" = TRUE ]; then
-    ./Nexus5XPkg/Tools/edk2-build.ps1
-  else
-    ./DragonboardPkg/Tools/edk2-build.ps1
+    ./Nexus5XPkg/Tools/edk2-build.sh
   fi
 
   if [ ! $? -eq 0 ]; then
