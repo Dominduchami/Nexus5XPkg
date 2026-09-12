@@ -151,6 +151,8 @@ NUM_CPUS=$((`getconf _NPROCESSORS_ONLN` + 2))
 make clean -C ../edk2/BaseTools
 make -C ../edk2/BaseTools -j$(nproc)
 
+mkdir -p workspace
+
 platforms=()
 
 if [ "${DEVICE}" == 'All' ]
