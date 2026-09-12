@@ -1,10 +1,62 @@
-#include <PiDxe.h>
-
-#include <Library/LKEnvLib.h>
+#include <Library/BaseLib.h>
+#include <Library/IoLib.h>
 #include <Library/SerialPortLib.h>
-#include <Library/HobLib.h>
+#include <Library/MsmSerialDmPortLib.h>
 
-#include "uartdm_p.h"
+#define NON_PRINTABLE_ASCII_CHAR  128
+#define UART_DM_BASE ((UINT32)BLSP1_UART1_BASE)
+
+//
+// Pack up to 4 bytes from Buffer into a single 32-bit FIFO word,
+// translating '\n' -> '\r' '\n' the same way msm_boot_uart_dm_write does.
+//
+static
+UINT8
+PackCharsIntoWord (
+  IN  UINT8   *Buffer,
+  IN  UINT8   Count,
+  OUT UINT32  *Word
+  )
+{
+  UINT8  NumCharsWritten = 0;
+  UINT8  j;
+
+  *Word = 0;
+
+  for (j = 0; j < Count; j++) {
+    if (Buffer[NumCharsWritten] == '\n') {
+      *Word |= ((UINT32)'\r' & 0xff) << (j * 8);
+      Buffer[NumCharsWritten] = NON_PRINTABLE_ASCII_CHAR;
+    } else {
+      if (Buffer[NumCharsWritten] == NON_PRINTABLE_ASCII_CHAR) {
+        Buffer[NumCharsWritten] = '\n';
+      }
+
+      *Word |= ((UINT32)Buffer[NumCharsWritten] & 0xff) << (j * 8);
+      NumCharsWritten++;
+    }
+  }
+
+  return NumCharsWritten;
+}
+
+//
+// Unpack up to 4 bytes out of a 32-bit FIFO word into Buffer.
+//
+static
+VOID
+UnpackWordIntoChars (
+  IN  UINT32  Word,
+  IN  UINT8   Count,
+  OUT UINT8   *Buffer
+  )
+{
+  UINT8  j;
+
+  for (j = 0; j < Count; j++) {
+    Buffer[j] = (UINT8)((Word >> (j * 8)) & 0xff);
+  }
+}
 
 RETURN_STATUS
 EFIAPI
@@ -12,194 +64,167 @@ SerialPortInitialize (
   VOID
   )
 {
+  UINT32  Base = UART_DM_BASE;
+
+  // Mode registers: no flow control, 8-N-1
+  MmioWrite32 (MSM_BOOT_UART_DM_MR1 (Base), 0x0);
+  MmioWrite32 (MSM_BOOT_UART_DM_MR2 (Base), MSM_BOOT_UART_DM_8_N_1_MODE);
+
+  MmioWrite32 (MSM_BOOT_UART_DM_IMR (Base), MSM_BOOT_UART_DM_IMR_ENABLED);
+
+  MmioWrite32 (MSM_BOOT_UART_DM_TFWR (Base), MSM_BOOT_UART_DM_TFW_VALUE);
+  MmioWrite32 (MSM_BOOT_UART_DM_RFWR (Base), MSM_BOOT_UART_DM_RFW_VALUE);
+
+  MmioWrite32 (MSM_BOOT_UART_DM_IPR (Base), MSM_BOOT_UART_DM_STALE_TIMEOUT_LSB);
+
+  MmioWrite32 (MSM_BOOT_UART_DM_IRDA (Base), 0x0);
+  MmioWrite32 (MSM_BOOT_UART_DM_HCR (Base), 0x0);
+
+  // Soft reset
+  MmioWrite32 (MSM_BOOT_UART_DM_CR (Base), MSM_BOOT_UART_DM_CMD_RESET_RX);
+  MmioWrite32 (MSM_BOOT_UART_DM_CR (Base), MSM_BOOT_UART_DM_CMD_RESET_TX);
+  MmioWrite32 (MSM_BOOT_UART_DM_CR (Base), MSM_BOOT_UART_DM_CMD_RESET_ERR_STAT);
+  MmioWrite32 (MSM_BOOT_UART_DM_CR (Base), MSM_BOOT_UART_DM_CMD_RES_TX_ERR);
+  MmioWrite32 (MSM_BOOT_UART_DM_CR (Base), MSM_BOOT_UART_DM_CMD_RES_STALE_INT);
+
+  MmioWrite32 (MSM_BOOT_UART_DM_DMEN (Base), 0x0);
+
+  MmioWrite32 (MSM_BOOT_UART_DM_CR (Base), MSM_BOOT_UART_DM_CR_RX_ENABLE);
+  MmioWrite32 (MSM_BOOT_UART_DM_CR (Base), MSM_BOOT_UART_DM_CR_TX_ENABLE);
+
+  // Init RX path (disable/re-enable stale event, arm DMRX watermark)
+  MmioWrite32 (MSM_BOOT_UART_DM_CR (Base), MSM_BOOT_UART_DM_GCMD_DIS_STALE_EVT);
+  MmioWrite32 (MSM_BOOT_UART_DM_CR (Base), MSM_BOOT_UART_DM_CMD_RES_STALE_INT);
+  MmioWrite32 (MSM_BOOT_UART_DM_DMRX (Base), MSM_BOOT_UART_DM_DMRX_DEF_VALUE);
+  MmioWrite32 (MSM_BOOT_UART_DM_CR (Base), MSM_BOOT_UART_DM_GCMD_ENA_STALE_EVT);
+
   return RETURN_SUCCESS;
 }
 
-RETURN_STATUS
-EFIAPI
-UartDmSerialPortLibInitialize (
-  VOID
-  )
-{
-  VOID                *Hob;
-  CONST UINT64        *UartBase;
-
-  Hob = GetFirstGuidHob (&gQcomUartDmBaseGuid);
-  if (Hob == NULL || GET_GUID_HOB_DATA_SIZE (Hob) != sizeof *UartBase) {
-    return RETURN_NOT_FOUND;
-  }
-  UartBase = GET_GUID_HOB_DATA (Hob);
-
-  g_uart_dm_base = (UINTN)*UartBase;
-
-  return RETURN_SUCCESS;
-}
-
-/**
-  Write data to serial device.
-
-  @param  Buffer           Point of data buffer which need to be written.
-  @param  NumberOfBytes    Number of output bytes which are cached in Buffer.
-
-  @retval 0                Write data failed.
-  @retval !0               Actual number of bytes written to serial device.
-
-**/
 UINTN
 EFIAPI
 SerialPortWrite (
-  IN UINT8     *Buffer,
-  IN UINTN     NumberOfBytes
+  IN  UINT8   *Buffer,
+  IN  UINTN   NumberOfBytes
   )
 {
-  UINTN Num = 0;
-  UINT8* CONST Final = &Buffer[NumberOfBytes];
-  while (Buffer < Final) {
-    int rc = uart_putc(*Buffer++);
-    if (rc <= 0) {
-      break;
-    }
-    else {
-      Num += rc;
+  UINT32  Base = UART_DM_BASE;
+  UINT8   *TxData;
+  UINT32  NumOfChars;
+  UINT32  TxWordCount;
+  UINT32  TxCharLeft;
+  UINT32  TxChar;
+  UINT32  TxWord;
+  UINT8   NumCharsWritten;
+  UINT32  i;
+
+  if ((Buffer == NULL) || (NumberOfBytes == 0)) {
+    return 0;
+  }
+
+  // Account for '\n' -> '\r' '\n' expansion the same way
+  // msm_boot_uart_calculate_num_chars_to_write does.
+  NumOfChars = 0;
+  for (i = 0; i < NumberOfBytes; i++) {
+    NumOfChars++;
+    if (Buffer[i] == '\n') {
+      NumOfChars++;
     }
   }
-  return Num;
+
+  TxData = Buffer;
+
+  // Wait for TX FIFO to be empty, then arm NO_CHARS_FOR_TX atomically
+  // with clearing the TX_READY interrupt, same ordering as the reference.
+  if (!(MmioRead32 (MSM_BOOT_UART_DM_SR (Base)) & MSM_BOOT_UART_DM_SR_TXEMT)) {
+    while (!(MmioRead32 (MSM_BOOT_UART_DM_ISR (Base)) & MSM_BOOT_UART_DM_TX_READY)) {
+      // busy wait - no timers here
+    }
+  }
+
+  MmioWrite32 (MSM_BOOT_UART_DM_NO_CHARS_FOR_TX (Base), NumOfChars);
+  MmioWrite32 (MSM_BOOT_UART_DM_CR (Base), MSM_BOOT_UART_DM_GCMD_RES_TX_RDY_INT);
+
+  TxWordCount = (NumOfChars % 4) ? ((NumOfChars / 4) + 1) : (NumOfChars / 4);
+  TxCharLeft  = NumOfChars;
+
+  for (i = 0; i < TxWordCount; i++) {
+    TxChar = (TxCharLeft < 4) ? TxCharLeft : 4;
+    NumCharsWritten = PackCharsIntoWord (TxData, (UINT8)TxChar, &TxWord);
+
+    while (!(MmioRead32 (MSM_BOOT_UART_DM_SR (Base)) & MSM_BOOT_UART_DM_SR_TXRDY)) {
+      // busy wait for FIFO space
+    }
+
+    MmioWrite32 (MSM_BOOT_UART_DM_TF (Base, 0), TxWord);
+
+    TxCharLeft = NumOfChars - (i + 1) * 4;
+    TxData    += NumCharsWritten;
+  }
+
+  // Drain: block here until the UART has actually finished shifting the
+  // last word out onto the wire (TXEMT), not just accepted it into the
+  // FIFO (TXRDY). Without this, a subsequent SerialPortWrite() call can
+  // reprogram NO_CHARS_FOR_TX / TF while the previous message is still
+  // transmitting, which is what produces the single garbled byte followed
+  // by the next message running on with no separator.
+  while (!(MmioRead32 (MSM_BOOT_UART_DM_SR (Base)) & MSM_BOOT_UART_DM_SR_TXEMT)) {
+    // busy wait for full drain
+  }
+
+  return NumberOfBytes;
 }
 
-/**
-  Read data from serial device and save the data in buffer.
-
-  @param  Buffer           Point of data buffer which need to be written.
-  @param  NumberOfBytes    Size of Buffer[].
-
-  @retval 0                Read data failed.
-  @retval !0               Actual number of bytes read from serial device.
-
-**/
 UINTN
 EFIAPI
 SerialPortRead (
-  OUT UINT8     *Buffer,
-  IN  UINTN     NumberOfBytes
-)
+  OUT UINT8   *Buffer,
+  IN  UINTN   NumberOfBytes
+  )
 {
-  UINTN Num = 0;
-  UINT8* CONST Final = &Buffer[NumberOfBytes];
+  UINT32  Base = UART_DM_BASE;
+  UINTN   BytesRead = 0;
+  UINT32  Status;
+  UINT32  RxWord;
+  UINT8   Chunk[4];
+  UINT8   ChunkSize;
+  UINT8   i;
 
-  while (Buffer < Final) {
-    int rc = uart_getc(Buffer++, TRUE);
-    if (rc <= 0) {
-      break;
+  if ((Buffer == NULL) || (NumberOfBytes == 0)) {
+    return 0;
+  }
+
+  while (BytesRead < NumberOfBytes) {
+    Status = MmioRead32 (MSM_BOOT_UART_DM_SR (Base));
+
+    if (!(Status & MSM_BOOT_UART_DM_SR_RXRDY)) {
+      break; // nothing waiting right now - non-blocking read
     }
-    else {
-      Num += rc;
+
+    if (Status & MSM_BOOT_UART_DM_SR_UART_OVERRUN) {
+      // Overrun is reported out of band, same as the reset-error handling
+      // used on the TX side and in the reference reset routine.
+      MmioWrite32 (MSM_BOOT_UART_DM_CR (Base), MSM_BOOT_UART_DM_CMD_RESET_ERR_STAT);
+    }
+
+    RxWord    = MmioRead32 (MSM_BOOT_UART_DM_RF (Base, 0));
+    ChunkSize = (UINT8)((NumberOfBytes - BytesRead) < 4 ? (NumberOfBytes - BytesRead) : 4);
+
+    UnpackWordIntoChars (RxWord, ChunkSize, Chunk);
+
+    for (i = 0; i < ChunkSize; i++) {
+      Buffer[BytesRead++] = Chunk[i];
     }
   }
-  return Num;
+
+  return BytesRead;
 }
 
-/**
-  Check to see if any data is available to be read from the debug device.
-
-  @retval TRUE       At least one byte of data is available to be read
-  @retval FALSE      No data is available to be read
-
-**/
 BOOLEAN
 EFIAPI
 SerialPortPoll (
   VOID
   )
 {
-  return uart_tstc()==1;
+  return (MmioRead32 (MSM_BOOT_UART_DM_SR (UART_DM_BASE)) & MSM_BOOT_UART_DM_SR_RXRDY) != 0;
 }
-
-/**
-  Sets the control bits on a serial device.
-
-  @param[in] Control            Sets the bits of Control that are settable.
-
-  @retval RETURN_SUCCESS        The new control bits were set on the serial device.
-  @retval RETURN_UNSUPPORTED    The serial device does not support this operation.
-  @retval RETURN_DEVICE_ERROR   The serial device is not functioning correctly.
-
-**/
-RETURN_STATUS
-EFIAPI
-SerialPortSetControl (
-  IN UINT32 Control
-  )
-{
-  return RETURN_UNSUPPORTED;
-}
-
-/**
-  Retrieve the status of the control bits on a serial device.
-
-  @param[out] Control           A pointer to return the current control signals from the serial device.
-
-  @retval RETURN_SUCCESS        The control bits were read from the serial device.
-  @retval RETURN_UNSUPPORTED    The serial device does not support this operation.
-  @retval RETURN_DEVICE_ERROR   The serial device is not functioning correctly.
-
-**/
-RETURN_STATUS
-EFIAPI
-SerialPortGetControl (
-  OUT UINT32 *Control
-  )
-{
-  *Control = 0;
-  if (!SerialPortPoll ()) {
-    *Control = EFI_SERIAL_INPUT_BUFFER_EMPTY;
-  }
-  return RETURN_SUCCESS;
-}
-
-/**
-  Sets the baud rate, receive FIFO depth, transmit/receice time out, parity,
-  data bits, and stop bits on a serial device.
-
-  @param BaudRate           The requested baud rate. A BaudRate value of 0 will use the
-                            device's default interface speed.
-                            On output, the value actually set.
-  @param ReveiveFifoDepth   The requested depth of the FIFO on the receive side of the
-                            serial interface. A ReceiveFifoDepth value of 0 will use
-                            the device's default FIFO depth.
-                            On output, the value actually set.
-  @param Timeout            The requested time out for a single character in microseconds.
-                            This timeout applies to both the transmit and receive side of the
-                            interface. A Timeout value of 0 will use the device's default time
-                            out value.
-                            On output, the value actually set.
-  @param Parity             The type of parity to use on this serial device. A Parity value of
-                            DefaultParity will use the device's default parity value.
-                            On output, the value actually set.
-  @param DataBits           The number of data bits to use on the serial device. A DataBits
-                            vaule of 0 will use the device's default data bit setting.
-                            On output, the value actually set.
-  @param StopBits           The number of stop bits to use on this serial device. A StopBits
-                            value of DefaultStopBits will use the device's default number of
-                            stop bits.
-                            On output, the value actually set.
-
-  @retval RETURN_SUCCESS            The new attributes were set on the serial device.
-  @retval RETURN_UNSUPPORTED        The serial device does not support this operation.
-  @retval RETURN_INVALID_PARAMETER  One or more of the attributes has an unsupported value.
-  @retval RETURN_DEVICE_ERROR       The serial device is not functioning correctly.
-
-**/
-RETURN_STATUS
-EFIAPI
-SerialPortSetAttributes (
-  IN OUT UINT64             *BaudRate,
-  IN OUT UINT32             *ReceiveFifoDepth,
-  IN OUT UINT32             *Timeout,
-  IN OUT EFI_PARITY_TYPE    *Parity,
-  IN OUT UINT8              *DataBits,
-  IN OUT EFI_STOP_BITS_TYPE *StopBits
-  )
-{
-  return RETURN_UNSUPPORTED;
-}
-
