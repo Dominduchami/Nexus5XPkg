@@ -52,11 +52,11 @@ steps:
 - task: PublishBuildArtifacts@1
   displayName: 'Publish UEFI build (Nexus 5X)'
   inputs:
-    pathtoPublish: ../edk2/Nexus5XPkg/ImageResources/Bullhead/uefi_bullhead.img
+    pathtoPublish: ./ImageResources/Bullhead/uefi_bullhead.img
     artifactName: MSM8992 UEFI (Nexus 5X)
 
 - task: PublishBuildArtifacts@1
   displayName: 'Publish UEFI build (Nexus 6P)'
   inputs:
-    pathtoPublish: ../edk2/Nexus5XPkg/ImageResources/Angler/uefi_angler.img
+    pathtoPublish: ./ImageResources/Angler/uefi_angler.img
     artifactName: MSM8994 UEFI (Nexus 6P)
