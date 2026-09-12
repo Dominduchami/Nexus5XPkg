@@ -13,3 +13,7 @@ BootShim.elf: BootShim.S
 	$(CC) -c $< -o $@ -DUEFI_BASE=$(UEFI_BASE) -DUEFI_SIZE=$(UEFI_SIZE)
 
 BootShim.S:
+
+.PHONY: clean
+clean:
+	rm -f BootShim.elf BootShim.bin

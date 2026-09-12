@@ -45,24 +45,18 @@ steps:
 - script: ./Tools/CI/Bootstrapper/Stage1.sh
   displayName: 'Prepare pre-build environment, phase 1'
 
-- script: chmod +x ./Tools/CI/Builder/build_boot_shim.sh && ./Tools/CI/Builder/build_boot_shim.sh
-  displayName: 'BootShim build'
-
-- script: ./Tools/CI/Builder/Build.sh
+- script: ./build.sh -d All
   displayName: 'UEFI build'
-
-- script: chmod +x ./build_boot_images.sh && ./build_boot_images.sh
-  displayName: 'Boot images build'
 
 # Publish UEFI (2 targets)
 - task: PublishBuildArtifacts@1
   displayName: 'Publish UEFI build (Nexus 5X)'
   inputs:
-    pathtoPublish: ../edk2/Build/Nexus5X-AARCH64/DEBUG_GCC5/FV/uefi_bullhead.img
+    pathtoPublish: ../edk2/Nexus5XPkg/ImageResources/Bullhead/uefi_bullhead.img
     artifactName: MSM8992 UEFI (Nexus 5X)
 
 - task: PublishBuildArtifacts@1
   displayName: 'Publish UEFI build (Nexus 6P)'
   inputs:
-    pathtoPublish: ../edk2/Build/Nexus6P-AARCH64/DEBUG_GCC5/FV/uefi_angler.img
+    pathtoPublish: ../edk2/Nexus5XPkg/ImageResources/Angler/uefi_angler.img
     artifactName: MSM8994 UEFI (Nexus 6P)

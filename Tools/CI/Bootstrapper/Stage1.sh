@@ -22,12 +22,3 @@ git checkout FETCH_HEAD
 git submodule init
 git submodule update
 cd ..
-
-# Set a link to EDK2 workspace
-ln -s $(pwd)/Nexus5XPkg $(pwd)/edk2/Nexus5XPkg
-# ln -s $(pwd)/Nexus5XPkg/Tools/rundbbuild.sh $(pwd)/edk2/rundbbuild.sh
-chmod +x $(pwd)/Nexus5XPkg/Tools/rundbbuild.sh
-
-# Build EDK2 Tools
-cd edk2
-make -C BaseTools
