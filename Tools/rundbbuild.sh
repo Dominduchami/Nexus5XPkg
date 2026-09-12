@@ -90,7 +90,6 @@ function FixPermission()
 {
   if [ -d "Nexus5XPkg" ]; then
    chmod +x Nexus5XPkg/Tools/*.sh
-   chmod +x Nexus5XPkg/Tools/PsModules/*.psm1
   fi
 }
 
