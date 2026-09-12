@@ -26,14 +26,13 @@ Mainline linux boots with framebuffer working via efifb.
 
 The bootloader on Nexus 5X/6P disables refresh, so a function to enable it again had to be implemented
 
-./Nexus5XPkg/Tools/CI/Builder/Build.sh for all targets
-./Nexus5XPkg/Tools/CI/Builder/BuildAngler.sh for Nexus 6P
-./Nexus5XPkg/Tools/CI/Builder/BuildBullhead.sh for Nexus 5X
+## WSL Build Notes
 
-For Production Builds you want to invoke the runbuild script manually
+If you checked out the EDK2 repository under Windows and build it using WSL, you will have trouble locating BaseTools Python classes due to [file case sensitive behavior changes](https://blogs.msdn.microsoft.com/commandline/2018/02/28/per-directory-case-sensitivity-and-wsl/) in WSL. Run the following PowerShell script under EDK2 directory prior to build:
 
-./Nexus5XPkg/Tools/runbuild.sh --device Angler --production for Nexus 6P
-./Nexus5XPkg/Tools/runbuild.sh --device Bullhead --production for Nexus 5X
+	Get-ChildItem .\BaseTools\ -Directory -Recurse | Foreach-Object { fsutil.exe file setCaseSensitiveInfo $_.FullName }
+
+You only need to run it once.
 
 ## Acknowledgements
 
