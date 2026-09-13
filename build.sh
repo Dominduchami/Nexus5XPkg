@@ -8,6 +8,7 @@ AvailablePlatforms=("Nexus5X" "Nexus6P" "All")
 IsValid=0
 BUILD_TYPE="DEBUG"
 device=""
+CLEAN_BASETOOLS=0
 
 while [[ $# -gt 0 ]]; do
     case "$1" in
@@ -17,6 +18,10 @@ while [[ $# -gt 0 ]]; do
         ;;
     --release)
         BUILD_TYPE="RELEASE"
+        shift
+        ;;
+    --clean)
+        CLEAN_BASETOOLS=1
         shift
         ;;
     *)
@@ -148,8 +153,11 @@ source "../edk2/edksetup.sh"
 
 NUM_CPUS=$((`getconf _NPROCESSORS_ONLN` + 2))
 
+if [ "${CLEAN_BASETOOLS}" -eq 1 ]
+then
 make clean -C ../edk2/BaseTools
 make -C ../edk2/BaseTools -j$(nproc)
+fi
 
 mkdir -p workspace
 
@@ -174,6 +182,7 @@ echo "Building uefi for ${PlatformName} (${BUILD_TYPE})"
 #-a AARCH64 -p "Nexus5XPkg/${target}.dsc" -t GCC5
 build -n "${NUM_CPUS}" -a AARCH64 -t GCC5 -p "Platforms/${PlatformName}/${PlatformName}.dsc" -b "${BUILD_TYPE}"
 
+rm -rf Nexus5XPkg/Include/Resources/ReleaseInfo.h
 ./build_boot_images.sh "${PlatformName}" "${BUILD_TYPE}"
 done
 }
@@ -194,4 +203,5 @@ echo ""
 echo "Options:"
 echo "  -d <device>   Platform to build (Nexus5X | Nexus6P | All)"
 echo "  --release     Build in RELEASE mode instead of DEBUG"
+echo "  --clean       Rebuild BaseTools before building platform(s)"
 fi

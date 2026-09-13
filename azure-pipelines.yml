@@ -45,7 +45,7 @@ steps:
 - script: ./Tools/CI/Bootstrapper/Stage1.sh
   displayName: 'Prepare pre-build environment, phase 1'
 
-- script: ./build.sh -d All
+- script: ./build.sh -d All --release --clean
   displayName: 'UEFI build'
 
 # Publish UEFI (2 targets)
