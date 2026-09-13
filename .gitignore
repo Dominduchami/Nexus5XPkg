@@ -1,7 +1,8 @@
 # Dynamic Generated
 Driver/SmBiosTableDxe/ReleaseInfo.h
 Application/BdsMenuApp/ReleaseInfo.h
-Include/Resources/ReleaseInfo.h
+Nexus5XPkg/Include/Resources/ReleaseInfo.h
+Nexus5XPkg/Include/LittleVgl/lv_conf.h
 
 # Local
 .DS_Store
