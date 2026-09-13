@@ -1,4 +1,4 @@
-[FD.MSM8992_EFI]
+[FD.MSM8994_EFI]
 BaseAddress   = 0x00200000|gArmTokenSpaceGuid.PcdFdBaseAddress  #The base address of the FLASH Device.
 Size          = 0x00100000|gArmTokenSpaceGuid.PcdFdSize         #The size in bytes of the FLASH Device
 ErasePolarity = 1
@@ -72,8 +72,8 @@ READ_LOCK_STATUS   = TRUE
   INF Nexus5XPkg/Driver/RuntimeMemoryConfigDxe/RuntimeMemoryConfigDxe.inf
 
   # Device Drivers
-  INF Nexus5XPkg/Driver/SynapticsTouchDxe/SynapticsTouchDevice.inf
-  INF Nexus5XPkg/Driver/SynapticsTouchDxe/SynapticsTouchDxe.inf
+  # INF Nexus5XPkg/Driver/SynapticsTouchDxe/SynapticsTouchDevice.inf
+  # INF Nexus5XPkg/Driver/SynapticsTouchDxe/SynapticsTouchDxe.inf
 
   # Debug heartbeat
 !if $(SEND_HEARTBEAT_TO_SERIAL) == 1
@@ -138,11 +138,11 @@ READ_LOCK_STATUS   = TRUE
 	SECTION RAW = Nexus5XPkg/AcpiTables/common/builtin/FPDT.aml
 	SECTION RAW = Nexus5XPkg/AcpiTables/common/builtin/GTDT.aml
 	SECTION RAW = Nexus5XPkg/AcpiTables/common/builtin/TPM2.aml
-	SECTION RAW = Nexus5XPkg/AcpiTables/8992/builtin/DSDT.minimal.aml
-	SECTION RAW = Nexus5XPkg/AcpiTables/8992/builtin/MADT.SingleCore.aml
-	SECTION RAW = Nexus5XPkg/AcpiTables/8992/builtin/MCFG.aml
-	SECTION RAW = Nexus5XPkg/AcpiTables/8992/builtin/PPTT.aml
-	# SECTION RAW = Nexus5XPkg/AcpiTables/8992/builtin/SSDT.aml
+	SECTION RAW = Nexus5XPkg/AcpiTables/8994/builtin/DSDT.aml
+	SECTION RAW = Nexus5XPkg/AcpiTables/8994/builtin/MADT.SingleCore.aml
+	SECTION RAW = Nexus5XPkg/AcpiTables/8994/builtin/MCFG.aml
+	SECTION RAW = Nexus5XPkg/AcpiTables/8994/builtin/PPTT.aml
+  # SECTION RAW = Nexus5XPkg/AcpiTables/8994/builtin/SSDT.aml
 	SECTION UI = "AcpiTables"
   }
 
@@ -188,4 +188,4 @@ READ_LOCK_STATUS   = TRUE
     }
   }
 
-!include Nexus5X.fdf.inc
+!include Platforms/Nexus5X.fdf.inc

@@ -28,3 +28,7 @@ AcpiTables/Hapanero/generated
 # BootShim
 BootShim/BootShim.bin
 BootShim/BootShim.elf
+
+workspace/Build
+ImageResources/Angler/uefi_angler.img
+ImageResources/Bullhead/uefi_bullhead.img
