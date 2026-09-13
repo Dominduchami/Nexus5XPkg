@@ -100,6 +100,41 @@ EOF
 fi
 }
 
+# Reads gNexus5XPkgTokenSpaceGuid.PcdMipiFrameBufferWidth/Height out of the
+# platform's .dsc file and rewrites LV_HOR_RES / LV_VER_RES in lv_conf.h to
+# match, so LittleVGL is always built against the panel's real resolution.
+function _update_lv_conf() {
+local DEVICE="${1}"
+local DSC_FILE="Platforms/${DEVICE}/${DEVICE}.dsc"
+local LV_CONF="Nexus5XPkg/Include/LittleVgl/lv_conf.h"
+if [ ! -f "$DSC_FILE" ]; then
+echo "Warning: DSC file not found: ${DSC_FILE}, skipping lv_conf.h update for ${DEVICE}" >&2
+return 0
+fi
+
+if [ ! -f "$LV_CONF" ]; then
+echo "Warning: lv_conf.h not found: ${LV_CONF}, skipping lv_conf.h update for ${DEVICE}" >&2
+return 0
+fi
+
+local WIDTH
+WIDTH="$(grep -E 'PcdMipiFrameBufferWidth\|[0-9]+' "$DSC_FILE" | sed -E 's/.*PcdMipiFrameBufferWidth\|([0-9]+).*/\1/')"
+local HEIGHT
+HEIGHT="$(grep -E 'PcdMipiFrameBufferHeight\|[0-9]+' "$DSC_FILE" | sed -E 's/.*PcdMipiFrameBufferHeight\|([0-9]+).*/\1/')"
+
+if [ -z "$WIDTH" ] || [ -z "$HEIGHT" ]; then
+echo "Warning: no PcdMipiFrameBufferWidth/Height in ${DSC_FILE}, leaving lv_conf.h as-is for ${DEVICE}" >&2
+return 0
+fi
+
+echo "Setting lv_conf.h resolution to ${WIDTH}x${HEIGHT} for ${DEVICE}"
+
+sed -i \
+-e "s/#define[[:space:]]\+LV_HOR_RES[[:space:]].*/#define LV_HOR_RES          (${WIDTH})/" \
+-e "s/#define[[:space:]]\+LV_VER_RES[[:space:]].*/#define LV_VER_RES          (${HEIGHT})/" \
+"$LV_CONF"
+}
+
 # based on https://github.com/edk2-porting/edk2-msm/blob/master/build.sh#L47 
 function _build() {
 local DEVICE="${1}"
@@ -180,6 +215,9 @@ for PlatformName in "${platforms[@]}"
 do
 echo "Building uefi for ${PlatformName} (${BUILD_TYPE})"
 #-a AARCH64 -p "Nexus5XPkg/${target}.dsc" -t GCC5
+
+_update_lv_conf "${PlatformName}"
+
 build -n "${NUM_CPUS}" -a AARCH64 -t GCC5 -p "Platforms/${PlatformName}/${PlatformName}.dsc" -b "${BUILD_TYPE}"
 
 rm -rf Nexus5XPkg/Include/Resources/ReleaseInfo.h
