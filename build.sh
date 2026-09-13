@@ -140,8 +140,6 @@ function _build() {
 local DEVICE="${1}"
 shift
 
-_stamp_build
-
 # Set environment again for legacy compatibility. On newer systems, GCC should be used from package source.
 echo "Set legacy environment."
 export PATH="/opt/gcc-linaro-7.5.0-2019.12-x86_64_aarch64-elf/bin:/opt/gcc-linaro-7.5.0-2019.12-x86_64_arm-eabi/bin:${PATH}"
@@ -215,6 +213,8 @@ for PlatformName in "${platforms[@]}"
 do
 echo "Building uefi for ${PlatformName} (${BUILD_TYPE})"
 #-a AARCH64 -p "Nexus5XPkg/${target}.dsc" -t GCC5
+
+_stamp_build
 
 _update_lv_conf "${PlatformName}"
 
