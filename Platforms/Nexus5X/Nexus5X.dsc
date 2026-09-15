@@ -28,10 +28,11 @@
   SUPPORTED_ARCHITECTURES        = AARCH64
   BUILD_TARGETS                  = DEBUG|RELEASE
   SKUID_IDENTIFIER               = DEFAULT
-  FLASH_DEFINITION               = Nexus5XPkg/Nexus5X.fdf
+  FLASH_DEFINITION               = Platforms/Nexus5X/Nexus5X.fdf
 
   DEFINE SECURE_BOOT_ENABLE           = TRUE
   DEFINE USE_SCREEN_FOR_SERIAL_OUTPUT = TRUE
+  DEFINE USE_UART_FOR_SERIAL_OUTPUT   = TRUE
   DEFINE MEMORY_4GB                   = 0
 
 [BuildOptions.common]
