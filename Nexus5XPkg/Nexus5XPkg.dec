@@ -158,10 +158,10 @@
   gQcomTokenSpaceGuid.PcdUartDmRxTotalSnapOffset|0|UINT64|0x0000002a
 
   # Synaptics 3202
-  gNexus5XPkgTokenSpaceGuid.SynapticsCtlrAddress|0|UINT16|0x0002a501
-  gNexus5XPkgTokenSpaceGuid.SynapticsCtlrResetPin|0|UINT32|0x0002a502
-  gNexus5XPkgTokenSpaceGuid.SynapticsCtlrIntPin|0|UINT32|0x0002a503
-  gNexus5XPkgTokenSpaceGuid.SynapticsCtlrI2cDevice|0|UINT32|0x0002a504
+  gNexus5XPkgTokenSpaceGuid.SynapticsCtlrAddress|0x20|UINT16|0x0002a501
+  gNexus5XPkgTokenSpaceGuid.SynapticsCtlrResetPin|8|UINT32|0x0002a502
+  gNexus5XPkgTokenSpaceGuid.SynapticsCtlrIntPin|22|UINT32|0x0002a503
+  gNexus5XPkgTokenSpaceGuid.SynapticsCtlrI2cDevice|2|UINT32|0x0002a504
   gNexus5XPkgTokenSpaceGuid.SynapticsXMax|0|UINT64|0x0002a505
   gNexus5XPkgTokenSpaceGuid.SynapticsYMax|0|UINT64|0x0002a506
 
