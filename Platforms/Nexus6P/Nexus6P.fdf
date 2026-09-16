@@ -72,8 +72,8 @@ READ_LOCK_STATUS   = TRUE
   INF Nexus5XPkg/Driver/RuntimeMemoryConfigDxe/RuntimeMemoryConfigDxe.inf
 
   # Device Drivers
-  # INF Nexus5XPkg/Driver/SynapticsTouchDxe/SynapticsTouchDevice.inf
-  # INF Nexus5XPkg/Driver/SynapticsTouchDxe/SynapticsTouchDxe.inf
+  INF Nexus5XPkg/Driver/SynapticsTouchDxe/SynapticsTouchDevice.inf
+  INF Nexus5XPkg/Driver/SynapticsTouchDxe/SynapticsTouchDxe.inf
 
   # Debug heartbeat
 !if $(SEND_HEARTBEAT_TO_SERIAL) == 1
@@ -98,6 +98,9 @@ READ_LOCK_STATUS   = TRUE
   
   # Graphics
   INF Nexus5XPkg/Driver/SimpleFbDxe/SimpleFbDxe.inf
+
+  # Qup SPI
+  INF Nexus5XPkg/GPLDriver/QupSpiDxe/QupSpiDxe.inf
 
   # BDS
   INF MdeModulePkg/Universal/PrintDxe/PrintDxe.inf

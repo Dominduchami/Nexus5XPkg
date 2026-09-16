@@ -335,6 +335,7 @@ EFIAPI
 SynaPowerUpController(RMI4_INTERNAL_DATA *Instance)
 {
   UINT32     ResetLine;
+  UINT32     VbusLine;
   EFI_STATUS Status;
 
   if (Instance == NULL || Instance->Rmi4Device == NULL ||
@@ -342,6 +343,27 @@ SynaPowerUpController(RMI4_INTERNAL_DATA *Instance)
     Status = EFI_INVALID_PARAMETER;
     goto exit;
   }
+
+  // Pin Sanity check
+  VbusLine = 38;//Instance->Rmi4Device->ControllerVbusPin;
+  if (VbusLine <= 0) {
+    DEBUG((EFI_D_ERROR, "Invalid GPIO VBUS configuration \n"));
+    Status = EFI_INVALID_PARAMETER;
+    goto exit;
+  }
+
+  // Vbus Seq (direction output)
+  Instance->Rmi4Device->GpioTlmmProtocol->SetPull(VbusLine, 2);
+  Instance->Rmi4Device->GpioTlmmProtocol->SetDriveStrength(VbusLine, 2);
+  Instance->Rmi4Device->GpioTlmmProtocol->Set(VbusLine, GPIO_ENABLE);
+
+  // Configure MSM GPIO VBUS line to Low
+  Instance->Rmi4Device->GpioTlmmProtocol->DirectionOutput(VbusLine, GPIO_LOW);
+  gBS->Stall(TOUCH_POWER_RAIL_STABLE_TIME);
+
+  // configure MSM GPIO VBUS line to High
+  Instance->Rmi4Device->GpioTlmmProtocol->DirectionOutput(VbusLine, GPIO_HIGH);
+  gBS->Stall(TOUCH_DELAY_TO_COMMUNICATE);
 
   // Pin Sanity check
   ResetLine = Instance->Rmi4Device->ControllerResetPin;
@@ -352,7 +374,7 @@ SynaPowerUpController(RMI4_INTERNAL_DATA *Instance)
   }
 
   // Power Seq
-  Instance->Rmi4Device->GpioTlmmProtocol->SetPull(ResetLine, GPIO_PULL_NONE);
+  Instance->Rmi4Device->GpioTlmmProtocol->SetPull(ResetLine, 2);
   Instance->Rmi4Device->GpioTlmmProtocol->SetDriveStrength(ResetLine, 2);
   Instance->Rmi4Device->GpioTlmmProtocol->Set(ResetLine, GPIO_ENABLE);
 
