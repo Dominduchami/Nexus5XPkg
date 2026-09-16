@@ -47,6 +47,8 @@
   gNexus5XPkgTokenSpaceGuid.PcdSmbiosSystemModel|"LG Nexus 5X"
   gNexus5XPkgTokenSpaceGuid.PcdSmbiosProcessorModel|"Qualcomm Snapdragon 808 Processor (8992)"
   gNexus5XPkgTokenSpaceGuid.PcdSmbiosSystemRetailModel|" "
+  gNexus5XPkgTokenSpaceGuid.SynapticsXMax|1080
+  gNexus5XPkgTokenSpaceGuid.SynapticsYMax|1920
   gNexus5XPkgTokenSpaceGuid.PsciCpuSuspendAddress|0x6c03920
 
   gNexus5XPkgTokenSpaceGuid.PcdMipiFrameBufferAddress|0x03400000
@@ -59,8 +61,6 @@
   gNexus5XPkgTokenSpaceGuid.SynapticsCtlrResetPin|8
   gNexus5XPkgTokenSpaceGuid.SynapticsCtlrIntPin|22
   gNexus5XPkgTokenSpaceGuid.SynapticsCtlrI2cDevice|2
-  gNexus5XPkgTokenSpaceGuid.SynapticsXMax|1080
-  gNexus5XPkgTokenSpaceGuid.SynapticsYMax|1920
 
 [PcdsDynamicDefault.common]
   gEfiMdeModulePkgTokenSpaceGuid.PcdVideoHorizontalResolution|1080

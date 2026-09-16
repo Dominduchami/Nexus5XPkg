@@ -99,6 +99,9 @@ READ_LOCK_STATUS   = TRUE
   # Graphics
   INF Nexus5XPkg/Driver/SimpleFbDxe/SimpleFbDxe.inf
 
+  # Qup SPI
+  INF Nexus5XPkg/GPLDriver/QupSpiDxe/QupSpiDxe.inf
+
   # BDS
   INF MdeModulePkg/Universal/PrintDxe/PrintDxe.inf
   INF MdeModulePkg/Universal/Console/ConPlatformDxe/ConPlatformDxe.inf
