@@ -29,7 +29,7 @@
 #include <Library/ArmHvcLib.h>
 #include <Library/ArmSmcLib.h>
 
-//#include <IndustryStandard/ArmStdSmc.h>
+#include <IndustryStandard/ArmStdSmc.h>
 
 VOID EFIAPI ProcessLibraryConstructorList(VOID);
 extern void SecondaryCpuEntry();
@@ -133,8 +133,16 @@ VOID PrePiMain(IN VOID *StackBase, IN UINTN StackSize)
     }
   }*/
 
-  // Launch all CPUs
-
+  /* Launch all CPUs
+   * - boot cpus
+   * - set boot adress to &SecondaryCpuEntry (cpu_boot_set_addr in lk2nd?)
+   */
+  //                          &SecondaryCpuEntry, BOOT_ARM64
+  //ret = cpu_boot_set_addr((uintptr_t)smp->code, boot_type & BOOT_ARM64);
+  //      -> boot_and_setup_cpu(dtb, node, cpus, smp);
+  //            -> cpu_boot(dtb, cpu, mpidr);
+  //
+  //https://github.com/fekz115/lk2nd/blob/5d53e48a4829cb52245b5c09fe98ea418b4dbfff/lk2nd/smp/cpu-boot.c#L68
 
   // Now, the HOB List has been initialized, we can register performance
   // information PERF_START (NULL, "PEI", NULL, StartTimeStamp);
