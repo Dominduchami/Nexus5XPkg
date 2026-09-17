@@ -9,9 +9,9 @@
  *
  * Original Table Header:
  *     Signature        "DSDT"
- *     Length           0x00001836 (6198)
+ *     Length           0x00001852 (6226)
  *     Revision         0x02
- *     Checksum         0x69
+ *     Checksum         0x6E
  *     OEM ID           "QCOMM "
  *     OEM Table ID     "MSM8994 "
  *     OEM Revision     0x00000003 (3)
@@ -1260,7 +1260,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8994 ", 0x00000003)
                         )
                     Interrupt (ResourceConsumer, Level, ActiveHigh, Exclusive, ,, )
                     {
-                        0x00000060,
+                        0x00000080,
                     }
                 })
                 Return (RBUF) /* \_SB_.I2C2._CRS.RBUF */
@@ -1496,9 +1496,15 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8994 ", 0x00000003)
             Name (_UID, 0x05)  // _UID: Unique ID
         }
 
+        Device (TECC)
+        {
+            Name (_HID, "MSHW1024")  // _HID: Hardware ID
+            Name (_UID, Zero)  // _UID: Unique ID
+        }
+
         Device (TSC1)
         {
-            Name (_HID, "QCOM2418")  // _HID: Hardware ID
+            Name (_HID, "MSHW1003")  // _HID: Hardware ID
             Name (_UID, One)  // _UID: Unique ID
             Method (_CRS, 0, NotSerialized)  // _CRS: Current Resource Settings
             {
