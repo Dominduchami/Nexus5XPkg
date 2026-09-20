@@ -77,7 +77,7 @@ VOID SetupMpPark()
       DEBUG((EFI_D_LOAD | EFI_D_INFO, "Launching cpu %d\n", i));
         //if (!cpu_boot(NULL, CpuNum, mpidr))
         //if (!cpu_boot_cortex_a_msm8994(mpidr)) {
-        if (!cpu_boot(i, MpIdr)) {
+        if (!cpu_boot(i, MpIdr)) {//TODO: pass MpIdr as ProcessorIdMapping[i]
             DEBUG((EFI_D_LOAD | EFI_D_INFO, "Launching cpu %d FAIL!\n", i));
             return;
         }
