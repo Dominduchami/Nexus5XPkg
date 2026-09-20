@@ -5,7 +5,7 @@
 #include <debug.h>
 #include <platform/timer.h>
 #include <scm.h>*/
-
+#include <Library/DebugLib.h>
 #include <Library/TimerLib.h>
 #include <Library/LKEnvLib.h>
 #include <Library/MallocLib.h>
@@ -154,10 +154,14 @@ bool cpu_boot(int node, uint32_t mpidr)
 
 	if (mpidr == read_mpidr()) {
 		dprintf(CRITICAL, "Skipping boot of current CPU (%x)\n", mpidr);
+        DEBUG((EFI_D_LOAD | EFI_D_INFO, "Skipping boot of current CPU (%x)\n", mpidr));
 		return true;
 	}
+    DEBUG((EFI_D_LOAD | EFI_D_INFO, "NOT skipping boot of CPU (%x)\n", mpidr));//for 1 it is equal so idk??
 
-	cpu_boot_cortex_a_msm8994(mpidr);
+	cpu_boot_cortex_a_msm8994(mpidr);//gets stuck, might be cause of mpidr being wrong??
+
+    DEBUG((EFI_D_LOAD | EFI_D_INFO, "CPU booted!\n"));
 
 	/* Give CPU some time to boot */
 	//udelay(100);

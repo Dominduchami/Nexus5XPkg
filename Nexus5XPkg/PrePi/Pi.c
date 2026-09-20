@@ -66,17 +66,19 @@ VOID SetupMpPark()
       BOOT_ARM64)
    )  
   {
-    DEBUG((EFI_D_ERROR, "Failed to set CPU boot address\n"));
+    DEBUG((EFI_D_LOAD | EFI_D_INFO, "Failed to set CPU boot address\n"));
 		for(;;) {}; // Boot failed
 	}
+  DEBUG((EFI_D_LOAD | EFI_D_INFO, "CPU boot address set!\n"));
 
     // Launch all CPUs
   if ( MpIdr == 0x80000000) {
-    for (UINTN i = 1; i < 6; i++) {
+    for (UINTN i = 2; i < 6; i++) {//1
+      DEBUG((EFI_D_LOAD | EFI_D_INFO, "Launching cpu %d\n", i));
         //if (!cpu_boot(NULL, CpuNum, mpidr))
         //if (!cpu_boot_cortex_a_msm8994(mpidr)) {
         if (!cpu_boot(i, MpIdr)) {
-            // DEBUG ERROR
+            DEBUG((EFI_D_LOAD | EFI_D_INFO, "Launching cpu %d FAIL!\n", i));
             return;
         }
     }
