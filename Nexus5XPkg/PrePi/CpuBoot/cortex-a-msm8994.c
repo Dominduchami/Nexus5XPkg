@@ -1,13 +1,10 @@
 // SPDX-License-Identifier: GPL-2.0-only
 
-#include <arch/defines.h>
-#include <bits.h>
-#include <debug.h>
-#include <kernel/thread.h>
-#include <platform/timer.h>
-#include <reg.h>
+//#include <Platform/timer.h>
+//#include <reg.h>
 
-#include "../cpu-boot.h"
+#include <Library/LKEnvLib.h>
+#include "CpuBoot.h"
 
 #define CPU_PWR_CTL			0x4
 #define APC_PWR_GATE_CTL	0x14
@@ -179,7 +176,7 @@ static void power_on_l2_cache_msm8994(uint32_t l2ccc_base, uint32_t vctl_base_0,
 		msm_spm_turn_on_cpu_rail(vctl_base_0, vctl_base_1, vctl_val);
 	}
 
-	enter_critical_section();
+	//enter_critical_section();
 
 	/* Enable L1 invalidation by h/w */
 	writel(0x00000000, l2ccc_base + L1_RST_DIS);
@@ -227,7 +224,7 @@ static void power_on_l2_cache_msm8994(uint32_t l2ccc_base, uint32_t vctl_base_0,
 	/* De-assert PRESETDBGn */
 	writel(0x00000000 , l2ccc_base + L2_PWR_CTL_OVERRIDE);
 	dsb();
-	exit_critical_section();
+	//exit_critical_section();
 }
 
 void cpu_boot_cortex_a_msm8994(uint32_t mpidr)
@@ -244,7 +241,7 @@ void cpu_boot_cortex_a_msm8994(uint32_t mpidr)
 	if (l2ccc_base)
 		power_on_l2_cache_msm8994(l2ccc_base, vctl_base_0, vctl_base_1, vctl_val);
 
-	enter_critical_section();
+	//enter_critical_section();
 
 	/* Assert head switch enable few */
 	writel(0x00000001, base + APC_PWR_GATE_CTL);
@@ -283,5 +280,5 @@ void cpu_boot_cortex_a_msm8994(uint32_t mpidr)
 	writel(0x0000008C, base + CPU_PWR_CTL);
 	dsb();
 
-	exit_critical_section();
+	//exit_critical_section();
 }

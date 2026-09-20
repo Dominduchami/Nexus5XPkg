@@ -31,6 +31,9 @@
 
 #include <IndustryStandard/ArmStdSmc.h>
 
+#include <Library/LKEnvLib.h>
+#include "CpuBoot/CpuBoot.h"
+
 VOID EFIAPI ProcessLibraryConstructorList(VOID);
 extern void SecondaryCpuEntry();
 
@@ -38,6 +41,47 @@ static UINT32 ProcessorIdMapping[6] = {
     0x00000000, 0x00000001, 0x00000002, 0x00000003,
     0x00000100, 0x00000101,
 };
+
+VOID SetupMpPark()
+{
+  /* Launch all CPUs
+   * - boot cpus
+   * - set boot adress to &SecondaryCpuEntry (cpu_boot_set_addr in lk2nd?)
+   */
+  //                          &SecondaryCpuEntry, BOOT_ARM64
+  //ret = cpu_boot_set_addr((uintptr_t)smp->code, boot_type & BOOT_ARM64);
+  //      -> boot_and_setup_cpu(dtb, node, cpus, smp);
+  //            -> cpu_boot(dtb, cpu, mpidr);
+  //
+  //https://github.com/fekz115/lk2nd/blob/5d53e48a4829cb52245b5c09fe98ea418b4dbfff/lk2nd/smp/cpu-boot.c#L68
+
+    /* Prepare spin table memory */
+    //???
+    //ret = cpu_boot_set_addr((uintptr_t)smp->code, boot_type & BOOT_ARM64);
+  UINT32 MpIdr = ArmReadMpidr();
+
+	if ( 
+    cpu_boot_set_addr(
+      (UINTN)&SecondaryCpuEntry, 
+      BOOT_ARM64)
+   )  
+  {
+    DEBUG((EFI_D_ERROR, "Failed to set CPU boot address\n"));
+		for(;;) {}; // Boot failed
+	}
+
+    // Launch all CPUs
+  if ( MpIdr == 0x80000000) {
+    for (UINTN i = 1; i < 6; i++) {
+        //if (!cpu_boot(NULL, CpuNum, mpidr))
+        //if (!cpu_boot_cortex_a_msm8994(mpidr)) {
+        if (!cpu_boot(i, MpIdr)) {
+            // DEBUG ERROR
+            return;
+        }
+    }
+  }
+}
 
 VOID PrePiMain(IN VOID *StackBase, IN UINTN StackSize)
 {
@@ -133,16 +177,7 @@ VOID PrePiMain(IN VOID *StackBase, IN UINTN StackSize)
     }
   }*/
 
-  /* Launch all CPUs
-   * - boot cpus
-   * - set boot adress to &SecondaryCpuEntry (cpu_boot_set_addr in lk2nd?)
-   */
-  //                          &SecondaryCpuEntry, BOOT_ARM64
-  //ret = cpu_boot_set_addr((uintptr_t)smp->code, boot_type & BOOT_ARM64);
-  //      -> boot_and_setup_cpu(dtb, node, cpus, smp);
-  //            -> cpu_boot(dtb, cpu, mpidr);
-  //
-  //https://github.com/fekz115/lk2nd/blob/5d53e48a4829cb52245b5c09fe98ea418b4dbfff/lk2nd/smp/cpu-boot.c#L68
+  SetupMpPark();
 
   // Now, the HOB List has been initialized, we can register performance
   // information PERF_START (NULL, "PEI", NULL, StartTimeStamp);
