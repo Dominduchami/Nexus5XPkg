@@ -8,6 +8,9 @@
 [Sources.common]
   Pi.c
   EarlyQGic/EarlyQGic.c
+  CpuBoot/cortex-a-msm8994.c
+  CpuBoot/cpu-boot.c
+  CpuBoot/mppark.c
 
 [Sources.AARCH64]
   ReleaseInfo.S | GCC
