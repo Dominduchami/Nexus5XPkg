@@ -26,7 +26,56 @@
 #include <Library/PlatformPrePiLib.h>
 #include <Library/SerialPortLib.h>
 
+#include <Library/ArmHvcLib.h>
+#include <Library/ArmSmcLib.h>
+
+#include <IndustryStandard/ArmStdSmc.h>
+
+#include <Library/LKEnvLib.h>
+#include "CpuBoot/CpuBoot.h"
+
 VOID EFIAPI ProcessLibraryConstructorList(VOID);
+extern void SecondaryCpuEntry();
+
+static UINT32 ProcessorIdMapping[6] = {
+    0x00000000, 0x00000001, 0x00000002, 0x00000003,
+    0x00000100, 0x00000101,
+};
+
+VOID SetupMpPark()
+{
+  /* Launch all CPUs
+   * - boot cpus
+   * - set boot adress to &SecondaryCpuEntry (cpu_boot_set_addr in lk2nd?)
+   *
+   * //https://github.com/fekz115/lk2nd/blob/5d53e48a4829cb52245b5c09fe98ea418b4dbfff/lk2nd/smp/cpu-boot.c#L68
+   */
+
+	if (cpu_boot_set_addr(
+      (UINTN)&SecondaryCpuEntry, 
+      BOOT_ARM64)
+   )  
+  {
+    DEBUG((EFI_D_LOAD | EFI_D_INFO, "Failed to set CPU boot address!!\n"));
+		for(;;) {}; // Set boot adress failed, loop forever
+	}
+  DEBUG((EFI_D_LOAD | EFI_D_INFO, "CPU boot address set!\n"));
+
+    // Launch all CPUs
+  if ( ArmReadMpidr() == 0x80000000) {
+    for (UINTN i = 1; i < 6; i++) {
+      if (ProcessorIdMapping[i] == ArmReadMpidr()) {
+        DEBUG((EFI_D_LOAD | EFI_D_INFO, "Skipping boot of current CPU...\n"));
+      } 
+      else {
+        cpu_boot_cortex_a_msm8994(ProcessorIdMapping[i]);
+
+        /* Give CPU some time to boot */
+        MicroSecondDelay(100);
+      }
+    }
+  }
+}
 
 VOID PrePiMain(IN VOID *StackBase, IN UINTN StackSize)
 {
@@ -106,6 +155,11 @@ VOID PrePiMain(IN VOID *StackBase, IN UINTN StackSize)
   // Install SoC driver HOBs
   //InstallPlatformHob();
 
+  DEBUG((EFI_D_LOAD | EFI_D_INFO, "Launching CPUs\n"));
+
+  // Launch all CPUs
+  SetupMpPark();
+
   // Now, the HOB List has been initialized, we can register performance
   // information PERF_START (NULL, "PEI", NULL, StartTimeStamp);
 
@@ -138,5 +192,68 @@ CEntryPoint(
   PrePiMain(StackBase, StackSize);
 
   // DXE Core should always load and never return
+  ASSERT(FALSE);
+}
+
+VOID SecondaryCEntryPoint(IN UINTN Index)
+{
+  ASSERT(Index >= 1 && Index <= 5);
+
+  EFI_PHYSICAL_ADDRESS MailboxAddress =
+      FixedPcdGet64(SecondaryCpuMpParkRegionBase) + 0x10000 * Index + 0x1000;
+  PEFI_PROCESSOR_MAILBOX pMailbox =
+      (PEFI_PROCESSOR_MAILBOX)(VOID *)MailboxAddress;
+
+  UINT32 CurrentProcessorId = 0;
+  VOID (*SecondaryStart)(VOID * pMailbox);
+  UINTN SecondaryEntryAddr;
+  UINTN InterruptId;
+  UINTN AcknowledgeInterrupt;
+
+  // MMU, cache and branch predicton must be disabled
+  // Cache is disabled in CRT startup code
+  ArmDisableMmu();
+  ArmDisableBranchPrediction();
+
+  // Turn on GIC CPU interface as well as SGI interrupts
+  ArmGicEnableInterruptInterface(FixedPcdGet64(PcdGicInterruptInterfaceBase));
+  MmioWrite32(FixedPcdGet64(PcdGicInterruptInterfaceBase) + 0x4, 0xf0);
+
+  // But turn off interrupts
+  ArmDisableInterrupts();
+
+  // Clear mailbox
+  pMailbox->JumpAddress = 0;
+  pMailbox->ProcessorId = 0xffffffff;
+  CurrentProcessorId    = ProcessorIdMapping[Index];
+
+  do {
+    // ArmDataSynchronizationBarrier();
+    // DEBUG((EFI_D_ERROR, "%d: WFI \n", Index));
+    // ArmCallWFI();
+    // DEBUG((EFI_D_ERROR, "%d: end WFI \n", Index));
+    ArmDataSynchronizationBarrier();
+
+    if (pMailbox->ProcessorId == Index) {
+      SecondaryEntryAddr = pMailbox->JumpAddress;
+    }
+
+    AcknowledgeInterrupt = ArmGicAcknowledgeInterrupt(
+        FixedPcdGet64(PcdGicInterruptInterfaceBase), &InterruptId);
+    if (InterruptId <
+        ArmGicGetMaxNumInterrupts(FixedPcdGet64(PcdGicDistributorBase))) {
+      // Got a valid SGI number hence signal End of Interrupt
+      ArmGicEndOfInterrupt(
+          FixedPcdGet64(PcdGicInterruptInterfaceBase), AcknowledgeInterrupt);
+    }
+  } while (SecondaryEntryAddr == 0);
+
+  // Acknowledge this one
+  pMailbox->JumpAddress = 0;
+
+  SecondaryStart = (VOID(*)())SecondaryEntryAddr;
+  SecondaryStart(pMailbox);
+
+  // Should never reach here
   ASSERT(FALSE);
 }

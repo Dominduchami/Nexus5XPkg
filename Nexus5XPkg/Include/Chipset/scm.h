@@ -206,12 +206,12 @@ typedef struct {
  *       : list can be passed here.
  */
 typedef struct {
-  uint32_t x0;     /* command ID details as per ARMv8 spec :
+  unsigned long x0;     /* command ID details as per ARMv8 spec :
                                        0:7 command, 8:15 service id
                                        0x02000000: SIP calls
                                        30: SMC32 or SMC64
                                        31: Standard or fast calls*/
-  uint32_t x1;     /* # of args and attributes for buffers
+  unsigned long x1;     /* # of args and attributes for buffers
                     * 0-3: arg #
                     * 4-5: type of arg1
                     * 6-7: type of arg2
@@ -220,11 +220,11 @@ typedef struct {
                     * 20-21: type of arg8
                     * 22-23: type of arg9
                     */
-  uint32_t x2;     /* Param1 */
-  uint32_t x3;     /* Param2 */
-  uint32_t x4;     /* Param3 */
-  uint32_t x5[10]; /* Indirect parameter list */
-  uint32_t atomic; /* To indicate if its standard or fast call */
+  unsigned long x2;     /* Param1 */
+  unsigned long x3;     /* Param2 */
+  unsigned long x4;     /* Param3 */
+  unsigned long x5[10]; /* Indirect parameter list */
+  unsigned long atomic; /* To indicate if its standard or fast call */
 } scmcall_arg;
 
 /* Return value for the SCM call:
