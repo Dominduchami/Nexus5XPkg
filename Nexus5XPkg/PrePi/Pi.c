@@ -63,7 +63,7 @@ VOID SetupMpPark()
 
     // Launch all CPUs
   if ( ArmReadMpidr() == 0x80000000) {
-    for (UINTN i = 1; i < 6; i++) {
+    for (UINTN i = 1; i < FixedPcdGet32(PcdCoreCount); i++) {
       if (ProcessorIdMapping[i] == ArmReadMpidr()) {
         DEBUG((EFI_D_LOAD | EFI_D_INFO, "Skipping boot of current CPU...\n"));
       } 
@@ -197,7 +197,7 @@ CEntryPoint(
 
 VOID SecondaryCEntryPoint(IN UINTN Index)
 {
-  ASSERT(Index >= 1 && Index <= 5);
+  ASSERT(Index >= 1 && Index < FixedPcdGet32(PcdCoreCount));
 
   EFI_PHYSICAL_ADDRESS MailboxAddress =
       FixedPcdGet64(SecondaryCpuMpParkRegionBase) + 0x10000 * Index + 0x1000;
