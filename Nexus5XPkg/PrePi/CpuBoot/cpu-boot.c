@@ -43,7 +43,8 @@ static uint32_t scm_call_a32(uint32_t x0, uint32_t x1, uint32_t x2, uint32_t x3,
 
 	do {
 		__asm__ volatile(
-			/*__asmeq("%0", "r0")
+#if HACK
+			__asmeq("%0", "r0")
 			__asmeq("%1", "r1")
 			__asmeq("%2", "r2")
 			__asmeq("%3", "r3")
@@ -53,7 +54,8 @@ static uint32_t scm_call_a32(uint32_t x0, uint32_t x1, uint32_t x2, uint32_t x3,
 			__asmeq("%7", "r3")
 			__asmeq("%8", "r4")
 			__asmeq("%9", "r5")
-			__asmeq("%10", "r6")*/
+			__asmeq("%10", "r6")
+#endif
 			"smc    #0\n"
 			: "=r" (r0), "=r" (r1), "=r" (r2), "=r" (r3)
 			: "r" (r0), "r" (r1), "r" (r2), "r" (r3), "r" (r4), "r" (r5), "r" (r6));
@@ -148,6 +150,7 @@ static inline uint32_t read_mpidr(void)
 	return BITS(res, 23, 0);
 }
 
+#if 0
 bool cpu_boot(int node, uint32_t mpidr)
 {
 	//uint32_t extra_reg __UNUSED;
@@ -168,3 +171,4 @@ bool cpu_boot(int node, uint32_t mpidr)
     MicroSecondDelay(100);
 	return true;
 }
+#endif

@@ -58,7 +58,6 @@ VOID SetupMpPark()
     /* Prepare spin table memory */
     //???
     //ret = cpu_boot_set_addr((uintptr_t)smp->code, boot_type & BOOT_ARM64);
-  UINT32 MpIdr = ArmReadMpidr();
 
 	if ( 
     cpu_boot_set_addr(
@@ -72,15 +71,20 @@ VOID SetupMpPark()
   DEBUG((EFI_D_LOAD | EFI_D_INFO, "CPU boot address set!\n"));
 
     // Launch all CPUs
-  if ( MpIdr == 0x80000000) {
-    for (UINTN i = 2; i < 6; i++) {//1
-      DEBUG((EFI_D_LOAD | EFI_D_INFO, "Launching cpu %d\n", i));
-        //if (!cpu_boot(NULL, CpuNum, mpidr))
-        //if (!cpu_boot_cortex_a_msm8994(mpidr)) {
-        if (!cpu_boot(i, MpIdr)) {//TODO: pass MpIdr as ProcessorIdMapping[i]
-            DEBUG((EFI_D_LOAD | EFI_D_INFO, "Launching cpu %d FAIL!\n", i));
-            return;
-        }
+  if ( ArmReadMpidr() == 0x80000000) {
+    for (UINTN i = 1; i < 6; i++) {
+      if (ProcessorIdMapping[i] == ArmReadMpidr()) {
+        DEBUG((EFI_D_LOAD | EFI_D_INFO, "Skipping boot of current CPU...\n"));
+      } 
+      else {
+        DEBUG((EFI_D_LOAD | EFI_D_INFO, "Launching cpu %d\n", i));
+        cpu_boot_cortex_a_msm8994(ProcessorIdMapping[i]);
+
+        /* Give CPU some time to boot */
+        MicroSecondDelay(100);
+        DEBUG((EFI_D_LOAD | EFI_D_INFO, "CPU booted!\n"));
+      }
+      
     }
   }
 }
