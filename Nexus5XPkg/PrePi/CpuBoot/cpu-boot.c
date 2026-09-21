@@ -1,22 +1,21 @@
 // SPDX-License-Identifier: BSD-3-Clause
 /* Copyright (c) 2021-2022, Stephan Gerhold <stephan@gerhold.net> */
 
-/*#include <bits.h>
-#include <debug.h>
-#include <platform/timer.h>
-#include <scm.h>*/
 #include <Library/DebugLib.h>
 #include <Library/TimerLib.h>
 #include <Library/LKEnvLib.h>
 #include <Library/MallocLib.h>
-//#include <Library/QcomSmcLib.h>
 
-#include "scm.h"
+//#include "scm.h"
+#include <Chipset/scm.h>
 #include "CpuBoot.h"
 
-#include <Chipset/scm.h>
-
-#define HACK 0
+/* FIXME: current compiler seems to produce err here 
+ * (which means the variables aren't correctly assigned?) 
+ */
+#define ASM_HACK 0
+/* FIXME: memalign seems to get called fine, but free doesn't... */
+#define FREE_HACK 0
 
 #define QCOM_SCM_BOOT_SET_ADDR		0x01
 #define QCOM_SCM_BOOT_FLAG_COLD_ALL	(0 | BIT(0) | BIT(3) | BIT(5))
@@ -26,7 +25,7 @@
 #define QCOM_SCM_BOOT_MC_FLAG_WARMBOOT	BIT(2)
 
 #define BITS(x, high, low) ((x) & (((1<<((high)+1))-1) & ~((1<<(low))-1)))
-#if 1
+
 /* From Linux Kernel asm/system.h */
 #define __asmeq(x, y)  ".ifnc " x "," y " ; .err ; .endif\n\t"
 
@@ -43,7 +42,7 @@ static uint32_t scm_call_a32(uint32_t x0, uint32_t x1, uint32_t x2, uint32_t x3,
 
 	do {
 		__asm__ volatile(
-#if HACK
+#if ASM_HACK
 			__asmeq("%0", "r0")
 			__asmeq("%1", "r1")
 			__asmeq("%2", "r2")
@@ -70,7 +69,7 @@ static uint32_t scm_call_a32(uint32_t x0, uint32_t x1, uint32_t x2, uint32_t x3,
 
 	return r0;
 }
-//SmInternalCallCommand(const struct scm_command *cmd)
+
 uint32_t scm_call2(scmcall_arg *arg, scmcall_ret *ret)
 {
 	uint32_t *indir_arg = NULL;
@@ -101,33 +100,14 @@ uint32_t scm_call2(scmcall_arg *arg, scmcall_ret *ret)
 		dprintf(CRITICAL, "SCM call: 0x%x failed with :%x\n", arg->x0, rc);
 		return rc;
 	}
-#if HACK
+#if FREE_HACK
 	if (indir_arg)
 		free(indir_arg);
 #endif
+
 	return 0;
 }
-// -----------------------------------------------------------------------
-#endif
 
-/*int cpu_boot_set_addr(uintptr_t addr, bool arm64)
-{
-	uint32_t aarch64 = arm64 ? QCOM_SCM_BOOT_MC_FLAG_AARCH64 : 0;
-	scmcall_arg arg = {
-		.x0 = MAKE_SIP_SCM_CMD(SCM_SVC_BOOT, QCOM_SCM_BOOT_SET_ADDR_MC),
-		.x1 = MAKE_SCM_ARGS(6),
-		.x2 = addr,
-		.x3 = ~0UL, .x4 = ~0UL, .x5 = {~0UL, ~0UL, // All CPUs
-		aarch64 | QCOM_SCM_BOOT_MC_FLAG_COLDBOOT},
-	};
-
-	if (is_scm_armv8_support())
-		return scm_call2(&arg, NULL);
-
-	dprintf(INFO, "Falling back to legacy QCOM_SCM_BOOT_SET_ADDR call\n");
-	return scm_call_atomic2(SCM_SVC_BOOT, QCOM_SCM_BOOT_SET_ADDR,
-				QCOM_SCM_BOOT_FLAG_COLD_ALL, addr);
-}*/
 int cpu_boot_set_addr(uintptr_t addr, bool arm64)
 {
     uint32_t aarch64 = arm64 ? QCOM_SCM_BOOT_MC_FLAG_AARCH64 : 0;
@@ -140,35 +120,4 @@ int cpu_boot_set_addr(uintptr_t addr, bool arm64)
 	};
 
 	return scm_call2(&arg, NULL);
-    //return SmInternalCallCommand(const struct scm_command *cmd)
 }
-
-static inline uint32_t read_mpidr(void)
-{
-	uint32_t res;
-	__asm__ ("mrc p15, 0, %0, c0, c0, 5" : "=r" (res));
-	return BITS(res, 23, 0);
-}
-
-#if 0
-bool cpu_boot(int node, uint32_t mpidr)
-{
-	//uint32_t extra_reg __UNUSED;
-
-	if (mpidr == read_mpidr()) {
-		dprintf(CRITICAL, "Skipping boot of current CPU (%x)\n", mpidr);
-        DEBUG((EFI_D_LOAD | EFI_D_INFO, "Skipping boot of current CPU (%x)\n", mpidr));
-		return true;
-	}
-    DEBUG((EFI_D_LOAD | EFI_D_INFO, "NOT skipping boot of CPU (%x)\n", mpidr));//for 1 it is equal so idk??
-
-	cpu_boot_cortex_a_msm8994(mpidr);//gets stuck, might be cause of mpidr being wrong??
-
-    DEBUG((EFI_D_LOAD | EFI_D_INFO, "CPU booted!\n"));
-
-	/* Give CPU some time to boot */
-	//udelay(100);
-    MicroSecondDelay(100);
-	return true;
-}
-#endif

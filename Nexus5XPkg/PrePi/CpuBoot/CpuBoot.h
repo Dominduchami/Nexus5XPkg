@@ -1,7 +1,6 @@
 int cpu_boot_set_addr(uintptr_t addr, bool arm64);
 
 bool cpu_boot(int node, uint32_t mpidr);
-//void cpu_boot_cortex_a(uint32_t base, uint32_t apcs_base);
 
 /**
  * cpu_boot_cortex_a_msm8994() -  This function enables msm8994/2 core 

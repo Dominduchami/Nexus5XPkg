@@ -1,8 +1,5 @@
 // SPDX-License-Identifier: GPL-2.0-only
 
-//#include <Platform/timer.h>
-//#include <reg.h>
-
 #include <Library/LKEnvLib.h>
 #include "CpuBoot.h"
 
@@ -238,59 +235,44 @@ void cpu_boot_cortex_a_msm8994(uint32_t mpidr)
 	vctl_base_1 = info->cache_info->vctl_base_1;
 	vctl_val = info->cache_info->vctl_val;
 
-    DEBUG((EFI_D_LOAD | EFI_D_INFO, "cpu_boot_cortex_a_msm8994()\n"));
-
 	if (l2ccc_base) {
-        DEBUG((EFI_D_LOAD | EFI_D_INFO, "power_on_l2_cache_msm8994!\n"));
 		power_on_l2_cache_msm8994(l2ccc_base, vctl_base_0, vctl_base_1, vctl_val);
     }
 
-	//enter_critical_section();
-
 	/* Assert head switch enable few */
-    DEBUG((EFI_D_LOAD | EFI_D_INFO, "1!\n"));
 	writel(0x00000001, base + APC_PWR_GATE_CTL);
 	dsb();
 	udelay(1);
 
 	/* Assert head switch enable rest */
-    DEBUG((EFI_D_LOAD | EFI_D_INFO, "2\n"));
 	writel(0x00000003, base + APC_PWR_GATE_CTL);
 	dsb();
 	udelay(1);
 
 	/* De-assert coremem clamp. This is asserted by default */
-    DEBUG((EFI_D_LOAD | EFI_D_INFO, "3!\n"));
 	writel(0x00000079, base + CPU_PWR_CTL);
 	dsb();
 	udelay(2);
 
 	/* Close coremem array gdhs */
-    DEBUG((EFI_D_LOAD | EFI_D_INFO, "4!\n"));
 	writel(0x0000007D, base + CPU_PWR_CTL);
 	dsb();
 	udelay(2);
 
 	/* De-assert clamp */
-    DEBUG((EFI_D_LOAD | EFI_D_INFO, "5!\n"));
 	writel(0x0000003D, base + CPU_PWR_CTL);
 	dsb();
 
 	/* De-assert clamp */
-    DEBUG((EFI_D_LOAD | EFI_D_INFO, "6!\n"));
 	writel(0x0000003C, base + CPU_PWR_CTL);
 	dsb();
 	udelay(1);
 
 	/* De-assert core0 reset */
-    DEBUG((EFI_D_LOAD | EFI_D_INFO, "7!\n"));
 	writel(0x0000000C, base + CPU_PWR_CTL);
 	dsb();
 
 	/* Assert PWRDUP */
-    DEBUG((EFI_D_LOAD | EFI_D_INFO, "8!\n"));
 	writel(0x0000008C, base + CPU_PWR_CTL);
 	dsb();
-
-	//exit_critical_section();
 }

@@ -29,8 +29,6 @@
 #ifndef __SCM_H__
 #define __SCM_H__
 
-//#include <reboot.h>
-
 /* ARM SCM format support related flags */
 #define SIP_SVC_CALLS                          0x02000000
 #define MAKE_SIP_SCM_CMD(svc_id, cmd_id)       ((((svc_id << 8) | (cmd_id)) & 0xFFFF) | SIP_SVC_CALLS)

@@ -47,26 +47,17 @@ VOID SetupMpPark()
   /* Launch all CPUs
    * - boot cpus
    * - set boot adress to &SecondaryCpuEntry (cpu_boot_set_addr in lk2nd?)
+   *
+   * //https://github.com/fekz115/lk2nd/blob/5d53e48a4829cb52245b5c09fe98ea418b4dbfff/lk2nd/smp/cpu-boot.c#L68
    */
-  //                          &SecondaryCpuEntry, BOOT_ARM64
-  //ret = cpu_boot_set_addr((uintptr_t)smp->code, boot_type & BOOT_ARM64);
-  //      -> boot_and_setup_cpu(dtb, node, cpus, smp);
-  //            -> cpu_boot(dtb, cpu, mpidr);
-  //
-  //https://github.com/fekz115/lk2nd/blob/5d53e48a4829cb52245b5c09fe98ea418b4dbfff/lk2nd/smp/cpu-boot.c#L68
 
-    /* Prepare spin table memory */
-    //???
-    //ret = cpu_boot_set_addr((uintptr_t)smp->code, boot_type & BOOT_ARM64);
-
-	if ( 
-    cpu_boot_set_addr(
+	if (cpu_boot_set_addr(
       (UINTN)&SecondaryCpuEntry, 
       BOOT_ARM64)
    )  
   {
-    DEBUG((EFI_D_LOAD | EFI_D_INFO, "Failed to set CPU boot address\n"));
-		for(;;) {}; // Boot failed
+    DEBUG((EFI_D_LOAD | EFI_D_INFO, "Failed to set CPU boot address!!\n"));
+		for(;;) {}; // Set boot adress failed, loop forever
 	}
   DEBUG((EFI_D_LOAD | EFI_D_INFO, "CPU boot address set!\n"));
 
@@ -77,14 +68,11 @@ VOID SetupMpPark()
         DEBUG((EFI_D_LOAD | EFI_D_INFO, "Skipping boot of current CPU...\n"));
       } 
       else {
-        DEBUG((EFI_D_LOAD | EFI_D_INFO, "Launching cpu %d\n", i));
         cpu_boot_cortex_a_msm8994(ProcessorIdMapping[i]);
 
         /* Give CPU some time to boot */
         MicroSecondDelay(100);
-        DEBUG((EFI_D_LOAD | EFI_D_INFO, "CPU booted!\n"));
       }
-      
     }
   }
 }
@@ -170,19 +158,6 @@ VOID PrePiMain(IN VOID *StackBase, IN UINTN StackSize)
   DEBUG((EFI_D_LOAD | EFI_D_INFO, "Launching CPUs\n"));
 
   // Launch all CPUs
-  /*if (ArmReadMpidr() == 0x80000000) {
-    for (UINTN i = 1; i < 6; i++) {
-      ARM_HVC_ARGS ArmHvcArgs;
-      ArmHvcArgs.Arg0 = ARM_SMC_ID_PSCI_CPU_ON_AARCH64;
-      ArmHvcArgs.Arg1 = ProcessorIdMapping[i];
-      ArmHvcArgs.Arg2 = (UINTN)&SecondaryCpuEntry;
-      ArmHvcArgs.Arg3 = i;
-
-      ArmCallHvc(&ArmHvcArgs);
-      ASSERT(ArmHvcArgs.Arg0 == ARM_SMC_PSCI_RET_SUCCESS);
-    }
-  }*/
-
   SetupMpPark();
 
   // Now, the HOB List has been initialized, we can register performance
