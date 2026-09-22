@@ -224,11 +224,6 @@ VOID SecondaryCEntryPoint(IN UINTN Index)
   CurrentProcessorId    = ProcessorIdMapping[Index];
 
   do {
-    DEBUG((EFI_D_LOAD | EFI_D_INFO, "Index: %d\n", Index));
-    // ArmDataSynchronizationBarrier();
-    // DEBUG((EFI_D_ERROR, "%d: WFI \n", Index));
-    // ArmCallWFI();
-    // DEBUG((EFI_D_ERROR, "%d: end WFI \n", Index));
     ArmDataSynchronizationBarrier();
 
     // Technically the CPU ID should be checked
