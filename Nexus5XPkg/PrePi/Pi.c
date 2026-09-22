@@ -37,9 +37,9 @@
 VOID EFIAPI ProcessLibraryConstructorList(VOID);
 extern void SecondaryCpuEntry();
 
-static UINT32 ProcessorIdMapping[6] = {
+static UINT32 ProcessorIdMapping[8] = {
     0x00000000, 0x00000001, 0x00000002, 0x00000003,
-    0x00000100, 0x00000101,
+    0x00000100, 0x00000101, 0x00000102, 0x00000103,
 };
 
 VOID SetupMpPark()
@@ -50,7 +50,6 @@ VOID SetupMpPark()
    *
    * //https://github.com/fekz115/lk2nd/blob/5d53e48a4829cb52245b5c09fe98ea418b4dbfff/lk2nd/smp/cpu-boot.c#L68
    */
-  /* Confirmed working, without it secondary entry doesn't exec */
 	if (cpu_boot_set_addr((UINTN)&SecondaryCpuEntry, BOOT_ARM64))  
   {
 		for(;;) {}; // Set boot adress failed, loop forever
@@ -65,7 +64,6 @@ VOID SetupMpPark()
         DEBUG((EFI_D_LOAD | EFI_D_INFO, "Skipping boot of current CPU...\n"));
       } 
       else {
-        /* Also confirmed working, without it secondary entry doesn't exec */
         cpu_boot_cortex_a_msm8994(ProcessorIdMapping[i]);
 
         /* Give CPU some time to boot */
@@ -158,8 +156,6 @@ VOID PrePiMain(IN VOID *StackBase, IN UINTN StackSize)
   // Launch all CPUs
   SetupMpPark();
 
-  CpuDeadLoop();
-
   // Now, the HOB List has been initialized, we can register performance
   // information PERF_START (NULL, "PEI", NULL, StartTimeStamp);
 
@@ -197,7 +193,7 @@ CEntryPoint(
 
 VOID SecondaryCEntryPoint(IN UINTN Index)
 {
-  ASSERT(ArmReadMpidr() != 0x80000000);//triggers if false
+  ASSERT(Index >= 1 && Index < FixedPcdGet32(PcdCoreCount));
 
   EFI_PHYSICAL_ADDRESS MailboxAddress =
       FixedPcdGet64(SecondaryCpuMpParkRegionBase) + 0x10000 * Index + 0x1000;
