@@ -142,6 +142,9 @@ VOID PlatformInitialize()
 {
   UartInit();
 
+  // Reconfigure the framebuffer to a BGRA 32bpp one (windows requirements)
+  CheckMdpConfig();
+
   /* Display refresh gets disabled by the stock bootloader.
   Enable it so that we'll get a proper framebuffer */
   DisplayEnableRefresh(); //TODO: Check cmd mode vs video mode and apply accordingly

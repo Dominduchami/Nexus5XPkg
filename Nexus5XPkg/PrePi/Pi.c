@@ -59,7 +59,9 @@ VOID SetupMpPark()
   // Launch all CPUs
   if ( ArmReadMpidr() == 0x80000000) {
     for (UINTN i = 1; i < FixedPcdGet32(PcdCoreCount); i++) {
-      if (ProcessorIdMapping[i] == ArmReadMpidr()) {
+      DEBUG((EFI_D_INFO | EFI_D_LOAD, "Mpidr: 0x%llx\n", ProcessorIdMapping[i]));
+
+      if (ProcessorIdMapping[i] == 0x00000000) {
         DEBUG((EFI_D_LOAD | EFI_D_INFO, "Skipping boot of current CPU...\n"));
       } 
       else {
@@ -192,19 +194,7 @@ CEntryPoint(
 }
 
 VOID SecondaryCEntryPoint(IN UINTN Index)
-{ 
-  //ASSERT(Index >= 1 && Index < FixedPcdGet32(PcdCoreCount));
-
-  /* Change the config for Windows */
-  if (Index >= 1) {
-    // We're hitting this
-    MicroSecondDelay(8000000);
-  }
-
-  MicroSecondDelay(8000000);
-
-  CheckMdpConfig();
-
+{
   EFI_PHYSICAL_ADDRESS MailboxAddress =
       FixedPcdGet64(SecondaryCpuMpParkRegionBase) + 0x10000 * Index + 0x1000;
   PEFI_PROCESSOR_MAILBOX pMailbox =
