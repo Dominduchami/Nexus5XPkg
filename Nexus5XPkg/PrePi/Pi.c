@@ -50,24 +50,20 @@ VOID SetupMpPark()
    *
    * //https://github.com/fekz115/lk2nd/blob/5d53e48a4829cb52245b5c09fe98ea418b4dbfff/lk2nd/smp/cpu-boot.c#L68
    */
-
-	if (cpu_boot_set_addr(
-      (UINTN)&SecondaryCpuEntry, 
-      BOOT_ARM64)
-   )  
+  /* Confirmed working, without it secondary entry doesn't exec */
+	if (cpu_boot_set_addr((UINTN)&SecondaryCpuEntry, BOOT_ARM64))  
   {
-    DEBUG((EFI_D_LOAD | EFI_D_INFO, "Failed to set CPU boot address!!\n"));
 		for(;;) {}; // Set boot adress failed, loop forever
 	}
-  DEBUG((EFI_D_LOAD | EFI_D_INFO, "CPU boot address set!\n"));
 
-    // Launch all CPUs
+  // Launch all CPUs
   if ( ArmReadMpidr() == 0x80000000) {
     for (UINTN i = 1; i < FixedPcdGet32(PcdCoreCount); i++) {
       if (ProcessorIdMapping[i] == ArmReadMpidr()) {
         DEBUG((EFI_D_LOAD | EFI_D_INFO, "Skipping boot of current CPU...\n"));
       } 
       else {
+        /* Also confirmed working, without it secondary entry doesn't exec */
         cpu_boot_cortex_a_msm8994(ProcessorIdMapping[i]);
 
         /* Give CPU some time to boot */
@@ -196,8 +192,18 @@ CEntryPoint(
 }
 
 VOID SecondaryCEntryPoint(IN UINTN Index)
-{
-  ASSERT(Index >= 1 && Index < FixedPcdGet32(PcdCoreCount));
+{ 
+  //ASSERT(Index >= 1 && Index < FixedPcdGet32(PcdCoreCount));
+
+  /* Change the config for Windows */
+  if (Index >= 1) {
+    // We're hitting this
+    MicroSecondDelay(8000000);
+  }
+
+  MicroSecondDelay(8000000);
+
+  CheckMdpConfig();
 
   EFI_PHYSICAL_ADDRESS MailboxAddress =
       FixedPcdGet64(SecondaryCpuMpParkRegionBase) + 0x10000 * Index + 0x1000;
@@ -223,7 +229,7 @@ VOID SecondaryCEntryPoint(IN UINTN Index)
   ArmDisableInterrupts();
 
   // Clear mailbox
-  pMailbox->JumpAddress = 0;
+  pMailbox->JumpAddress = 0x0;
   pMailbox->ProcessorId = 0xffffffff;
   CurrentProcessorId    = ProcessorIdMapping[Index];
 
@@ -234,7 +240,21 @@ VOID SecondaryCEntryPoint(IN UINTN Index)
     // DEBUG((EFI_D_ERROR, "%d: end WFI \n", Index));
     ArmDataSynchronizationBarrier();
 
-    if (pMailbox->ProcessorId == Index) {
+    // Technically the CPU ID should be checked
+    // against request per MpPark spec,
+    // but the actual Windows implementation guarantees
+    // that no CPU will be started simultaneously,
+    // so the check was made optional.
+    //
+    // This also enables "spin-table" startup method
+    // for Linux.
+    //
+    // Example usage:
+    // enable-method = "spin-table";
+    // cpu-release-addr = <0 0x00311008>;
+
+    if(FixedPcdGetBool(SecondaryCpuIgnoreCpuIdCheck) || pMailbox->ProcessorId == Index ) 
+    {
       SecondaryEntryAddr = pMailbox->JumpAddress;
     }
 

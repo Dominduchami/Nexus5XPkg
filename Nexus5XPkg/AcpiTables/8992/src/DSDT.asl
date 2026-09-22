@@ -9,9 +9,9 @@
  *
  * Original Table Header:
  *     Signature        "DSDT"
- *     Length           0x00001852 (6226)
+ *     Length           0x0000C831 (51249)
  *     Revision         0x02
- *     Checksum         0x6E
+ *     Checksum         0xF0
  *     OEM ID           "QCOMM "
  *     OEM Table ID     "MSM8994 "
  *     OEM Revision     0x00000003 (3)
@@ -23,14 +23,14 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8994 ", 0x00000003)
     Scope (\_SB)
     {
         Name (SOID, 0xFB)
-        Name (SIDS, "899200000000000")
         Name (SIDV, 0x00010000)
         Name (SVMJ, One)
         Name (SVMI, Zero)
         Name (SDFE, 0x39)
         Name (SFES, "899200000000000")
         Name (SIDM, 0xFFFF00FF)
-        Name (SSBS, "899400000000000")
+        Name (SSBV, One)
+        Name (SSBS, "899200000000000")
         Name (NCPU, "6")
         Name (PSCI, "000")
         Name (RMTB, 0x06F00000)
@@ -41,6 +41,10 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8994 ", 0x00000003)
         Name (RFAS, 0x00010000)
         Device (SDC1)
         {
+            Name (_DEP, Package (One)  // _DEP: Dependencies
+            {
+                \_SB.PEP0
+            })
             Name (_HID, "QCOM24BF")  // _HID: Hardware ID
             Name (_CID, "ACPIQCOM24BF")  // _CID: Compatible ID
             Name (_UID, Zero)  // _UID: Unique ID
@@ -977,6 +981,9450 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8994 ", 0x00000003)
             }
         }
 
+        Device (PEP0)
+        {
+            Name (_HID, "QCOM2425")  // _HID: Hardware ID
+            Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
+            {
+                Interrupt (ResourceConsumer, Level, ActiveHigh, ExclusiveAndWake, ,, )
+                {
+                    0x000000D8,
+                }
+                Interrupt (ResourceConsumer, Edge, ActiveHigh, Exclusive, ,, )
+                {
+                    0x000000C8,
+                }
+                Interrupt (ResourceConsumer, Edge, ActiveHigh, Exclusive, ,, )
+                {
+                    0x000000C9,
+                }
+                Interrupt (ResourceConsumer, Edge, ActiveHigh, Exclusive, ,, )
+                {
+                    0x000000CB,
+                }
+                Interrupt (ResourceConsumer, Edge, ActiveHigh, Exclusive, ,, )
+                {
+                    0x00000030,
+                }
+                Interrupt (ResourceConsumer, Edge, ActiveHigh, Exclusive, ,, )
+                {
+                    0x00000033,
+                }
+                Interrupt (ResourceConsumer, Level, ActiveHigh, ExclusiveAndWake, ,, )
+                {
+                    0x000000D7,
+                }
+                Interrupt (ResourceConsumer, Edge, ActiveHigh, Exclusive, ,, )
+                {
+                    0x0000016C,
+                }
+            })
+            Field (\_SB.ABD.ROP1, BufferAcc, NoLock, Preserve)
+            {
+                Connection (
+                    I2cSerialBusV2 (0x0001, ControllerInitiated, 0x00000000,
+                        AddressingMode7Bit, "\\_SB.ABD",
+                        0x00, ResourceConsumer, , Exclusive,
+                        )
+                ), 
+                AccessAs (BufferAcc, AttribRawBytes (0x15)), 
+                FLD0,   168
+            }
+
+            Method (GEPT, 0, NotSerialized)
+            {
+                Name (BUFF, Buffer (0x04){})
+                CreateByteField (BUFF, Zero, STAT)
+                CreateWordField (BUFF, 0x02, DATA)
+                DATA = One
+                Return (DATA) /* \_SB_.PEP0.GEPT.DATA */
+            }
+
+            Name (ROST, Zero)
+            Method (NPUR, 1, NotSerialized)
+            {
+            }
+
+            Method (INTR, 0, NotSerialized)
+            {
+                Name (RBUF, Package (0x18)
+                {
+                    0x02, 
+                    One, 
+                    0x03, 
+                    One, 
+                    0x06, 
+                    0xF900D008, 
+                    One, 
+                    Zero, 
+                    0x06A00000, 
+                    0x00200000, 
+                    Zero, 
+                    Zero, 
+                    0xFC428000, 
+                    0x4000, 
+                    Zero, 
+                    Zero, 
+                    0xFE802FF0, 
+                    0x10, 
+                    Zero, 
+                    Zero, 
+                    0xF900D008, 
+                    Zero, 
+                    Zero, 
+                    Zero
+                })
+                Return (RBUF) /* \_SB_.PEP0.INTR.RBUF */
+            }
+
+            Method (CRTC, 0, NotSerialized)
+            {
+                Return (CTRX) /* \_SB_.PEP0.CTRX */
+            }
+
+            Name (CTRX, Package (0x09)
+            {
+                "MMVD", 
+                "DSGP", 
+                "NCDA", 
+                "CCGP", 
+                "MTPS", 
+                "CPGP", 
+                "DMPP", 
+                "GBDL", 
+                "SRDL"
+            })
+            Method (STND, 0, NotSerialized)
+            {
+                Return (STNX) /* \_SB_.PEP0.STNX */
+            }
+
+            Name (STNX, Package (0x14)
+            {
+                "DMCO", 
+                "DMPA", 
+                "DMPC", 
+                "DMPB", 
+                "DMSB", 
+                "DMPG", 
+                "DMPS", 
+                "DMRC", 
+                "DMPL", 
+                "DMTB", 
+                "DMDQ", 
+                "DMMT", 
+                "DMPI", 
+                "DMWE", 
+                "DMHC", 
+                "XMPC", 
+                "XMPL", 
+                "XMPN", 
+                "XMID", 
+                "XMHC"
+            })
+            Method (ADCN, 0, NotSerialized)
+            {
+                Return (VADL) /* \_SB_.PEP0.VADL */
+            }
+
+            Name (VADL, Package (0x08)
+            {
+                "SYS_THERM1", 
+                "SYS_THERM2", 
+                "PA_THERM", 
+                "PA_THERM1", 
+                "SYS_THERM3", 
+                "PMIC_THERM", 
+                "VPH_PWR", 
+                "USB_ID"
+            })
+            Method (CTPM, 0, NotSerialized)
+            {
+                Name (CTPN, Package (0x03)
+                {
+                    "CORE_TOPOLOGY", 
+                    0x04, 
+                    0x02
+                })
+                Return (CTPN) /* \_SB_.PEP0.CTPM.CTPN */
+            }
+
+            Name (CCFG, Package (0x06)
+            {
+                Package (0x02)
+                {
+                    "\\_SB.CPU0", 
+                    0x10
+                }, 
+
+                Package (0x02)
+                {
+                    "\\_SB.CPU1", 
+                    0x11
+                }, 
+
+                Package (0x02)
+                {
+                    "\\_SB.CPU2", 
+                    0x12
+                }, 
+
+                Package (0x02)
+                {
+                    "\\_SB.CPU3", 
+                    0x13
+                }, 
+
+                Package (0x02)
+                {
+                    "\\_SB.CPU4", 
+                    0x14
+                }, 
+
+                Package (0x02)
+                {
+                    "\\_SB.CPU5", 
+                    0x15
+                }
+            })
+            Method (PGCC, 0, NotSerialized)
+            {
+                Return (CCFG) /* \_SB_.PEP0.CCFG */
+            }
+
+            Name (DCVS, Zero)
+            Method (PGDS, 0, NotSerialized)
+            {
+                Return (DCVS) /* \_SB_.PEP0.DCVS */
+            }
+
+            Name (PPPP, Package (0x4E)
+            {
+                Package (0x04)
+                {
+                    "PPP_RESOURCE_ID_SMPS1_A", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_RPM", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF_TEST"
+                }, 
+
+                Package (0x04)
+                {
+                    "PPP_RESOURCE_ID_SMPS2_A", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_RPM", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF_TEST"
+                }, 
+
+                Package (0x04)
+                {
+                    "PPP_RESOURCE_ID_SMPS3_A", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_RPM", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF_TEST"
+                }, 
+
+                Package (0x04)
+                {
+                    "PPP_RESOURCE_ID_SMPS4_A", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_RPM", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF_TEST"
+                }, 
+
+                Package (0x04)
+                {
+                    "PPP_RESOURCE_ID_SMPS5_A", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_RPM", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF_TEST"
+                }, 
+
+                Package (0x04)
+                {
+                    "PPP_RESOURCE_ID_SMPS6_A", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_RPM", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF_TEST"
+                }, 
+
+                Package (0x04)
+                {
+                    "PPP_RESOURCE_ID_SMPS7_A", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_RPM", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF_TEST"
+                }, 
+
+                Package (0x04)
+                {
+                    "PPP_RESOURCE_ID_SMPS8_A", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_RPM", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF_TEST"
+                }, 
+
+                Package (0x04)
+                {
+                    "PPP_RESOURCE_ID_SMPS9_A", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_RPM", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF_TEST"
+                }, 
+
+                Package (0x04)
+                {
+                    "PPP_RESOURCE_ID_SMPS10_A", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_RPM", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF_TEST"
+                }, 
+
+                Package (0x04)
+                {
+                    "PPP_RESOURCE_ID_SMPS11_A", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_RPM", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF_TEST"
+                }, 
+
+                Package (0x04)
+                {
+                    "PPP_RESOURCE_ID_SMPS12_A", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_RPM", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF_TEST"
+                }, 
+
+                Package (0x04)
+                {
+                    "PPP_RESOURCE_ID_SMPS1_B", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_RPM", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF_TEST"
+                }, 
+
+                Package (0x04)
+                {
+                    "PPP_RESOURCE_ID_SMPS2_B", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_RPM", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF_TEST"
+                }, 
+
+                Package (0x04)
+                {
+                    "PPP_RESOURCE_ID_SMPS3_B", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_RPM", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF_TEST"
+                }, 
+
+                Package (0x04)
+                {
+                    "PPP_RESOURCE_ID_BOOST1_B", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_RPM", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF_TEST"
+                }, 
+
+                Package (0x04)
+                {
+                    "PPP_RESOURCE_ID_BOOST_BYPASS1_B", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_RPM", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF_TEST"
+                }, 
+
+                Package (0x04)
+                {
+                    "PPP_RESOURCE_ID_LDO1_A", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_RPM", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF_TEST"
+                }, 
+
+                Package (0x04)
+                {
+                    "PPP_RESOURCE_ID_LDO2_A", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_RPM", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF_TEST"
+                }, 
+
+                Package (0x04)
+                {
+                    "PPP_RESOURCE_ID_LDO3_A", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_RPM", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF_TEST"
+                }, 
+
+                Package (0x04)
+                {
+                    "PPP_RESOURCE_ID_LDO4_A", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_RPM", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF_TEST"
+                }, 
+
+                Package (0x04)
+                {
+                    "PPP_RESOURCE_ID_LDO5_A", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_RPM", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF_TEST"
+                }, 
+
+                Package (0x04)
+                {
+                    "PPP_RESOURCE_ID_LDO6_A", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_RPM", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF_TEST"
+                }, 
+
+                Package (0x04)
+                {
+                    "PPP_RESOURCE_ID_LDO7_A", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_RPM", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF_TEST"
+                }, 
+
+                Package (0x04)
+                {
+                    "PPP_RESOURCE_ID_LDO8_A", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_RPM", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF_TEST"
+                }, 
+
+                Package (0x04)
+                {
+                    "PPP_RESOURCE_ID_LDO9_A", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_RPM", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF_TEST"
+                }, 
+
+                Package (0x04)
+                {
+                    "PPP_RESOURCE_ID_LDO10_A", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_RPM", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF_TEST"
+                }, 
+
+                Package (0x04)
+                {
+                    "PPP_RESOURCE_ID_LDO11_A", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_RPM", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF_TEST"
+                }, 
+
+                Package (0x04)
+                {
+                    "PPP_RESOURCE_ID_LDO12_A", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_RPM", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF_TEST"
+                }, 
+
+                Package (0x04)
+                {
+                    "PPP_RESOURCE_ID_LDO13_A", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_RPM", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF_TEST"
+                }, 
+
+                Package (0x04)
+                {
+                    "PPP_RESOURCE_ID_LDO14_A", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_RPM", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF_TEST"
+                }, 
+
+                Package (0x04)
+                {
+                    "PPP_RESOURCE_ID_LDO15_A", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_RPM", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF_TEST"
+                }, 
+
+                Package (0x04)
+                {
+                    "PPP_RESOURCE_ID_LDO16_A", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_RPM", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF_TEST"
+                }, 
+
+                Package (0x04)
+                {
+                    "PPP_RESOURCE_ID_LDO17_A", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_RPM", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF_TEST"
+                }, 
+
+                Package (0x04)
+                {
+                    "PPP_RESOURCE_ID_LDO18_A", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_RPM", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF_TEST"
+                }, 
+
+                Package (0x04)
+                {
+                    "PPP_RESOURCE_ID_LDO19_A", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_RPM", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF_TEST"
+                }, 
+
+                Package (0x04)
+                {
+                    "PPP_RESOURCE_ID_LDO20_A", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_RPM", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF_TEST"
+                }, 
+
+                Package (0x04)
+                {
+                    "PPP_RESOURCE_ID_LDO21_A", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_RPM", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF_TEST"
+                }, 
+
+                Package (0x04)
+                {
+                    "PPP_RESOURCE_ID_LDO22_A", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_RPM", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF_TEST"
+                }, 
+
+                Package (0x04)
+                {
+                    "PPP_RESOURCE_ID_LDO23_A", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_RPM", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF_TEST"
+                }, 
+
+                Package (0x04)
+                {
+                    "PPP_RESOURCE_ID_LDO24_A", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_RPM", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF_TEST"
+                }, 
+
+                Package (0x04)
+                {
+                    "PPP_RESOURCE_ID_LDO25_A", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_RPM", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF_TEST"
+                }, 
+
+                Package (0x04)
+                {
+                    "PPP_RESOURCE_ID_LDO26_A", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_RPM", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF_TEST"
+                }, 
+
+                Package (0x04)
+                {
+                    "PPP_RESOURCE_ID_LDO27_A", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_RPM", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF_TEST"
+                }, 
+
+                Package (0x04)
+                {
+                    "PPP_RESOURCE_ID_LDO28_A", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_RPM", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF_TEST"
+                }, 
+
+                Package (0x04)
+                {
+                    "PPP_RESOURCE_ID_LDO29_A", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_RPM", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF_TEST"
+                }, 
+
+                Package (0x04)
+                {
+                    "PPP_RESOURCE_ID_LDO30_A", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_RPM", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF_TEST"
+                }, 
+
+                Package (0x04)
+                {
+                    "PPP_RESOURCE_ID_LDO31_A", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_RPM", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF_TEST"
+                }, 
+
+                Package (0x04)
+                {
+                    "PPP_RESOURCE_ID_LDO32_A", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_RPM", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF_TEST"
+                }, 
+
+                Package (0x04)
+                {
+                    "PPP_RESOURCE_ID_LDO1_B", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_RPM", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF_TEST"
+                }, 
+
+                Package (0x04)
+                {
+                    "PPP_RESOURCE_ID_LVS1_A", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_RPM", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF_TEST"
+                }, 
+
+                Package (0x04)
+                {
+                    "PPP_RESOURCE_ID_LVS2_A", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_RPM", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF_TEST"
+                }, 
+
+                Package (0x04)
+                {
+                    "PPP_RESOURCE_ID_CXO_BUFFERS_BBCLK1_A", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_RPM", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF_TEST"
+                }, 
+
+                Package (0x04)
+                {
+                    "PPP_RESOURCE_ID_CXO_BUFFERS_BBCLK2_A", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_RPM", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF_TEST"
+                }, 
+
+                Package (0x04)
+                {
+                    "PPP_RESOURCE_ID_CXO_BUFFERS_BBCLK3_A", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_RPM", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF_TEST"
+                }, 
+
+                Package (0x04)
+                {
+                    "PPP_RESOURCE_ID_CXO_BUFFERS_RFCLK1_A", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_RPM", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF_TEST"
+                }, 
+
+                Package (0x04)
+                {
+                    "PPP_RESOURCE_ID_CXO_BUFFERS_RFCLK2_A", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_RPM", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF_TEST"
+                }, 
+
+                Package (0x04)
+                {
+                    "PPP_RESOURCE_ID_CXO_BUFFERS_RFCLK3_A", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_RPM", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF_TEST"
+                }, 
+
+                Package (0x04)
+                {
+                    "PPP_RESOURCE_ID_CXO_BUFFERS_DIFFCLK1_A", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_RPM", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF_TEST"
+                }, 
+
+                Package (0x04)
+                {
+                    "PPP_RESOURCE_ID_CXO_BUFFERS_LNBBCLK1_A", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_RPM", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF_TEST"
+                }, 
+
+                Package (0x04)
+                {
+                    "PPP_RESOURCE_ID_CXO_BUFFERS_CLK_DIST_A", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_RPM", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF_TEST"
+                }, 
+
+                Package (0x04)
+                {
+                    "PPP_RESOURCE_ID_CXO_BUFFERS_SLEEPCLK1_A", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_RPM", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF_TEST"
+                }, 
+
+                Package (0x04)
+                {
+                    "PPP_RESOURCE_ID_CXO_BUFFERS_DIVCLK1_A", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_RPM", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF_TEST"
+                }, 
+
+                Package (0x04)
+                {
+                    "PPP_RESOURCE_ID_CXO_BUFFERS_DIVCLK2_A", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_RPM", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF_TEST"
+                }, 
+
+                Package (0x04)
+                {
+                    "PPP_RESOURCE_ID_CXO_BUFFERS_DIVCLK3_A", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_RPM", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF_TEST"
+                }, 
+
+                Package (0x04)
+                {
+                    "PPP_RESOURCE_ID_CXO_CLOCK_A", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_RPM", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF_TEST"
+                }, 
+
+                Package (0x04)
+                {
+                    "PPP_RESOURCE_ID_PMIC_GPIO_DV1", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF_TEST"
+                }, 
+
+                Package (0x04)
+                {
+                    "PPP_RESOURCE_ID_PMIC_GPIO_DV2", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF_TEST"
+                }, 
+
+                Package (0x04)
+                {
+                    "PPP_RESOURCE_ID_PMIC_GPIO_DV3", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF_TEST"
+                }, 
+
+                Package (0x04)
+                {
+                    "PPP_RESOURCE_ID_PMIC_MPP_DV1", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF_TEST"
+                }, 
+
+                Package (0x04)
+                {
+                    "PPP_RESOURCE_ID_PMIC_MPP_DV2", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF_TEST"
+                }, 
+
+                Package (0x04)
+                {
+                    "PPP_RESOURCE_ID_PMIC_MPP_DV3", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF_TEST"
+                }, 
+
+                Package (0x04)
+                {
+                    "PPP_RESOURCE_ID_TLMM_GPIO_DV1", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_TLMM_KMDF", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF_TEST"
+                }, 
+
+                Package (0x04)
+                {
+                    "PPP_RESOURCE_ID_TLMM_GPIO_DV2", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_TLMM_KMDF", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF_TEST"
+                }, 
+
+                Package (0x04)
+                {
+                    "PPP_RESOURCE_ID_TLMM_GPIO_DV3", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_TLMM_KMDF", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF_TEST"
+                }, 
+
+                Package (0x04)
+                {
+                    "PPP_RESOURCE_ID_DIV_CLK_1_A", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF_TEST"
+                }, 
+
+                Package (0x04)
+                {
+                    "PPP_RESOURCE_ID_DIV_CLK_2_A", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF_TEST"
+                }, 
+
+                Package (0x04)
+                {
+                    "PPP_RESOURCE_ID_DIV_CLK_3_A", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF", 
+                    "PM_RESOURCE_SERVICE_INTERFACE_TYPE_PMIC_KMDF_TEST"
+                }
+            })
+            Method (PPPM, 0, NotSerialized)
+            {
+                Return (PPPP) /* \_SB_.PEP0.PPPP */
+            }
+
+            Name (PRRP, Package (0x27)
+            {
+                "PPP_RESOURCE_RANGE_INFO_SMPS_A", 
+                "PPP_RESOURCE_ID_SMPS1_A", 
+                "PPP_RESOURCE_ID_SMPS12_A", 
+                "PPP_RESOURCE_RANGE_INFO_SMPS_B", 
+                "PPP_RESOURCE_ID_SMPS1_B", 
+                "PPP_RESOURCE_ID_SMPS3_B", 
+                "PPP_RESOURCE_RANGE_INFO_BOOST_B", 
+                "PPP_RESOURCE_ID_BOOST1_B", 
+                "PPP_RESOURCE_ID_BOOST1_B", 
+                "PPP_RESOURCE_RANGE_INFO_BOOST_BYPASS_B", 
+                "PPP_RESOURCE_ID_BOOST_BYPASS1_B", 
+                "PPP_RESOURCE_ID_BOOST_BYPASS1_B", 
+                "PPP_RESOURCE_RANGE_INFO_LDO_A", 
+                "PPP_RESOURCE_ID_LDO1_A", 
+                "PPP_RESOURCE_ID_LDO32_A", 
+                "PPP_RESOURCE_RANGE_INFO_LDO_B", 
+                "PPP_RESOURCE_ID_LDO1_B", 
+                "PPP_RESOURCE_ID_LDO1_B", 
+                "PPP_RESOURCE_RANGE_INFO_LVS_A", 
+                "PPP_RESOURCE_ID_LVS1_A", 
+                "PPP_RESOURCE_ID_LVS2_A", 
+                "PPP_RESOURCE_RANGE_INFO_CXO_BUFFERS_A", 
+                "PPP_RESOURCE_ID_CXO_BUFFERS_BBCLK1_A", 
+                "PPP_RESOURCE_ID_CXO_BUFFERS_DIVCLK3_A", 
+                "PPP_RESOURCE_RANGE_INFO_CXO_CLOCK_A", 
+                "PPP_RESOURCE_ID_CXO_CLOCK_A", 
+                "PPP_RESOURCE_ID_CXO_CLOCK_A", 
+                "PPP_RESOURCE_RANGE_INFO_PMIC_GPIO_DV", 
+                "PPP_RESOURCE_ID_PMIC_GPIO_DV1", 
+                "PPP_RESOURCE_ID_PMIC_GPIO_DV3", 
+                "PPP_RESOURCE_RANGE_INFO_PMIC_MPP_DV", 
+                "PPP_RESOURCE_ID_PMIC_MPP_DV1", 
+                "PPP_RESOURCE_ID_PMIC_MPP_DV3", 
+                "PPP_RESOURCE_RANGE_INFO_TLMM_GPIO_DV", 
+                "PPP_RESOURCE_ID_TLMM_GPIO_DV1", 
+                "PPP_RESOURCE_ID_TLMM_GPIO_DV3", 
+                "PPP_RESOURCE_RANGE_INFO_DIV_CLK_A", 
+                "PPP_RESOURCE_ID_DIV_CLK_1_A", 
+                "PPP_RESOURCE_ID_DIV_CLK_3_A"
+            })
+            Method (PPRR, 0, NotSerialized)
+            {
+                Return (PRRP) /* \_SB_.PEP0.PRRP */
+            }
+
+            Method (PGSD, 0, NotSerialized)
+            {
+                Return (SDFR) /* \_SB_.PEP0.SDFR */
+            }
+
+            Name (FPDP, Zero)
+            Method (FPMD, 0, NotSerialized)
+            {
+                Return (FPDP) /* \_SB_.PEP0.FPDP */
+            }
+
+            Name (PPPC, Zero)
+            Method (PGPC, 0, NotSerialized)
+            {
+                Return (PPPC) /* \_SB_.PEP0.PPPC */
+            }
+
+            Name (CPRD, Package (0x02)
+            {
+                Package (0x05)
+                {
+                    Package (0x02)
+                    {
+                        "info", 
+                        "CPR ACPI config table"
+                    }, 
+
+                    Package (0x02)
+                    {
+                        "chip_id", 
+                        0xFB
+                    }, 
+
+                    Package (0x02)
+                    {
+                        "chip_version", 
+                        One
+                    }, 
+
+                    Package (0x15)
+                    {
+                        Package (0x02)
+                        {
+                            "instance_num", 
+                            Zero
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "num_clients", 
+                            0x02
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "apc_rail_name", 
+                            "/vdd/apc0"
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "measurement_period_ms", 
+                            0x05
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "step_quotient", 
+                            0x10
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "max_pmic_step_up", 
+                            One
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "max_pmic_step_dn", 
+                            One
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "pmic_step_size", 
+                            0x1388
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "up_threshold", 
+                            0x02
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "dn_threshold", 
+                            0x04
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "consecutive_up", 
+                            Zero
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "consecutive_dn", 
+                            0x02
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "clamp_timer_interval", 
+                            Zero
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "rbcpr_base_addr", 
+                            0xF9019000
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "rbcpr_size", 
+                            0x0164
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "security_control_base_addr", 
+                            0xFC4B8000
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "security_control_size", 
+                            0x8000
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "target_quotient_multiplier", 
+                            0x0A
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "quotient_offset_multiplier", 
+                            0x0A
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "hw_errata_flag", 
+                            Zero
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "workitem_affinity", 
+                            0x0F
+                        }
+                    }, 
+
+                    Package (0x15)
+                    {
+                        Package (0x02)
+                        {
+                            "instance_num", 
+                            One
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "num_clients", 
+                            One
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "apc_rail_name", 
+                            "/vdd/apc1"
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "measurement_period_ms", 
+                            0x05
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "step_quotient", 
+                            0x0A
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "max_pmic_step_up", 
+                            One
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "max_pmic_step_dn", 
+                            One
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "pmic_step_size", 
+                            0x1388
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "up_threshold", 
+                            0x02
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "dn_threshold", 
+                            0x04
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "consecutive_up", 
+                            Zero
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "consecutive_dn", 
+                            0x02
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "clamp_timer_interval", 
+                            One
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "rbcpr_base_addr", 
+                            0xF901A000
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "rbcpr_size", 
+                            0x0164
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "security_control_base_addr", 
+                            0xFC4B8000
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "security_control_size", 
+                            0x8000
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "target_quotient_multiplier", 
+                            0x0A
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "quotient_offset_multiplier", 
+                            0x0A
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "hw_errata_flag", 
+                            Zero
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "workitem_affinity", 
+                            0xF0
+                        }
+                    }
+                }, 
+
+                Package (0x05)
+                {
+                    Package (0x02)
+                    {
+                        "info", 
+                        "CPR ACPI config table"
+                    }, 
+
+                    Package (0x02)
+                    {
+                        "chip_id", 
+                        0xFB
+                    }, 
+
+                    Package (0x02)
+                    {
+                        "chip_version", 
+                        0x02
+                    }, 
+
+                    Package (0x15)
+                    {
+                        Package (0x02)
+                        {
+                            "instance_num", 
+                            Zero
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "num_clients", 
+                            0x02
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "apc_rail_name", 
+                            "/vdd/apc0"
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "measurement_period_ms", 
+                            0x05
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "step_quotient", 
+                            0x0C
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "max_pmic_step_up", 
+                            One
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "max_pmic_step_dn", 
+                            One
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "pmic_step_size", 
+                            0x1388
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "up_threshold", 
+                            0x02
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "dn_threshold", 
+                            0x04
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "consecutive_up", 
+                            Zero
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "consecutive_dn", 
+                            0x02
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "clamp_timer_interval", 
+                            Zero
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "rbcpr_base_addr", 
+                            0xF9019000
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "rbcpr_size", 
+                            0x0164
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "security_control_base_addr", 
+                            0xFC4B8000
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "security_control_size", 
+                            0x8000
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "target_quotient_multiplier", 
+                            0x0A
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "quotient_offset_multiplier", 
+                            One
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "hw_errata_flag", 
+                            Zero
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "workitem_affinity", 
+                            0x0F
+                        }
+                    }, 
+
+                    Package (0x15)
+                    {
+                        Package (0x02)
+                        {
+                            "instance_num", 
+                            One
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "num_clients", 
+                            One
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "apc_rail_name", 
+                            "/vdd/apc1"
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "measurement_period_ms", 
+                            0x05
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "step_quotient", 
+                            0x0C
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "max_pmic_step_up", 
+                            One
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "max_pmic_step_dn", 
+                            One
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "pmic_step_size", 
+                            0x1388
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "up_threshold", 
+                            0x02
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "dn_threshold", 
+                            0x04
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "consecutive_up", 
+                            Zero
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "consecutive_dn", 
+                            0x02
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "clamp_timer_interval", 
+                            One
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "rbcpr_base_addr", 
+                            0xF901A000
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "rbcpr_size", 
+                            0x0164
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "security_control_base_addr", 
+                            0xFC4B8000
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "security_control_size", 
+                            0x8000
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "target_quotient_multiplier", 
+                            0x0A
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "quotient_offset_multiplier", 
+                            One
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "hw_errata_flag", 
+                            Zero
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "workitem_affinity", 
+                            0xF0
+                        }
+                    }
+                }
+            })
+            Method (CPUS, 0, NotSerialized)
+            {
+                Name (PKGG, Package (0x02)
+                {
+                    "000000000", 
+                    "000000000"
+                })
+                PKGG [Zero] = NCPU /* \_SB_.NCPU */
+                PKGG [One] = PSCI /* \_SB_.PSCI */
+                Return (PKGG) /* \_SB_.PEP0.CPUS.PKGG */
+            }
+
+            Method (CPRM, 0, NotSerialized)
+            {
+                Return (CPRD) /* \_SB_.PEP0.CPRD */
+            }
+        }
+
+        Scope (\_SB.PEP0)
+        {
+            Method (LMPM, 0, NotSerialized)
+            {
+                Return (NMPM) /* \_SB_.PEP0.NMPM */
+            }
+
+            Name (NMPM, Package (0x02)
+            {
+                Package (0x02)
+                {
+                    "MPM_SCALAR_CONFIG", 
+                    Package (0x05)
+                    {
+                        0xFC428000, 
+                        0x4000, 
+                        0xF900D000, 
+                        0x1000, 
+                        0x01D0
+                    }
+                }, 
+
+                Package (0x02)
+                {
+                    "MPM_INTERRUPT_CONFIG", 
+                    Package (0x09)
+                    {
+                        Package (0x04)
+                        {
+                            0x30, 
+                            0xAC, 
+                            Zero, 
+                            One
+                        }, 
+
+                        Package (0x04)
+                        {
+                            0x31, 
+                            0xAC, 
+                            Zero, 
+                            One
+                        }, 
+
+                        Package (0x04)
+                        {
+                            0x3A, 
+                            0xAC, 
+                            Zero, 
+                            One
+                        }, 
+
+                        Package (0x04)
+                        {
+                            0x32, 
+                            0x9B, 
+                            Zero, 
+                            One
+                        }, 
+
+                        Package (0x04)
+                        {
+                            0x33, 
+                            0x9C, 
+                            Zero, 
+                            One
+                        }, 
+
+                        Package (0x04)
+                        {
+                            0x38, 
+                            0x9D, 
+                            Zero, 
+                            One
+                        }, 
+
+                        Package (0x04)
+                        {
+                            0x39, 
+                            0x9E, 
+                            Zero, 
+                            One
+                        }, 
+
+                        Package (0x04)
+                        {
+                            0x0D, 
+                            0x25, 
+                            One, 
+                            One
+                        }, 
+
+                        Package (0x04)
+                        {
+                            0x3E, 
+                            0xDE, 
+                            Zero, 
+                            0x04
+                        }
+                    }
+                }
+            })
+        }
+
+        Scope (\_SB.PEP0)
+        {
+            Method (LSPM, 0, NotSerialized)
+            {
+                Return (NSPM) /* \_SB_.PEP0.NSPM */
+            }
+
+            Name (NSPM, Package (0x07)
+            {
+                "SPM_CONFIG", 
+                0x0B, 
+                0x03, 
+                Package (0x04)
+                {
+                    "SPM_CLUSTER_CONFIG", 
+                    0x05, 
+                    0x05, 
+                    One
+                }, 
+
+                Package (0x0C)
+                {
+                    "SPM_PHYS_CONFIG", 
+                    0xF9089000, 
+                    0xF9099000, 
+                    0xF90A9000, 
+                    0xF90B9000, 
+                    0xF9012000, 
+                    0xF90C9000, 
+                    0xF90D9000, 
+                    0xF90E9000, 
+                    0xF90F9000, 
+                    0xF9013000, 
+                    0xF9065000
+                }, 
+
+                Package (0x0C)
+                {
+                    "SPM_QCHANNEL_CONFIG", 
+                    0xF908B060, 
+                    0xF909B060, 
+                    0xF90AB060, 
+                    0xF90BB060, 
+                    0xF900D210, 
+                    0xF90CB060, 
+                    0xF90DB060, 
+                    0xF90EB060, 
+                    0xF90FB060, 
+                    0xF900F210, 
+                    Zero
+                }, 
+
+                Package (0x04)
+                {
+                    "SPM_GLB_CONFIG", 
+                    0xF900D000, 
+                    0xF900F000, 
+                    0xF900D000
+                }
+            })
+        }
+
+        Scope (\_SB.PEP0)
+        {
+            Method (LVDD, 0, NotSerialized)
+            {
+                Return (NVDD) /* \_SB_.PEP0.NVDD */
+            }
+
+            Name (NVDD, Package (0x03)
+            {
+                Package (0x02)
+                {
+                    "PEP_VDD_CX", 
+                    Package (0x0B)
+                    {
+                        "PPP_RESOURCE_ID_SMPS1_A", 
+                        0x02, 
+                        0x07, 
+                        0x04, 
+                        Package (0x0C)
+                        {
+                            Zero, 
+                            Zero, 
+                            One, 
+                            Zero, 
+                            Zero, 
+                            Zero, 
+                            Zero, 
+                            0x05, 
+                            Zero, 
+                            Zero, 
+                            One, 
+                            Zero
+                        }, 
+
+                        Package (0x0C)
+                        {
+                            Zero, 
+                            Zero, 
+                            One, 
+                            Zero, 
+                            Zero, 
+                            Zero, 
+                            Zero, 
+                            0x05, 
+                            Zero, 
+                            Zero, 
+                            One, 
+                            Zero
+                        }, 
+
+                        Package (0x0C)
+                        {
+                            Zero, 
+                            Zero, 
+                            One, 
+                            Zero, 
+                            Zero, 
+                            Zero, 
+                            Zero, 
+                            0x05, 
+                            Zero, 
+                            Zero, 
+                            0x02, 
+                            Zero
+                        }, 
+
+                        Package (0x0C)
+                        {
+                            Zero, 
+                            Zero, 
+                            One, 
+                            Zero, 
+                            Zero, 
+                            Zero, 
+                            Zero, 
+                            0x05, 
+                            Zero, 
+                            Zero, 
+                            0x03, 
+                            Zero
+                        }, 
+
+                        Package (0x0C)
+                        {
+                            Zero, 
+                            Zero, 
+                            One, 
+                            Zero, 
+                            Zero, 
+                            Zero, 
+                            Zero, 
+                            0x05, 
+                            Zero, 
+                            Zero, 
+                            0x04, 
+                            Zero
+                        }, 
+
+                        Package (0x0C)
+                        {
+                            Zero, 
+                            Zero, 
+                            One, 
+                            Zero, 
+                            Zero, 
+                            Zero, 
+                            Zero, 
+                            0x05, 
+                            Zero, 
+                            Zero, 
+                            0x05, 
+                            Zero
+                        }, 
+
+                        Package (0x0C)
+                        {
+                            Zero, 
+                            Zero, 
+                            One, 
+                            Zero, 
+                            Zero, 
+                            Zero, 
+                            Zero, 
+                            0x05, 
+                            Zero, 
+                            Zero, 
+                            0x06, 
+                            Zero
+                        }
+                    }
+                }, 
+
+                Package (0x02)
+                {
+                    "PEP_VDD_MX", 
+                    Package (0x0B)
+                    {
+                        "PPP_RESOURCE_ID_SMPS2_A", 
+                        0x02, 
+                        0x07, 
+                        0x06, 
+                        Package (0x0C)
+                        {
+                            Zero, 
+                            Zero, 
+                            One, 
+                            Zero, 
+                            Zero, 
+                            Zero, 
+                            Zero, 
+                            0x05, 
+                            Zero, 
+                            Zero, 
+                            One, 
+                            Zero
+                        }, 
+
+                        Package (0x0C)
+                        {
+                            Zero, 
+                            Zero, 
+                            One, 
+                            Zero, 
+                            Zero, 
+                            Zero, 
+                            Zero, 
+                            0x05, 
+                            Zero, 
+                            Zero, 
+                            One, 
+                            Zero
+                        }, 
+
+                        Package (0x0C)
+                        {
+                            Zero, 
+                            Zero, 
+                            One, 
+                            Zero, 
+                            Zero, 
+                            Zero, 
+                            Zero, 
+                            0x05, 
+                            Zero, 
+                            Zero, 
+                            0x02, 
+                            Zero
+                        }, 
+
+                        Package (0x0C)
+                        {
+                            Zero, 
+                            Zero, 
+                            One, 
+                            Zero, 
+                            Zero, 
+                            Zero, 
+                            Zero, 
+                            0x05, 
+                            Zero, 
+                            Zero, 
+                            0x03, 
+                            Zero
+                        }, 
+
+                        Package (0x0C)
+                        {
+                            Zero, 
+                            Zero, 
+                            One, 
+                            Zero, 
+                            Zero, 
+                            Zero, 
+                            Zero, 
+                            0x05, 
+                            Zero, 
+                            Zero, 
+                            0x04, 
+                            Zero
+                        }, 
+
+                        Package (0x0C)
+                        {
+                            Zero, 
+                            Zero, 
+                            One, 
+                            Zero, 
+                            Zero, 
+                            Zero, 
+                            Zero, 
+                            0x05, 
+                            Zero, 
+                            Zero, 
+                            0x05, 
+                            Zero
+                        }, 
+
+                        Package (0x0C)
+                        {
+                            Zero, 
+                            Zero, 
+                            One, 
+                            Zero, 
+                            Zero, 
+                            Zero, 
+                            Zero, 
+                            0x05, 
+                            Zero, 
+                            Zero, 
+                            0x06, 
+                            Zero
+                        }
+                    }
+                }, 
+
+                Package (0x02)
+                {
+                    "PEP_VDD_HFPLL1", 
+                    Package (0x07)
+                    {
+                        "PPP_RESOURCE_ID_SMPS12_A", 
+                        0x02, 
+                        0x03, 
+                        One, 
+                        Package (0x0C)
+                        {
+                            Zero, 
+                            Zero, 
+                            One, 
+                            Zero, 
+                            Zero, 
+                            Zero, 
+                            Zero, 
+                            0x05, 
+                            Zero, 
+                            Zero, 
+                            Zero, 
+                            Zero
+                        }, 
+
+                        Package (0x0C)
+                        {
+                            0x0010C8E0, 
+                            0x0FA0, 
+                            One, 
+                            Zero, 
+                            Zero, 
+                            Zero, 
+                            Zero, 
+                            0x05, 
+                            Zero, 
+                            Zero, 
+                            Zero, 
+                            Zero
+                        }, 
+
+                        Package (0x0C)
+                        {
+                            0x0010C8E0, 
+                            0x2328, 
+                            One, 
+                            Zero, 
+                            Zero, 
+                            Zero, 
+                            Zero, 
+                            0x05, 
+                            Zero, 
+                            Zero, 
+                            Zero, 
+                            Zero
+                        }
+                    }
+                }
+            })
+        }
+
+        Scope (\_SB.PEP0)
+        {
+            Name (DVMP, Package (0x02)
+            {
+                Package (0x04)
+                {
+                    "PPP_RESOURCE_ID_PMIC_GPIO_DV1", 
+                    "PPP_RESOURCE_TYPE_DISCRETE_PMIC_GPIO", 
+                    Package (0x02)
+                    {
+                        "PM_DISCRETE_VREG_STATE_ON", 
+                        Package (0x0A)
+                        {
+                            Zero, 
+                            0x08, 
+                            Zero, 
+                            Zero, 
+                            One, 
+                            Zero, 
+                            One, 
+                            Zero, 
+                            One, 
+                            0x05
+                        }
+                    }, 
+
+                    Package (0x02)
+                    {
+                        "PM_DISCRETE_VREG_STATE_OFF", 
+                        Package (0x0A)
+                        {
+                            Zero, 
+                            0x08, 
+                            Zero, 
+                            Zero, 
+                            Zero, 
+                            Zero, 
+                            One, 
+                            Zero, 
+                            One, 
+                            0x05
+                        }
+                    }
+                }, 
+
+                Package (0x04)
+                {
+                    "PPP_RESOURCE_ID_PMIC_MPP_DV1", 
+                    "PPP_RESOURCE_TYPE_DISCRETE_PMIC_MPP", 
+                    Package (0x02)
+                    {
+                        "PM_DISCRETE_VREG_STATE_ON", 
+                        Package (0x06)
+                        {
+                            Zero, 
+                            0x03, 
+                            Zero, 
+                            0x02, 
+                            One, 
+                            Zero
+                        }
+                    }, 
+
+                    Package (0x02)
+                    {
+                        "PM_DISCRETE_VREG_STATE_OFF", 
+                        Package (0x06)
+                        {
+                            Zero, 
+                            0x03, 
+                            Zero, 
+                            0x02, 
+                            Zero, 
+                            Zero
+                        }
+                    }
+                }
+            })
+            Method (DVMM, 0, NotSerialized)
+            {
+                Return (DVMP) /* \_SB_.PEP0.DVMP */
+            }
+        }
+
+        Scope (\_SB.PEP0)
+        {
+            Method (LDBG, 0, NotSerialized)
+            {
+                Return (NDBG) /* \_SB_.PEP0.NDBG */
+            }
+
+            Name (NDBG, Package (0x04)
+            {
+                "DEBUGGERS", 
+                Package (0x05)
+                {
+                    "TYPE", 
+                    "SERIAL", 
+                    Package (0x02)
+                    {
+                        "INSTANCES", 
+                        "\\_SB.UAR1"
+                    }, 
+
+                    Package (0x04)
+                    {
+                        "DEBUG_ON", 
+                        Package (0x02)
+                        {
+                            "CLOCK", 
+                            Package (0x02)
+                            {
+                                "gcc_blsp1_uart2_apps_clk", 
+                                One
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "CLOCK", 
+                            Package (0x02)
+                            {
+                                "gcc_blsp1_ahb_clk", 
+                                One
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "CLOCK", 
+                            Package (0x03)
+                            {
+                                "gcc_blsp1_ahb_clk", 
+                                0x09, 
+                                0x0C
+                            }
+                        }
+                    }, 
+
+                    Package (0x01)
+                    {
+                        "DEBUG_OFF"
+                    }
+                }, 
+
+                Package (0x06)
+                {
+                    "TYPE", 
+                    "USB2.0", 
+                    Package (0x03)
+                    {
+                        "DEBUG_INSTANCES", 
+                        "\\_SB.URS0", 
+                        "\\_SB.UFN1"
+                    }, 
+
+                    Package (0x02)
+                    {
+                        "DRIVER_INSTANCES", 
+                        "\\_SB.UFN1"
+                    }, 
+
+                    Package (0x09)
+                    {
+                        "DEBUG_ON", 
+                        Package (0x02)
+                        {
+                            "REQUIRED_RESOURCE", 
+                            Package (0x03)
+                            {
+                                One, 
+                                "/clk/pnoc", 
+                                0x000186A0
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "CLOCK", 
+                            Package (0x02)
+                            {
+                                "gcc_usb_phy_cfg_ahb2phy_clk", 
+                                One
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "CLOCK", 
+                            Package (0x04)
+                            {
+                                "gcc_usb_hs_system_clk", 
+                                0x08, 
+                                0x3C, 
+                                0x09
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "CLOCK", 
+                            Package (0x02)
+                            {
+                                "gcc_usb_hs_ahb_clk", 
+                                One
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "BUSARB", 
+                            Package (0x05)
+                            {
+                                0x03, 
+                                "ICBID_MASTER_USB_HS1", 
+                                "ICBID_SLAVE_EBI1", 
+                                0x5DC00000, 
+                                0x03C00000
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "PMICVREGVOTE", 
+                            Package (0x04)
+                            {
+                                "PPP_RESOURCE_ID_CXO_BUFFERS_LNBBCLK1_A", 
+                                0x06, 
+                                One, 
+                                Zero
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "PMICVREGVOTE", 
+                            Package (0x0A)
+                            {
+                                "PPP_RESOURCE_ID_LDO24_A", 
+                                One, 
+                                0x002EEBB8, 
+                                0x16A8, 
+                                One, 
+                                Zero, 
+                                One, 
+                                Zero, 
+                                Zero, 
+                                Zero
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "PMICVREGVOTE", 
+                            Package (0x0A)
+                            {
+                                "PPP_RESOURCE_ID_LDO6_A", 
+                                One, 
+                                0x001B7740, 
+                                0x48A8, 
+                                One, 
+                                Zero, 
+                                One, 
+                                Zero, 
+                                Zero, 
+                                Zero
+                            }
+                        }
+                    }, 
+
+                    Package (0x0C)
+                    {
+                        "DEBUG_OFF", 
+                        Package (0x02)
+                        {
+                            "CLOCK", 
+                            Package (0x02)
+                            {
+                                "gcc_usb_phy_cfg_ahb2phy_clk", 
+                                One
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "CLOCK", 
+                            Package (0x04)
+                            {
+                                "gcc_usb_hs_system_clk", 
+                                0x08, 
+                                0x3C, 
+                                0x09
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "CLOCK", 
+                            Package (0x02)
+                            {
+                                "gcc_usb_hs_ahb_clk", 
+                                One
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "REQUIRED_RESOURCE", 
+                            Package (0x03)
+                            {
+                                Zero, 
+                                "/clk/pnoc", 
+                                Zero
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "CLOCK", 
+                            Package (0x02)
+                            {
+                                "gcc_usb_phy_cfg_ahb2phy_clk", 
+                                0x02
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "CLOCK", 
+                            Package (0x02)
+                            {
+                                "gcc_usb_hs_system_clk", 
+                                0x02
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "CLOCK", 
+                            Package (0x02)
+                            {
+                                "gcc_usb_hs_ahb_clk", 
+                                0x02
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "BUSARB", 
+                            Package (0x05)
+                            {
+                                0x03, 
+                                "ICBID_MASTER_USB_HS1", 
+                                "ICBID_SLAVE_EBI1", 
+                                Zero, 
+                                Zero
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "PMICVREGVOTE", 
+                            Package (0x04)
+                            {
+                                "PPP_RESOURCE_ID_CXO_BUFFERS_LNBBCLK1_A", 
+                                0x06, 
+                                Zero, 
+                                Zero
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "PMICVREGVOTE", 
+                            Package (0x0A)
+                            {
+                                "PPP_RESOURCE_ID_LDO24_A", 
+                                One, 
+                                0x002EEBB8, 
+                                Zero, 
+                                One, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                Zero
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "PMICVREGVOTE", 
+                            Package (0x0A)
+                            {
+                                "PPP_RESOURCE_ID_LDO6_A", 
+                                One, 
+                                0x001B7740, 
+                                Zero, 
+                                One, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                Zero
+                            }
+                        }
+                    }
+                }, 
+
+                Package (0x05)
+                {
+                    "TYPE", 
+                    "USB3.0", 
+                    Package (0x02)
+                    {
+                        "INSTANCES", 
+                        "\\_SB.NULL"
+                    }, 
+
+                    Package (0x01)
+                    {
+                        "DEBUG_ON"
+                    }, 
+
+                    Package (0x01)
+                    {
+                        "DEBUG_OFF"
+                    }
+                }
+            })
+        }
+
+        Scope (\_SB.PEP0)
+        {
+            Method (LDRS, 0, NotSerialized)
+            {
+                Return (NDRS) /* \_SB_.PEP0.NDRS */
+            }
+
+            Name (NDRS, Package (0x05)
+            {
+                "DEFAULT_RESOURCES", 
+                Package (0x04)
+                {
+                    "OPTIMIZATION", 
+                    "CRYPTO_OFF", 
+                    "BOOT", 
+                    Package (0x07)
+                    {
+                        "RESOURCES", 
+                        Package (0x02)
+                        {
+                            "REQUIRED_RESOURCE", 
+                            Package (0x03)
+                            {
+                                One, 
+                                "/clk/ce1", 
+                                0x64
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "REQUIRED_RESOURCE", 
+                            Package (0x03)
+                            {
+                                One, 
+                                "/clk/ce2", 
+                                0x64
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "REQUIRED_RESOURCE", 
+                            Package (0x03)
+                            {
+                                One, 
+                                "/clk/ce3", 
+                                0x64
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "REQUIRED_RESOURCE", 
+                            Package (0x03)
+                            {
+                                One, 
+                                "/clk/ce3", 
+                                Zero
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "REQUIRED_RESOURCE", 
+                            Package (0x03)
+                            {
+                                One, 
+                                "/clk/ce2", 
+                                Zero
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "REQUIRED_RESOURCE", 
+                            Package (0x03)
+                            {
+                                One, 
+                                "/clk/ce1", 
+                                Zero
+                            }
+                        }
+                    }
+                }, 
+
+                Package (0x04)
+                {
+                    "WORKAROUND", 
+                    "PNOC_DEFAULT_ON", 
+                    "BOOT", 
+                    Package (0x02)
+                    {
+                        "RESOURCES", 
+                        Package (0x02)
+                        {
+                            "REQUIRED_RESOURCE", 
+                            Package (0x03)
+                            {
+                                One, 
+                                "/clk/pnoc", 
+                                One
+                            }
+                        }
+                    }
+                }, 
+
+                Package (0x04)
+                {
+                    "OPTIMIZATION", 
+                    "PCIE0_OFF", 
+                    "BOOT", 
+                    Package (0x03)
+                    {
+                        "RESOURCES", 
+                        Package (0x02)
+                        {
+                            "FOOTSWITCH", 
+                            Package (0x02)
+                            {
+                                "VDD_PCIE_0", 
+                                One
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "FOOTSWITCH", 
+                            Package (0x02)
+                            {
+                                "VDD_PCIE_0", 
+                                0x02
+                            }
+                        }
+                    }
+                }, 
+
+                Package (0x04)
+                {
+                    "OPTIMIZATION", 
+                    "UFS_OFF", 
+                    "BOOT", 
+                    Package (0x05)
+                    {
+                        "RESOURCES", 
+                        Package (0x02)
+                        {
+                            "FOOTSWITCH", 
+                            Package (0x02)
+                            {
+                                "VDD_UFS", 
+                                One
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "FOOTSWITCH", 
+                            Package (0x02)
+                            {
+                                "VDD_UFS", 
+                                0x02
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "PMICVREGVOTE", 
+                            Package (0x0A)
+                            {
+                                "PPP_RESOURCE_ID_LDO31_A", 
+                                One, 
+                                Zero, 
+                                Zero, 
+                                One, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                Zero
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "PMICVREGVOTE", 
+                            Package (0x0A)
+                            {
+                                "PPP_RESOURCE_ID_LDO31_A", 
+                                One, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                Zero
+                            }
+                        }
+                    }
+                }
+            })
+        }
+
+        Scope (\_SB.PEP0)
+        {
+            Method (UIDL, 0, NotSerialized)
+            {
+                Return (NIDL) /* \_SB_.PEP0.NIDL */
+            }
+
+            Name (NIDL, Package (0x09)
+            {
+                "MICROPEP_IDLE", 
+                One, 
+                Package (0x06)
+                {
+                    "LPR", 
+                    "A53Core0", 
+                    Zero, 
+                    Package (0x07)
+                    {
+                        "MODE", 
+                        "C1", 
+                        Zero, 
+                        Zero, 
+                        Zero, 
+                        Zero, 
+                        Zero
+                    }, 
+
+                    Package (0x07)
+                    {
+                        "MODE", 
+                        "C2D", 
+                        0x03E8, 
+                        0x0FA0, 
+                        0x10, 
+                        Zero, 
+                        Zero
+                    }, 
+
+                    Package (0x07)
+                    {
+                        "MODE", 
+                        "C3", 
+                        0x1388, 
+                        0x6978, 
+                        0x03, 
+                        Zero, 
+                        One
+                    }
+                }, 
+
+                Package (0x06)
+                {
+                    "LPR", 
+                    "A53Core1", 
+                    One, 
+                    Package (0x07)
+                    {
+                        "MODE", 
+                        "C1", 
+                        Zero, 
+                        Zero, 
+                        Zero, 
+                        Zero, 
+                        Zero
+                    }, 
+
+                    Package (0x07)
+                    {
+                        "MODE", 
+                        "C2D", 
+                        0x03E8, 
+                        0x0FA0, 
+                        0x10, 
+                        Zero, 
+                        Zero
+                    }, 
+
+                    Package (0x07)
+                    {
+                        "MODE", 
+                        "C3", 
+                        0x1388, 
+                        0x6978, 
+                        0x03, 
+                        Zero, 
+                        One
+                    }
+                }, 
+
+                Package (0x06)
+                {
+                    "LPR", 
+                    "A53Core2", 
+                    0x02, 
+                    Package (0x07)
+                    {
+                        "MODE", 
+                        "C1", 
+                        Zero, 
+                        Zero, 
+                        Zero, 
+                        Zero, 
+                        Zero
+                    }, 
+
+                    Package (0x07)
+                    {
+                        "MODE", 
+                        "C2D", 
+                        0x03E8, 
+                        0x0FA0, 
+                        0x10, 
+                        Zero, 
+                        Zero
+                    }, 
+
+                    Package (0x07)
+                    {
+                        "MODE", 
+                        "C3", 
+                        0x1388, 
+                        0x6978, 
+                        0x03, 
+                        Zero, 
+                        One
+                    }
+                }, 
+
+                Package (0x06)
+                {
+                    "LPR", 
+                    "A53Core3", 
+                    0x03, 
+                    Package (0x07)
+                    {
+                        "MODE", 
+                        "C1", 
+                        Zero, 
+                        Zero, 
+                        Zero, 
+                        Zero, 
+                        Zero
+                    }, 
+
+                    Package (0x07)
+                    {
+                        "MODE", 
+                        "C2D", 
+                        0x03E8, 
+                        0x0FA0, 
+                        0x10, 
+                        Zero, 
+                        Zero
+                    }, 
+
+                    Package (0x07)
+                    {
+                        "MODE", 
+                        "C3", 
+                        0x1388, 
+                        0x6978, 
+                        0x03, 
+                        Zero, 
+                        One
+                    }
+                }, 
+
+                Package (0x05)
+                {
+                    "LPR", 
+                    "A53L2", 
+                    0xFFFFFFFF, 
+                    Package (0x0B)
+                    {
+                        "MODE", 
+                        "D2D", 
+                        0x0514, 
+                        0x1D4C, 
+                        0x10, 
+                        0x02, 
+                        Zero, 
+                        Package (0x04)
+                        {
+                            "DEPENDENCY_CONTAINER", 
+                            Package (0x04)
+                            {
+                                "DEPENDENCY", 
+                                "A53Core0", 
+                                "C1", 
+                                0x03
+                            }, 
+
+                            Package (0x04)
+                            {
+                                "DEPENDENCY", 
+                                "A53Core0", 
+                                "C2D", 
+                                0x03
+                            }, 
+
+                            Package (0x04)
+                            {
+                                "DEPENDENCY", 
+                                "A53Core0", 
+                                "C3", 
+                                0x03
+                            }
+                        }, 
+
+                        Package (0x04)
+                        {
+                            "DEPENDENCY_CONTAINER", 
+                            Package (0x04)
+                            {
+                                "DEPENDENCY", 
+                                "A53Core1", 
+                                "C1", 
+                                0x03
+                            }, 
+
+                            Package (0x04)
+                            {
+                                "DEPENDENCY", 
+                                "A53Core1", 
+                                "C2D", 
+                                0x03
+                            }, 
+
+                            Package (0x04)
+                            {
+                                "DEPENDENCY", 
+                                "A53Core1", 
+                                "C3", 
+                                0x03
+                            }
+                        }, 
+
+                        Package (0x04)
+                        {
+                            "DEPENDENCY_CONTAINER", 
+                            Package (0x04)
+                            {
+                                "DEPENDENCY", 
+                                "A53Core2", 
+                                "C1", 
+                                0x03
+                            }, 
+
+                            Package (0x04)
+                            {
+                                "DEPENDENCY", 
+                                "A53Core2", 
+                                "C2D", 
+                                0x03
+                            }, 
+
+                            Package (0x04)
+                            {
+                                "DEPENDENCY", 
+                                "A53Core2", 
+                                "C3", 
+                                0x03
+                            }
+                        }, 
+
+                        Package (0x04)
+                        {
+                            "DEPENDENCY_CONTAINER", 
+                            Package (0x04)
+                            {
+                                "DEPENDENCY", 
+                                "A53Core3", 
+                                "C1", 
+                                0x03
+                            }, 
+
+                            Package (0x04)
+                            {
+                                "DEPENDENCY", 
+                                "A53Core3", 
+                                "C2D", 
+                                0x03
+                            }, 
+
+                            Package (0x04)
+                            {
+                                "DEPENDENCY", 
+                                "A53Core3", 
+                                "C3", 
+                                0x03
+                            }
+                        }
+                    }, 
+
+                    Package (0x0B)
+                    {
+                        "MODE", 
+                        "D3", 
+                        0x2328, 
+                        0xD2F0, 
+                        Zero, 
+                        One, 
+                        0x04, 
+                        Package (0x02)
+                        {
+                            "DEPENDENCY_CONTAINER", 
+                            Package (0x04)
+                            {
+                                "DEPENDENCY", 
+                                "A53Core0", 
+                                "C3", 
+                                0x07
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "DEPENDENCY_CONTAINER", 
+                            Package (0x04)
+                            {
+                                "DEPENDENCY", 
+                                "A53Core1", 
+                                "C3", 
+                                0x07
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "DEPENDENCY_CONTAINER", 
+                            Package (0x04)
+                            {
+                                "DEPENDENCY", 
+                                "A53Core2", 
+                                "C3", 
+                                0x07
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "DEPENDENCY_CONTAINER", 
+                            Package (0x04)
+                            {
+                                "DEPENDENCY", 
+                                "A53Core3", 
+                                "C3", 
+                                0x07
+                            }
+                        }
+                    }
+                }, 
+
+                Package (0x05)
+                {
+                    "LPR", 
+                    "CCI", 
+                    0xFFFFFFFF, 
+                    Package (0x08)
+                    {
+                        "MODE", 
+                        "E1", 
+                        0x1388, 
+                        0x2710, 
+                        Zero, 
+                        Zero, 
+                        Zero, 
+                        Package (0x03)
+                        {
+                            "DEPENDENCY_CONTAINER", 
+                            Package (0x04)
+                            {
+                                "DEPENDENCY", 
+                                "A53L2", 
+                                "D2D", 
+                                0x07
+                            }, 
+
+                            Package (0x04)
+                            {
+                                "DEPENDENCY", 
+                                "A53L2", 
+                                "D3", 
+                                0x07
+                            }
+                        }
+                    }, 
+
+                    Package (0x08)
+                    {
+                        "MODE", 
+                        "E3", 
+                        0x2AF8, 
+                        0x00038270, 
+                        Zero, 
+                        Zero, 
+                        Zero, 
+                        Package (0x02)
+                        {
+                            "DEPENDENCY_CONTAINER", 
+                            Package (0x04)
+                            {
+                                "DEPENDENCY", 
+                                "A53L2", 
+                                "D3", 
+                                0x07
+                            }
+                        }
+                    }
+                }, 
+
+                Package (0x04)
+                {
+                    "LPR", 
+                    "platform", 
+                    0xFFFFFFFF, 
+                    Package (0x08)
+                    {
+                        "MODE", 
+                        "xo", 
+                        0x2EE0, 
+                        0x00050910, 
+                        0x20, 
+                        Zero, 
+                        0x10, 
+                        Package (0x02)
+                        {
+                            "DEPENDENCY_CONTAINER", 
+                            Package (0x04)
+                            {
+                                "DEPENDENCY", 
+                                "CCI", 
+                                "E3", 
+                                0x07
+                            }
+                        }
+                    }
+                }
+            })
+        }
+
+        Scope (\_SB.PEP0)
+        {
+            Method (OIDL, 0, NotSerialized)
+            {
+                Return (MIDL) /* \_SB_.PEP0.MIDL */
+            }
+
+            Name (MIDL, Package (0x0C)
+            {
+                "MICROPEP_IDLE", 
+                One, 
+                Package (0x06)
+                {
+                    "LPR", 
+                    "A53Core0", 
+                    Zero, 
+                    Package (0x07)
+                    {
+                        "MODE", 
+                        "C1", 
+                        Zero, 
+                        Zero, 
+                        Zero, 
+                        Zero, 
+                        Zero
+                    }, 
+
+                    Package (0x07)
+                    {
+                        "MODE", 
+                        "C2D", 
+                        0x03E8, 
+                        0x0FA0, 
+                        Zero, 
+                        Zero, 
+                        Zero
+                    }, 
+
+                    Package (0x07)
+                    {
+                        "MODE", 
+                        "C3", 
+                        0x0BB8, 
+                        0xAFC8, 
+                        0x03, 
+                        Zero, 
+                        One
+                    }
+                }, 
+
+                Package (0x06)
+                {
+                    "LPR", 
+                    "A53Core1", 
+                    One, 
+                    Package (0x07)
+                    {
+                        "MODE", 
+                        "C1", 
+                        Zero, 
+                        Zero, 
+                        Zero, 
+                        Zero, 
+                        Zero
+                    }, 
+
+                    Package (0x07)
+                    {
+                        "MODE", 
+                        "C2D", 
+                        0x03E8, 
+                        0x0FA0, 
+                        Zero, 
+                        Zero, 
+                        Zero
+                    }, 
+
+                    Package (0x07)
+                    {
+                        "MODE", 
+                        "C3", 
+                        0x0BB8, 
+                        0xAFC8, 
+                        0x03, 
+                        Zero, 
+                        One
+                    }
+                }, 
+
+                Package (0x06)
+                {
+                    "LPR", 
+                    "A53Core2", 
+                    0x02, 
+                    Package (0x07)
+                    {
+                        "MODE", 
+                        "C1", 
+                        Zero, 
+                        Zero, 
+                        Zero, 
+                        Zero, 
+                        Zero
+                    }, 
+
+                    Package (0x07)
+                    {
+                        "MODE", 
+                        "C2D", 
+                        0x03E8, 
+                        0x0FA0, 
+                        Zero, 
+                        Zero, 
+                        Zero
+                    }, 
+
+                    Package (0x07)
+                    {
+                        "MODE", 
+                        "C3", 
+                        0x0BB8, 
+                        0xAFC8, 
+                        0x03, 
+                        Zero, 
+                        One
+                    }
+                }, 
+
+                Package (0x06)
+                {
+                    "LPR", 
+                    "A53Core3", 
+                    0x03, 
+                    Package (0x07)
+                    {
+                        "MODE", 
+                        "C1", 
+                        Zero, 
+                        Zero, 
+                        Zero, 
+                        Zero, 
+                        Zero
+                    }, 
+
+                    Package (0x07)
+                    {
+                        "MODE", 
+                        "C2D", 
+                        0x03E8, 
+                        0x0FA0, 
+                        Zero, 
+                        Zero, 
+                        Zero
+                    }, 
+
+                    Package (0x07)
+                    {
+                        "MODE", 
+                        "C3", 
+                        0x0BB8, 
+                        0xAFC8, 
+                        0x03, 
+                        Zero, 
+                        One
+                    }
+                }, 
+
+                Package (0x06)
+                {
+                    "LPR", 
+                    "A57Core0", 
+                    0x04, 
+                    Package (0x07)
+                    {
+                        "MODE", 
+                        "C1", 
+                        Zero, 
+                        Zero, 
+                        Zero, 
+                        Zero, 
+                        Zero
+                    }, 
+
+                    Package (0x07)
+                    {
+                        "MODE", 
+                        "C2D", 
+                        0x0320, 
+                        0x1770, 
+                        0x10, 
+                        Zero, 
+                        Zero
+                    }, 
+
+                    Package (0x07)
+                    {
+                        "MODE", 
+                        "C3", 
+                        0x0384, 
+                        0x00011170, 
+                        0x03, 
+                        Zero, 
+                        One
+                    }
+                }, 
+
+                Package (0x06)
+                {
+                    "LPR", 
+                    "A57Core1", 
+                    0x05, 
+                    Package (0x07)
+                    {
+                        "MODE", 
+                        "C1", 
+                        Zero, 
+                        Zero, 
+                        Zero, 
+                        Zero, 
+                        Zero
+                    }, 
+
+                    Package (0x07)
+                    {
+                        "MODE", 
+                        "C2D", 
+                        0x0320, 
+                        0x1770, 
+                        0x10, 
+                        Zero, 
+                        Zero
+                    }, 
+
+                    Package (0x07)
+                    {
+                        "MODE", 
+                        "C3", 
+                        0x0384, 
+                        0x00011170, 
+                        0x03, 
+                        Zero, 
+                        One
+                    }
+                }, 
+
+                Package (0x05)
+                {
+                    "LPR", 
+                    "A53L2", 
+                    0xFFFFFFFF, 
+                    Package (0x0B)
+                    {
+                        "MODE", 
+                        "D2D", 
+                        0x0514, 
+                        0x0BB8, 
+                        Zero, 
+                        0x02, 
+                        Zero, 
+                        Package (0x04)
+                        {
+                            "DEPENDENCY_CONTAINER", 
+                            Package (0x04)
+                            {
+                                "DEPENDENCY", 
+                                "A53Core0", 
+                                "C1", 
+                                0x03
+                            }, 
+
+                            Package (0x04)
+                            {
+                                "DEPENDENCY", 
+                                "A53Core0", 
+                                "C2D", 
+                                0x07
+                            }, 
+
+                            Package (0x04)
+                            {
+                                "DEPENDENCY", 
+                                "A53Core0", 
+                                "C3", 
+                                0x03
+                            }
+                        }, 
+
+                        Package (0x04)
+                        {
+                            "DEPENDENCY_CONTAINER", 
+                            Package (0x04)
+                            {
+                                "DEPENDENCY", 
+                                "A53Core1", 
+                                "C1", 
+                                0x03
+                            }, 
+
+                            Package (0x04)
+                            {
+                                "DEPENDENCY", 
+                                "A53Core1", 
+                                "C2D", 
+                                0x07
+                            }, 
+
+                            Package (0x04)
+                            {
+                                "DEPENDENCY", 
+                                "A53Core1", 
+                                "C3", 
+                                0x03
+                            }
+                        }, 
+
+                        Package (0x04)
+                        {
+                            "DEPENDENCY_CONTAINER", 
+                            Package (0x04)
+                            {
+                                "DEPENDENCY", 
+                                "A53Core2", 
+                                "C1", 
+                                0x03
+                            }, 
+
+                            Package (0x04)
+                            {
+                                "DEPENDENCY", 
+                                "A53Core2", 
+                                "C2D", 
+                                0x07
+                            }, 
+
+                            Package (0x04)
+                            {
+                                "DEPENDENCY", 
+                                "A53Core2", 
+                                "C3", 
+                                0x03
+                            }
+                        }, 
+
+                        Package (0x04)
+                        {
+                            "DEPENDENCY_CONTAINER", 
+                            Package (0x04)
+                            {
+                                "DEPENDENCY", 
+                                "A53Core3", 
+                                "C1", 
+                                0x03
+                            }, 
+
+                            Package (0x04)
+                            {
+                                "DEPENDENCY", 
+                                "A53Core3", 
+                                "C2D", 
+                                0x07
+                            }, 
+
+                            Package (0x04)
+                            {
+                                "DEPENDENCY", 
+                                "A53Core3", 
+                                "C3", 
+                                0x03
+                            }
+                        }
+                    }, 
+
+                    Package (0x0B)
+                    {
+                        "MODE", 
+                        "D3", 
+                        0x2328, 
+                        0xFA00, 
+                        Zero, 
+                        One, 
+                        0x04, 
+                        Package (0x02)
+                        {
+                            "DEPENDENCY_CONTAINER", 
+                            Package (0x04)
+                            {
+                                "DEPENDENCY", 
+                                "A53Core0", 
+                                "C3", 
+                                0x07
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "DEPENDENCY_CONTAINER", 
+                            Package (0x04)
+                            {
+                                "DEPENDENCY", 
+                                "A53Core1", 
+                                "C3", 
+                                0x07
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "DEPENDENCY_CONTAINER", 
+                            Package (0x04)
+                            {
+                                "DEPENDENCY", 
+                                "A53Core2", 
+                                "C3", 
+                                0x07
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "DEPENDENCY_CONTAINER", 
+                            Package (0x04)
+                            {
+                                "DEPENDENCY", 
+                                "A53Core3", 
+                                "C3", 
+                                0x07
+                            }
+                        }
+                    }
+                }, 
+
+                Package (0x05)
+                {
+                    "LPR", 
+                    "A57L2", 
+                    0xFFFFFFFF, 
+                    Package (0x09)
+                    {
+                        "MODE", 
+                        "D2D", 
+                        0x07D0, 
+                        0x2328, 
+                        0x10, 
+                        0x02, 
+                        Zero, 
+                        Package (0x04)
+                        {
+                            "DEPENDENCY_CONTAINER", 
+                            Package (0x04)
+                            {
+                                "DEPENDENCY", 
+                                "A57Core0", 
+                                "C1", 
+                                0x03
+                            }, 
+
+                            Package (0x04)
+                            {
+                                "DEPENDENCY", 
+                                "A57Core0", 
+                                "C2D", 
+                                0x07
+                            }, 
+
+                            Package (0x04)
+                            {
+                                "DEPENDENCY", 
+                                "A57Core0", 
+                                "C3", 
+                                0x03
+                            }
+                        }, 
+
+                        Package (0x04)
+                        {
+                            "DEPENDENCY_CONTAINER", 
+                            Package (0x04)
+                            {
+                                "DEPENDENCY", 
+                                "A57Core1", 
+                                "C1", 
+                                0x03
+                            }, 
+
+                            Package (0x04)
+                            {
+                                "DEPENDENCY", 
+                                "A57Core1", 
+                                "C2D", 
+                                0x07
+                            }, 
+
+                            Package (0x04)
+                            {
+                                "DEPENDENCY", 
+                                "A57Core1", 
+                                "C3", 
+                                0x03
+                            }
+                        }
+                    }, 
+
+                    Package (0x09)
+                    {
+                        "MODE", 
+                        "D3", 
+                        0x2EE0, 
+                        0xEA60, 
+                        Zero, 
+                        One, 
+                        0x04, 
+                        Package (0x02)
+                        {
+                            "DEPENDENCY_CONTAINER", 
+                            Package (0x04)
+                            {
+                                "DEPENDENCY", 
+                                "A57Core0", 
+                                "C3", 
+                                0x07
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "DEPENDENCY_CONTAINER", 
+                            Package (0x04)
+                            {
+                                "DEPENDENCY", 
+                                "A57Core1", 
+                                "C3", 
+                                0x07
+                            }
+                        }
+                    }
+                }, 
+
+                Package (0x05)
+                {
+                    "LPR", 
+                    "CCI", 
+                    0xFFFFFFFF, 
+                    Package (0x09)
+                    {
+                        "MODE", 
+                        "E1", 
+                        0x1388, 
+                        0x6590, 
+                        Zero, 
+                        Zero, 
+                        Zero, 
+                        Package (0x03)
+                        {
+                            "DEPENDENCY_CONTAINER", 
+                            Package (0x04)
+                            {
+                                "DEPENDENCY", 
+                                "A53L2", 
+                                "D2D", 
+                                0x07
+                            }, 
+
+                            Package (0x04)
+                            {
+                                "DEPENDENCY", 
+                                "A53L2", 
+                                "D3", 
+                                0x07
+                            }
+                        }, 
+
+                        Package (0x03)
+                        {
+                            "DEPENDENCY_CONTAINER", 
+                            Package (0x04)
+                            {
+                                "DEPENDENCY", 
+                                "A57L2", 
+                                "D2D", 
+                                0x07
+                            }, 
+
+                            Package (0x04)
+                            {
+                                "DEPENDENCY", 
+                                "A57L2", 
+                                "D3", 
+                                0x07
+                            }
+                        }
+                    }, 
+
+                    Package (0x09)
+                    {
+                        "MODE", 
+                        "E3", 
+                        0x2AF8, 
+                        0x7530, 
+                        Zero, 
+                        Zero, 
+                        Zero, 
+                        Package (0x02)
+                        {
+                            "DEPENDENCY_CONTAINER", 
+                            Package (0x04)
+                            {
+                                "DEPENDENCY", 
+                                "A53L2", 
+                                "D3", 
+                                0x07
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "DEPENDENCY_CONTAINER", 
+                            Package (0x04)
+                            {
+                                "DEPENDENCY", 
+                                "A57L2", 
+                                "D3", 
+                                0x07
+                            }
+                        }
+                    }
+                }, 
+
+                Package (0x04)
+                {
+                    "LPR", 
+                    "platform", 
+                    0xFFFFFFFF, 
+                    Package (0x08)
+                    {
+                        "MODE", 
+                        "xo", 
+                        0x1388, 
+                        0x00050910, 
+                        0x20, 
+                        Zero, 
+                        0x10, 
+                        Package (0x02)
+                        {
+                            "DEPENDENCY_CONTAINER", 
+                            Package (0x04)
+                            {
+                                "DEPENDENCY", 
+                                "CCI", 
+                                "E3", 
+                                0x07
+                            }
+                        }
+                    }
+                }
+            })
+        }
+
+        Scope (\_SB.PEP0)
+        {
+            Method (PPMD, 0, NotSerialized)
+            {
+                Return (PPCC) /* \_SB_.PEP0.PPCC */
+            }
+
+            Name (PPCC, Package (0x03)
+            {
+                Package (0x03)
+                {
+                    "DEVICE", 
+                    "\\_SB.STAT", 
+                    Package (0x03)
+                    {
+                        "COMPONENT", 
+                        Zero, 
+                        Package (0x02)
+                        {
+                            "FSTATE", 
+                            Zero
+                        }
+                    }
+                }, 
+
+                Package (0x03)
+                {
+                    "DEVICE", 
+                    "\\_SB.UAR1", 
+                    Package (0x03)
+                    {
+                        "COMPONENT", 
+                        Zero, 
+                        Package (0x02)
+                        {
+                            "FSTATE", 
+                            Zero
+                        }
+                    }
+                }, 
+
+                Package (0x05)
+                {
+                    "DEVICE", 
+                    0x81, 
+                    "\\_SB.GIO0", 
+                    Package (0x03)
+                    {
+                        "COMPONENT", 
+                        Zero, 
+                        Package (0x02)
+                        {
+                            "FSTATE", 
+                            Zero
+                        }
+                    }, 
+
+                    Package (0x03)
+                    {
+                        "COMPONENT", 
+                        One, 
+                        Package (0x02)
+                        {
+                            "FSTATE", 
+                            Zero
+                        }
+                    }
+                }
+            })
+            Name (SDFR, Package (0x01)
+            {
+                Package (0x03)
+                {
+                    "DEVICE", 
+                    "\\_SB.SDFR", 
+                    Package (0x06)
+                    {
+                        "COMPONENT", 
+                        Zero, 
+                        Package (0x02)
+                        {
+                            "FSTATE", 
+                            Zero
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "FSTATE", 
+                            One
+                        }, 
+
+                        Package (0x03)
+                        {
+                            "FSTATE", 
+                            0x02, 
+                            Package (0x02)
+                            {
+                                "REQUIRED_RESOURCE", 
+                                Package (0x03)
+                                {
+                                    One, 
+                                    "/clk/dcvs.ena", 
+                                    One
+                                }
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "FSTATE", 
+                            0x03
+                        }
+                    }
+                }
+            })
+        }
+
+        Scope (\_SB.PEP0)
+        {
+            Method (BPMD, 0, NotSerialized)
+            {
+                Return (BPCC) /* \_SB_.PEP0.BPCC */
+            }
+
+            Name (BPCC, Package (0x05)
+            {
+                Package (0x05)
+                {
+                    "DEVICE", 
+                    "\\_SB.SDC1", 
+                    Package (0x08)
+                    {
+                        "COMPONENT", 
+                        Zero, 
+                        Package (0x02)
+                        {
+                            "FSTATE", 
+                            Zero
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "FSTATE", 
+                            One
+                        }, 
+
+                        Package (0x1A)
+                        {
+                            "PSTATE_SET", 
+                            Zero, 
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                Zero, 
+                                Package (0x02)
+                                {
+                                    "DELAY", 
+                                    Package (0x01)
+                                    {
+                                        One
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                One, 
+                                Package (0x02)
+                                {
+                                    "DELAY", 
+                                    Package (0x01)
+                                    {
+                                        One
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x02, 
+                                Package (0x02)
+                                {
+                                    "DELAY", 
+                                    Package (0x01)
+                                    {
+                                        One
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x03, 
+                                Package (0x02)
+                                {
+                                    "DELAY", 
+                                    Package (0x01)
+                                    {
+                                        One
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x04, 
+                                Package (0x02)
+                                {
+                                    "DELAY", 
+                                    Package (0x01)
+                                    {
+                                        One
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x05, 
+                                Package (0x02)
+                                {
+                                    "DELAY", 
+                                    Package (0x01)
+                                    {
+                                        One
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x06, 
+                                Package (0x02)
+                                {
+                                    "DELAY", 
+                                    Package (0x01)
+                                    {
+                                        One
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x07, 
+                                Package (0x02)
+                                {
+                                    "DELAY", 
+                                    Package (0x01)
+                                    {
+                                        One
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x08, 
+                                Package (0x02)
+                                {
+                                    "DELAY", 
+                                    Package (0x01)
+                                    {
+                                        One
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x09, 
+                                Package (0x02)
+                                {
+                                    "DELAY", 
+                                    Package (0x01)
+                                    {
+                                        One
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x0A, 
+                                Package (0x02)
+                                {
+                                    "DELAY", 
+                                    Package (0x01)
+                                    {
+                                        One
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x0B, 
+                                Package (0x02)
+                                {
+                                    "DELAY", 
+                                    Package (0x01)
+                                    {
+                                        One
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x0C, 
+                                Package (0x02)
+                                {
+                                    "DELAY", 
+                                    Package (0x01)
+                                    {
+                                        One
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x0D, 
+                                Package (0x02)
+                                {
+                                    "DELAY", 
+                                    Package (0x01)
+                                    {
+                                        One
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x0E, 
+                                Package (0x02)
+                                {
+                                    "DELAY", 
+                                    Package (0x01)
+                                    {
+                                        One
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x0F, 
+                                Package (0x02)
+                                {
+                                    "DELAY", 
+                                    Package (0x01)
+                                    {
+                                        One
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x10, 
+                                Package (0x02)
+                                {
+                                    "DELAY", 
+                                    Package (0x01)
+                                    {
+                                        One
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x11, 
+                                Package (0x02)
+                                {
+                                    "DELAY", 
+                                    Package (0x01)
+                                    {
+                                        One
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x12, 
+                                Package (0x02)
+                                {
+                                    "DELAY", 
+                                    Package (0x01)
+                                    {
+                                        One
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x13, 
+                                Package (0x02)
+                                {
+                                    "DELAY", 
+                                    Package (0x01)
+                                    {
+                                        One
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x14, 
+                                Package (0x02)
+                                {
+                                    "DELAY", 
+                                    Package (0x01)
+                                    {
+                                        One
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x15, 
+                                Package (0x02)
+                                {
+                                    "DELAY", 
+                                    Package (0x01)
+                                    {
+                                        One
+                                    }
+                                }
+                            }, 
+
+                            Package (0x05)
+                            {
+                                "PSTATE", 
+                                0x16, 
+                                Package (0x02)
+                                {
+                                    "PMICVREGVOTE", 
+                                    Package (0x0A)
+                                    {
+                                        "PPP_RESOURCE_ID_LDO20_A", 
+                                        One, 
+                                        0x002D0370, 
+                                        0x0008B290, 
+                                        One, 
+                                        Zero, 
+                                        One, 
+                                        Zero, 
+                                        Zero, 
+                                        Zero
+                                    }
+                                }, 
+
+                                Package (0x02)
+                                {
+                                    "PMICVREGVOTE", 
+                                    Package (0x0E)
+                                    {
+                                        "PPP_RESOURCE_ID_SMPS4_A", 
+                                        0x02, 
+                                        0x001B7740, 
+                                        0x0004F588, 
+                                        One, 
+                                        Zero, 
+                                        Zero, 
+                                        Zero, 
+                                        Zero, 
+                                        0x05, 
+                                        Zero, 
+                                        Zero, 
+                                        Zero, 
+                                        Zero
+                                    }
+                                }, 
+
+                                Package (0x02)
+                                {
+                                    "DELAY", 
+                                    Package (0x01)
+                                    {
+                                        0x23
+                                    }
+                                }
+                            }, 
+
+                            Package (0x04)
+                            {
+                                "PSTATE", 
+                                0x17, 
+                                Package (0x02)
+                                {
+                                    "PMICVREGVOTE", 
+                                    Package (0x0A)
+                                    {
+                                        "PPP_RESOURCE_ID_LDO20_A", 
+                                        One, 
+                                        Zero, 
+                                        Zero, 
+                                        Zero, 
+                                        Zero, 
+                                        Zero, 
+                                        Zero, 
+                                        Zero, 
+                                        Zero
+                                    }
+                                }, 
+
+                                Package (0x02)
+                                {
+                                    "DELAY", 
+                                    Package (0x01)
+                                    {
+                                        0x23
+                                    }
+                                }
+                            }
+                        }, 
+
+                        Package (0x0C)
+                        {
+                            "PSTATE_SET", 
+                            One, 
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                Zero, 
+                                Package (0x02)
+                                {
+                                    "CLOCK", 
+                                    Package (0x04)
+                                    {
+                                        "gcc_sdcc1_apps_clk", 
+                                        0x03, 
+                                        0x00061A80, 
+                                        0x02
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                One, 
+                                Package (0x02)
+                                {
+                                    "CLOCK", 
+                                    Package (0x04)
+                                    {
+                                        "gcc_sdcc1_apps_clk", 
+                                        0x03, 
+                                        0x017D7840, 
+                                        0x02
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x02, 
+                                Package (0x02)
+                                {
+                                    "CLOCK", 
+                                    Package (0x04)
+                                    {
+                                        "gcc_sdcc1_apps_clk", 
+                                        0x03, 
+                                        0x017D7840, 
+                                        0x02
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x03, 
+                                Package (0x02)
+                                {
+                                    "CLOCK", 
+                                    Package (0x04)
+                                    {
+                                        "gcc_sdcc1_apps_clk", 
+                                        0x03, 
+                                        0x02FAF080, 
+                                        0x02
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x04, 
+                                Package (0x02)
+                                {
+                                    "CLOCK", 
+                                    Package (0x04)
+                                    {
+                                        "gcc_sdcc1_apps_clk", 
+                                        0x03, 
+                                        0x02FAF080, 
+                                        0x02
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x05, 
+                                Package (0x02)
+                                {
+                                    "CLOCK", 
+                                    Package (0x04)
+                                    {
+                                        "gcc_sdcc1_apps_clk", 
+                                        0x03, 
+                                        0x05F5E100, 
+                                        0x02
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x06, 
+                                Package (0x02)
+                                {
+                                    "CLOCK", 
+                                    Package (0x04)
+                                    {
+                                        "gcc_sdcc1_apps_clk", 
+                                        0x03, 
+                                        0x05F5E100, 
+                                        0x02
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x07, 
+                                Package (0x02)
+                                {
+                                    "CLOCK", 
+                                    Package (0x04)
+                                    {
+                                        "gcc_sdcc1_apps_clk", 
+                                        0x03, 
+                                        0x0BEBC200, 
+                                        0x02
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x08, 
+                                Package (0x02)
+                                {
+                                    "CLOCK", 
+                                    Package (0x04)
+                                    {
+                                        "gcc_sdcc1_apps_clk", 
+                                        0x03, 
+                                        0x0BEBC200, 
+                                        0x02
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x09, 
+                                Package (0x02)
+                                {
+                                    "CLOCK", 
+                                    Package (0x04)
+                                    {
+                                        "gcc_sdcc1_apps_clk", 
+                                        0x03, 
+                                        0x17D78400, 
+                                        0x02
+                                    }
+                                }
+                            }
+                        }, 
+
+                        Package (0x07)
+                        {
+                            "PSTATE_SET", 
+                            0x02, 
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                Zero, 
+                                Package (0x02)
+                                {
+                                    "BUSARB", 
+                                    Package (0x05)
+                                    {
+                                        0x03, 
+                                        "ICBID_MASTER_SDCC_1", 
+                                        "ICBID_SLAVE_EBI1", 
+                                        0x2FAF0800, 
+                                        0x17D78400
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                One, 
+                                Package (0x02)
+                                {
+                                    "BUSARB", 
+                                    Package (0x05)
+                                    {
+                                        0x03, 
+                                        "ICBID_MASTER_SDCC_1", 
+                                        "ICBID_SLAVE_EBI1", 
+                                        0x17D78400, 
+                                        0x0BEBC200
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x02, 
+                                Package (0x02)
+                                {
+                                    "BUSARB", 
+                                    Package (0x05)
+                                    {
+                                        0x03, 
+                                        "ICBID_MASTER_SDCC_1", 
+                                        "ICBID_SLAVE_EBI1", 
+                                        0x0BEBC200, 
+                                        0x05F5E100
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x03, 
+                                Package (0x02)
+                                {
+                                    "BUSARB", 
+                                    Package (0x05)
+                                    {
+                                        0x03, 
+                                        "ICBID_MASTER_SDCC_1", 
+                                        "ICBID_SLAVE_EBI1", 
+                                        0x05F5E100, 
+                                        0x02FAF080
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x04, 
+                                Package (0x02)
+                                {
+                                    "BUSARB", 
+                                    Package (0x05)
+                                    {
+                                        0x03, 
+                                        "ICBID_MASTER_SDCC_1", 
+                                        "ICBID_SLAVE_EBI1", 
+                                        Zero, 
+                                        Zero
+                                    }
+                                }
+                            }
+                        }, 
+
+                        Package (0x06)
+                        {
+                            "PSTATE_SET", 
+                            0x03, 
+                            Package (0x04)
+                            {
+                                "PSTATE", 
+                                Zero, 
+                                Package (0x02)
+                                {
+                                    "PSTATE_ADJUST", 
+                                    Package (0x02)
+                                    {
+                                        One, 
+                                        0x09
+                                    }
+                                }, 
+
+                                Package (0x02)
+                                {
+                                    "PSTATE_ADJUST", 
+                                    Package (0x02)
+                                    {
+                                        0x02, 
+                                        Zero
+                                    }
+                                }
+                            }, 
+
+                            Package (0x04)
+                            {
+                                "PSTATE", 
+                                One, 
+                                Package (0x02)
+                                {
+                                    "PSTATE_ADJUST", 
+                                    Package (0x02)
+                                    {
+                                        One, 
+                                        0x07
+                                    }
+                                }, 
+
+                                Package (0x02)
+                                {
+                                    "PSTATE_ADJUST", 
+                                    Package (0x02)
+                                    {
+                                        0x02, 
+                                        One
+                                    }
+                                }
+                            }, 
+
+                            Package (0x04)
+                            {
+                                "PSTATE", 
+                                0x02, 
+                                Package (0x02)
+                                {
+                                    "PSTATE_ADJUST", 
+                                    Package (0x02)
+                                    {
+                                        One, 
+                                        0x05
+                                    }
+                                }, 
+
+                                Package (0x02)
+                                {
+                                    "PSTATE_ADJUST", 
+                                    Package (0x02)
+                                    {
+                                        0x02, 
+                                        0x02
+                                    }
+                                }
+                            }, 
+
+                            Package (0x04)
+                            {
+                                "PSTATE", 
+                                0x03, 
+                                Package (0x02)
+                                {
+                                    "PSTATE_ADJUST", 
+                                    Package (0x02)
+                                    {
+                                        One, 
+                                        0x03
+                                    }
+                                }, 
+
+                                Package (0x02)
+                                {
+                                    "PSTATE_ADJUST", 
+                                    Package (0x02)
+                                    {
+                                        0x02, 
+                                        0x03
+                                    }
+                                }
+                            }
+                        }
+                    }, 
+
+                    Package (0x09)
+                    {
+                        "DSTATE", 
+                        Zero, 
+                        Package (0x02)
+                        {
+                            "TLMMPORT", 
+                            Package (0x03)
+                            {
+                                0x2044, 
+                                0x0001FFFF, 
+                                0x9FDB
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "CLOCK", 
+                            Package (0x02)
+                            {
+                                "gcc_sdcc1_apps_clk", 
+                                One
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "PSTATE_ADJUST", 
+                            Package (0x02)
+                            {
+                                One, 
+                                0x09
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "PSTATE_ADJUST", 
+                            Package (0x02)
+                            {
+                                0x02, 
+                                Zero
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "CLOCK", 
+                            Package (0x02)
+                            {
+                                "gcc_sdcc1_ahb_clk", 
+                                One
+                            }
+                        }, 
+
+                        Package (0x01)
+                        {
+                            "PSTATE_RESTORE"
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "PSTATE_ADJUST", 
+                            Package (0x02)
+                            {
+                                Zero, 
+                                0x16
+                            }
+                        }
+                    }, 
+
+                    Package (0x07)
+                    {
+                        "DSTATE", 
+                        0x03, 
+                        Package (0x02)
+                        {
+                            "CLOCK", 
+                            Package (0x04)
+                            {
+                                "gcc_sdcc1_ahb_clk", 
+                                0x02, 
+                                Zero, 
+                                0x02
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "CLOCK", 
+                            Package (0x04)
+                            {
+                                "gcc_sdcc1_apps_clk", 
+                                0x02, 
+                                Zero, 
+                                0x02
+                            }
+                        }, 
+
+                        Package (0x01)
+                        {
+                            "PSTATE_SAVE"
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "PSTATE_ADJUST", 
+                            Package (0x02)
+                            {
+                                0x02, 
+                                0x04
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "TLMMPORT", 
+                            Package (0x03)
+                            {
+                                0x2044, 
+                                0x0001FFFF, 
+                                0x0A00
+                            }
+                        }
+                    }
+                }, 
+
+                Package (0x05)
+                {
+                    "DEVICE", 
+                    "\\_SB.SDC2", 
+                    Package (0x08)
+                    {
+                        "COMPONENT", 
+                        Zero, 
+                        Package (0x02)
+                        {
+                            "FSTATE", 
+                            Zero
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "FSTATE", 
+                            One
+                        }, 
+
+                        Package (0x19)
+                        {
+                            "PSTATE_SET", 
+                            Zero, 
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                Zero, 
+                                Package (0x02)
+                                {
+                                    "DELAY", 
+                                    Package (0x01)
+                                    {
+                                        One
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                One, 
+                                Package (0x02)
+                                {
+                                    "DELAY", 
+                                    Package (0x01)
+                                    {
+                                        One
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x02, 
+                                Package (0x02)
+                                {
+                                    "DELAY", 
+                                    Package (0x01)
+                                    {
+                                        One
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x03, 
+                                Package (0x02)
+                                {
+                                    "DELAY", 
+                                    Package (0x01)
+                                    {
+                                        One
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x04, 
+                                Package (0x02)
+                                {
+                                    "DELAY", 
+                                    Package (0x01)
+                                    {
+                                        One
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x05, 
+                                Package (0x02)
+                                {
+                                    "DELAY", 
+                                    Package (0x01)
+                                    {
+                                        One
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x06, 
+                                Package (0x02)
+                                {
+                                    "DELAY", 
+                                    Package (0x01)
+                                    {
+                                        One
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x07, 
+                                Package (0x02)
+                                {
+                                    "DELAY", 
+                                    Package (0x01)
+                                    {
+                                        One
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x08, 
+                                Package (0x02)
+                                {
+                                    "DELAY", 
+                                    Package (0x01)
+                                    {
+                                        One
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x09, 
+                                Package (0x02)
+                                {
+                                    "DELAY", 
+                                    Package (0x01)
+                                    {
+                                        One
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x0B, 
+                                Package (0x02)
+                                {
+                                    "DELAY", 
+                                    Package (0x01)
+                                    {
+                                        One
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x0C, 
+                                Package (0x02)
+                                {
+                                    "DELAY", 
+                                    Package (0x01)
+                                    {
+                                        One
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x0D, 
+                                Package (0x02)
+                                {
+                                    "DELAY", 
+                                    Package (0x01)
+                                    {
+                                        One
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x0E, 
+                                Package (0x02)
+                                {
+                                    "DELAY", 
+                                    Package (0x01)
+                                    {
+                                        One
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x0F, 
+                                Package (0x02)
+                                {
+                                    "DELAY", 
+                                    Package (0x01)
+                                    {
+                                        One
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x10, 
+                                Package (0x02)
+                                {
+                                    "DELAY", 
+                                    Package (0x01)
+                                    {
+                                        One
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x11, 
+                                Package (0x02)
+                                {
+                                    "DELAY", 
+                                    Package (0x01)
+                                    {
+                                        One
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x12, 
+                                Package (0x02)
+                                {
+                                    "DELAY", 
+                                    Package (0x01)
+                                    {
+                                        One
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x13, 
+                                Package (0x02)
+                                {
+                                    "DELAY", 
+                                    Package (0x01)
+                                    {
+                                        One
+                                    }
+                                }
+                            }, 
+
+                            Package (0x08)
+                            {
+                                "PSTATE", 
+                                0x14, 
+                                Package (0x02)
+                                {
+                                    "PMICVREGVOTE", 
+                                    Package (0x0A)
+                                    {
+                                        "PPP_RESOURCE_ID_LDO21_A", 
+                                        One, 
+                                        Zero, 
+                                        Zero, 
+                                        Zero, 
+                                        Zero, 
+                                        Zero, 
+                                        Zero, 
+                                        Zero, 
+                                        Zero
+                                    }
+                                }, 
+
+                                Package (0x02)
+                                {
+                                    "PMICVREGVOTE", 
+                                    Package (0x0A)
+                                    {
+                                        "PPP_RESOURCE_ID_LDO13_A", 
+                                        One, 
+                                        Zero, 
+                                        Zero, 
+                                        Zero, 
+                                        Zero, 
+                                        Zero, 
+                                        Zero, 
+                                        Zero, 
+                                        Zero
+                                    }
+                                }, 
+
+                                Package (0x02)
+                                {
+                                    "DELAY", 
+                                    Package (0x01)
+                                    {
+                                        0x23
+                                    }
+                                }, 
+
+                                Package (0x02)
+                                {
+                                    "PMICVREGVOTE", 
+                                    Package (0x0A)
+                                    {
+                                        "PPP_RESOURCE_ID_LDO21_A", 
+                                        One, 
+                                        0x001B7740, 
+                                        0x000C3500, 
+                                        One, 
+                                        Zero, 
+                                        One, 
+                                        Zero, 
+                                        Zero, 
+                                        Zero
+                                    }
+                                }, 
+
+                                Package (0x02)
+                                {
+                                    "PMICVREGVOTE", 
+                                    Package (0x0A)
+                                    {
+                                        "PPP_RESOURCE_ID_LDO13_A", 
+                                        One, 
+                                        0x002D0370, 
+                                        0x55F0, 
+                                        One, 
+                                        Zero, 
+                                        One, 
+                                        Zero, 
+                                        Zero, 
+                                        Zero
+                                    }
+                                }, 
+
+                                Package (0x02)
+                                {
+                                    "DELAY", 
+                                    Package (0x01)
+                                    {
+                                        0x23
+                                    }
+                                }
+                            }, 
+
+                            Package (0x04)
+                            {
+                                "PSTATE", 
+                                0x15, 
+                                Package (0x02)
+                                {
+                                    "PMICVREGVOTE", 
+                                    Package (0x0A)
+                                    {
+                                        "PPP_RESOURCE_ID_LDO13_A", 
+                                        One, 
+                                        0x001C3A90, 
+                                        0x55F0, 
+                                        One, 
+                                        Zero, 
+                                        One, 
+                                        Zero, 
+                                        Zero, 
+                                        Zero
+                                    }
+                                }, 
+
+                                Package (0x02)
+                                {
+                                    "DELAY", 
+                                    Package (0x01)
+                                    {
+                                        0x23
+                                    }
+                                }
+                            }, 
+
+                            Package (0x05)
+                            {
+                                "PSTATE", 
+                                0x16, 
+                                Package (0x02)
+                                {
+                                    "PMICVREGVOTE", 
+                                    Package (0x0A)
+                                    {
+                                        "PPP_RESOURCE_ID_LDO21_A", 
+                                        One, 
+                                        0x001B7740, 
+                                        0x000C3500, 
+                                        One, 
+                                        Zero, 
+                                        One, 
+                                        Zero, 
+                                        Zero, 
+                                        Zero
+                                    }
+                                }, 
+
+                                Package (0x02)
+                                {
+                                    "PMICVREGVOTE", 
+                                    Package (0x0A)
+                                    {
+                                        "PPP_RESOURCE_ID_LDO13_A", 
+                                        One, 
+                                        0x002D0370, 
+                                        0x55F0, 
+                                        One, 
+                                        Zero, 
+                                        One, 
+                                        Zero, 
+                                        Zero, 
+                                        Zero
+                                    }
+                                }, 
+
+                                Package (0x02)
+                                {
+                                    "DELAY", 
+                                    Package (0x01)
+                                    {
+                                        0x23
+                                    }
+                                }
+                            }, 
+
+                            Package (0x05)
+                            {
+                                "PSTATE", 
+                                0x17, 
+                                Package (0x02)
+                                {
+                                    "PMICVREGVOTE", 
+                                    Package (0x0A)
+                                    {
+                                        "PPP_RESOURCE_ID_LDO21_A", 
+                                        One, 
+                                        Zero, 
+                                        Zero, 
+                                        Zero, 
+                                        Zero, 
+                                        Zero, 
+                                        Zero, 
+                                        Zero, 
+                                        Zero
+                                    }
+                                }, 
+
+                                Package (0x02)
+                                {
+                                    "PMICVREGVOTE", 
+                                    Package (0x0A)
+                                    {
+                                        "PPP_RESOURCE_ID_LDO13_A", 
+                                        One, 
+                                        Zero, 
+                                        Zero, 
+                                        Zero, 
+                                        Zero, 
+                                        Zero, 
+                                        Zero, 
+                                        Zero, 
+                                        Zero
+                                    }
+                                }, 
+
+                                Package (0x02)
+                                {
+                                    "DELAY", 
+                                    Package (0x01)
+                                    {
+                                        0x23
+                                    }
+                                }
+                            }
+                        }, 
+
+                        Package (0x0B)
+                        {
+                            "PSTATE_SET", 
+                            One, 
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                Zero, 
+                                Package (0x02)
+                                {
+                                    "CLOCK", 
+                                    Package (0x04)
+                                    {
+                                        "gcc_sdcc2_apps_clk", 
+                                        0x03, 
+                                        0x00061A80, 
+                                        0x02
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                One, 
+                                Package (0x02)
+                                {
+                                    "CLOCK", 
+                                    Package (0x04)
+                                    {
+                                        "gcc_sdcc2_apps_clk", 
+                                        0x03, 
+                                        0x017D7840, 
+                                        0x02
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x02, 
+                                Package (0x02)
+                                {
+                                    "CLOCK", 
+                                    Package (0x04)
+                                    {
+                                        "gcc_sdcc2_apps_clk", 
+                                        0x03, 
+                                        0x017D7840, 
+                                        0x02
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x03, 
+                                Package (0x02)
+                                {
+                                    "CLOCK", 
+                                    Package (0x04)
+                                    {
+                                        "gcc_sdcc2_apps_clk", 
+                                        0x03, 
+                                        0x02FAF080, 
+                                        0x02
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x04, 
+                                Package (0x02)
+                                {
+                                    "CLOCK", 
+                                    Package (0x04)
+                                    {
+                                        "gcc_sdcc2_apps_clk", 
+                                        0x03, 
+                                        0x02FAF080, 
+                                        0x02
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x05, 
+                                Package (0x02)
+                                {
+                                    "CLOCK", 
+                                    Package (0x04)
+                                    {
+                                        "gcc_sdcc2_apps_clk", 
+                                        0x03, 
+                                        0x05F5E100, 
+                                        0x02
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x06, 
+                                Package (0x02)
+                                {
+                                    "CLOCK", 
+                                    Package (0x04)
+                                    {
+                                        "gcc_sdcc2_apps_clk", 
+                                        0x03, 
+                                        0x05F5E100, 
+                                        0x02
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x07, 
+                                Package (0x02)
+                                {
+                                    "CLOCK", 
+                                    Package (0x04)
+                                    {
+                                        "gcc_sdcc2_apps_clk", 
+                                        0x03, 
+                                        0x0BEBC200, 
+                                        0x02
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x08, 
+                                Package (0x02)
+                                {
+                                    "CLOCK", 
+                                    Package (0x04)
+                                    {
+                                        "gcc_sdcc2_apps_clk", 
+                                        0x03, 
+                                        0x0BEBC200, 
+                                        0x02
+                                    }
+                                }
+                            }
+                        }, 
+
+                        Package (0x06)
+                        {
+                            "PSTATE_SET", 
+                            0x02, 
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                Zero, 
+                                Package (0x02)
+                                {
+                                    "BUSARB", 
+                                    Package (0x05)
+                                    {
+                                        0x03, 
+                                        "ICBID_MASTER_SDCC_2", 
+                                        "ICBID_SLAVE_EBI1", 
+                                        0x17D78400, 
+                                        0x0BEBC200
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                One, 
+                                Package (0x02)
+                                {
+                                    "BUSARB", 
+                                    Package (0x05)
+                                    {
+                                        0x03, 
+                                        "ICBID_MASTER_SDCC_2", 
+                                        "ICBID_SLAVE_EBI1", 
+                                        0x0BEBC200, 
+                                        0x05F5E100
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x02, 
+                                Package (0x02)
+                                {
+                                    "BUSARB", 
+                                    Package (0x05)
+                                    {
+                                        0x03, 
+                                        "ICBID_MASTER_SDCC_2", 
+                                        "ICBID_SLAVE_EBI1", 
+                                        0x05F5E100, 
+                                        0x02FAF080
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x03, 
+                                Package (0x02)
+                                {
+                                    "BUSARB", 
+                                    Package (0x05)
+                                    {
+                                        0x03, 
+                                        "ICBID_MASTER_SDCC_2", 
+                                        "ICBID_SLAVE_EBI1", 
+                                        Zero, 
+                                        Zero
+                                    }
+                                }
+                            }
+                        }, 
+
+                        Package (0x05)
+                        {
+                            "PSTATE_SET", 
+                            0x03, 
+                            Package (0x04)
+                            {
+                                "PSTATE", 
+                                Zero, 
+                                Package (0x02)
+                                {
+                                    "PSTATE_ADJUST", 
+                                    Package (0x02)
+                                    {
+                                        One, 
+                                        0x08
+                                    }
+                                }, 
+
+                                Package (0x02)
+                                {
+                                    "PSTATE_ADJUST", 
+                                    Package (0x02)
+                                    {
+                                        0x02, 
+                                        Zero
+                                    }
+                                }
+                            }, 
+
+                            Package (0x04)
+                            {
+                                "PSTATE", 
+                                One, 
+                                Package (0x02)
+                                {
+                                    "PSTATE_ADJUST", 
+                                    Package (0x02)
+                                    {
+                                        One, 
+                                        0x05
+                                    }
+                                }, 
+
+                                Package (0x02)
+                                {
+                                    "PSTATE_ADJUST", 
+                                    Package (0x02)
+                                    {
+                                        0x02, 
+                                        One
+                                    }
+                                }
+                            }, 
+
+                            Package (0x04)
+                            {
+                                "PSTATE", 
+                                0x02, 
+                                Package (0x02)
+                                {
+                                    "PSTATE_ADJUST", 
+                                    Package (0x02)
+                                    {
+                                        One, 
+                                        0x04
+                                    }
+                                }, 
+
+                                Package (0x02)
+                                {
+                                    "PSTATE_ADJUST", 
+                                    Package (0x02)
+                                    {
+                                        0x02, 
+                                        0x02
+                                    }
+                                }
+                            }
+                        }
+                    }, 
+
+                    Package (0x07)
+                    {
+                        "DSTATE", 
+                        Zero, 
+                        Package (0x02)
+                        {
+                            "PSTATE_ADJUST", 
+                            Package (0x02)
+                            {
+                                Zero, 
+                                0x16
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "TLMMPORT", 
+                            Package (0x03)
+                            {
+                                0x2048, 
+                                0x7FFF, 
+                                0x1FE4
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "CLOCK", 
+                            Package (0x02)
+                            {
+                                "gcc_sdcc2_ahb_clk", 
+                                One
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "CLOCK", 
+                            Package (0x02)
+                            {
+                                "gcc_sdcc2_apps_clk", 
+                                One
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "PSTATE_ADJUST", 
+                            Package (0x02)
+                            {
+                                One, 
+                                0x08
+                            }
+                        }
+                    }, 
+
+                    Package (0x07)
+                    {
+                        "DSTATE", 
+                        0x03, 
+                        Package (0x02)
+                        {
+                            "CLOCK", 
+                            Package (0x04)
+                            {
+                                "gcc_sdcc2_ahb_clk", 
+                                0x02, 
+                                Zero, 
+                                0x02
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "CLOCK", 
+                            Package (0x04)
+                            {
+                                "gcc_sdcc2_apps_clk", 
+                                0x02, 
+                                Zero, 
+                                0x02
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "PSTATE_ADJUST", 
+                            Package (0x02)
+                            {
+                                0x02, 
+                                0x03
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "TLMMPORT", 
+                            Package (0x03)
+                            {
+                                0x2048, 
+                                0x7FFF, 
+                                0x0A00
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "PSTATE_ADJUST", 
+                            Package (0x02)
+                            {
+                                Zero, 
+                                0x17
+                            }
+                        }
+                    }
+                }, 
+
+                Package (0x07)
+                {
+                    "DEVICE", 
+                    "\\_SB.ADSP.SLM1", 
+                    Package (0x03)
+                    {
+                        "COMPONENT", 
+                        Zero, 
+                        Package (0x02)
+                        {
+                            "FSTATE", 
+                            Zero
+                        }
+                    }, 
+
+                    Package (0x02)
+                    {
+                        "DSTATE", 
+                        Zero
+                    }, 
+
+                    Package (0x02)
+                    {
+                        "DSTATE", 
+                        One
+                    }, 
+
+                    Package (0x02)
+                    {
+                        "DSTATE", 
+                        0x02
+                    }, 
+
+                    Package (0x02)
+                    {
+                        "DSTATE", 
+                        0x03
+                    }
+                }, 
+
+                Package (0x07)
+                {
+                    "DEVICE", 
+                    "\\_SB.PCI0", 
+                    Package (0x04)
+                    {
+                        "COMPONENT", 
+                        Zero, 
+                        Package (0x02)
+                        {
+                            "FSTATE", 
+                            Zero
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "FSTATE", 
+                            One
+                        }
+                    }, 
+
+                    Package (0x0E)
+                    {
+                        "DSTATE", 
+                        Zero, 
+                        Package (0x02)
+                        {
+                            "EXECUTE_FUNCTION", 
+                            Package (0x01)
+                            {
+                                "WlanD0ResourceVote"
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "FOOTSWITCH", 
+                            Package (0x02)
+                            {
+                                "VDD_PCIE_1", 
+                                One
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "PMICVREGVOTE", 
+                            Package (0x04)
+                            {
+                                "PPP_RESOURCE_ID_CXO_BUFFERS_LNBBCLK1_A", 
+                                0x06, 
+                                One, 
+                                Zero
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "CLOCK", 
+                            Package (0x02)
+                            {
+                                "gcc_pcie_1_pipe_clk", 
+                                One
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "CLOCK", 
+                            Package (0x02)
+                            {
+                                "gcc_pcie_1_slv_axi_clk", 
+                                One
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "CLOCK", 
+                            Package (0x02)
+                            {
+                                "gcc_pcie_1_mstr_axi_clk", 
+                                One
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "CLOCK", 
+                            Package (0x02)
+                            {
+                                "gcc_pcie_1_cfg_ahb_clk", 
+                                One
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "CLOCK", 
+                            Package (0x04)
+                            {
+                                "gcc_pcie_1_aux_clk", 
+                                0x08, 
+                                0x000F4240, 
+                                0x03
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "BUSARB", 
+                            Package (0x05)
+                            {
+                                0x03, 
+                                "ICBID_MASTER_APPSS_PROC", 
+                                "ICBID_SLAVE_PCIE_1_CFG", 
+                                0x11E1A300, 
+                                Zero
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "BUSARB", 
+                            Package (0x05)
+                            {
+                                0x03, 
+                                "ICBID_MASTER_PCIE_1", 
+                                "ICBID_SLAVE_EBI1", 
+                                0x17D78400, 
+                                0x0BEBC200
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "PMICVREGVOTE", 
+                            Package (0x0A)
+                            {
+                                "PPP_RESOURCE_ID_LDO28_A", 
+                                One, 
+                                0x000F4240, 
+                                0xAFC8, 
+                                One, 
+                                Zero, 
+                                One, 
+                                Zero, 
+                                Zero, 
+                                Zero
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "PMICVREGVOTE", 
+                            Package (0x0A)
+                            {
+                                "PPP_RESOURCE_ID_LDO12_A", 
+                                One, 
+                                0x001B7740, 
+                                0x5DC0, 
+                                One, 
+                                Zero, 
+                                One, 
+                                Zero, 
+                                Zero, 
+                                Zero
+                            }
+                        }
+                    }, 
+
+                    Package (0x02)
+                    {
+                        "DSTATE", 
+                        One
+                    }, 
+
+                    Package (0x02)
+                    {
+                        "DSTATE", 
+                        0x02
+                    }, 
+
+                    Package (0x0E)
+                    {
+                        "DSTATE", 
+                        0x03, 
+                        Package (0x02)
+                        {
+                            "CLOCK", 
+                            Package (0x02)
+                            {
+                                "gcc_pcie_1_pipe_clk", 
+                                0x02
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "CLOCK", 
+                            Package (0x02)
+                            {
+                                "gcc_pcie_1_aux_clk", 
+                                0x02
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "CLOCK", 
+                            Package (0x02)
+                            {
+                                "gcc_pcie_1_slv_axi_clk", 
+                                0x02
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "CLOCK", 
+                            Package (0x02)
+                            {
+                                "gcc_pcie_1_mstr_axi_clk", 
+                                0x02
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "CLOCK", 
+                            Package (0x02)
+                            {
+                                "gcc_pcie_1_cfg_ahb_clk", 
+                                0x02
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "BUSARB", 
+                            Package (0x05)
+                            {
+                                0x03, 
+                                "ICBID_MASTER_APPSS_PROC", 
+                                "ICBID_SLAVE_PCIE_1_CFG", 
+                                Zero, 
+                                Zero
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "BUSARB", 
+                            Package (0x05)
+                            {
+                                0x03, 
+                                "ICBID_MASTER_PCIE_1", 
+                                "ICBID_SLAVE_EBI1", 
+                                Zero, 
+                                Zero
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "FOOTSWITCH", 
+                            Package (0x02)
+                            {
+                                "VDD_PCIE_1", 
+                                0x02
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "PMICVREGVOTE", 
+                            Package (0x04)
+                            {
+                                "PPP_RESOURCE_ID_CXO_BUFFERS_LNBBCLK1_A", 
+                                0x06, 
+                                Zero, 
+                                Zero
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "PMICVREGVOTE", 
+                            Package (0x0A)
+                            {
+                                "PPP_RESOURCE_ID_LDO28_A", 
+                                One, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                Zero
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "PMICVREGVOTE", 
+                            Package (0x0A)
+                            {
+                                "PPP_RESOURCE_ID_LDO12_A", 
+                                One, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                Zero
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "EXECUTE_FUNCTION", 
+                            Package (0x01)
+                            {
+                                "WlanD3ResourceVote"
+                            }
+                        }
+                    }
+                }, 
+
+                Package (0x07)
+                {
+                    "DEVICE", 
+                    "\\_SB.PCI0.RP1", 
+                    Package (0x04)
+                    {
+                        "COMPONENT", 
+                        Zero, 
+                        Package (0x02)
+                        {
+                            "FSTATE", 
+                            Zero
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "FSTATE", 
+                            One
+                        }
+                    }, 
+
+                    Package (0x02)
+                    {
+                        "DSTATE", 
+                        Zero
+                    }, 
+
+                    Package (0x02)
+                    {
+                        "DSTATE", 
+                        One
+                    }, 
+
+                    Package (0x02)
+                    {
+                        "DSTATE", 
+                        0x02
+                    }, 
+
+                    Package (0x02)
+                    {
+                        "DSTATE", 
+                        0x03
+                    }
+                }
+            })
+        }
+
+        Scope (\_SB.PEP0)
+        {
+            Method (IPMD, 0, NotSerialized)
+            {
+                Return (IPSC) /* \_SB_.PEP0.IPSC */
+            }
+
+            Name (IPSC, Package (0x01)
+            {
+                Package (0x03)
+                {
+                    "DEVICE", 
+                    "\\_SB.IPA", 
+                    Package (0x04)
+                    {
+                        "COMPONENT", 
+                        Zero, 
+                        Package (0x04)
+                        {
+                            "FSTATE", 
+                            Zero, 
+                            Package (0x02)
+                            {
+                                "REQUIRED_RESOURCE", 
+                                Package (0x03)
+                                {
+                                    One, 
+                                    "/clk/ipa", 
+                                    0x000124F8
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "REQUIRED_RESOURCE", 
+                                Package (0x03)
+                                {
+                                    One, 
+                                    "/xo/cxo", 
+                                    One
+                                }
+                            }
+                        }, 
+
+                        Package (0x04)
+                        {
+                            "FSTATE", 
+                            One, 
+                            Package (0x02)
+                            {
+                                "REQUIRED_RESOURCE", 
+                                Package (0x03)
+                                {
+                                    One, 
+                                    "/clk/ipa", 
+                                    Zero
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "REQUIRED_RESOURCE", 
+                                Package (0x03)
+                                {
+                                    One, 
+                                    "/xo/cxo", 
+                                    Zero
+                                }
+                            }
+                        }
+                    }
+                }
+            })
+        }
+
+        Scope (\_SB.PEP0)
+        {
+            Method (CRMD, 0, NotSerialized)
+            {
+                Return (CRCC) /* \_SB_.PEP0.CRCC */
+            }
+
+            Name (CRCC, Package (0x01)
+            {
+                Package (0x06)
+                {
+                    "DEVICE", 
+                    "\\_SB.QBCC", 
+                    Package (0x04)
+                    {
+                        "COMPONENT", 
+                        Zero, 
+                        Package (0x04)
+                        {
+                            "FSTATE", 
+                            Zero, 
+                            Package (0x02)
+                            {
+                                "BUSARB", 
+                                Package (0x05)
+                                {
+                                    0x03, 
+                                    "ICBID_MASTER_APPSS_PROC", 
+                                    "ICBID_SLAVE_PRNG", 
+                                    0x2FAF0800, 
+                                    Zero
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "gcc_prng_ahb_clk", 
+                                    One, 
+                                    Zero, 
+                                    One
+                                }
+                            }
+                        }, 
+
+                        Package (0x04)
+                        {
+                            "FSTATE", 
+                            One, 
+                            Package (0x02)
+                            {
+                                "BUSARB", 
+                                Package (0x05)
+                                {
+                                    0x03, 
+                                    "ICBID_MASTER_APPSS_PROC", 
+                                    "ICBID_SLAVE_PRNG", 
+                                    Zero, 
+                                    Zero
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "gcc_prng_ahb_clk", 
+                                    0x02, 
+                                    Zero, 
+                                    One
+                                }
+                            }
+                        }
+                    }, 
+
+                    Package (0x08)
+                    {
+                        "COMPONENT", 
+                        One, 
+                        Package (0x06)
+                        {
+                            "FSTATE", 
+                            Zero, 
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "gcc_ce2_ahb_clk", 
+                                    One, 
+                                    Zero, 
+                                    One
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "gcc_ce2_axi_clk", 
+                                    One, 
+                                    Zero, 
+                                    One
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "gcc_ce2_clk", 
+                                    One, 
+                                    Zero, 
+                                    One
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "PSTATE_ADJUST", 
+                                Package (0x02)
+                                {
+                                    Zero, 
+                                    Zero
+                                }
+                            }
+                        }, 
+
+                        Package (0x06)
+                        {
+                            "FSTATE", 
+                            One, 
+                            Package (0x02)
+                            {
+                                "PSTATE_ADJUST", 
+                                Package (0x02)
+                                {
+                                    Zero, 
+                                    0x03
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "gcc_ce2_ahb_clk", 
+                                    0x02, 
+                                    Zero, 
+                                    One
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "gcc_ce2_axi_clk", 
+                                    0x02, 
+                                    Zero, 
+                                    One
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "gcc_ce2_clk", 
+                                    0x02, 
+                                    Zero, 
+                                    One
+                                }
+                            }
+                        }, 
+
+                        Package (0x04)
+                        {
+                            "PSTATE", 
+                            Zero, 
+                            Package (0x02)
+                            {
+                                "BUSARB", 
+                                Package (0x05)
+                                {
+                                    0x03, 
+                                    "ICBID_MASTER_CRYPTO_CORE1", 
+                                    "ICBID_SLAVE_EBI1", 
+                                    0x17D78400, 
+                                    0x17D78400
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "gcc_ce2_clk", 
+                                    0x03, 
+                                    0x0A37D070, 
+                                    One
+                                }
+                            }
+                        }, 
+
+                        Package (0x04)
+                        {
+                            "PSTATE", 
+                            One, 
+                            Package (0x02)
+                            {
+                                "BUSARB", 
+                                Package (0x05)
+                                {
+                                    0x03, 
+                                    "ICBID_MASTER_CRYPTO_CORE1", 
+                                    "ICBID_SLAVE_EBI1", 
+                                    0x0BEBC200, 
+                                    0x0BEBC200
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "gcc_ce2_clk", 
+                                    0x03, 
+                                    0x051BD4B0, 
+                                    One
+                                }
+                            }
+                        }, 
+
+                        Package (0x04)
+                        {
+                            "PSTATE", 
+                            0x02, 
+                            Package (0x02)
+                            {
+                                "BUSARB", 
+                                Package (0x05)
+                                {
+                                    0x03, 
+                                    "ICBID_MASTER_CRYPTO_CORE1", 
+                                    "ICBID_SLAVE_EBI1", 
+                                    0x05F5E100, 
+                                    0x05F5E100
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "gcc_ce2_clk", 
+                                    0x03, 
+                                    0x028DFDE0, 
+                                    One
+                                }
+                            }
+                        }, 
+
+                        Package (0x04)
+                        {
+                            "PSTATE", 
+                            0x03, 
+                            Package (0x02)
+                            {
+                                "BUSARB", 
+                                Package (0x05)
+                                {
+                                    0x03, 
+                                    "ICBID_MASTER_CRYPTO_CORE1", 
+                                    "ICBID_SLAVE_EBI1", 
+                                    Zero, 
+                                    Zero
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "gcc_ce2_clk", 
+                                    0x03, 
+                                    0x028DFDE0, 
+                                    One
+                                }
+                            }
+                        }
+                    }, 
+
+                    Package (0x08)
+                    {
+                        "COMPONENT", 
+                        0x02, 
+                        Package (0x03)
+                        {
+                            "FSTATE", 
+                            Zero, 
+                            Package (0x02)
+                            {
+                                "PSTATE_ADJUST", 
+                                Package (0x02)
+                                {
+                                    Zero, 
+                                    Zero
+                                }
+                            }
+                        }, 
+
+                        Package (0x03)
+                        {
+                            "FSTATE", 
+                            One, 
+                            Package (0x02)
+                            {
+                                "PSTATE_ADJUST", 
+                                Package (0x02)
+                                {
+                                    Zero, 
+                                    0x03
+                                }
+                            }
+                        }, 
+
+                        Package (0x04)
+                        {
+                            "PSTATE", 
+                            Zero, 
+                            Package (0x02)
+                            {
+                                "BUSARB", 
+                                Package (0x05)
+                                {
+                                    0x03, 
+                                    "ICBID_MASTER_CRYPTO_CORE0", 
+                                    "ICBID_SLAVE_EBI1", 
+                                    0x17D78400, 
+                                    0x17D78400
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "REQUIRED_RESOURCE", 
+                                Package (0x03)
+                                {
+                                    One, 
+                                    "/clk/ce1", 
+                                    0x00029DA6
+                                }
+                            }
+                        }, 
+
+                        Package (0x04)
+                        {
+                            "PSTATE", 
+                            One, 
+                            Package (0x02)
+                            {
+                                "BUSARB", 
+                                Package (0x05)
+                                {
+                                    0x03, 
+                                    "ICBID_MASTER_CRYPTO_CORE0", 
+                                    "ICBID_SLAVE_EBI1", 
+                                    0x0BEBC200, 
+                                    0x0BEBC200
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "REQUIRED_RESOURCE", 
+                                Package (0x03)
+                                {
+                                    One, 
+                                    "/clk/ce1", 
+                                    0x00014ECE
+                                }
+                            }
+                        }, 
+
+                        Package (0x04)
+                        {
+                            "PSTATE", 
+                            0x02, 
+                            Package (0x02)
+                            {
+                                "BUSARB", 
+                                Package (0x05)
+                                {
+                                    0x03, 
+                                    "ICBID_MASTER_CRYPTO_CORE0", 
+                                    "ICBID_SLAVE_EBI1", 
+                                    0x05F5E100, 
+                                    0x05F5E100
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "REQUIRED_RESOURCE", 
+                                Package (0x03)
+                                {
+                                    One, 
+                                    "/clk/ce1", 
+                                    0xA76C
+                                }
+                            }
+                        }, 
+
+                        Package (0x04)
+                        {
+                            "PSTATE", 
+                            0x03, 
+                            Package (0x02)
+                            {
+                                "BUSARB", 
+                                Package (0x05)
+                                {
+                                    0x03, 
+                                    "ICBID_MASTER_CRYPTO_CORE0", 
+                                    "ICBID_SLAVE_EBI1", 
+                                    Zero, 
+                                    Zero
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "REQUIRED_RESOURCE", 
+                                Package (0x03)
+                                {
+                                    One, 
+                                    "/clk/ce1", 
+                                    Zero
+                                }
+                            }
+                        }
+                    }, 
+
+                    Package (0x08)
+                    {
+                        "COMPONENT", 
+                        0x03, 
+                        Package (0x06)
+                        {
+                            "FSTATE", 
+                            Zero, 
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "gcc_ce3_ahb_clk", 
+                                    One, 
+                                    Zero, 
+                                    One
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "gcc_ce3_axi_clk", 
+                                    One, 
+                                    Zero, 
+                                    One
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "gcc_ce3_clk", 
+                                    One, 
+                                    Zero, 
+                                    One
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "PSTATE_ADJUST", 
+                                Package (0x02)
+                                {
+                                    Zero, 
+                                    Zero
+                                }
+                            }
+                        }, 
+
+                        Package (0x06)
+                        {
+                            "FSTATE", 
+                            One, 
+                            Package (0x02)
+                            {
+                                "PSTATE_ADJUST", 
+                                Package (0x02)
+                                {
+                                    Zero, 
+                                    0x03
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "gcc_ce3_ahb_clk", 
+                                    0x02, 
+                                    Zero, 
+                                    One
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "gcc_ce3_axi_clk", 
+                                    0x02, 
+                                    Zero, 
+                                    One
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "gcc_ce3_clk", 
+                                    0x02, 
+                                    Zero, 
+                                    One
+                                }
+                            }
+                        }, 
+
+                        Package (0x04)
+                        {
+                            "PSTATE", 
+                            Zero, 
+                            Package (0x02)
+                            {
+                                "BUSARB", 
+                                Package (0x05)
+                                {
+                                    0x03, 
+                                    "ICBID_MASTER_CRYPTO_CORE2", 
+                                    "ICBID_SLAVE_EBI1", 
+                                    0x17D78400, 
+                                    0x17D78400
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "gcc_ce3_clk", 
+                                    0x03, 
+                                    0x0A37D070, 
+                                    One
+                                }
+                            }
+                        }, 
+
+                        Package (0x04)
+                        {
+                            "PSTATE", 
+                            One, 
+                            Package (0x02)
+                            {
+                                "BUSARB", 
+                                Package (0x05)
+                                {
+                                    0x03, 
+                                    "ICBID_MASTER_CRYPTO_CORE2", 
+                                    "ICBID_SLAVE_EBI1", 
+                                    0x0BEBC200, 
+                                    0x0BEBC200
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "gcc_ce3_clk", 
+                                    0x03, 
+                                    0x051BD4B0, 
+                                    One
+                                }
+                            }
+                        }, 
+
+                        Package (0x04)
+                        {
+                            "PSTATE", 
+                            0x02, 
+                            Package (0x02)
+                            {
+                                "BUSARB", 
+                                Package (0x05)
+                                {
+                                    0x03, 
+                                    "ICBID_MASTER_CRYPTO_CORE2", 
+                                    "ICBID_SLAVE_EBI1", 
+                                    0x05F5E100, 
+                                    0x05F5E100
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "gcc_ce3_clk", 
+                                    0x03, 
+                                    0x028DFDE0, 
+                                    One
+                                }
+                            }
+                        }, 
+
+                        Package (0x04)
+                        {
+                            "PSTATE", 
+                            0x03, 
+                            Package (0x02)
+                            {
+                                "BUSARB", 
+                                Package (0x05)
+                                {
+                                    0x03, 
+                                    "ICBID_MASTER_CRYPTO_CORE2", 
+                                    "ICBID_SLAVE_EBI1", 
+                                    Zero, 
+                                    Zero
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "gcc_ce3_clk", 
+                                    0x03, 
+                                    0x028DFDE0, 
+                                    One
+                                }
+                            }
+                        }
+                    }
+                }
+            })
+        }
+
+        Scope (\_SB.PEP0)
+        {
+            Method (EWMD, 0, NotSerialized)
+            {
+                Return (WBRC) /* \_SB_.PEP0.WBRC */
+            }
+
+            Name (WBRC, Package (0x03)
+            {
+                Package (0x04)
+                {
+                    "DEVICE", 
+                    "\\_SB.PCI0.RP1.ENDP.RES", 
+                    Package (0x09)
+                    {
+                        "DSTATE", 
+                        Zero, 
+                        Package (0x02)
+                        {
+                            "TLMMGPIO", 
+                            Package (0x06)
+                            {
+                                0x25, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                0x03, 
+                                Zero
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "PMICVREGVOTE", 
+                            Package (0x0A)
+                            {
+                                "PPP_RESOURCE_ID_LDO30_A", 
+                                One, 
+                                0x001B7740, 
+                                0x09C4, 
+                                One, 
+                                Zero, 
+                                One, 
+                                Zero, 
+                                Zero, 
+                                Zero
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "DELAY", 
+                            Package (0x01)
+                            {
+                                One
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "DISCRETE_VREGVOTE", 
+                            Package (0x02)
+                            {
+                                "PPP_RESOURCE_ID_PMIC_GPIO_DV1", 
+                                One
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "DELAY", 
+                            Package (0x01)
+                            {
+                                One
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "TLMMGPIO", 
+                            Package (0x06)
+                            {
+                                0x71, 
+                                One, 
+                                Zero, 
+                                One, 
+                                One, 
+                                Zero
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "DELAY", 
+                            Package (0x01)
+                            {
+                                0x0A
+                            }
+                        }
+                    }, 
+
+                    Package (0x08)
+                    {
+                        "DSTATE", 
+                        0x03, 
+                        Package (0x02)
+                        {
+                            "TLMMGPIO", 
+                            Package (0x06)
+                            {
+                                0x71, 
+                                Zero, 
+                                Zero, 
+                                One, 
+                                One, 
+                                Zero
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "DELAY", 
+                            Package (0x01)
+                            {
+                                One
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "DISCRETE_VREGVOTE", 
+                            Package (0x02)
+                            {
+                                "PPP_RESOURCE_ID_PMIC_GPIO_DV1", 
+                                Zero
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "DELAY", 
+                            Package (0x01)
+                            {
+                                One
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "PMICVREGVOTE", 
+                            Package (0x0A)
+                            {
+                                "PPP_RESOURCE_ID_LDO30_A", 
+                                One, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                Zero
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "TLMMGPIO", 
+                            Package (0x06)
+                            {
+                                0x25, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                Zero
+                            }
+                        }
+                    }
+                }, 
+
+                Package (0x05)
+                {
+                    "DEVICE", 
+                    "\\_SB.BTH0", 
+                    Package (0x03)
+                    {
+                        "COMPONENT", 
+                        Zero, 
+                        Package (0x02)
+                        {
+                            "FSTATE", 
+                            Zero
+                        }
+                    }, 
+
+                    Package (0x08)
+                    {
+                        "DSTATE", 
+                        Zero, 
+                        Package (0x02)
+                        {
+                            "PMICGPIO", 
+                            Package (0x08)
+                            {
+                                "IOCTL_PM_GPIO_CONFIG_DIGITAL_OUTPUT", 
+                                Zero, 
+                                0x12, 
+                                Zero, 
+                                0x02, 
+                                Zero, 
+                                One, 
+                                0x04
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "PMICVREGVOTE", 
+                            Package (0x0A)
+                            {
+                                "PPP_RESOURCE_ID_LDO30_A", 
+                                One, 
+                                0x001B7740, 
+                                0x09C4, 
+                                One, 
+                                Zero, 
+                                One, 
+                                Zero, 
+                                Zero, 
+                                Zero
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "DELAY", 
+                            Package (0x01)
+                            {
+                                One
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "DISCRETE_VREGVOTE", 
+                            Package (0x02)
+                            {
+                                "PPP_RESOURCE_ID_PMIC_GPIO_DV1", 
+                                One
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "DELAY", 
+                            Package (0x01)
+                            {
+                                One
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "PMICGPIO", 
+                            Package (0x08)
+                            {
+                                "IOCTL_PM_GPIO_CONFIG_DIGITAL_OUTPUT", 
+                                Zero, 
+                                0x12, 
+                                Zero, 
+                                0x02, 
+                                Zero, 
+                                0x03, 
+                                0x04
+                            }
+                        }
+                    }, 
+
+                    Package (0x05)
+                    {
+                        "DSTATE", 
+                        0x03, 
+                        Package (0x02)
+                        {
+                            "PMICGPIO", 
+                            Package (0x08)
+                            {
+                                "IOCTL_PM_GPIO_CONFIG_DIGITAL_OUTPUT", 
+                                Zero, 
+                                0x12, 
+                                Zero, 
+                                0x02, 
+                                Zero, 
+                                One, 
+                                0x04
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "DISCRETE_VREGVOTE", 
+                            Package (0x02)
+                            {
+                                "PPP_RESOURCE_ID_PMIC_GPIO_DV1", 
+                                Zero
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "PMICVREGVOTE", 
+                            Package (0x0A)
+                            {
+                                "PPP_RESOURCE_ID_LDO30_A", 
+                                One, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                Zero
+                            }
+                        }
+                    }
+                }, 
+
+                Package (0x05)
+                {
+                    "DEVICE", 
+                    "\\_SB.FMSL", 
+                    Package (0x03)
+                    {
+                        "COMPONENT", 
+                        Zero, 
+                        Package (0x02)
+                        {
+                            "FSTATE", 
+                            Zero
+                        }
+                    }, 
+
+                    Package (0x08)
+                    {
+                        "DSTATE", 
+                        Zero, 
+                        Package (0x02)
+                        {
+                            "TLMMGPIO", 
+                            Package (0x06)
+                            {
+                                0x3E, 
+                                Zero, 
+                                Zero, 
+                                One, 
+                                One, 
+                                Zero
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "TLMMGPIO", 
+                            Package (0x06)
+                            {
+                                0x09, 
+                                One, 
+                                Zero, 
+                                Zero, 
+                                One, 
+                                Zero
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "DISCRETE_VREGVOTE", 
+                            Package (0x02)
+                            {
+                                "PPP_RESOURCE_ID_PMIC_GPIO_DV1", 
+                                One
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "DELAY", 
+                            Package (0x01)
+                            {
+                                One
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "TLMMGPIO", 
+                            Package (0x06)
+                            {
+                                0x0B, 
+                                One, 
+                                Zero, 
+                                One, 
+                                0x03, 
+                                Zero
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "TLMMGPIO", 
+                            Package (0x06)
+                            {
+                                0x3E, 
+                                One, 
+                                Zero, 
+                                One, 
+                                0x03, 
+                                Zero
+                            }
+                        }
+                    }, 
+
+                    Package (0x06)
+                    {
+                        "DSTATE", 
+                        0x03, 
+                        Package (0x02)
+                        {
+                            "TLMMGPIO", 
+                            Package (0x06)
+                            {
+                                0x0B, 
+                                Zero, 
+                                Zero, 
+                                One, 
+                                One, 
+                                Zero
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "TLMMGPIO", 
+                            Package (0x06)
+                            {
+                                0x3E, 
+                                Zero, 
+                                Zero, 
+                                One, 
+                                One, 
+                                Zero
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "TLMMGPIO", 
+                            Package (0x06)
+                            {
+                                0x09, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                One, 
+                                Zero
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "DISCRETE_VREGVOTE", 
+                            Package (0x02)
+                            {
+                                "PPP_RESOURCE_ID_PMIC_GPIO_DV1", 
+                                Zero
+                            }
+                        }
+                    }
+                }
+            })
+        }
+
+        Scope (\_SB.PEP0)
+        {
+            Method (LPMD, 0, NotSerialized)
+            {
+                Return (LPCC) /* \_SB_.PEP0.LPCC */
+            }
+
+            Name (LPCC, Package (0x04)
+            {
+                Package (0x07)
+                {
+                    "DEVICE", 
+                    "\\_SB.URS0", 
+                    Package (0x05)
+                    {
+                        "COMPONENT", 
+                        Zero, 
+                        Package (0x02)
+                        {
+                            "FSTATE", 
+                            Zero
+                        }, 
+
+                        Package (0x03)
+                        {
+                            "PSTATE", 
+                            Zero, 
+                            Package (0x02)
+                            {
+                                "PMICUSBOTG", 
+                                Package (0x02)
+                                {
+                                    "IOCTL_PMIC_PUBLIC_USB_OTG_ENABLE", 
+                                    Zero
+                                }
+                            }
+                        }, 
+
+                        Package (0x03)
+                        {
+                            "PSTATE", 
+                            One, 
+                            Package (0x02)
+                            {
+                                "PMICUSBOTG", 
+                                Package (0x02)
+                                {
+                                    "IOCTL_PMIC_PUBLIC_USB_OTG_ENABLE", 
+                                    One
+                                }
+                            }
+                        }
+                    }, 
+
+                    Package (0x02)
+                    {
+                        "DSTATE", 
+                        Zero
+                    }, 
+
+                    Package (0x02)
+                    {
+                        "DSTATE", 
+                        One
+                    }, 
+
+                    Package (0x02)
+                    {
+                        "DSTATE", 
+                        0x02
+                    }, 
+
+                    Package (0x02)
+                    {
+                        "DSTATE", 
+                        0x03
+                    }
+                }, 
+
+                Package (0x08)
+                {
+                    "DEVICE", 
+                    "\\_SB.URS0.USB0", 
+                    Package (0x05)
+                    {
+                        "COMPONENT", 
+                        Zero, 
+                        Package (0x02)
+                        {
+                            "FSTATE", 
+                            Zero
+                        }, 
+
+                        Package (0x09)
+                        {
+                            "PSTATE", 
+                            Zero, 
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x02)
+                                {
+                                    "gcc_usb30_sleep_clk", 
+                                    One
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x02)
+                                {
+                                    "gcc_usb2_hs_phy_sleep_clk", 
+                                    One
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x03)
+                                {
+                                    "gcc_usb30_sleep_clk", 
+                                    0x09, 
+                                    0x08
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x03)
+                                {
+                                    "gcc_usb30_sleep_clk", 
+                                    0x09, 
+                                    0x0C
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x03)
+                                {
+                                    "gcc_usb2_hs_phy_sleep_clk", 
+                                    0x09, 
+                                    0x08
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x03)
+                                {
+                                    "gcc_usb2_hs_phy_sleep_clk", 
+                                    0x09, 
+                                    0x0C
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x03)
+                                {
+                                    "gcc_usb30_mock_utmi_clk", 
+                                    0x09, 
+                                    0x0A
+                                }
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "PRELOAD_PSTATE", 
+                            Zero
+                        }
+                    }, 
+
+                    Package (0x11)
+                    {
+                        "DSTATE", 
+                        Zero, 
+                        Package (0x02)
+                        {
+                            "PMICVREGVOTE", 
+                            Package (0x0A)
+                            {
+                                "PPP_RESOURCE_ID_LDO24_A", 
+                                One, 
+                                0x003010B0, 
+                                0x16A8, 
+                                One, 
+                                Zero, 
+                                One, 
+                                Zero, 
+                                Zero, 
+                                Zero
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "PMICVREGVOTE", 
+                            Package (0x0A)
+                            {
+                                "PPP_RESOURCE_ID_LDO6_A", 
+                                One, 
+                                0x001B7740, 
+                                0xA08C, 
+                                One, 
+                                Zero, 
+                                One, 
+                                Zero, 
+                                Zero, 
+                                Zero
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "PMICVREGVOTE", 
+                            Package (0x0A)
+                            {
+                                "PPP_RESOURCE_ID_LDO28_A", 
+                                One, 
+                                0x000F4240, 
+                                0x6590, 
+                                One, 
+                                Zero, 
+                                One, 
+                                Zero, 
+                                Zero, 
+                                Zero
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "FOOTSWITCH", 
+                            Package (0x02)
+                            {
+                                "VDD_USB_30", 
+                                One
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "REQUIRED_RESOURCE", 
+                            Package (0x03)
+                            {
+                                One, 
+                                "/clk/snoc", 
+                                0x0001E848
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "CLOCK", 
+                            Package (0x04)
+                            {
+                                "gcc_sys_noc_usb3_axi_clk", 
+                                0x08, 
+                                0x7D, 
+                                0x09
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "CLOCK", 
+                            Package (0x04)
+                            {
+                                "gcc_usb30_master_clk", 
+                                0x08, 
+                                0x7D, 
+                                0x09
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "CLOCK", 
+                            Package (0x04)
+                            {
+                                "gcc_usb30_mock_utmi_clk", 
+                                0x08, 
+                                0x4B00, 
+                                0x07
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "CLOCK", 
+                            Package (0x04)
+                            {
+                                "gcc_usb3_phy_aux_clk", 
+                                0x08, 
+                                0x04B0, 
+                                0x07
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "BUSARB", 
+                            Package (0x05)
+                            {
+                                0x03, 
+                                "ICBID_MASTER_USB3", 
+                                "ICBID_SLAVE_EBI1", 
+                                0x28000000, 
+                                0x28000000
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "REQUIRED_RESOURCE", 
+                            Package (0x03)
+                            {
+                                One, 
+                                "/pmic/client/rail_cx", 
+                                0x04
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "REQUIRED_RESOURCE", 
+                            Package (0x03)
+                            {
+                                One, 
+                                "/clk/pnoc", 
+                                0x000186A0
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "CLOCK", 
+                            Package (0x02)
+                            {
+                                "gcc_usb_phy_cfg_ahb2phy_clk", 
+                                One
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "CLOCK", 
+                            Package (0x05)
+                            {
+                                "gcc_usb3_phy_pipe_clk", 
+                                0x06, 
+                                Zero, 
+                                Zero, 
+                                Zero
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "PMICVREGVOTE", 
+                            Package (0x04)
+                            {
+                                "PPP_RESOURCE_ID_CXO_BUFFERS_LNBBCLK1_A", 
+                                0x06, 
+                                One, 
+                                Zero
+                            }
+                        }
+                    }, 
+
+                    Package (0x12)
+                    {
+                        "DSTATE", 
+                        One, 
+                        Package (0x02)
+                        {
+                            "REQUIRED_RESOURCE", 
+                            Package (0x03)
+                            {
+                                Zero, 
+                                "/clk/snoc", 
+                                Zero
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "CLOCK", 
+                            Package (0x04)
+                            {
+                                "gcc_usb30_master_clk", 
+                                0x03, 
+                                0x00927C00, 
+                                One
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "CLOCK", 
+                            Package (0x02)
+                            {
+                                "gcc_usb30_master_clk", 
+                                0x02
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "CLOCK", 
+                            Package (0x02)
+                            {
+                                "gcc_sys_noc_usb3_axi_clk", 
+                                0x02
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "CLOCK", 
+                            Package (0x04)
+                            {
+                                "gcc_usb30_mock_utmi_clk", 
+                                0x08, 
+                                0x4B00, 
+                                0x07
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "CLOCK", 
+                            Package (0x02)
+                            {
+                                "gcc_usb3_phy_aux_clk", 
+                                0x02
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "REQUIRED_RESOURCE", 
+                            Package (0x03)
+                            {
+                                Zero, 
+                                "/clk/pnoc", 
+                                Zero
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "CLOCK", 
+                            Package (0x02)
+                            {
+                                "gcc_usb_phy_cfg_ahb2phy_clk", 
+                                0x02
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "CLOCK", 
+                            Package (0x02)
+                            {
+                                "gcc_usb3_phy_pipe_clk", 
+                                0x02
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "PMICVREGVOTE", 
+                            Package (0x04)
+                            {
+                                "PPP_RESOURCE_ID_CXO_BUFFERS_LNBBCLK1_A", 
+                                0x06, 
+                                Zero, 
+                                Zero
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "FOOTSWITCH", 
+                            Package (0x02)
+                            {
+                                "VDD_USB_30", 
+                                One
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "BUSARB", 
+                            Package (0x05)
+                            {
+                                0x03, 
+                                "ICBID_MASTER_USB3", 
+                                "ICBID_SLAVE_EBI1", 
+                                Zero, 
+                                Zero
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "REQUIRED_RESOURCE", 
+                            Package (0x03)
+                            {
+                                One, 
+                                "/pmic/client/rail_cx", 
+                                0x04
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "PMICVREGVOTE", 
+                            Package (0x0A)
+                            {
+                                "PPP_RESOURCE_ID_LDO24_A", 
+                                One, 
+                                0x003010B0, 
+                                0x16A8, 
+                                One, 
+                                Zero, 
+                                One, 
+                                Zero, 
+                                Zero, 
+                                Zero
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "PMICVREGVOTE", 
+                            Package (0x0A)
+                            {
+                                "PPP_RESOURCE_ID_LDO6_A", 
+                                One, 
+                                0x001B7740, 
+                                0xA08C, 
+                                One, 
+                                Zero, 
+                                One, 
+                                Zero, 
+                                Zero, 
+                                Zero
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "PMICVREGVOTE", 
+                            Package (0x0A)
+                            {
+                                "PPP_RESOURCE_ID_LDO28_A", 
+                                One, 
+                                0x000F4240, 
+                                0x6590, 
+                                One, 
+                                Zero, 
+                                One, 
+                                Zero, 
+                                Zero, 
+                                Zero
+                            }
+                        }
+                    }, 
+
+                    Package (0x12)
+                    {
+                        "DSTATE", 
+                        0x02, 
+                        Package (0x02)
+                        {
+                            "REQUIRED_RESOURCE", 
+                            Package (0x03)
+                            {
+                                Zero, 
+                                "/clk/snoc", 
+                                Zero
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "CLOCK", 
+                            Package (0x04)
+                            {
+                                "gcc_usb30_master_clk", 
+                                0x03, 
+                                0x00927C00, 
+                                One
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "CLOCK", 
+                            Package (0x02)
+                            {
+                                "gcc_usb30_master_clk", 
+                                0x02
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "CLOCK", 
+                            Package (0x02)
+                            {
+                                "gcc_sys_noc_usb3_axi_clk", 
+                                0x02
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "CLOCK", 
+                            Package (0x02)
+                            {
+                                "gcc_usb30_mock_utmi_clk", 
+                                0x02
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "CLOCK", 
+                            Package (0x02)
+                            {
+                                "gcc_usb3_phy_aux_clk", 
+                                0x02
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "REQUIRED_RESOURCE", 
+                            Package (0x03)
+                            {
+                                Zero, 
+                                "/clk/pnoc", 
+                                Zero
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "CLOCK", 
+                            Package (0x02)
+                            {
+                                "gcc_usb_phy_cfg_ahb2phy_clk", 
+                                0x02
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "CLOCK", 
+                            Package (0x02)
+                            {
+                                "gcc_usb3_phy_pipe_clk", 
+                                0x02
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "PMICVREGVOTE", 
+                            Package (0x04)
+                            {
+                                "PPP_RESOURCE_ID_CXO_BUFFERS_LNBBCLK1_A", 
+                                0x06, 
+                                Zero, 
+                                Zero
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "FOOTSWITCH", 
+                            Package (0x02)
+                            {
+                                "VDD_USB_30", 
+                                One
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "BUSARB", 
+                            Package (0x05)
+                            {
+                                0x03, 
+                                "ICBID_MASTER_USB3", 
+                                "ICBID_SLAVE_EBI1", 
+                                Zero, 
+                                Zero
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "REQUIRED_RESOURCE", 
+                            Package (0x03)
+                            {
+                                One, 
+                                "/pmic/client/rail_cx", 
+                                0x04
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "PMICVREGVOTE", 
+                            Package (0x0A)
+                            {
+                                "PPP_RESOURCE_ID_LDO24_A", 
+                                One, 
+                                0x003010B0, 
+                                0x16A8, 
+                                One, 
+                                Zero, 
+                                One, 
+                                Zero, 
+                                Zero, 
+                                Zero
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "PMICVREGVOTE", 
+                            Package (0x0A)
+                            {
+                                "PPP_RESOURCE_ID_LDO6_A", 
+                                One, 
+                                0x001B7740, 
+                                0xA08C, 
+                                One, 
+                                Zero, 
+                                One, 
+                                Zero, 
+                                Zero, 
+                                Zero
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "PMICVREGVOTE", 
+                            Package (0x0A)
+                            {
+                                "PPP_RESOURCE_ID_LDO28_A", 
+                                One, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                Zero
+                            }
+                        }
+                    }, 
+
+                    Package (0x12)
+                    {
+                        "DSTATE", 
+                        0x03, 
+                        Package (0x02)
+                        {
+                            "REQUIRED_RESOURCE", 
+                            Package (0x03)
+                            {
+                                Zero, 
+                                "/clk/snoc", 
+                                Zero
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "CLOCK", 
+                            Package (0x04)
+                            {
+                                "gcc_usb30_master_clk", 
+                                0x03, 
+                                0x00927C00, 
+                                One
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "CLOCK", 
+                            Package (0x02)
+                            {
+                                "gcc_usb30_master_clk", 
+                                0x02
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "CLOCK", 
+                            Package (0x02)
+                            {
+                                "gcc_sys_noc_usb3_axi_clk", 
+                                0x02
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "CLOCK", 
+                            Package (0x02)
+                            {
+                                "gcc_usb30_mock_utmi_clk", 
+                                0x02
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "CLOCK", 
+                            Package (0x02)
+                            {
+                                "gcc_usb3_phy_aux_clk", 
+                                0x02
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "REQUIRED_RESOURCE", 
+                            Package (0x03)
+                            {
+                                Zero, 
+                                "/clk/pnoc", 
+                                Zero
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "CLOCK", 
+                            Package (0x02)
+                            {
+                                "gcc_usb_phy_cfg_ahb2phy_clk", 
+                                0x02
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "CLOCK", 
+                            Package (0x02)
+                            {
+                                "gcc_usb3_phy_pipe_clk", 
+                                0x02
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "PMICVREGVOTE", 
+                            Package (0x04)
+                            {
+                                "PPP_RESOURCE_ID_CXO_BUFFERS_LNBBCLK1_A", 
+                                0x06, 
+                                Zero, 
+                                Zero
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "FOOTSWITCH", 
+                            Package (0x02)
+                            {
+                                "VDD_USB_30", 
+                                0x02
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "BUSARB", 
+                            Package (0x05)
+                            {
+                                0x03, 
+                                "ICBID_MASTER_USB3", 
+                                "ICBID_SLAVE_EBI1", 
+                                Zero, 
+                                Zero
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "REQUIRED_RESOURCE", 
+                            Package (0x03)
+                            {
+                                One, 
+                                "/pmic/client/rail_cx", 
+                                Zero
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "PMICVREGVOTE", 
+                            Package (0x0A)
+                            {
+                                "PPP_RESOURCE_ID_LDO24_A", 
+                                One, 
+                                0x003010B0, 
+                                Zero, 
+                                One, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                Zero
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "PMICVREGVOTE", 
+                            Package (0x0A)
+                            {
+                                "PPP_RESOURCE_ID_LDO6_A", 
+                                One, 
+                                0x001B7740, 
+                                Zero, 
+                                One, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                Zero
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "PMICVREGVOTE", 
+                            Package (0x0A)
+                            {
+                                "PPP_RESOURCE_ID_LDO28_A", 
+                                One, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                Zero
+                            }
+                        }
+                    }, 
+
+                    Package (0x02)
+                    {
+                        "ABANDON_DSTATE", 
+                        0x03
+                    }
+                }, 
+
+                Package (0x08)
+                {
+                    "DEVICE", 
+                    "\\_SB.URS0.UFN0", 
+                    Package (0x05)
+                    {
+                        "COMPONENT", 
+                        Zero, 
+                        Package (0x02)
+                        {
+                            "FSTATE", 
+                            Zero
+                        }, 
+
+                        Package (0x09)
+                        {
+                            "PSTATE", 
+                            Zero, 
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x02)
+                                {
+                                    "gcc_usb30_sleep_clk", 
+                                    One
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x02)
+                                {
+                                    "gcc_usb2_hs_phy_sleep_clk", 
+                                    One
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x03)
+                                {
+                                    "gcc_usb30_sleep_clk", 
+                                    0x09, 
+                                    0x08
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x03)
+                                {
+                                    "gcc_usb30_sleep_clk", 
+                                    0x09, 
+                                    0x0C
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x03)
+                                {
+                                    "gcc_usb2_hs_phy_sleep_clk", 
+                                    0x09, 
+                                    0x08
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x03)
+                                {
+                                    "gcc_usb2_hs_phy_sleep_clk", 
+                                    0x09, 
+                                    0x0C
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x03)
+                                {
+                                    "gcc_usb30_mock_utmi_clk", 
+                                    0x09, 
+                                    0x0A
+                                }
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "PRELOAD_PSTATE", 
+                            Zero
+                        }
+                    }, 
+
+                    Package (0x12)
+                    {
+                        "DSTATE", 
+                        Zero, 
+                        Package (0x02)
+                        {
+                            "PMICVREGVOTE", 
+                            Package (0x0A)
+                            {
+                                "PPP_RESOURCE_ID_LDO24_A", 
+                                One, 
+                                0x002EEBB8, 
+                                0x16A8, 
+                                One, 
+                                Zero, 
+                                One, 
+                                Zero, 
+                                Zero, 
+                                Zero
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "PMICVREGVOTE", 
+                            Package (0x0A)
+                            {
+                                "PPP_RESOURCE_ID_LDO6_A", 
+                                One, 
+                                0x001B7740, 
+                                0xA08C, 
+                                One, 
+                                Zero, 
+                                One, 
+                                Zero, 
+                                Zero, 
+                                Zero
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "PMICVREGVOTE", 
+                            Package (0x0A)
+                            {
+                                "PPP_RESOURCE_ID_LDO28_A", 
+                                One, 
+                                0x000F4240, 
+                                0x6590, 
+                                One, 
+                                Zero, 
+                                One, 
+                                Zero, 
+                                Zero, 
+                                Zero
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "FOOTSWITCH", 
+                            Package (0x02)
+                            {
+                                "VDD_USB_30", 
+                                One
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "EXECUTE_FUNCTION", 
+                            Package (0x01)
+                            {
+                                "HSUSBResetSequence"
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "REQUIRED_RESOURCE", 
+                            Package (0x03)
+                            {
+                                One, 
+                                "/clk/snoc", 
+                                0x0001E848
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "CLOCK", 
+                            Package (0x04)
+                            {
+                                "gcc_sys_noc_usb3_axi_clk", 
+                                0x08, 
+                                0x7D, 
+                                0x09
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "CLOCK", 
+                            Package (0x04)
+                            {
+                                "gcc_usb30_master_clk", 
+                                0x08, 
+                                0x7D, 
+                                0x09
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "CLOCK", 
+                            Package (0x04)
+                            {
+                                "gcc_usb30_mock_utmi_clk", 
+                                0x08, 
+                                0x4B00, 
+                                0x07
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "CLOCK", 
+                            Package (0x04)
+                            {
+                                "gcc_usb3_phy_aux_clk", 
+                                0x08, 
+                                0x04B0, 
+                                0x07
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "BUSARB", 
+                            Package (0x05)
+                            {
+                                0x03, 
+                                "ICBID_MASTER_USB3", 
+                                "ICBID_SLAVE_EBI1", 
+                                0x28000000, 
+                                0x28000000
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "REQUIRED_RESOURCE", 
+                            Package (0x03)
+                            {
+                                One, 
+                                "/pmic/client/rail_cx", 
+                                0x04
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "REQUIRED_RESOURCE", 
+                            Package (0x03)
+                            {
+                                One, 
+                                "/clk/pnoc", 
+                                0x000186A0
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "CLOCK", 
+                            Package (0x02)
+                            {
+                                "gcc_usb_phy_cfg_ahb2phy_clk", 
+                                One
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "CLOCK", 
+                            Package (0x05)
+                            {
+                                "gcc_usb3_phy_pipe_clk", 
+                                0x06, 
+                                Zero, 
+                                Zero, 
+                                Zero
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "PMICVREGVOTE", 
+                            Package (0x04)
+                            {
+                                "PPP_RESOURCE_ID_CXO_BUFFERS_LNBBCLK1_A", 
+                                0x06, 
+                                One, 
+                                Zero
+                            }
+                        }
+                    }, 
+
+                    Package (0x0D)
+                    {
+                        "DSTATE", 
+                        One, 
+                        Package (0x02)
+                        {
+                            "CLOCK", 
+                            Package (0x04)
+                            {
+                                "gcc_usb30_master_clk", 
+                                0x03, 
+                                0x2580, 
+                                0x05
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "CLOCK", 
+                            Package (0x02)
+                            {
+                                "gcc_usb30_master_clk", 
+                                0x02
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "CLOCK", 
+                            Package (0x02)
+                            {
+                                "gcc_sys_noc_usb3_axi_clk", 
+                                0x02
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "CLOCK", 
+                            Package (0x02)
+                            {
+                                "gcc_usb30_mock_utmi_clk", 
+                                0x02
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "CLOCK", 
+                            Package (0x04)
+                            {
+                                "gcc_usb3_phy_aux_clk", 
+                                0x08, 
+                                0x04B0, 
+                                0x07
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "PMICVREGVOTE", 
+                            Package (0x04)
+                            {
+                                "PPP_RESOURCE_ID_CXO_BUFFERS_LNBBCLK1_A", 
+                                0x06, 
+                                One, 
+                                Zero
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "BUSARB", 
+                            Package (0x05)
+                            {
+                                0x03, 
+                                "ICBID_MASTER_USB3", 
+                                "ICBID_SLAVE_EBI1", 
+                                Zero, 
+                                Zero
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "REQUIRED_RESOURCE", 
+                            Package (0x03)
+                            {
+                                One, 
+                                "/pmic/client/rail_cx", 
+                                0x04
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "PMICVREGVOTE", 
+                            Package (0x0A)
+                            {
+                                "PPP_RESOURCE_ID_LDO24_A", 
+                                One, 
+                                0x002EEBB8, 
+                                0x03E8, 
+                                One, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                Zero
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "PMICVREGVOTE", 
+                            Package (0x0A)
+                            {
+                                "PPP_RESOURCE_ID_LDO6_A", 
+                                One, 
+                                0x001B7740, 
+                                0x03E8, 
+                                One, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                Zero
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "PMICVREGVOTE", 
+                            Package (0x0A)
+                            {
+                                "PPP_RESOURCE_ID_LDO28_A", 
+                                One, 
+                                0x000F4240, 
+                                0x03E8, 
+                                One, 
+                                Zero, 
+                                One, 
+                                Zero, 
+                                Zero, 
+                                Zero
+                            }
+                        }
+                    }, 
+
+                    Package (0x12)
+                    {
+                        "DSTATE", 
+                        0x02, 
+                        Package (0x02)
+                        {
+                            "REQUIRED_RESOURCE", 
+                            Package (0x03)
+                            {
+                                Zero, 
+                                "/clk/snoc", 
+                                Zero
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "CLOCK", 
+                            Package (0x04)
+                            {
+                                "gcc_usb30_master_clk", 
+                                0x03, 
+                                0x00927C00, 
+                                One
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "CLOCK", 
+                            Package (0x02)
+                            {
+                                "gcc_usb30_master_clk", 
+                                0x02
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "CLOCK", 
+                            Package (0x02)
+                            {
+                                "gcc_sys_noc_usb3_axi_clk", 
+                                0x02
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "CLOCK", 
+                            Package (0x02)
+                            {
+                                "gcc_usb30_mock_utmi_clk", 
+                                0x02
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "CLOCK", 
+                            Package (0x02)
+                            {
+                                "gcc_usb3_phy_aux_clk", 
+                                0x02
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "REQUIRED_RESOURCE", 
+                            Package (0x03)
+                            {
+                                Zero, 
+                                "/clk/pnoc", 
+                                Zero
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "CLOCK", 
+                            Package (0x02)
+                            {
+                                "gcc_usb_phy_cfg_ahb2phy_clk", 
+                                0x02
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "CLOCK", 
+                            Package (0x02)
+                            {
+                                "gcc_usb3_phy_pipe_clk", 
+                                0x02
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "PMICVREGVOTE", 
+                            Package (0x04)
+                            {
+                                "PPP_RESOURCE_ID_CXO_BUFFERS_LNBBCLK1_A", 
+                                0x06, 
+                                Zero, 
+                                Zero
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "FOOTSWITCH", 
+                            Package (0x02)
+                            {
+                                "VDD_USB_30", 
+                                0x02
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "BUSARB", 
+                            Package (0x05)
+                            {
+                                0x03, 
+                                "ICBID_MASTER_USB3", 
+                                "ICBID_SLAVE_EBI1", 
+                                Zero, 
+                                Zero
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "REQUIRED_RESOURCE", 
+                            Package (0x03)
+                            {
+                                One, 
+                                "/pmic/client/rail_cx", 
+                                0x04
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "PMICVREGVOTE", 
+                            Package (0x0A)
+                            {
+                                "PPP_RESOURCE_ID_LDO24_A", 
+                                One, 
+                                0x002EEBB8, 
+                                Zero, 
+                                One, 
+                                Zero, 
+                                One, 
+                                Zero, 
+                                Zero, 
+                                Zero
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "PMICVREGVOTE", 
+                            Package (0x0A)
+                            {
+                                "PPP_RESOURCE_ID_LDO6_A", 
+                                One, 
+                                0x001B7740, 
+                                Zero, 
+                                One, 
+                                Zero, 
+                                One, 
+                                Zero, 
+                                Zero, 
+                                Zero
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "PMICVREGVOTE", 
+                            Package (0x0A)
+                            {
+                                "PPP_RESOURCE_ID_LDO28_A", 
+                                One, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                Zero
+                            }
+                        }
+                    }, 
+
+                    Package (0x12)
+                    {
+                        "DSTATE", 
+                        0x03, 
+                        Package (0x02)
+                        {
+                            "REQUIRED_RESOURCE", 
+                            Package (0x03)
+                            {
+                                Zero, 
+                                "/clk/snoc", 
+                                Zero
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "CLOCK", 
+                            Package (0x04)
+                            {
+                                "gcc_usb30_master_clk", 
+                                0x03, 
+                                0x00927C00, 
+                                One
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "CLOCK", 
+                            Package (0x02)
+                            {
+                                "gcc_usb30_master_clk", 
+                                0x02
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "CLOCK", 
+                            Package (0x02)
+                            {
+                                "gcc_sys_noc_usb3_axi_clk", 
+                                0x02
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "CLOCK", 
+                            Package (0x02)
+                            {
+                                "gcc_usb30_mock_utmi_clk", 
+                                0x02
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "CLOCK", 
+                            Package (0x02)
+                            {
+                                "gcc_usb3_phy_aux_clk", 
+                                0x02
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "REQUIRED_RESOURCE", 
+                            Package (0x03)
+                            {
+                                Zero, 
+                                "/clk/pnoc", 
+                                Zero
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "CLOCK", 
+                            Package (0x02)
+                            {
+                                "gcc_usb_phy_cfg_ahb2phy_clk", 
+                                0x02
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "CLOCK", 
+                            Package (0x02)
+                            {
+                                "gcc_usb3_phy_pipe_clk", 
+                                0x02
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "PMICVREGVOTE", 
+                            Package (0x04)
+                            {
+                                "PPP_RESOURCE_ID_CXO_BUFFERS_LNBBCLK1_A", 
+                                0x06, 
+                                Zero, 
+                                Zero
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "FOOTSWITCH", 
+                            Package (0x02)
+                            {
+                                "VDD_USB_30", 
+                                0x02
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "BUSARB", 
+                            Package (0x05)
+                            {
+                                0x03, 
+                                "ICBID_MASTER_USB3", 
+                                "ICBID_SLAVE_EBI1", 
+                                Zero, 
+                                Zero
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "REQUIRED_RESOURCE", 
+                            Package (0x03)
+                            {
+                                One, 
+                                "/pmic/client/rail_cx", 
+                                Zero
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "PMICVREGVOTE", 
+                            Package (0x0A)
+                            {
+                                "PPP_RESOURCE_ID_LDO24_A", 
+                                One, 
+                                0x002EEBB8, 
+                                Zero, 
+                                One, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                Zero
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "PMICVREGVOTE", 
+                            Package (0x0A)
+                            {
+                                "PPP_RESOURCE_ID_LDO6_A", 
+                                One, 
+                                0x001B7740, 
+                                Zero, 
+                                One, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                Zero
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "PMICVREGVOTE", 
+                            Package (0x0A)
+                            {
+                                "PPP_RESOURCE_ID_LDO28_A", 
+                                One, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                Zero
+                            }
+                        }
+                    }, 
+
+                    Package (0x02)
+                    {
+                        "ABANDON_DSTATE", 
+                        0x03
+                    }
+                }, 
+
+                Package (0x07)
+                {
+                    "DEVICE", 
+                    "\\_SB.UFN1", 
+                    Package (0x03)
+                    {
+                        "COMPONENT", 
+                        Zero, 
+                        Package (0x02)
+                        {
+                            "FSTATE", 
+                            Zero
+                        }
+                    }, 
+
+                    Package (0x02)
+                    {
+                        "DSTATE", 
+                        Zero
+                    }, 
+
+                    Package (0x02)
+                    {
+                        "DSTATE", 
+                        One
+                    }, 
+
+                    Package (0x02)
+                    {
+                        "DSTATE", 
+                        0x02
+                    }, 
+
+                    Package (0x02)
+                    {
+                        "DSTATE", 
+                        0x03
+                    }
+                }
+            })
+        }
+
+        Scope (\_SB.PEP0)
+        {
+            Method (LPMX, 0, NotSerialized)
+            {
+                Return (LPXC) /* \_SB_.PEP0.LPXC */
+            }
+
+            Name (LPXC, Package (0x01)
+            {
+                Package (0x04)
+                {
+                    "DEVICE", 
+                    "\\_SB.TSC1", 
+                    Package (0x09)
+                    {
+                        "DSTATE", 
+                        Zero, 
+                        Package (0x02)
+                        {
+                            "TLMMGPIO", 
+                            Package (0x06)
+                            {
+                                0x3C, 
+                                Zero, 
+                                Zero, 
+                                One, 
+                                Zero, 
+                                Zero
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "PMICVREGVOTE", 
+                            Package (0x0A)
+                            {
+                                "PPP_RESOURCE_ID_LDO14_A", 
+                                One, 
+                                0x00124F80, 
+                                0x047E, 
+                                One, 
+                                Zero, 
+                                One, 
+                                Zero, 
+                                Zero, 
+                                Zero
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "PMICVREGVOTE", 
+                            Package (0x0A)
+                            {
+                                "PPP_RESOURCE_ID_LDO22_A", 
+                                One, 
+                                0x002F4D60, 
+                                0x00011904, 
+                                One, 
+                                Zero, 
+                                One, 
+                                Zero, 
+                                Zero, 
+                                Zero
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "DELAY", 
+                            Package (0x01)
+                            {
+                                0x02
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "TLMMGPIO", 
+                            Package (0x06)
+                            {
+                                0x3C, 
+                                One, 
+                                Zero, 
+                                One, 
+                                Zero, 
+                                Zero
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "TLMMGPIO", 
+                            Package (0x06)
+                            {
+                                0x3D, 
+                                One, 
+                                Zero, 
+                                Zero, 
+                                One, 
+                                Zero
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "DELAY", 
+                            Package (0x01)
+                            {
+                                0xC8
+                            }
+                        }
+                    }, 
+
+                    Package (0x06)
+                    {
+                        "DSTATE", 
+                        0x03, 
+                        Package (0x02)
+                        {
+                            "PMICVREGVOTE", 
+                            Package (0x0A)
+                            {
+                                "PPP_RESOURCE_ID_LDO14_A", 
+                                One, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                Zero
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "PMICVREGVOTE", 
+                            Package (0x0A)
+                            {
+                                "PPP_RESOURCE_ID_LDO22_A", 
+                                One, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                Zero
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "TLMMGPIO", 
+                            Package (0x06)
+                            {
+                                0x3C, 
+                                Zero, 
+                                Zero, 
+                                One, 
+                                Zero, 
+                                Zero
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "TLMMGPIO", 
+                            Package (0x06)
+                            {
+                                0x3D, 
+                                One, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                Zero
+                            }
+                        }
+                    }
+                }
+            })
+        }
+
         Device (BAM0)
         {
             Name (_HID, "QCOM2401")  // _HID: Hardware ID
@@ -1241,6 +10689,62 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8994 ", 0x00000003)
             }
         }
 
+        Device (UAR2)
+        {
+            Name (_HID, "QCOM2424")  // _HID: Hardware ID
+            Name (_UID, 0x02)  // _UID: Unique ID
+            Name (_CCA, Zero)  // _CCA: Cache Coherency Attribute
+            Method (_CRS, 0, NotSerialized)  // _CRS: Current Resource Settings
+            {
+                Name (RBUF, ResourceTemplate ()
+                {
+                    Memory32Fixed (ReadWrite,
+                        0xF991E000,         // Address Base
+                        0x00000100,         // Address Length
+                        )
+                    Interrupt (ResourceConsumer, Level, ActiveHigh, Exclusive, ,, )
+                    {
+                        0x0000008C,
+                    }
+                    GpioInt (Edge, ActiveLow, Exclusive, PullDown, 0x0000,
+                        "\\_SB.GIO0", 0x00, ResourceConsumer, ,
+                        )
+                        {   // Pin list
+                            0x0005
+                        }
+                })
+                Return (RBUF) /* \_SB_.UAR2._CRS.RBUF */
+            }
+
+            Method (PROP, 0, NotSerialized)
+            {
+                Name (RBUF, Package (0x14)
+                {
+                    "UartClass", 
+                    One, 
+                    "EnableDma", 
+                    Zero, 
+                    "QgicBase", 
+                    0xF9000000, 
+                    "BamBase", 
+                    0xF9904000, 
+                    "BamPipeTx", 
+                    0x02, 
+                    "BamPipeRx", 
+                    0x03, 
+                    "ClkrgmBase", 
+                    0xFC400000, 
+                    "TlmmBase", 
+                    0xFD510000, 
+                    "GpioRxData", 
+                    0x05, 
+                    "GpioTxData", 
+                    0x04
+                })
+                Return (RBUF) /* \_SB_.UAR2.PROP.RBUF */
+            }
+        }
+
         Device (I2C2)
         {
             Name (_HID, "QCOM240E")  // _HID: Hardware ID
@@ -1275,6 +10779,549 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8994 ", 0x00000003)
                 })
                 Return (RBUF) /* \_SB_.I2C2.FNOC.RBUF */
             }
+        }
+
+        Scope (\_SB.PEP0)
+        {
+            Method (BSMD, 0, NotSerialized)
+            {
+                Return (BSRC) /* \_SB_.PEP0.BSRC */
+            }
+
+            Name (BSRC, Package (0x02)
+            {
+                Package (0x04)
+                {
+                    "DEVICE", 
+                    "\\_SB.UAR2", 
+                    Package (0x11)
+                    {
+                        "COMPONENT", 
+                        Zero, 
+                        Package (0x05)
+                        {
+                            "FSTATE", 
+                            Zero, 
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "gcc_blsp1_ahb_clk", 
+                                    One, 
+                                    Zero, 
+                                    0x04
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "gcc_blsp1_uart2_apps_clk", 
+                                    One, 
+                                    Zero, 
+                                    0x04
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "BUSARB", 
+                                Package (0x05)
+                                {
+                                    0x03, 
+                                    "ICBID_MASTER_BLSP_1", 
+                                    "ICBID_SLAVE_EBI1", 
+                                    Zero, 
+                                    0x0007A120
+                                }
+                            }
+                        }, 
+
+                        Package (0x05)
+                        {
+                            "FSTATE", 
+                            One, 
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "gcc_blsp1_ahb_clk", 
+                                    0x02, 
+                                    Zero, 
+                                    0x04
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "gcc_blsp1_uart2_apps_clk", 
+                                    0x02, 
+                                    Zero, 
+                                    0x04
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "BUSARB", 
+                                Package (0x05)
+                                {
+                                    0x03, 
+                                    "ICBID_MASTER_BLSP_1", 
+                                    "ICBID_SLAVE_EBI1", 
+                                    Zero, 
+                                    Zero
+                                }
+                            }
+                        }, 
+
+                        Package (0x04)
+                        {
+                            "PSTATE", 
+                            Zero, 
+                            Package (0x02)
+                            {
+                                "TLMMGPIO", 
+                                Package (0x06)
+                                {
+                                    0x05, 
+                                    Zero, 
+                                    0x02, 
+                                    Zero, 
+                                    One, 
+                                    Zero
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "TLMMGPIO", 
+                                Package (0x06)
+                                {
+                                    0x04, 
+                                    Zero, 
+                                    0x02, 
+                                    Zero, 
+                                    Zero, 
+                                    Zero
+                                }
+                            }
+                        }, 
+
+                        Package (0x04)
+                        {
+                            "PSTATE", 
+                            One, 
+                            Package (0x02)
+                            {
+                                "TLMMGPIO", 
+                                Package (0x06)
+                                {
+                                    0x05, 
+                                    Zero, 
+                                    0x02, 
+                                    Zero, 
+                                    One, 
+                                    Zero
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "TLMMGPIO", 
+                                Package (0x06)
+                                {
+                                    0x04, 
+                                    Zero, 
+                                    0x02, 
+                                    Zero, 
+                                    Zero, 
+                                    Zero
+                                }
+                            }
+                        }, 
+
+                        Package (0x03)
+                        {
+                            "PSTATE", 
+                            0x02, 
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "gcc_blsp1_uart2_apps_clk", 
+                                    0x03, 
+                                    0x00708000, 
+                                    0x04
+                                }
+                            }
+                        }, 
+
+                        Package (0x03)
+                        {
+                            "PSTATE", 
+                            0x03, 
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "gcc_blsp1_uart2_apps_clk", 
+                                    0x03, 
+                                    0x00E10000, 
+                                    0x04
+                                }
+                            }
+                        }, 
+
+                        Package (0x03)
+                        {
+                            "PSTATE", 
+                            0x04, 
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "gcc_blsp1_uart2_apps_clk", 
+                                    0x03, 
+                                    0x00F42400, 
+                                    0x04
+                                }
+                            }
+                        }, 
+
+                        Package (0x03)
+                        {
+                            "PSTATE", 
+                            0x05, 
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "gcc_blsp1_uart2_apps_clk", 
+                                    0x03, 
+                                    0x016E3600, 
+                                    0x04
+                                }
+                            }
+                        }, 
+
+                        Package (0x03)
+                        {
+                            "PSTATE", 
+                            0x06, 
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "gcc_blsp1_uart2_apps_clk", 
+                                    0x03, 
+                                    0x01E84800, 
+                                    0x04
+                                }
+                            }
+                        }, 
+
+                        Package (0x03)
+                        {
+                            "PSTATE", 
+                            0x07, 
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "gcc_blsp1_uart2_apps_clk", 
+                                    0x03, 
+                                    0x02625A00, 
+                                    0x04
+                                }
+                            }
+                        }, 
+
+                        Package (0x03)
+                        {
+                            "PSTATE", 
+                            0x08, 
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "gcc_blsp1_uart2_apps_clk", 
+                                    0x03, 
+                                    0x02DC6C00, 
+                                    0x04
+                                }
+                            }
+                        }, 
+
+                        Package (0x03)
+                        {
+                            "PSTATE", 
+                            0x09, 
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "gcc_blsp1_uart2_apps_clk", 
+                                    0x03, 
+                                    0x030D4000, 
+                                    0x04
+                                }
+                            }
+                        }, 
+
+                        Package (0x03)
+                        {
+                            "PSTATE", 
+                            0x0A, 
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "gcc_blsp1_uart2_apps_clk", 
+                                    0x03, 
+                                    0x03567E00, 
+                                    0x04
+                                }
+                            }
+                        }, 
+
+                        Package (0x03)
+                        {
+                            "PSTATE", 
+                            0x0B, 
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "gcc_blsp1_uart2_apps_clk", 
+                                    0x03, 
+                                    0x03840000, 
+                                    0x04
+                                }
+                            }
+                        }, 
+
+                        Package (0x03)
+                        {
+                            "PSTATE", 
+                            0x0C, 
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "gcc_blsp1_uart2_apps_clk", 
+                                    0x03, 
+                                    0x03D09000, 
+                                    0x04
+                                }
+                            }
+                        }
+                    }, 
+
+                    Package (0x04)
+                    {
+                        "COMPONENT", 
+                        One, 
+                        Package (0x02)
+                        {
+                            "FSTATE", 
+                            Zero
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "FSTATE", 
+                            One
+                        }
+                    }
+                }, 
+
+                Package (0x07)
+                {
+                    "DEVICE", 
+                    "\\_SB.I2C2", 
+                    Package (0x03)
+                    {
+                        "COMPONENT", 
+                        Zero, 
+                        Package (0x02)
+                        {
+                            "FSTATE", 
+                            Zero
+                        }
+                    }, 
+
+                    Package (0x07)
+                    {
+                        "DSTATE", 
+                        Zero, 
+                        Package (0x02)
+                        {
+                            "CLOCK", 
+                            Package (0x04)
+                            {
+                                "gcc_blsp1_ahb_clk", 
+                                One, 
+                                0x05F5E100, 
+                                One
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "CLOCK", 
+                            Package (0x04)
+                            {
+                                "gcc_blsp1_qup2_i2c_apps_clk", 
+                                0x08, 
+                                0x0124F800, 
+                                0x04
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "BUSARB", 
+                            Package (0x05)
+                            {
+                                0x03, 
+                                "ICBID_MASTER_BLSP_1", 
+                                "ICBID_SLAVE_EBI1", 
+                                0x0927C000, 
+                                Zero
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "TLMMGPIO", 
+                            Package (0x06)
+                            {
+                                0x06, 
+                                One, 
+                                0x03, 
+                                One, 
+                                0x03, 
+                                Zero
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "TLMMGPIO", 
+                            Package (0x06)
+                            {
+                                0x07, 
+                                One, 
+                                0x03, 
+                                One, 
+                                0x03, 
+                                Zero
+                            }
+                        }
+                    }, 
+
+                    Package (0x02)
+                    {
+                        "DSTATE", 
+                        One
+                    }, 
+
+                    Package (0x02)
+                    {
+                        "DSTATE", 
+                        0x02
+                    }, 
+
+                    Package (0x07)
+                    {
+                        "DSTATE", 
+                        0x03, 
+                        Package (0x02)
+                        {
+                            "CLOCK", 
+                            Package (0x04)
+                            {
+                                "gcc_blsp1_ahb_clk", 
+                                0x02, 
+                                0x05F5E100, 
+                                One
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "CLOCK", 
+                            Package (0x04)
+                            {
+                                "gcc_blsp1_qup2_i2c_apps_clk", 
+                                0x02, 
+                                0x0124F800, 
+                                One
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "BUSARB", 
+                            Package (0x05)
+                            {
+                                0x03, 
+                                "ICBID_MASTER_BLSP_1", 
+                                "ICBID_SLAVE_EBI1", 
+                                Zero, 
+                                Zero
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "TLMMGPIO", 
+                            Package (0x06)
+                            {
+                                0x07, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                0x03, 
+                                Zero
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "TLMMGPIO", 
+                            Package (0x06)
+                            {
+                                0x06, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                0x03, 
+                                Zero
+                            }
+                        }
+                    }
+                }
+            })
         }
 
         Device (SCM0)

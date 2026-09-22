@@ -142,9 +142,6 @@ VOID PlatformInitialize()
 {
   UartInit();
 
-  /* Change the config for Windows */
-  CheckMdpConfig();
-
   /* Display refresh gets disabled by the stock bootloader.
   Enable it so that we'll get a proper framebuffer */
   DisplayEnableRefresh(); //TODO: Check cmd mode vs video mode and apply accordingly
