@@ -42,11 +42,6 @@ static UINT32 ProcessorIdMapping[6] = {
     0x00000100, 0x00000101,
 };
 
-static UINT32 MpIdrMapping[6] = {
-    0x80000000, 0x80000001, 0x80000002, 0x80000003,
-    0x80000100, 0x80000101,
-};
-
 VOID SetupMpPark()
 {
   /* Launch all CPUs
@@ -204,15 +199,6 @@ VOID SecondaryCEntryPoint(IN UINTN Index)
 {
   ASSERT(ArmReadMpidr() != 0x80000000);//triggers if false
 
-  /* TODO: Implement id checking in pre-C asm code in ModuleEntryPoint */
-
-  // Hacky way for now
-  for (UINTN i = 1; i < FixedPcdGet32(PcdCoreCount); i++) {
-    if(MpIdrMapping[i] == ArmReadMpidr()) {
-      Index = i;
-    }
-  }
-
   EFI_PHYSICAL_ADDRESS MailboxAddress =
       FixedPcdGet64(SecondaryCpuMpParkRegionBase) + 0x10000 * Index + 0x1000;
   PEFI_PROCESSOR_MAILBOX pMailbox =
@@ -242,7 +228,7 @@ VOID SecondaryCEntryPoint(IN UINTN Index)
   CurrentProcessorId    = ProcessorIdMapping[Index];
 
   do {
-    //DEBUG((EFI_D_LOAD | EFI_D_INFO, "Index: %d\n", Index));
+    DEBUG((EFI_D_LOAD | EFI_D_INFO, "Index: %d\n", Index));
     // ArmDataSynchronizationBarrier();
     // DEBUG((EFI_D_ERROR, "%d: WFI \n", Index));
     // ArmCallWFI();
