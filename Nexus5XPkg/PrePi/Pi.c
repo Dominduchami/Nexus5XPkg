@@ -37,34 +37,28 @@
 VOID EFIAPI ProcessLibraryConstructorList(VOID);
 extern void SecondaryCpuEntry();
 
-static UINT32 ProcessorIdMapping[6] = {
+static UINT32 ProcessorIdMapping[8] = {
     0x00000000, 0x00000001, 0x00000002, 0x00000003,
-    0x00000100, 0x00000101,
+    0x00000100, 0x00000101, 0x00000102, 0x00000103,
 };
 
 VOID SetupMpPark()
 {
   /* Launch all CPUs
+   * - set boot adress to &SecondaryCpuEntry
    * - boot cpus
-   * - set boot adress to &SecondaryCpuEntry (cpu_boot_set_addr in lk2nd?)
-   *
-   * //https://github.com/fekz115/lk2nd/blob/5d53e48a4829cb52245b5c09fe98ea418b4dbfff/lk2nd/smp/cpu-boot.c#L68
    */
-
-	if (cpu_boot_set_addr(
-      (UINTN)&SecondaryCpuEntry, 
-      BOOT_ARM64)
-   )  
+	if (cpu_boot_set_addr((UINTN)&SecondaryCpuEntry, BOOT_ARM64))  
   {
-    DEBUG((EFI_D_LOAD | EFI_D_INFO, "Failed to set CPU boot address!!\n"));
 		for(;;) {}; // Set boot adress failed, loop forever
 	}
-  DEBUG((EFI_D_LOAD | EFI_D_INFO, "CPU boot address set!\n"));
 
-    // Launch all CPUs
+  // Launch all CPUs
   if ( ArmReadMpidr() == 0x80000000) {
     for (UINTN i = 1; i < FixedPcdGet32(PcdCoreCount); i++) {
-      if (ProcessorIdMapping[i] == ArmReadMpidr()) {
+      DEBUG((EFI_D_INFO | EFI_D_LOAD, "Mpidr: 0x%llx\n", ProcessorIdMapping[i]));
+
+      if (ProcessorIdMapping[i] == 0x00000000) {
         DEBUG((EFI_D_LOAD | EFI_D_INFO, "Skipping boot of current CPU...\n"));
       } 
       else {
@@ -155,8 +149,6 @@ VOID PrePiMain(IN VOID *StackBase, IN UINTN StackSize)
   // Install SoC driver HOBs
   //InstallPlatformHob();
 
-  DEBUG((EFI_D_LOAD | EFI_D_INFO, "Launching CPUs\n"));
-
   // Launch all CPUs
   SetupMpPark();
 
@@ -223,18 +215,28 @@ VOID SecondaryCEntryPoint(IN UINTN Index)
   ArmDisableInterrupts();
 
   // Clear mailbox
-  pMailbox->JumpAddress = 0;
+  pMailbox->JumpAddress = 0x0;
   pMailbox->ProcessorId = 0xffffffff;
   CurrentProcessorId    = ProcessorIdMapping[Index];
 
   do {
-    // ArmDataSynchronizationBarrier();
-    // DEBUG((EFI_D_ERROR, "%d: WFI \n", Index));
-    // ArmCallWFI();
-    // DEBUG((EFI_D_ERROR, "%d: end WFI \n", Index));
     ArmDataSynchronizationBarrier();
 
-    if (pMailbox->ProcessorId == Index) {
+    // Technically the CPU ID should be checked
+    // against request per MpPark spec,
+    // but the actual Windows implementation guarantees
+    // that no CPU will be started simultaneously,
+    // so the check was made optional.
+    //
+    // This also enables "spin-table" startup method
+    // for Linux.
+    //
+    // Example usage:
+    // enable-method = "spin-table";
+    // cpu-release-addr = <0 0x00311008>;
+
+    if(FixedPcdGetBool(SecondaryCpuIgnoreCpuIdCheck) || pMailbox->ProcessorId == Index ) 
+    {
       SecondaryEntryAddr = pMailbox->JumpAddress;
     }
 

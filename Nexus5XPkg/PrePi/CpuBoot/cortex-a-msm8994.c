@@ -20,14 +20,14 @@
  * enum msm8994_cpu_node_mpidrs - Enum that used for mapping cores and its mpidrs
  */
 enum msm8994_cpu_node_mpidrs {
-	CPU0 = 0x0,
-	CPU1 = 0x1,
-	CPU2 = 0x2,
-	CPU3 = 0x3,
-	CPU4 = 0x100,
-	CPU5 = 0x101,
-	CPU6 = 0x102,
-	CPU7 = 0x103,
+	CPU0 = 0x00000000,
+	CPU1 = 0x00000001,
+	CPU2 = 0x00000002,
+	CPU3 = 0x00000003,
+	CPU4 = 0x00000100,
+	CPU5 = 0x00000101,
+	CPU6 = 0x00000102,
+	CPU7 = 0x00000103,
 };
 
 /**

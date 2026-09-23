@@ -119,7 +119,9 @@ _PrepareArguments:
   bl CEntryPoint
 
 SecondaryCpuEntry:
-  /* Keep the incoming index */
+  /* Keep the index */
+  mrs x1, mpidr_el1
+  and x0, x1, #0xf
   mov x19, x0
 
   /* First ensure all interrupts are disabled */

@@ -6,7 +6,6 @@
 #include <Library/LKEnvLib.h>
 #include <Library/MallocLib.h>
 
-//#include "scm.h"
 #include <Chipset/scm.h>
 #include "CpuBoot.h"
 

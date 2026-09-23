@@ -1,0 +1,2 @@
+* lk2nd upstream cpu boot support: https://github.com/msm8916-mainline/lk2nd/tree/main/lk2nd/smp
+* fekz115 PR to add 8994 boot support: https://github.com/msm8916-mainline/lk2nd/pull/252
