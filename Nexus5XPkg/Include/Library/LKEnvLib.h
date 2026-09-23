@@ -108,4 +108,7 @@
 
 #define ROUND_TO_PAGE(x) (x & (~(EFI_PAGE_SIZE - 1)))
 
+typedef UINTN  uintptr_t;
+typedef INTN   intptr_t;
+
 #endif

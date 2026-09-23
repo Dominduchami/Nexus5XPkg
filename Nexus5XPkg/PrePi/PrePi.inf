@@ -8,6 +8,8 @@
 [Sources.common]
   Pi.c
   EarlyQGic/EarlyQGic.c
+  CpuBoot/cpu-boot.c
+  CpuBoot/cortex-a-msm8994.c
 
 [Sources.AARCH64]
   ReleaseInfo.S | GCC
@@ -50,6 +52,7 @@
   # MpPark
   ArmHvcLib
   ArmSmcLib
+  MallocLib
 
 [Guids]
   gEfiSystemNvDataFvGuid

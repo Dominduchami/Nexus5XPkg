@@ -26,7 +26,50 @@
 #include <Library/PlatformPrePiLib.h>
 #include <Library/SerialPortLib.h>
 
+#include <Library/ArmHvcLib.h>
+#include <Library/ArmSmcLib.h>
+
+#include <IndustryStandard/ArmStdSmc.h>
+
+#include <Library/LKEnvLib.h>
+#include "CpuBoot/CpuBoot.h"
+
 VOID EFIAPI ProcessLibraryConstructorList(VOID);
+extern void SecondaryCpuEntry();
+
+static UINT32 ProcessorIdMapping[8] = {
+    0x00000000, 0x00000001, 0x00000002, 0x00000003,
+    0x00000100, 0x00000101, 0x00000102, 0x00000103,
+};
+
+VOID SetupMpPark()
+{
+  /* Launch all CPUs
+   * - set boot adress to &SecondaryCpuEntry
+   * - boot cpus
+   */
+	if (cpu_boot_set_addr((UINTN)&SecondaryCpuEntry, BOOT_ARM64))  
+  {
+		for(;;) {}; // Set boot adress failed, loop forever
+	}
+
+  // Launch all CPUs
+  if ( ArmReadMpidr() == 0x80000000) {
+    for (UINTN i = 1; i < FixedPcdGet32(PcdCoreCount); i++) {
+      DEBUG((EFI_D_INFO | EFI_D_LOAD, "Mpidr: 0x%llx\n", ProcessorIdMapping[i]));
+
+      if (ProcessorIdMapping[i] == 0x00000000) {
+        DEBUG((EFI_D_LOAD | EFI_D_INFO, "Skipping boot of current CPU...\n"));
+      } 
+      else {
+        cpu_boot_cortex_a_msm8994(ProcessorIdMapping[i]);
+
+        /* Give CPU some time to boot */
+        MicroSecondDelay(100);
+      }
+    }
+  }
+}
 
 VOID PrePiMain(IN VOID *StackBase, IN UINTN StackSize)
 {
@@ -106,6 +149,9 @@ VOID PrePiMain(IN VOID *StackBase, IN UINTN StackSize)
   // Install SoC driver HOBs
   //InstallPlatformHob();
 
+  // Launch all CPUs
+  SetupMpPark();
+
   // Now, the HOB List has been initialized, we can register performance
   // information PERF_START (NULL, "PEI", NULL, StartTimeStamp);
 
@@ -138,5 +184,78 @@ CEntryPoint(
   PrePiMain(StackBase, StackSize);
 
   // DXE Core should always load and never return
+  ASSERT(FALSE);
+}
+
+VOID SecondaryCEntryPoint(IN UINTN Index)
+{
+  ASSERT(Index >= 1 && Index < FixedPcdGet32(PcdCoreCount));
+
+  EFI_PHYSICAL_ADDRESS MailboxAddress =
+      FixedPcdGet64(SecondaryCpuMpParkRegionBase) + 0x10000 * Index + 0x1000;
+  PEFI_PROCESSOR_MAILBOX pMailbox =
+      (PEFI_PROCESSOR_MAILBOX)(VOID *)MailboxAddress;
+
+  UINT32 CurrentProcessorId = 0;
+  VOID (*SecondaryStart)(VOID * pMailbox);
+  UINTN SecondaryEntryAddr;
+  UINTN InterruptId;
+  UINTN AcknowledgeInterrupt;
+
+  // MMU, cache and branch predicton must be disabled
+  // Cache is disabled in CRT startup code
+  ArmDisableMmu();
+  ArmDisableBranchPrediction();
+
+  // Turn on GIC CPU interface as well as SGI interrupts
+  ArmGicEnableInterruptInterface(FixedPcdGet64(PcdGicInterruptInterfaceBase));
+  MmioWrite32(FixedPcdGet64(PcdGicInterruptInterfaceBase) + 0x4, 0xf0);
+
+  // But turn off interrupts
+  ArmDisableInterrupts();
+
+  // Clear mailbox
+  pMailbox->JumpAddress = 0x0;
+  pMailbox->ProcessorId = 0xffffffff;
+  CurrentProcessorId    = ProcessorIdMapping[Index];
+
+  do {
+    ArmDataSynchronizationBarrier();
+
+    // Technically the CPU ID should be checked
+    // against request per MpPark spec,
+    // but the actual Windows implementation guarantees
+    // that no CPU will be started simultaneously,
+    // so the check was made optional.
+    //
+    // This also enables "spin-table" startup method
+    // for Linux.
+    //
+    // Example usage:
+    // enable-method = "spin-table";
+    // cpu-release-addr = <0 0x00311008>;
+
+    if(FixedPcdGetBool(SecondaryCpuIgnoreCpuIdCheck) || pMailbox->ProcessorId == Index ) 
+    {
+      SecondaryEntryAddr = pMailbox->JumpAddress;
+    }
+
+    AcknowledgeInterrupt = ArmGicAcknowledgeInterrupt(
+        FixedPcdGet64(PcdGicInterruptInterfaceBase), &InterruptId);
+    if (InterruptId <
+        ArmGicGetMaxNumInterrupts(FixedPcdGet64(PcdGicDistributorBase))) {
+      // Got a valid SGI number hence signal End of Interrupt
+      ArmGicEndOfInterrupt(
+          FixedPcdGet64(PcdGicInterruptInterfaceBase), AcknowledgeInterrupt);
+    }
+  } while (SecondaryEntryAddr == 0);
+
+  // Acknowledge this one
+  pMailbox->JumpAddress = 0;
+
+  SecondaryStart = (VOID(*)())SecondaryEntryAddr;
+  SecondaryStart(pMailbox);
+
+  // Should never reach here
   ASSERT(FALSE);
 }
