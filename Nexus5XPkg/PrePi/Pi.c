@@ -44,28 +44,52 @@ static UINT32 ProcessorIdMapping[8] = {
 
 VOID SetupMpPark()
 {
-  /* Launch all CPUs
-   * - set boot adress to &SecondaryCpuEntry
-   * - boot cpus
-   */
-	if (cpu_boot_set_addr((UINTN)&SecondaryCpuEntry, BOOT_ARM64))  
-  {
-		for(;;) {}; // Set boot adress failed, loop forever
-	}
+  BOOLEAN IsPsciSupported = 1;
+
+  // Setup with PSCI
+  DEBUG((EFI_D_LOAD | EFI_D_INFO, "Try to launch CPUs using PSCI\n"));
 
   // Launch all CPUs
-  if ( ArmReadMpidr() == 0x80000000) {
+  if (ArmReadMpidr() == 0x80000000) {
     for (UINTN i = 1; i < FixedPcdGet32(PcdCoreCount); i++) {
-      DEBUG((EFI_D_INFO | EFI_D_LOAD, "Mpidr: 0x%llx\n", ProcessorIdMapping[i]));
+      ARM_HVC_ARGS ArmHvcArgs;
+      ArmHvcArgs.Arg0 = ARM_SMC_ID_PSCI_CPU_ON_AARCH64;
+      ArmHvcArgs.Arg1 = ProcessorIdMapping[i];
+      ArmHvcArgs.Arg2 = (UINTN)&SecondaryCpuEntry;
+      ArmHvcArgs.Arg3 = i;
 
-      if (ProcessorIdMapping[i] == 0x00000000) {
-        DEBUG((EFI_D_LOAD | EFI_D_INFO, "Skipping boot of current CPU...\n"));
-      } 
-      else {
-        cpu_boot_cortex_a_msm8994(ProcessorIdMapping[i]);
+      ArmCallHvc(&ArmHvcArgs);
+      if(ArmHvcArgs.Arg0 != ARM_SMC_PSCI_RET_SUCCESS) {
+        IsPsciSupported = 0;
+        break;
+      }
+    }
+  }
 
-        /* Give CPU some time to boot */
-        MicroSecondDelay(100);
+  if (IsPsciSupported == 0) {
+    /* Launch all CPUs
+    * - set boot adress to &SecondaryCpuEntry
+    * - boot cpus
+    */
+    if (cpu_boot_set_addr((UINTN)&SecondaryCpuEntry, BOOT_ARM64))  
+    {
+      for(;;) {}; // Set boot adress failed, loop forever
+    }
+
+    // Launch all CPUs
+    if ( ArmReadMpidr() == 0x80000000) {
+      for (UINTN i = 1; i < FixedPcdGet32(PcdCoreCount); i++) {
+        DEBUG((EFI_D_INFO | EFI_D_LOAD, "Mpidr: 0x%llx\n", ProcessorIdMapping[i]));
+
+        if (ProcessorIdMapping[i] == 0x00000000) {
+          DEBUG((EFI_D_LOAD | EFI_D_INFO, "Skipping boot of current CPU...\n"));
+        } 
+        else {
+          cpu_boot_cortex_a_msm8994(ProcessorIdMapping[i]);
+
+          /* Give CPU some time to boot */
+          MicroSecondDelay(100);
+        }
       }
     }
   }
