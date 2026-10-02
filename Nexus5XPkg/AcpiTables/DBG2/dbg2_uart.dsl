@@ -28,7 +28,7 @@
 [042h 0066 001h]                    Space ID : 00 [SystemMemory]
 [043h 0067 001h]                   Bit Width : 20
 [044h 0068 001h]                  Bit Offset : 00
-[045h 0069 001h]        Encoded Access Width : 03 [DWord Access:32]
+[045h 0069 001h]        Encoded Access Width : 20 [Unknown Width Encoding]
 [046h 0070 008h]                     Address : 00000000F991E000
 
 [04Eh 0078 004h]                Address Size : 00001000
