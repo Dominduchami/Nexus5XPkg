@@ -33,3 +33,4 @@ BootShim/BootShim.elf
 workspace/Build
 ImageResources/Angler/uefi_angler.img
 ImageResources/Bullhead/uefi_bullhead.img
+Nexus5XPkg/Include/LittleVgl/lv_conf.h
