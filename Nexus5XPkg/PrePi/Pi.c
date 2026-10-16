@@ -42,20 +42,29 @@ static UINT32 ProcessorIdMapping[8] = {
     0x00000100, 0x00000101, 0x00000102, 0x00000103,
 };
 
+#define RAMDISK_ADDR 0x02000000
+#define LK_SDRAM 0x00400000
+#define LK_RAM_SIZE 0x00200000
+
 VOID SetupMpPark()
 {
+  // Copy payload
+  CopyMem(
+      (VOID *)LK_SDRAM, (VOID *)RAMDISK_ADDR,
+      LK_RAM_SIZE);
+  
   /* Launch all CPUs
    * - set boot adress to &SecondaryCpuEntry
    * - boot cpus
    */
-	if (cpu_boot_set_addr((UINTN)&SecondaryCpuEntry, BOOT_ARM64))  
+	if (cpu_boot_set_addr((UINTN)LK_SDRAM, BOOT_ARM64))  
   {
 		for(;;) {}; // Set boot adress failed, loop forever
 	}
 
   // Launch all CPUs
   if ( ArmReadMpidr() == 0x80000000) {
-    for (UINTN i = 1; i < FixedPcdGet32(PcdCoreCount); i++) {
+    for (UINTN i = 1; i < 2; i++) {
       DEBUG((EFI_D_INFO | EFI_D_LOAD, "Mpidr: 0x%llx\n", ProcessorIdMapping[i]));
 
       if (ProcessorIdMapping[i] == 0x00000000) {
@@ -152,6 +161,10 @@ VOID PrePiMain(IN VOID *StackBase, IN UINTN StackSize)
   // Launch all CPUs
   SetupMpPark();
 
+  for(;;) {
+    DEBUG((EFI_D_ERROR, "UEFI LOOPS\n"));
+  }
+
   // Now, the HOB List has been initialized, we can register performance
   // information PERF_START (NULL, "PEI", NULL, StartTimeStamp);
 
@@ -187,6 +200,8 @@ CEntryPoint(
   ASSERT(FALSE);
 }
 
+
+
 VOID SecondaryCEntryPoint(IN UINTN Index)
 {
   ASSERT(Index >= 1 && Index < FixedPcdGet32(PcdCoreCount));
@@ -199,8 +214,8 @@ VOID SecondaryCEntryPoint(IN UINTN Index)
   UINT32 CurrentProcessorId = 0;
   VOID (*SecondaryStart)(VOID * pMailbox);
   UINTN SecondaryEntryAddr;
-  UINTN InterruptId;
-  UINTN AcknowledgeInterrupt;
+  //UINTN InterruptId;
+  //UINTN AcknowledgeInterrupt;
 
   // MMU, cache and branch predicton must be disabled
   // Cache is disabled in CRT startup code
@@ -208,8 +223,8 @@ VOID SecondaryCEntryPoint(IN UINTN Index)
   ArmDisableBranchPrediction();
 
   // Turn on GIC CPU interface as well as SGI interrupts
-  ArmGicEnableInterruptInterface(FixedPcdGet64(PcdGicInterruptInterfaceBase));
-  MmioWrite32(FixedPcdGet64(PcdGicInterruptInterfaceBase) + 0x4, 0xf0);
+  //ArmGicEnableInterruptInterface(FixedPcdGet64(PcdGicInterruptInterfaceBase));
+  //MmioWrite32(FixedPcdGet64(PcdGicInterruptInterfaceBase) + 0x4, 0xf0);
 
   // But turn off interrupts
   ArmDisableInterrupts();
@@ -219,36 +234,7 @@ VOID SecondaryCEntryPoint(IN UINTN Index)
   pMailbox->ProcessorId = 0xffffffff;
   CurrentProcessorId    = ProcessorIdMapping[Index];
 
-  do {
-    ArmDataSynchronizationBarrier();
-
-    // Technically the CPU ID should be checked
-    // against request per MpPark spec,
-    // but the actual Windows implementation guarantees
-    // that no CPU will be started simultaneously,
-    // so the check was made optional.
-    //
-    // This also enables "spin-table" startup method
-    // for Linux.
-    //
-    // Example usage:
-    // enable-method = "spin-table";
-    // cpu-release-addr = <0 0x00311008>;
-
-    if(FixedPcdGetBool(SecondaryCpuIgnoreCpuIdCheck) || pMailbox->ProcessorId == Index ) 
-    {
-      SecondaryEntryAddr = pMailbox->JumpAddress;
-    }
-
-    AcknowledgeInterrupt = ArmGicAcknowledgeInterrupt(
-        FixedPcdGet64(PcdGicInterruptInterfaceBase), &InterruptId);
-    if (InterruptId <
-        ArmGicGetMaxNumInterrupts(FixedPcdGet64(PcdGicDistributorBase))) {
-      // Got a valid SGI number hence signal End of Interrupt
-      ArmGicEndOfInterrupt(
-          FixedPcdGet64(PcdGicInterruptInterfaceBase), AcknowledgeInterrupt);
-    }
-  } while (SecondaryEntryAddr == 0);
+  SecondaryEntryAddr = LK_SDRAM;
 
   // Acknowledge this one
   pMailbox->JumpAddress = 0;

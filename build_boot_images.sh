@@ -36,8 +36,8 @@ cat "BootShim/BootShim.bin" "${EFI_FD}" > "${FV_DIR}/BootShim${EFI_FD_NAME}"
 gzip -c < "${FV_DIR}/BootShim${EFI_FD_NAME}" > "${FV_DIR}/BootShim${EFI_FD_NAME}.gz"
 cat "${FV_DIR}/BootShim${EFI_FD_NAME}.gz" "${DTB}" > "${FV_DIR}/Image.gz-dtb"
 
-ramdisk="$(mktemp)"
-printf "\0" > "${ramdisk}"
+ramdisk="ImageResources/Angler/lk.bin"
+#printf "\0" > "${ramdisk}"
 
 python3 "ImageResources/mkbootimg.py" \
 --kernel "${FV_DIR}/Image.gz-dtb" \

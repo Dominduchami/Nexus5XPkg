@@ -97,7 +97,7 @@ READ_LOCK_STATUS   = TRUE
   !endif
   
   # Graphics
-  INF Nexus5XPkg/Driver/SimpleFbDxe/SimpleFbDxe.inf
+  # INF Nexus5XPkg/Driver/SimpleFbDxe/SimpleFbDxe.inf
 
   # BDS
   INF MdeModulePkg/Universal/PrintDxe/PrintDxe.inf
