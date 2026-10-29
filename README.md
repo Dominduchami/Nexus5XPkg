@@ -16,7 +16,7 @@ Last known good edk2 commit is 838c730fe61578847823da1b815e4c9c5ee1bed4 (thx Gus
 
 ## Windows Notes
 
-Windows boots fine now (although with only emmc and display via framebuffer working for now on the 5X, Nexus 6P loads more drivers)
+Windows boots fine on both devices with efi framebuffer, emmc working and some drivers loading (gpio i2c pmic uart). Trying to load PEP results in a bugcheck. Multicore should work.
 
 ## Linux notes
 
