@@ -448,6 +448,8 @@
   QcomTargetBoardLib|Nexus5XPkg/Library/QcomTargetBoardLib/QcomTargetBoardLib.inf
   PlatformIdLib|Nexus5XPkg/Library/PlatformIdLib/PlatformIdLib.inf
   QcomDxeTimerLib|Nexus5XPkg/Library/QTimerLib/QcomQTimerDxeTimerLib.inf
+  PlatformUsbfnLib|Nexus5XPkg/Library/PlatformUsbfnLib/PlatformUsbfnLib.inf
+  QcomUsbPhyLib|Nexus5XPkg/Library/QcomUsbPhyLib/QcomUsbPhyLib.inf
 
 !if $(SECURE_BOOT_ENABLE) == TRUE
   BaseCryptLib|CryptoPkg/Library/BaseCryptLib/BaseCryptLib.inf
@@ -475,6 +477,8 @@
   BoardLib|Nexus5XPkg/Driver/BoardDxe/BoardImplLib.inf
   QcomTargetBoardLib|Nexus5XPkg/Library/QcomTargetBoardLib/QcomTargetBoardLib.inf
   PlatformIdLib|Nexus5XPkg/Library/PlatformIdLib/PlatformIdLib.inf
+  PlatformUsbfnLib|Nexus5XPkg/Library/PlatformUsbfnLib/PlatformUsbfnLib.inf
+  QcomUsbPhyLib|Nexus5XPkg/Library/QcomUsbPhyLib/QcomUsbPhyLib.inf
 
 !if $(SECURE_BOOT_ENABLE) == TRUE
   BaseCryptLib|CryptoPkg/Library/BaseCryptLib/BaseCryptLib.inf
@@ -501,6 +505,8 @@
   BoardLib|Nexus5XPkg/Driver/BoardDxe/BoardImplLib.inf
   QcomTargetBoardLib|Nexus5XPkg/Library/QcomTargetBoardLib/QcomTargetBoardLib.inf
   PlatformIdLib|Nexus5XPkg/Library/PlatformIdLib/PlatformIdLib.inf
+  PlatformUsbfnLib|Nexus5XPkg/Library/PlatformUsbfnLib/PlatformUsbfnLib.inf
+  QcomUsbPhyLib|Nexus5XPkg/Library/QcomUsbPhyLib/QcomUsbPhyLib.inf
 
 !if $(SECURE_BOOT_ENABLE) == TRUE
   BaseCryptLib|CryptoPkg/Library/BaseCryptLib/BaseCryptLib.inf
@@ -577,6 +583,7 @@
   Nexus5XPkg/Driver/BoardDxe/BoardDxe.inf
   Nexus5XPkg/Driver/RuntimeMemoryConfigDxe/RuntimeMemoryConfigDxe.inf
   Nexus5XPkg/Driver/TimerDxe/TimerDxe.inf
+  Nexus5XPkg/Driver/UsbfnDwc3Dxe/UsbfnDwc3Dxe.inf
 
   # Device Drivers
   Nexus5XPkg/Driver/SynapticsTouchDxe/SynapticsTouchDevice.inf
