@@ -136,7 +136,7 @@ READ_LOCK_STATUS   = TRUE
   # ACPI Tables
   FILE FREEFORM = 7E374E25-8E01-4FEE-87F2-390C23C606CD {
 	SECTION RAW = Nexus5XPkg/AcpiTables/common/builtin/CSRT.aml
-	SECTION RAW = Nexus5XPkg/AcpiTables/common/builtin/DBG2.aml
+	SECTION RAW = Nexus5XPkg/AcpiTables/8992/builtin/DBG2.aml
 	SECTION RAW = Nexus5XPkg/AcpiTables/common/builtin/FACS.aml
 	SECTION RAW = Nexus5XPkg/AcpiTables/common/builtin/FADT.NoPsci.acpi
 	SECTION RAW = Nexus5XPkg/AcpiTables/common/builtin/FPDT.aml
