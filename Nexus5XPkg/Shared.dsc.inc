@@ -577,6 +577,7 @@
   Nexus5XPkg/Driver/BoardDxe/BoardDxe.inf
   Nexus5XPkg/Driver/RuntimeMemoryConfigDxe/RuntimeMemoryConfigDxe.inf
   Nexus5XPkg/Driver/TimerDxe/TimerDxe.inf
+  Nexus5XPkg/Driver/Usb3PhyDxe/Usb3PhyDxe.inf
 
   # Device Drivers
   Nexus5XPkg/Driver/SynapticsTouchDxe/SynapticsTouchDevice.inf
