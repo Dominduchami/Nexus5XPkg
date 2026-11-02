@@ -398,9 +398,6 @@ Usb3PhyDxeEntry(
 {
     EFI_STATUS status;
 
-	DEBUG((EFI_D_ERROR, "USBDxe init()\n"));
-	MicroSecondDelay(1000000);
-
     DEBUG((EFI_D_INFO | EFI_D_LOAD, "-> Usb3PhyDxeEntry\n"));
 
     DEBUG((EFI_D_INFO | EFI_D_LOAD, "-> AcquireEfiProtocols\n"));
@@ -415,13 +412,11 @@ Usb3PhyDxeEntry(
     DEBUG((EFI_D_INFO | EFI_D_LOAD, "-> usb30_qmp_phy_init\n"));
     usb30_qmp_phy_init();
     DEBUG((EFI_D_INFO | EFI_D_LOAD, "<- usb30_qmp_phy_init\n"));
-	for(;;) {};
 
 exit:
 	ASSERT(hsonly_mode == false);
     DEBUG((EFI_D_INFO | EFI_D_LOAD, "<- Usb3PhyDxeEntry 0x%x\n", status));
 	// Pause to read logs
 	MicroSecondDelay(2500000);
-	for(;;) {};
     return status;
 }
