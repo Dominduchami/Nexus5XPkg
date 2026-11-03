@@ -586,11 +586,11 @@
   Nexus5XPkg/Driver/BoardDxe/BoardDxe.inf
   Nexus5XPkg/Driver/RuntimeMemoryConfigDxe/RuntimeMemoryConfigDxe.inf
   Nexus5XPkg/Driver/TimerDxe/TimerDxe.inf
-  Nexus5XPkg/Driver/UsbfnDwc3Dxe/UsbfnDwc3Dxe.inf
 
   # Device Drivers
   Nexus5XPkg/Driver/SynapticsTouchDxe/SynapticsTouchDevice.inf
   Nexus5XPkg/Driver/SynapticsTouchDxe/SynapticsTouchDxe.inf
+  Nexus5XPkg/Driver/UsbfnDwc3Dxe/UsbfnDwc3Dxe.inf
 
   # Debug heartbeat
 !if $(SEND_HEARTBEAT_TO_SERIAL) == 1

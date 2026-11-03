@@ -914,7 +914,6 @@ Dwc3ReadyToBoot (
   gBS->CloseEvent (Event);
 }
 
-
 EFI_STATUS
 EFIAPI
 InitUsbfnDwc3Driver (
@@ -925,6 +924,9 @@ InitUsbfnDwc3Driver (
   DWC3_DEV  *Dev;
   UINT8      Index;
   EFI_EVENT  Event;
+
+  DEBUG((EFI_D_ERROR, "InitUsbfnDwc3Driver\n"));
+  for(;;) {};
 
   Dev = AllocateZeroPool (sizeof (DWC3_DEV));
   if (Dev == NULL) {
@@ -1001,11 +1003,14 @@ InitUsbfnDwc3Driver (
     goto Failure;
   }
 
-  Status = gBS->CreateEventEx (EVT_NOTIFY_SIGNAL, TPL_CALLBACK, Dwc3ReadyToBoot, NULL, &gEfiEventReadyToBootGuid, &Event);
+  /*Status = gBS->CreateEventEx (EVT_NOTIFY_SIGNAL, TPL_CALLBACK, Dwc3ReadyToBoot, NULL, &gEfiEventReadyToBootGuid, &Event);
   if (EFI_ERROR (Status)) {
     DEBUG ((EFI_D_ERROR, "Failed to create ReadyToBoot event! Status = %r\n", Status));
     goto Failure;
-  }
+  }*/
+
+  DEBUG ((EFI_D_WARN, "Start USB PHY\n"));
+  UsbfnPlatformPhyInit();
 
   return EFI_SUCCESS;
 
