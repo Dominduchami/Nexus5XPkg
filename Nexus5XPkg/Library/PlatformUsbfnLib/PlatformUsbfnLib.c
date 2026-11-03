@@ -3,6 +3,7 @@
 #include <Library/LKEnvLib.h>
 #include <Library/PlatformUsbfnLib.h>
 #include <Library/QcomUsbPhyLib.h>
+#include <Library/QcomPlatformUsbLib.h>
 
 target_usb_iface_t *mUsbInterface = NULL;
 
@@ -50,9 +51,15 @@ UsbfnPlatformPhyInit (VOID)
 {
   EFI_STATUS Status = EFI_SUCCESS;
 
+  if(mUsbInterface == NULL) {
+    LibQcomPlatformUsbGetInterface(mUsbInterface);
+  }
+
   Status = UsbfnPlatformPhyReset();
 
   DEBUG((EFI_D_ERROR, "UsbfnPlatformPhyInit: Reset done, yeah what next?\n"));
+
+  usb30_qmp_phy_init(mUsbInterface);
 
   return Status;
 }

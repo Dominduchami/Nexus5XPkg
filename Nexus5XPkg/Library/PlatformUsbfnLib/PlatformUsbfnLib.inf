@@ -19,6 +19,7 @@
   DebugLib
   TimerLib
   QcomUsbPhyLib
+  QcomPlatformUsbLib
 
 [Pcd.common]
   gQcomTokenSpaceGuid.PcdUsb30Base
