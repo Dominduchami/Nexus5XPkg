@@ -910,7 +910,7 @@ Dwc3ReadyToBoot (
   IN VOID      *Context)
 {
   DEBUG ((EFI_D_WARN, "Start USB PHY\n"));
- // UsbfnPlatformPhyInit();
+  //UsbfnPlatformPhyInit();
   gBS->CloseEvent (Event);
 }
 
@@ -1008,9 +1008,6 @@ InitUsbfnDwc3Driver (
     DEBUG ((EFI_D_ERROR, "Failed to create ReadyToBoot event! Status = %r\n", Status));
     goto Failure;
   }*/
-
-  //DEBUG ((EFI_D_WARN, "Start USB PHY\n"));
-  //UsbfnPlatformPhyInit();
 
   return EFI_SUCCESS;
 
