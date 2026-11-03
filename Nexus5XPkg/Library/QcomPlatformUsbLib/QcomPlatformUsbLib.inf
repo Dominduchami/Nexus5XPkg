@@ -20,4 +20,4 @@
   DebugLib
   ClockLib
   RpmLib
-  QcomUsbPhyLib
+  # QcomUsbPhyLib

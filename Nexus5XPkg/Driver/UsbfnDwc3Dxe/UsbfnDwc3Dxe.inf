@@ -27,7 +27,7 @@
   DxeServicesTableLib
   IoLib
   MemoryAllocationLib
-  PlatformUsbfnLib
+  # PlatformUsbfnLib
   TimerLib
   UefiBootServicesTableLib
   UefiDriverEntryPoint
