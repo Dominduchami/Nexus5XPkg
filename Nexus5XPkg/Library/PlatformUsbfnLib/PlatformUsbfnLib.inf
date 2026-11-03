@@ -17,9 +17,10 @@
 [LibraryClasses]
   ArmLib
   DebugLib
+  IoLib
   TimerLib
-  QcomUsbPhyLib
-  QcomPlatformUsbLib
+  ClockLib
 
 [Pcd.common]
   gQcomTokenSpaceGuid.PcdUsb30Base
+  gQcomTokenSpaceGuid.PcdUsb30ScratchBase

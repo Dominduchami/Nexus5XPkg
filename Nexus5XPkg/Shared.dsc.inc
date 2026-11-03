@@ -449,8 +449,6 @@
   PlatformIdLib|Nexus5XPkg/Library/PlatformIdLib/PlatformIdLib.inf
   QcomDxeTimerLib|Nexus5XPkg/Library/QTimerLib/QcomQTimerDxeTimerLib.inf
   PlatformUsbfnLib|Nexus5XPkg/Library/PlatformUsbfnLib/PlatformUsbfnLib.inf
-  QcomPlatformUsbLib|Nexus5XPkg/Library/QcomPlatformUsbLib/QcomPlatformUsbLib.inf
-  QcomUsbPhyLib|Nexus5XPkg/Library/QcomUsbPhyLib/QcomUsbPhyLib.inf
 
 !if $(SECURE_BOOT_ENABLE) == TRUE
   BaseCryptLib|CryptoPkg/Library/BaseCryptLib/BaseCryptLib.inf
@@ -479,8 +477,6 @@
   QcomTargetBoardLib|Nexus5XPkg/Library/QcomTargetBoardLib/QcomTargetBoardLib.inf
   PlatformIdLib|Nexus5XPkg/Library/PlatformIdLib/PlatformIdLib.inf
   PlatformUsbfnLib|Nexus5XPkg/Library/PlatformUsbfnLib/PlatformUsbfnLib.inf
-  QcomPlatformUsbLib|Nexus5XPkg/Library/QcomPlatformUsbLib/QcomPlatformUsbLib.inf
-  QcomUsbPhyLib|Nexus5XPkg/Library/QcomUsbPhyLib/QcomUsbPhyLib.inf
 
 !if $(SECURE_BOOT_ENABLE) == TRUE
   BaseCryptLib|CryptoPkg/Library/BaseCryptLib/BaseCryptLib.inf
@@ -508,8 +504,6 @@
   QcomTargetBoardLib|Nexus5XPkg/Library/QcomTargetBoardLib/QcomTargetBoardLib.inf
   PlatformIdLib|Nexus5XPkg/Library/PlatformIdLib/PlatformIdLib.inf
   PlatformUsbfnLib|Nexus5XPkg/Library/PlatformUsbfnLib/PlatformUsbfnLib.inf
-  QcomPlatformUsbLib|Nexus5XPkg/Library/QcomPlatformUsbLib/QcomPlatformUsbLib.inf
-  QcomUsbPhyLib|Nexus5XPkg/Library/QcomUsbPhyLib/QcomUsbPhyLib.inf
 
 !if $(SECURE_BOOT_ENABLE) == TRUE
   BaseCryptLib|CryptoPkg/Library/BaseCryptLib/BaseCryptLib.inf

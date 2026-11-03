@@ -910,7 +910,7 @@ Dwc3ReadyToBoot (
   IN VOID      *Context)
 {
   DEBUG ((EFI_D_WARN, "Start USB PHY\n"));
-  //UsbfnPlatformPhyInit();
+  UsbfnPlatformPhyInit();
   gBS->CloseEvent (Event);
 }
 
@@ -926,7 +926,7 @@ InitUsbfnDwc3Driver (
   EFI_EVENT  Event;
 
   DEBUG((EFI_D_ERROR, "InitUsbfnDwc3Driver\n"));
-  for(;;) {};
+  for(;;) {};//DEBUG
 
   Dev = AllocateZeroPool (sizeof (DWC3_DEV));
   if (Dev == NULL) {
