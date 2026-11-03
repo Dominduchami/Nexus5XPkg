@@ -1,9 +1,10 @@
 #include <Library/DebugLib.h>
+#include <Library/TimerLib.h>
+#include <Library/LKEnvLib.h>
 #include <Library/PlatformUsbfnLib.h>
 #include <Library/QcomUsbPhyLib.h>
 
-/* global reference counter between all HSPHY instances */
-static INT32 hsphy_active_count;
+target_usb_iface_t *mUsbInterface = NULL;
 
 EFI_STATUS
 UsbfnPlatformGetData (OUT USBFN_PLATFORM_DATA *PlatformData)
@@ -12,7 +13,7 @@ UsbfnPlatformGetData (OUT USBFN_PLATFORM_DATA *PlatformData)
     return EFI_INVALID_PARAMETER;
   }
 
-  PlatformData->ControllerBase = NULL;//EXYNOS9830_USBDRD_LINK_BASE;
+  PlatformData->ControllerBase = PcdGet64(PcdUsb30Base);//EXYNOS9830_USBDRD_LINK_BASE;
 
   PlatformData->MaximumSpeed          = UsbBusSpeedHigh;
   PlatformData->SuperSpeedPhyDisabled = TRUE;
@@ -21,7 +22,7 @@ UsbfnPlatformGetData (OUT USBFN_PLATFORM_DATA *PlatformData)
 
   //PlatformData->Usb2FreeClockExists = FALSE;
 
-  UsbfnGetFrameLengthAdjust (PlatformData);
+  //UsbfnGetFrameLengthAdjust (PlatformData);
 
   PlatformData->NumEndpoints = 0;
 
@@ -34,17 +35,14 @@ UsbfnPlatformGetData (OUT USBFN_PLATFORM_DATA *PlatformData)
 EFI_STATUS
 UsbfnPlatformPhyReset (VOID)
 {
-  /*if (hsphy_active_count > 1) {
-    // skip reset if there are other active PHY instances
-    DEBUG((EFI_D_ERROR, "Skipping phy reset\n"));
-    return EFI_SUCCESS;
-  }*/
+
+  // Reset usb2 phy
   qusb2_phy_reset();
 
-  qmp_phy_qmp_reset()
+  // Reset usb3 phy
+  qmp_phy_qmp_reset(mUsbInterface);
 
-
-  return EFI_UNSUPPORTED;
+  return EFI_SUCCESS;
 }
 
 EFI_STATUS
@@ -53,7 +51,10 @@ UsbfnPlatformPhyInit (VOID)
   EFI_STATUS Status = EFI_SUCCESS;
 
   Status = UsbfnPlatformPhyReset();
-  return EFI_UNSUPPORTED;
+
+  DEBUG((EFI_D_ERROR, "UsbfnPlatformPhyInit: Reset done, yeah what next?\n"));
+
+  return Status;
 }
 
 EFI_STATUS
