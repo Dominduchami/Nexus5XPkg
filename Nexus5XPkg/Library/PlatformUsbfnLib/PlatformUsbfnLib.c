@@ -223,7 +223,7 @@ UsbfnPlatformPhyInit (VOID)
   DEBUG((EFI_D_ERROR, "UsbfnPlatformPhyInit: Reset phy\n"));
   Status = UsbfnPlatformPhyReset();
 
-  DEBUG((EFI_D_ERROR, "UsbfnPlatformPhyInit: Reset done, yeah what next?\n"));
+  DEBUG((EFI_D_ERROR, "UsbfnPlatformPhyInit: Reset done\n"));
 
   /*if (get_qmp_rev)
     rev_id = get_qmp_rev();
@@ -314,6 +314,8 @@ UsbfnPlatformPhyInit (VOID)
 
   /*if (mUsbInterface->clock_bumpup_pipe3_clk)
     mUsbInterface->clock_bumpup_pipe3_clk(iface);*/
+
+  DEBUG((EFI_D_ERROR, "UsbfnPlatformPhyInit: Init done!\n"));
 
   return Status;
 }

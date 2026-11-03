@@ -909,10 +909,8 @@ Dwc3ReadyToBoot (
   IN EFI_EVENT  Event,
   IN VOID      *Context)
 {
-  DEBUG ((EFI_D_ERROR, "Start USB PHY\n"));//WARN
+  DEBUG ((EFI_D_WARN, "Start USB PHY\n"));
   UsbfnPlatformPhyInit();
-
-  for(;;) {};//DEBUG
   gBS->CloseEvent (Event);
 }
 
