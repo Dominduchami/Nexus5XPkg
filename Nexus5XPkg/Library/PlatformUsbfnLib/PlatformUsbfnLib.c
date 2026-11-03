@@ -21,8 +21,6 @@
 #define QMP_PHY_MAX_TIMEOUT 1000
 #define PHYSTATUS BIT(6)
 
-target_usb_iface_t *mUsbInterface = NULL;
-
 static struct qmp_reg qmp_settings[] = {
     {0xAC, 0x14},  /* QSERDES_COM_SYSCLK_EN_SEL */
     {0x34, 0x08},  /* QSERDES_COM_BIAS_EN_CLKBUFLR_EN */
@@ -89,18 +87,11 @@ static struct qmp_reg qmp_settings[] = {
     {0x608, 0x03}, /* USB3_PHY_START_CONTROL */
 };
 
-VOID
-UsbfnPlatformFillInterface()
-{
-  mUsbInterface->controller             = L"dwc";
-  //mUsbInterface->mux_config             = target_usb_phy_mux_configure;
-  //mUsbInterface->phy_init               = usb30_qmp_phy_init;
-  //mUsbInterface->phy_reset              = qmp_phy_qmp_reset;
-  //mUsbInterface->clock_init             = clock_usb30_init;
-  //mUsbInterface->clock_bumpup_pipe3_clk = clock_bumpup_pipe3_clk;
-  mUsbInterface->vbus_override          = TRUE;
-  mUsbInterface->pll_override           = TRUE;
-}
+
+// For override
+//
+BOOLEAN  VbusOverride = TRUE;//TODO: Get from PCD
+BOOLEAN  PllOverride = TRUE;
 
 EFI_STATUS
 UsbfnPlatformGetData (OUT USBFN_PLATFORM_DATA *PlatformData)
@@ -108,9 +99,6 @@ UsbfnPlatformGetData (OUT USBFN_PLATFORM_DATA *PlatformData)
   if (PlatformData == NULL) {
     return EFI_INVALID_PARAMETER;
   }
-
-  // Fill interface struct
-  UsbfnPlatformFillInterface();
 
   PlatformData->ControllerBase = PcdGet64(PcdUsb30Base);//EXYNOS9830_USBDRD_LINK_BASE;
 
@@ -232,22 +220,20 @@ UsbfnPlatformPhyInit (VOID)
   uint32_t qmp_reg_size;
   uint32_t i;
 
-  if(mUsbInterface == NULL) {
-    UsbfnPlatformFillInterface();
-  }
-
   DEBUG((EFI_D_ERROR, "UsbfnPlatformPhyInit: Reset phy\n"));
   Status = UsbfnPlatformPhyReset();
 
   DEBUG((EFI_D_ERROR, "UsbfnPlatformPhyInit: Reset done, yeah what next?\n"));
 
-  if (mUsbInterface->get_qmp_rev)
-    rev_id = mUsbInterface->get_qmp_rev(mUsbInterface);
+  /*if (get_qmp_rev)
+    rev_id = get_qmp_rev();
   else
-    rev_id = 0x10000000;
+    rev_id = 0x10000000;*/
+
+  rev_id = 0x10000000;
 
   /* Sequence as per HPG */
-  writel(0x01, QMP_PHY_BASE + PCIE_USB3_PHY_POWER_DOWN_CONTROL);
+  MmioWrite32(QMP_PHY_BASE + PCIE_USB3_PHY_POWER_DOWN_CONTROL, 0x01);
 
   if (rev_id >= 0x20000000) {
     qmp_reg_size = sizeof(qmp_settings) / sizeof(struct qmp_reg);
@@ -257,7 +243,7 @@ UsbfnPlatformPhyInit (VOID)
   else {
     writel(0x08, QMP_PHY_BASE + QSERDES_COM_SYSCLK_EN_SEL_TXBAND);
 
-    if (mUsbInterface->pll_override)
+    if (PllOverride)
       writel(0xE1, QMP_PHY_BASE + QSERDES_COM_PLL_VCOTAIL_EN);
 
     writel(0x82, QMP_PHY_BASE + QSERDES_COM_DEC_START1);
@@ -283,7 +269,7 @@ UsbfnPlatformPhyInit (VOID)
 
     /* Calibration Settings */
     writel(0x90, QMP_PHY_BASE + QSERDES_COM_RESETSM_CNTRL);
-    if (mUsbInterface->pll_override)
+    if (PllOverride)
       writel(0x07, QMP_PHY_BASE + QSERDES_COM_RESETSM_CNTRL2);
     else
       writel(0x05, QMP_PHY_BASE + QSERDES_COM_RESETSM_CNTRL2);
