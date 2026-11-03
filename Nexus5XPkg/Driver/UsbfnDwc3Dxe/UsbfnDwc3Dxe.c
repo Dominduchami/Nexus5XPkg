@@ -54,7 +54,7 @@ Dwc3ValidateEndpoint (
   IN  EFI_USBFN_ENDPOINT_DIRECTION  Direction,
   OUT UINT8                        *PhysEpNum)
 {
-  /*UINT8 Phys;
+  UINT8 Phys;
 
   if (Direction != EfiUsbEndpointDirectionDeviceRx && Direction != EfiUsbEndpointDirectionDeviceTx) {
     return EFI_INVALID_PARAMETER;
@@ -70,7 +70,7 @@ Dwc3ValidateEndpoint (
     return EFI_INVALID_PARAMETER;
   }
 
-  *PhysEpNum = Phys;*/
+  *PhysEpNum = Phys;
 
   return EFI_SUCCESS;
 }
@@ -111,7 +111,7 @@ Dwc3IsLinkDisconnected (IN DWC3_DEV *Dev)
   }
 
   // Hacky, ideally we talk to whatever PD controller is here to check VBUS and cable state.
-  return TRUE;//(BOOLEAN)(DWC3_DSTS_USBLNKST (MmioRead32 (Dev->Base + DWC3_DSTS)) == DWC3_LINK_STATE_SS_DIS);
+  return (BOOLEAN)(DWC3_DSTS_USBLNKST (MmioRead32 (Dev->Base + DWC3_DSTS)) == DWC3_LINK_STATE_SS_DIS);
 }
 
 STATIC
@@ -121,7 +121,7 @@ Dwc3DetectPort (
   IN  EFI_USBFN_IO_PROTOCOL *This,
   OUT EFI_USBFN_PORT_TYPE   *PortType)
 {
-  /*DWC3_DEV *Dev;
+  DWC3_DEV *Dev;
 
   if (This == NULL || PortType == NULL) {
     return EFI_INVALID_PARAMETER;
@@ -138,7 +138,7 @@ Dwc3DetectPort (
     *PortType = EfiUsbStandardDownstreamPort;
   } else {
     *PortType = EfiUsbUnknownPort;
-  }*/
+  }
 
   return EFI_SUCCESS;
 }
@@ -150,7 +150,7 @@ Dwc3ConfigureEnableEndpoints (
   IN  EFI_USBFN_IO_PROTOCOL *This,
   OUT EFI_USB_DEVICE_INFO   *DeviceInfo)
 {
-  /*DWC3_DEV                    *Dev;
+  DWC3_DEV                    *Dev;
   EFI_STATUS                   Status;
   EFI_USB_CONFIG_INFO         *ConfigInfo;
   EFI_USB_INTERFACE_INFO      *InterfaceInfo;
@@ -234,7 +234,7 @@ Dwc3ConfigureEnableEndpoints (
   Status = Dwc3RunStop (Dev, TRUE);
   if (EFI_ERROR (Status)) {
     return Status;
-  }*/
+  }
 
   return EFI_SUCCESS;
 }
@@ -248,7 +248,7 @@ Dwc3GetEndpointMaxPacketSize (
   IN  EFI_USB_BUS_SPEED      BusSpeed,
   OUT UINT16                *MaxPacketSize)
 {
-  /*DWC3_DEV *Dev;
+  DWC3_DEV *Dev;
 
   if (This == NULL || MaxPacketSize == NULL) {
     return EFI_INVALID_PARAMETER;
@@ -266,7 +266,7 @@ Dwc3GetEndpointMaxPacketSize (
     return EFI_INVALID_PARAMETER;
   }
 
-  *MaxPacketSize = Dwc3MaxPacketSizeForSpeed (EndpointType, BusSpeed);*/
+  *MaxPacketSize = Dwc3MaxPacketSizeForSpeed (EndpointType, BusSpeed);
 
   return EFI_SUCCESS;
 }
@@ -280,7 +280,7 @@ Dwc3GetDeviceInfo (
   IN OUT UINTN                    *BufferSize,
   OUT    VOID                     *Buffer OPTIONAL)
 {
-  /*CHAR16 *String;
+  CHAR16 *String;
   UINTN   Size;
 
   if (This == NULL || BufferSize == NULL) {
@@ -313,7 +313,7 @@ Dwc3GetDeviceInfo (
   }
 
   CopyMem (Buffer, String, Size);
-  *BufferSize = Size;*/
+  *BufferSize = Size;
 
   return EFI_SUCCESS;
 }
@@ -326,7 +326,7 @@ Dwc3GetVendorIdProductId (
   OUT UINT16                *Vid,
   OUT UINT16                *Pid)
 {
-  /*DWC3_DEV *Dev;
+  DWC3_DEV *Dev;
 
   if (This == NULL || Vid == NULL || Pid == NULL) {
     return EFI_INVALID_PARAMETER;
@@ -335,7 +335,7 @@ Dwc3GetVendorIdProductId (
   Dev = DWC3_DEV_FROM_PROTOCOL (This);
 
   *Vid = Dev->Platform.VendorId;
-  *Pid = Dev->Platform.ProductId;*/
+  *Pid = Dev->Platform.ProductId;
 
   return EFI_SUCCESS;
 }
@@ -348,7 +348,7 @@ Dwc3AbortTransfer (
   IN UINT8                         EndpointIndex,
   IN EFI_USBFN_ENDPOINT_DIRECTION  Direction)
 {
-  /*DWC3_DEV  *Dev;
+  DWC3_DEV  *Dev;
   EFI_STATUS Status;
   UINT8      PhysEpNum;
 
@@ -369,7 +369,7 @@ Dwc3AbortTransfer (
 
   Dwc3EndTransfer (Dev, PhysEpNum);
 
-  Dev->Endpoints[PhysEpNum].TransferBuffer = NULL;*/
+  Dev->Endpoints[PhysEpNum].TransferBuffer = NULL;
 
   return EFI_SUCCESS;
 }
@@ -383,7 +383,7 @@ Dwc3GetEndpointStallState (
   IN     EFI_USBFN_ENDPOINT_DIRECTION  Direction,
   IN OUT BOOLEAN                      *State)
 {
-  /*DWC3_DEV  *Dev;
+  DWC3_DEV  *Dev;
   EFI_STATUS Status;
   UINT8      PhysEpNum;
 
@@ -398,7 +398,7 @@ Dwc3GetEndpointStallState (
     return Status;
   }
 
-  *State = Dev->Endpoints[PhysEpNum].Stalled;*/
+  *State = Dev->Endpoints[PhysEpNum].Stalled;
 
   return EFI_SUCCESS;
 }
